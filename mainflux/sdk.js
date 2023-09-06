@@ -1,8 +1,10 @@
 import  Things from "mainflux-sdk/mainflux/things.js";
+import Users from "mainflux-sdk/mainflux/users.js";
 
 class SDK {
-  constructor(things_url) {
-    this.things = new Things(things_url);
+  constructor(url) {
+    this.things = new Things(url);
+    this.users = new Users(url);
   }
 }
 

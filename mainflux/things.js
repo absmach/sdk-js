@@ -49,15 +49,13 @@ class Things {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // Parse the response JSON
+        return response.json();
       })
       .then((result) => {
         console.log('Response data:', result);
-        // Handle the response data here
       })
       .catch((error) => {
         console.error('Fetch error:', error);
-        // Handle errors here
       });
   }
 
@@ -75,15 +73,13 @@ class Things {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // Parse the response JSON
+        return response.json();
       })
       .then((result) => {
         console.log('Response data:', result);
-        // Handle the response data here
       })
       .catch((error) => {
         console.error('Fetch error:', error);
-        // Handle errors here
       });
   }
 
@@ -102,15 +98,137 @@ class Things {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // Parse the response JSON
+        return response.json();
       })
       .then((result) => {
         console.log('Response data:', result);
-        // Handle the response data here
       })
       .catch((error) => {
         console.error('Fetch error:', error);
-        // Handle errors here
+      });
+  }
+
+  Disable(thing_id, token) {
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log('Response data:', result);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }
+
+  Update(thing_id, thing, token) {
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(thing),
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log('Response data:', result);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }
+
+  Update_thing_secret(thing_id, thing, token) {
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(thing),
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log('Response data:', result);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }
+
+  Update_thing_tags(thing_id, thing, token) {
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(thing),
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log('Response data:', result);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }
+
+  Update_thing_owner(thing_id, thing, token) {
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`;
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(thing),
+    };
+    fetch(url, options)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log('Response data:', result);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
       });
   }
 }
