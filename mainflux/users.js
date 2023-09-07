@@ -1,12 +1,12 @@
 import fetch from "node-fetch";
-import Errors from "mainflux-sdk/mainflux/errors.js";
+//import Errors from "mainflux-sdk/mainflux/errors.js";
 class Users {
     constructor(users_url) {
         this.users_url = users_url;
         this.content_type = "application/json";
         this.usersEndpoint = "users";
     }
-    userError = new Errors;
+    //userError = new Errors;
 
     Create(user, token) {
         const url = `${this.users_url}/${this.usersEndpoint}`;
@@ -48,8 +48,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                   this.userError.HandleError(this.userError.users["get"], response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
+                   //this.userError.HandleError(this.userError.users["get"], response.status);
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })

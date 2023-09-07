@@ -1,5 +1,5 @@
-import  Things from "mainflux-sdk/mainflux/things.js";
-import Users from "mainflux-sdk/mainflux/users.js";
+import  Things from "./things.js";
+import Users from "./users.js";
 
 class SDK {
   constructor(url) {
