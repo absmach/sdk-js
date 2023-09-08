@@ -1,15 +1,14 @@
 import fetch from "node-fetch";
-//import Errors from "mainflux-sdk/mainflux/errors.js";
-class Users {
-    constructor(users_url) {
-        this.users_url = users_url;
-        this.content_type = "application/json";
-        this.usersEndpoint = "users";
-    }
-    //userError = new Errors;
 
-    Create(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}`;
+class Groups {
+    constructor(groups_url) {
+        this.groups_url = groups_url;
+        this.content_type = "application/json";
+        this.groupsEndpoint = "groups";
+    }
+
+    Create(group, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}`;
         console.log(url);
         const options = {
             method: "POST",
@@ -17,7 +16,7 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            body: JSON.stringify(group),
         };
         fetch(url, options)
             .then((response) => {
@@ -36,187 +35,8 @@ class Users {
             });
     }
 
-    Login(user) {
-        const url = `${this.users_url}/${this.usersEndpoint}/tokens/issue`;
-        console.log(url);
-        const options = {
-            method: "POST",
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Refresh_token(user, refresh_token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/tokens/refresh`;
-        console.log(url);
-        const options = {
-            method: "POST",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${refresh_token}`,
-            },
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Update(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}`;
-        console.log(url);
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Update_user_identity(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`;
-        console.log(url);
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Update_user_tags(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`;
-        console.log(url);
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Update_user_owner(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`;
-        console.log(url);
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(user),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Update_user_password(old_secret, new_secret, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/secret`;
-        const secret = {old_secret: old_secret, new_secret: new_secret}
-        console.log(url);
-        const options = {
-            method: "PATCH",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(secret),
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Get(user_id, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user_id}`;
+    Get(group_id, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}`;
         const options = {
             method: "GET",
             headers: {
@@ -227,7 +47,6 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                   //this.userError.HandleError(this.userError.users["get"], response.status);
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
@@ -241,40 +60,14 @@ class Users {
     }
 
     Get_all(query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}`;
+        const url = `${this.groups_url}/${this.groupsEndpoint}`;
         const options = {
-          method: "GET",
-          headers: {
-            "Content-Type": this.content_type,
-            Authorization: `Bearer ${token}`,
-          },
-          params: query_params,
-        };
-        fetch(url, options)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((result) => {
-            console.log('Response data:', result);
-          })
-          .catch((error) => {
-            console.error('Fetch error:', error);
-          });
-      }
-
-    Disable(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`;
-        console.log(url);
-        const options = {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            params: query_params,
         };
         fetch(url, options)
             .then((response) => {
@@ -291,16 +84,15 @@ class Users {
             });
     }
 
-    Enable(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`;
-        console.log(url);
+    Update(group, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}`;
         const options = {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            body: JSON.stringify(group),
         };
         fetch(url, options)
             .then((response) => {
@@ -317,8 +109,147 @@ class Users {
             });
     }
 
-    Memberships(member_id, query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships`;
+    Children(group, query_params, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/children`;
+        console.log(url);
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            params: query_params,
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Parents(group, query_params, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents`;
+        console.log(url);
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            params: query_params,
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Assign(group_id, member_id, member_type, token) {
+        const url = `${this.groups_url}/policies`;
+        const payload = { "object": group_id, "subject": member_id, "actions": member_type };
+        console.log(url);
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            //     return response.text(); // Read response as text
+            // })
+            // .then((text) => {
+            // if (!text) {
+            //     throw new Error("Empty response received.");
+            // }
+            // const result = JSON.parse(text); // Parse JSON from text
+            // console.log('Response data:', "Registered new policy");
+            // })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Unassign(members_ids, group_id, token) {
+        const url = `${this.groups_url}/policies/${members_ids}/${group_id}`;
+        const payload = { "object": group_id, "subject": members_ids };
+        console.log(url);
+        const options = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', "Registered new policy");
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Disable(group_id, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`;
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Members(group_id, query_params, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members`;
         console.log(url);
         const options = {
             method: "GET",
@@ -345,4 +276,4 @@ class Users {
 
 }
 
-export default Users;
+export default Groups;
