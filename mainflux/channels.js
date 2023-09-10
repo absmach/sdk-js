@@ -84,6 +84,32 @@ class Channels {
             });
     }
 
+    Get_by_thing(channel_id, query_params, token) {
+        //Retrieves list of things connected to specified channel with pagination metadata.
+        const url = `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things`;
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            params: query_params,
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
     Get_all(query_params, token) {
         const url = `${this.channels_url}/${this.channelsEndpoint}`;
         const options = {
@@ -158,7 +184,29 @@ class Channels {
             });
     }
 
-
+    // Identify_thing(thing_key) {
+    //     const url = `${this.channels_url}/identify`;
+    //     const options = {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": this.content_type,
+    //             Authorization: `Bearer ${thing_key}`,
+    //         },
+    //     };
+    //     fetch(url, options)
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! Status: ${response.status}`);
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((result) => {
+    //             console.log('Response data:', result);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Fetch error:', error);
+    //         });
+    // }
 
 }
 

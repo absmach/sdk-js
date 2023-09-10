@@ -1,7 +1,7 @@
 import  Things from "./things.js";
 import Users from "./users.js";
 import Groups from "./groups.js";
-import Channels from "./channels.js"
+import Channels from "./channels.js";
 
 class SDK {
   constructor(url) {

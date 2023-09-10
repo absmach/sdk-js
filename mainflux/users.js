@@ -190,7 +190,7 @@ class Users {
 
     Update_user_password(old_secret, new_secret, token) {
         const url = `${this.users_url}/${this.usersEndpoint}/secret`;
-        const secret = {old_secret: old_secret, new_secret: new_secret}
+        const secret = { old_secret: old_secret, new_secret: new_secret }
         console.log(url);
         const options = {
             method: "PATCH",
@@ -227,7 +227,7 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                   //this.userError.HandleError(this.userError.users["get"], response.status);
+                    //this.userError.HandleError(this.userError.users["get"], response.status);
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
@@ -243,27 +243,27 @@ class Users {
     Get_all(query_params, token) {
         const url = `${this.users_url}/${this.usersEndpoint}`;
         const options = {
-          method: "GET",
-          headers: {
-            "Content-Type": this.content_type,
-            Authorization: `Bearer ${token}`,
-          },
-          params: query_params,
+            method: "GET",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            params: query_params,
         };
         fetch(url, options)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((result) => {
-            console.log('Response data:', result);
-          })
-          .catch((error) => {
-            console.error('Fetch error:', error);
-          });
-      }
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
 
     Disable(user, token) {
         const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`;
@@ -327,6 +327,38 @@ class Users {
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
+        };
+        fetch(url, options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Response data:', result);
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Authorise_user(user_id, group_id, action, entity_type, token) {
+        //Authorises user
+        const url = `${this.users_url}/authorize`;
+        const access_request = {
+            "subject": user_id,
+            "object": group_id,
+            "action": action,
+            "entity_type": entity_type
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(access_request),
         };
         fetch(url, options)
             .then((response) => {
