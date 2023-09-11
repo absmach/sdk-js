@@ -1,12 +1,13 @@
 import fetch from "node-fetch";
-//import Errors from "mainflux-sdk/mainflux/errors.js";
+import Errors from "./errors.js";
+
 class Users {
     constructor(users_url) {
         this.users_url = users_url;
         this.content_type = "application/json";
         this.usersEndpoint = "users";
     }
-    //userError = new Errors;
+    userError = new Errors;
 
     Create(user, token) {
         const url = `${this.users_url}/${this.usersEndpoint}`;
@@ -22,7 +23,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["create"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json(); // Parse the response JSON
             })
@@ -37,6 +39,7 @@ class Users {
     }
 
     Login(user) {
+        // Issue Access and Refresh Token used for authenticating into the system
         const url = `${this.users_url}/${this.usersEndpoint}/tokens/issue`;
         console.log(url);
         const options = {
@@ -46,7 +49,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["login"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -60,7 +64,6 @@ class Users {
 
     Refresh_token(user, refresh_token) {
         const url = `${this.users_url}/${this.usersEndpoint}/tokens/refresh`;
-        console.log(url);
         const options = {
             method: "POST",
             headers: {
@@ -72,7 +75,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["refresh_token"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -98,7 +102,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -124,7 +129,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -150,7 +156,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -176,7 +183,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -203,7 +211,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -217,6 +226,7 @@ class Users {
 
     Get(user_id, token) {
         const url = `${this.users_url}/${this.usersEndpoint}/${user_id}`;
+        comsole.log(url);
         const options = {
             method: "GET",
             headers: {
@@ -227,8 +237,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    //this.userError.HandleError(this.userError.users["get"], response.status);
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["get"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -242,6 +252,7 @@ class Users {
 
     Get_all(query_params, token) {
         const url = `${this.users_url}/${this.usersEndpoint}`;
+        console.log(url);
         const options = {
             method: "GET",
             headers: {
@@ -253,7 +264,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["get_all"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -279,7 +291,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["disable"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -305,7 +318,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["enable"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -331,7 +345,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["memberships"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -363,7 +378,8 @@ class Users {
         fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    this.userError.HandleError(this.userError.users["authorise_user"], response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
