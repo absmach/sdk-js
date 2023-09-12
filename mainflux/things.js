@@ -85,7 +85,7 @@ class Things {
 
   Get_by_channel(thing_id, query_params, token) {
     //Retrieves list of channels connected to specified thing with pagination metadata.
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels`;
+    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`;
     const options = {
       method: "GET",
       headers: {
@@ -110,7 +110,7 @@ class Things {
   }
 
   Get_all(query_params, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}`;
+    const url = `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`;
     const options = {
       method: "GET",
       headers: {
@@ -343,9 +343,10 @@ class Things {
       method: "POST",
       headers: {
         "Content-Type": this.content_type,
-        Authorization: `Bearer ${thing_key}`,
+        Authorization: `Thing ${thing_key}`,
       },
     };
+    // console.log(options);
     fetch(url, options)
       .then((response) => {
         if (!response.ok) {

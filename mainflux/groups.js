@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import Errors from "./errors.js";
 
 class Groups {
     constructor(groups_url) {
@@ -6,6 +7,7 @@ class Groups {
         this.content_type = "application/json";
         this.groupsEndpoint = "groups";
     }
+    userError = new Errors;
 
     Create(group, token) {
         const url = `${this.groups_url}/${this.groupsEndpoint}`;
@@ -44,15 +46,12 @@ class Groups {
                 Authorization: `Bearer ${token}`,
             },
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -60,7 +59,7 @@ class Groups {
     }
 
     Get_all(query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}`;
+        const url = `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`;
         const options = {
             method: "GET",
             headers: {
@@ -109,8 +108,8 @@ class Groups {
             });
     }
 
-    Children(group, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/children`;
+    Children(group_id, query_params, token) {
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`;
         console.log(url);
         const options = {
             method: "GET",
@@ -136,7 +135,7 @@ class Groups {
     }
 
     Parents(group, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents`;
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
         console.log(url);
         const options = {
             method: "GET",
@@ -249,7 +248,7 @@ class Groups {
     }
 
     Members(group_id, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members`;
+        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`;
         console.log(url);
         const options = {
             method: "GET",

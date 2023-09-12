@@ -86,7 +86,7 @@ class Channels {
 
     Get_by_thing(channel_id, query_params, token) {
         //Retrieves list of things connected to specified channel with pagination metadata.
-        const url = `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things`;
+        const url = `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`;
         const options = {
             method: "GET",
             headers: {
@@ -111,7 +111,7 @@ class Channels {
     }
 
     Get_all(query_params, token) {
-        const url = `${this.channels_url}/${this.channelsEndpoint}`;
+        const url = `${this.channels_url}/${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`;
         const options = {
             method: "GET",
             headers: {

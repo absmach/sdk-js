@@ -3,12 +3,19 @@ import Users from "./users.js";
 import Groups from "./groups.js";
 import Channels from "./channels.js";
 
+const defaultUrl = "http://localhost";
+
 class SDK {
-  constructor(url) {
-    this.things = new Things(url);
-    this.users = new Users(url);
-    this.groups = new Groups(url);
-    this.channels = new Channels(url);
+  constructor({
+    usersUrl = defaultUrl,
+    thingsUrl = defaultUrl,
+    groupsUrl = defaultUrl,
+    channelsUrl = defaultUrl,
+  } = {}) {
+    this.users = new Users(usersUrl);
+    this.things = new Things(thingsUrl);
+    this.groups = new Groups(groupsUrl);
+    this.channels = new Channels(channelsUrl);
   }
 }
 

@@ -20,17 +20,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["create"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json(); // Parse the response JSON
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-                // Handle the response data here
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -44,18 +40,18 @@ class Users {
         console.log(url);
         const options = {
             method: "POST",
+            headers: {
+                "Content-Type": this.content_type,
+            },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["login"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -72,16 +68,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["refresh_token"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -99,16 +92,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    return this.userError.HandleError(this.userError.users["update"], response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -126,16 +116,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -153,16 +140,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["update"], response.status);
+                   return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -180,16 +164,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -208,50 +189,21 @@ class Users {
             },
             body: JSON.stringify(secret),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["update"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
             });
     }
 
-    Get(user_id, token) {
+    async Get(user_id, token) {
         const url = `${this.users_url}/${this.usersEndpoint}/${user_id}`;
-        comsole.log(url);
-        const options = {
-            method: "GET",
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["get"], response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-            })
-            .catch((error) => {
-                console.error('Fetch error:', error);
-            });
-    }
-
-    Get_all(query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}`;
         console.log(url);
         const options = {
             method: "GET",
@@ -259,18 +211,38 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["get_all"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
-            .then((result) => {
-                console.log('Response data:', result);
+            .catch((error) => {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    Get_all(query_params, token) {
+        const url = `${this.users_url}/${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`;
+        console.log(url);
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            }
+            // URLSearchParams: query_params,
+        };
+        return fetch(url , options)
+            .then((response) => {
+                if (!response.ok) {
+                    return this.userError.HandleError(this.userError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -288,16 +260,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["disable"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -315,16 +284,13 @@ class Users {
             },
             body: JSON.stringify(user),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["enable"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -332,7 +298,7 @@ class Users {
     }
 
     Memberships(member_id, query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships`;
+        const url = `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`;
         console.log(url);
         const options = {
             method: "GET",
@@ -342,16 +308,13 @@ class Users {
             },
             params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["memberships"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -375,16 +338,13 @@ class Users {
             },
             body: JSON.stringify(access_request),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    this.userError.HandleError(this.userError.users["authorise_user"], response.status);
+                    return this.userError.HandleError(this.userError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
