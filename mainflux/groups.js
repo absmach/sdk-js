@@ -20,16 +20,12 @@ class Groups {
             },
             body: JSON.stringify(group),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status); 
                 }
                 return response.json(); // Parse the response JSON
-            })
-            .then((result) => {
-                console.log('Response data:', result);
-                // Handle the response data here
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -49,7 +45,7 @@ class Groups {
         return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
                 }
                 return response.json();
             })
@@ -68,15 +64,13 @@ class Groups {
             },
             params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -93,15 +87,12 @@ class Groups {
             },
             body: JSON.stringify(group),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -119,15 +110,13 @@ class Groups {
             },
             params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -145,15 +134,13 @@ class Groups {
             },
             params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -172,15 +159,13 @@ class Groups {
             },
             body: JSON.stringify(payload),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             //     return response.text(); // Read response as text
             // })
@@ -208,15 +193,13 @@ class Groups {
             },
             body: JSON.stringify(payload),
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
+                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', "Registered new policy");
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -232,15 +215,12 @@ class Groups {
                 Authorization: `Bearer ${token}`,
             },
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -258,15 +238,12 @@ class Groups {
             },
             params: query_params,
         };
-        fetch(url, options)
+        return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return this.groupError.HandleError(this.groupError.errors, response.status);
                 }
                 return response.json();
-            })
-            .then((result) => {
-                console.log('Response data:', result);
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
