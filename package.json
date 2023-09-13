@@ -27,5 +27,9 @@
   "homepage": "https://github.com/mainflux/sdk-js#readme",
   "dependencies": {
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3"
   }
 }
