@@ -89,6 +89,48 @@ class Errors {
             404: "A non-existent entity request.",
             400: "Failed due to malformed query parameters.",
         },
+        create : {
+            401: "Missing or invalid access token provided.",
+            404: "A non-existent entity request.",
+            400: "Failed due to malformed query parameters.",
+        },
+        children : {
+            401: "Missing or invalid access token provided.",
+        },
+        parents : {
+            401: "Missing or invalid access token provided.",
+        },
+        update : {
+            401: "Missing or invalid access token provided.",
+        },
+        assign : {
+            500: "Unexpected server-side error occurred.",
+        },
+        unassign : {
+            401: "Missing or invalid access token provided.",
+            500: "Unexpected server-side error occurred.",
+        },
+        disable: {
+            401: "Missing or invalid access token provided.",
+        },
+        members:{
+            401: "Missing or invalid access token provided.",
+        },
+
+    }
+
+    things ={
+        create : {
+
+        },
+        get :{
+
+        },
+        get_all :{
+
+        },
+        
+
 
     }
 
