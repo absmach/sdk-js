@@ -7,7 +7,7 @@ class Groups {
         this.content_type = "application/json";
         this.groupsEndpoint = "groups";
     }
-    userError = new Errors;
+    groupError = new Errors;
 
     Create(group, token) {
         const url = `${this.groups_url}/${this.groupsEndpoint}`;
@@ -23,6 +23,8 @@ class Groups {
         return fetch(url, options)
             .then((response) => {
                 if (!response.ok) {
+                    console.log
+                    // return Errors.HandleError(Errors.g)
                     return this.groupError.HandleError(this.groupError.errors, response.status); 
                 }
                 return response.json(); // Parse the response JSON
@@ -163,19 +165,9 @@ class Groups {
             .then((response) => {
                 if (!response.ok) {
                     return this.groupError.HandleError(this.groupError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                return response.json();
+                return "OK";
             })
-            //     return response.text(); // Read response as text
-            // })
-            // .then((text) => {
-            // if (!text) {
-            //     throw new Error("Empty response received.");
-            // }
-            // const result = JSON.parse(text); // Parse JSON from text
-            // console.log('Response data:', "Registered new policy");
-            // })
             .catch((error) => {
                 console.error('Fetch error:', error);
             });
@@ -199,7 +191,7 @@ class Groups {
                     return this.groupError.HandleError(this.groupError.errors, response.status);
                     // throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                return response.json();
+                return "OK";
             })
             .catch((error) => {
                 console.error('Fetch error:', error);

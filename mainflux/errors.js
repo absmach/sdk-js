@@ -130,8 +130,29 @@ class Errors {
 
         },
         
+    }
 
-
+    certs ={
+        issue : {
+            500: "Unexpected server-side error occurred.",
+            404: "Failed to revoke corresponding certificate.",
+            401: "Missing or invalid access token provided.",
+        },
+        view_by_serial :{
+            500: "Unexpected server-side error occurred.",
+            404: "Failed to revoke corresponding certificate.",
+            401: "Missing or invalid access token provided.",
+        },
+        view_by_thing :{
+            500: "Unexpected server-side error occurred.",
+            404: "Failed to revoke corresponding certificate.",
+            401: "Missing or invalid access token provided.",
+        },
+        revoke : {
+            500: "Unexpected server-side error occurred.",
+            404: "Failed to revoke corresponding certificate.",
+            401: "Missing or invalid access token provided.",
+        }    
     }
 
 
