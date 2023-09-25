@@ -1,3 +1,3 @@
-'use strict';
+const sdk = require('./mainflux/sdk');
 
-export * from "./mainflux";
+module.exports = sdk;

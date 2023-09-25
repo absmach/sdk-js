@@ -1,5 +1,4 @@
-import fetch from "node-fetch";
-import Errors from "./errors.js";
+const axios = require('axios');
 
 class Users {
     constructor(users_url) {
@@ -7,323 +6,298 @@ class Users {
         this.content_type = "application/json";
         this.usersEndpoint = "users";
     }
-    userError = new Errors;
 
     Create(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}`;
-        console.log(url);
+        // Create a new user
+
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json(); // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
-            });
+                return error.response.data;
+            })
     }
 
     Login(user) {
         // Issue Access and Refresh Token used for authenticating into the system
-        const url = `${this.users_url}/${this.usersEndpoint}/tokens/issue`;
-        console.log(url);
+
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/tokens/issue`,
             headers: {
                 "Content-Type": this.content_type,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error;
             });
     }
 
     Refresh_token(user, refresh_token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/tokens/refresh`;
+        //provides a new access token and refresh token.
+
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/tokens/refresh`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${refresh_token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error;
             });
     }
 
     Update(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}`;
-        console.log(url);
+        // Update a user
         const options = {
-            method: "PATCH",
+            method: "patch",
+            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}`,
+            maxBodyLength: Infinity,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.users["update"], response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
     Update_user_identity(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`;
-        console.log(url);
+        // Update a user identity
         const options = {
-            method: "PATCH",
+            method: "patch",
+            url:`${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`,
+            maxBodyLength: Infinity,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
     Update_user_tags(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`;
-        console.log(url);
+        // Update a user's tags
         const options = {
-            method: "PATCH",
+            method: "patch",
+            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`,
+            maxBodyLength: Infinity,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                   return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
     Update_user_owner(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`;
-        console.log(url);
+        // Update a user's owner status.
         const options = {
-            method: "PATCH",
+            method: "patch",
+            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
+            maxBodyLength: Infinity,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
     Update_user_password(old_secret, new_secret, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/secret`;
+        // Update a user's password.
         const secret = { old_secret: old_secret, new_secret: new_secret }
-        console.log(url);
         const options = {
-            method: "PATCH",
+            method: "patch",
+            url: `${this.users_url}/${this.usersEndpoint}/secret`,
+            maxBodyLength: Infinity,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(secret),
+            data: JSON.stringify(secret),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
-    async Get(user_id, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user_id}`;
-        console.log(url);
+    Get(user_id, token) {
+        // Get a user
+
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
+                return error.response.data;
             });
     }
 
     Get_all(query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`;
-        console.log(url);
+        // Gets all users with pagination.
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             }
-            // URLSearchParams: query_params,
         };
-        return fetch(url , options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
+            .catch((error) => { 
+                return error.response.data;
             });
+
+        // return fetch(url , options)
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             return this.userError.HandleError(this.userError.errors, response.status);
+        //             // throw new Error(`HTTP error! Status: ${response.status}`);
+        //         }
+        //         return response.json();
+        //     })
+        //     .catch((error) => {
+        //         console.error('Fetch error:', error);
+        //     });
     }
 
     Disable(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`;
-        console.log(url);
+        // Disable a user
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
+            .catch((error) => { 
+                return error.response.data;
             });
     }
 
     Enable(user, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`;
-        console.log(url);
+        // Enable a user
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(user),
+            data: JSON.stringify(user),
         };
-        return fetch(url, options)
+        return axios.request(options)  
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
+            .catch((error) => { 
+                return error.response.data;
             });
     }
 
     Memberships(member_id, query_params, token) {
-        const url = `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`;
-        console.log(url);
+        // Get memberships of a user
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
+            .catch((error) => { 
+                return error.response.data;
             });
     }
 
     Authorise_user(user_id, group_id, action, entity_type, token) {
-        //Authorises user
-        const url = `${this.users_url}/authorize`;
+        //Authorises user to perform an action on an entity
         const access_request = {
             "subject": user_id,
             "object": group_id,
@@ -331,26 +305,24 @@ class Users {
             "entity_type": entity_type
         }
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.users_url}/authorize`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(access_request),
+            data: JSON.stringify(access_request),
         };
-        return fetch(url, options)
-            .then((response) => {
-                if (!response.ok) {
-                    return this.userError.HandleError(this.userError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+        return axios.request(options)  
+            .then((_response) => {
+                return true;
             })
-            .catch((error) => {
-                console.error('Fetch error:', error);
+            .catch((_error) => { 
+                return false;
             });
     }
 
 }
 
-export default Users;
+module.exports = Users;

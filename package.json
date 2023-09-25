@@ -1,13 +1,16 @@
 {
   "name": "mainflux-sdk",
-  "version": "0.14.5",
+  "version": "0.14.15",
   "description": "Official Mainflux Javascript sdk",
   "main": "index.js",
-  "type": "module",
-  "directories": {
-    "example": "examples",
-    "test": "tests"
+  "engines": {
+    "node": ">=18.0.0"
   },
+  "files": [
+    "index.js",
+    "mainflux",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "jest"
   },
@@ -27,16 +30,13 @@
   },
   "homepage": "https://github.com/mainflux/sdk-js#readme",
   "dependencies": {
-    "mainflux-sdk": "^0.14.5",
+    "axios": "^1.5.0",
+    "browserify": "^17.0.0",
+    "mainflux-sdk": "^0.14.15",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "jest-fetch-mock": "^3.0.3"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    }
   }
 }

@@ -1,5 +1,6 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from '../mainflux/sdk.js';
+// import SDK from '../mainflux/sdk.js';
+const SDK = require("../mainflux/sdk");
 
 const defaultUrl = "http://localhost";
 
@@ -43,32 +44,32 @@ const mySdk = new SDK({
 //Users.js
 /*
 mySdk.users.Create(
-    { "credentials": { "identity": "azaelia@email.com", "secret": "12345678" } },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ4MjYzNjcsImlhdCI6MTY5NDc3MjM2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.khxEjSpbYfKrBF-FKTuYg3MIffjQXQHzGCLmR2pImdgNKoouHvRLLAfQlIQbX49zE_UvEi6xupVR55u7kjLfuw"
+    { "credentials": { "identity": "boniver@email.com", "secret": "12345678" } },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTUyMjM5MTAsImlhdCI6MTY5NTE2OTkxMCwiaWRlbnRpdHkiOiJlbG9xdWVudF9nYW5ndWx5QGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImQyZmQ4OWIyLWY5OGQtNDViZC1hNDY3LTZhZjYyMjVjY2I2OCIsInR5cGUiOiJhY2Nlc3MifQ.NvmdagoW9F6dNaeBZGuDXt7qD0Jr7IdGGUN60HHN0hV5QfNC2iWhSQ7o9y44Ehy_FeRDInTq5w3txnbUHDE6tQ"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Get(
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+    "ec0879b4-48ac-4849-9fe3-b4b1e285cc88",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0MzU0ODYsImlhdCI6MTY5NTM4MTQ4NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.5NJtCK_0kagO9ZeX3dhIMvy9yBnMkenXH9PrSGQ7Ske5K6Hzd6eBagsY8iKtZDaEBd28xUAh5sXmL_b8awlk8Q"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Login(
-    {"identity": "sinatra@email.com", "secret": "12345678"}
+    { "identity": "boniver@email.com", "secret": "12345678" }
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
         console.error(error);
@@ -76,113 +77,113 @@ mySdk.users.Login(
 
 mySdk.users.Refresh_token(
     "c52d-3b0d-43b9-8c3e-275c087d875af",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2MTE2MjUsImlhdCI6MTY5NDUyNTIyNSwiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJyZWZyZXNoIn0.gSmaazSC3daQjZgxpyILb05HqS18Cf5GieipPcmhv7HAV7BGY4jSJnXdEga7B6XmtCNsxm2_fbr5K6MhhqfYHg"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0Njc4ODYsImlhdCI6MTY5NTM4MTQ4NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJyZWZyZXNoIn0.BvL1-aLlA9K1aWaCVhC5DRkkf4RA4PUuwo3X4sdGipCx-V2ZLjyYtezy-glPF9LLwUBXL_c4134izH56dqO0lg"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Update(
-    {"id": "886b4266-77d1-4258-abae-2931fb4f16de", "name": "fkatwigs" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+    { "id": "ec0879b4-48ac-4849-9fe3-b4b1e285cc88", "name": "simone" },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0NjAxNjcsImlhdCI6MTY5NTQwNjE2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.eflbJEUqW6Pg6vIVcD_p0RssFTq6DcJ8QR3FxF0hIRCG0uCHMLOddvhfsr1h3O6Zmbv5RmWOAUqcrmFCzgYEsg"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Update_user_identity(
     { "id": "4d9a82e2-bea4-4c24-aec0-4da57aeb8311", "identity": "fkatwigs@email.com" },
     "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Update_user_tags(
     { "id": "886b4266-77d1-4258-abae-2931fb4f16de", "tags": ["holy", "terrain"] },
     "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Update_user_owner(
     { "id": "886b4266-77d1-4258-abae-2931fb4f16de", "owner": "hozier@email.com" },
     "JhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Disable(
     { "id": "c565052d-3b0d-43b9-8c3e-275c087d875a" },
     "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzkxNDMsImlhdCI6MTY5NDUyNTE0MywiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJhY2Nlc3MifQ.OBVLSkvCfMXW9LAjWLDZ9bznMqsqr9LEvvBckgkXQ6MZrZm3KHrwejL7tG-UNlk7lzsIsPZlZyVrSNuoKBVX2w"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Enable(
-    {"id":"c565052d-3b0d-43b9-8c3e-275c087d875a"},
+    { "id": "c565052d-3b0d-43b9-8c3e-275c087d875a" },
     "JhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzkxNDMsImlhdCI6MTY5NDUyNTE0MywiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJhY2Nlc3MifQ.OBVLSkvCfMXW9LAjWLDZ9bznMqsqr9LEvvBckgkXQ6MZrZm3KHrwejL7tG-UNlk7lzsIsPZlZyVrSNuoKBVX2w"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Get_all(
-    {"offset": 0, "limit": 10},
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+    { "offset": 0, "limit": 10 },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0NjAxNjcsImlhdCI6MTY5NTQwNjE2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.eflbJEUqW6Pg6vIVcD_p0RssFTq6DcJ8QR3FxF0hIRCG0uCHMLOddvhfsr1h3O6Zmbv5RmWOAUqcrmFCzgYEsg"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
-
+*/
 mySdk.users.Update_user_password(
     "12345678", "98765432",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzkyMjUsImlhdCI6MTY5NDUyNTIyNSwiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJhY2Nlc3MifQ.7Qqm0v6_pAd8VG2PomugKeS2YWqUjox2u6hkCQdX3GUA06cgQSWVBUKJ8qD6iApKZe0J3oq3j8J26mKsAwiK9w"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU2Nzg4MDksImlhdCI6MTY5NTYyNDgwOSwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.bcvDB0pxR5fdQ15FCyiZWMswulaOn7g6yV_NfYAvP8pOGyjQBxl3mIUqQgpjSftrSa32h7Jw1V0VUlUOQiYGyw"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
-
+/*
 mySdk.users.Memberships(
     "886b4266-77d1-4258-abae-2931fb4f16de",
-    {"offset": 0, "limit": 5},
+    { "offset": 0, "limit": 5 },
     "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 
 mySdk.users.Authorise_user(
@@ -192,11 +193,11 @@ mySdk.users.Authorise_user(
     "group",
     ""
 )
-    .then(result => {
-        console.log(result);
+    .then(response => {
+        console.log(response);
     })
     .catch(error => {
-        console.error(error);
+        console.error(error.response.data);
     });
 */
 
@@ -306,7 +307,7 @@ mySdk.groups.Disable(
     .catch(error => {
         console.error(error);
     });
- 
+
 mySdk.groups.Members(
     "3ba0da3f-05ca-4093-ab0d-cdb177c3670c",
     { "offset": 0, "limit": 5 },
