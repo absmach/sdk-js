@@ -1,5 +1,7 @@
-import fetch from "node-fetch";
-import Errors from "./errors.js";
+// import fetch from "node-fetch";
+// import Errors from "./errors.js";
+
+const axios = require("axios");
 
 class Certs {
     constructor(certs_url) {
@@ -7,110 +9,94 @@ class Certs {
         this.content_type = "application/json";
         this.certsEndpoint = "certs";
     }
-    certError = new Errors;
 
     Issue(thing_id , valid, token) {
-        const url = `${this.certs_url}/${this.certsEndpoint}`;
+        
         console.log(url);
         const payload= {"thing_id": thing_id, "ttl": valid};
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.certs_url}/${this.certsEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(payload),
+            data: JSON.stringify(payload),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    console.log
-                    // return Errors.HandleError(Errors.g)
-                    return this.certError.HandleError(this.certError.errors, response.status); 
-                }
-                return response.json(); // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
-            });
+                return error.response.data;
+            })
     }
 
     View_by_thing(thing_id, token) {
-        const url = `${this.certs_url}/serials/${thing_id}`;
+        
         console.log(url);
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.certs_url}/serials/${thing_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    console.log
-                    // return Errors.HandleError(Errors.g)
-                    return this.certError.HandleError(this.certError.errors, response.status); 
-                }
-                return response.json(); // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
-            });
+                return error.response.data;
+            })
     }
 
     View_by_serial(cert_id, token) {
-        const url = `${this.certs_url}/${this.certsEndpoint}/${cert_id}`;
+        
         console.log(url);
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.certs_url}/${this.certsEndpoint}/${cert_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    console.log
-                    // return Errors.HandleError(Errors.g)
-                    return this.certError.HandleError(this.certError.errors, response.status); 
-                }
-                return response.json(); // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
-            });
+                return error.response.data;
+            })
     }
 
     Revoke(thing_id, token) {
-        const url = `${this.certs_url}/${this.certsEndpoint}/${thing_id}`;
+        
         console.log(url);
         const options = {
-            method: "DELETE",
+            method: "delete",
+            maxBodyLength: Infinity,
+            url: `${this.certs_url}/${this.certsEndpoint}/${thing_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    console.log
-                    // return Errors.HandleError(Errors.g)
-                    return this.certError.HandleError(this.certError.errors, response.status); 
-                }
-                return "DELETED"; // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
-            });
+                return error.response.data;
+            })
     }
 
 }
 
-export default Certs;
+// export default Certs;
+module.exports = Certs;

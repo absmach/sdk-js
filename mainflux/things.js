@@ -1,4 +1,5 @@
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
+const axios = require("axios");
 
 class Things {
   constructor(things_url) {
@@ -8,363 +9,304 @@ class Things {
   }
 
   Create(thing, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}`;
+    
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(thing),
+      data: JSON.stringify(thing),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json(); // Parse the response JSON
-      })
-      .then((result) => {
-        console.log('Response data:', result);
-        // Handle the response data here
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-        // Handle errors here
-      });
+        return error.response.data;
+      })
   }
 
   Create_bulk(things, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/bulk`;
+    
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/bulk`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(things),
+      data: JSON.stringify(things),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Get(thing_id, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}`;
+    
     const options = {
-      method: "GET",
+      method: "get",
+      maxBodyLength: Infinity, 
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Get_by_channel(thing_id, query_params, token) {
     //Retrieves list of channels connected to specified thing with pagination metadata.
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`;
+    
     const options = {
-      method: "GET",
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
       params: query_params,
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Get_all(query_params, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`;
+    
     const options = {
-      method: "GET",
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
       params: query_params,
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Disable(thing_id, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`;
+    
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Update(thing_id, thing, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}`;
+    
     const options = {
-      method: "PATCH",
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(thing),
+      data: JSON.stringify(thing),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Update_thing_secret(thing_id, thing, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`;
+    
     const options = {
-      method: "PATCH",
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(thing),
+      data: JSON.stringify(thing),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Update_thing_tags(thing_id, thing, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`;
+    
     const options = {
-      method: "PATCH",
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(thing),
+      data: JSON.stringify(thing),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Update_thing_owner(thing_id, thing, token) {
-    const url = `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`;
+    
     const options = {
-      method: "PATCH",
+      method: "patch",
+      maxBodyLength: Infinity,
+      ul: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(thing),
+      data: JSON.stringify(thing),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Connect(thing_id, channel_id, action, token) {
-    const url = `${this.things_url}/policies`;
+    
     const payload = { "subject": thing_id, "object": channel_id, "action": action }
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/policies`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      data: JSON.stringify(payload),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Connects(thing_ids, channel_ids, actions, token) {
-    const url = `${this.things_url}/connect`;
+    
     const payload = { "subjects": thing_ids, "objects": channel_ids, "actions": actions }
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/connect`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      data: JSON.stringify(payload),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Disconnect(thing_id, channel_id, token) {
-    const url = `${this.things_url}/disconnect`;
+    
     const payload = { "subjects": thing_id, "objects": channel_id }
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/disconnect`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      data: JSON.stringify(payload),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Identify_thing(thing_key) {
     //Validates thing's key and returns it's ID if key is valid
-    const url = `${this.things_url}/identify`;
+    
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/identify`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Thing ${thing_key}`,
       },
     };
-    // console.log(options);
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
   Authorise_thing(thing_id, channel_id, action, entity_type, token) {
     //Authorises thing
-    const url = `${this.things_url}/channels/object/access`;
+    
     const access_request = {
       "subject": thing_id,
       "object": channel_id,
@@ -372,28 +314,25 @@ class Things {
       "entity_type": entity_type
     }
     const options = {
-      method: "POST",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.things_url}/channels/object/access`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(access_request),
+      data: JSON.stringify(access_request),
     };
-    fetch(url, options)
+    return axios.request(options)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((result) => {
-        console.log('Response data:', result);
+        return response.data;
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+        return error.response.data;
+      })
   }
 
 }
 
-export default Things;
+// export default Things;
+module.exports = Things;

@@ -20,7 +20,6 @@ class Users {
             },
             data: JSON.stringify(user),
         };
-
         return axios.request(options)
             .then((response) => {
                 return response.data;

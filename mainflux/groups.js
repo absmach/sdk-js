@@ -1,5 +1,6 @@
-import fetch from "node-fetch";
-import Errors from "./errors.js";
+// import fetch from "node-fetch";
+// import Errors from "./errors.js";
+const axios = require("axios");
 
 class Groups {
     constructor(groups_url) {
@@ -7,241 +8,219 @@ class Groups {
         this.content_type = "application/json";
         this.groupsEndpoint = "groups";
     }
-    groupError = new Errors;
+    // groupError = new Errors;
 
     Create(group, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}`;
-        console.log(url);
+
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(group),
+            data: JSON.stringify(group),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    console.log
-                    // return Errors.HandleError(Errors.g)
-                    return this.groupError.HandleError(this.groupError.errors, response.status); 
-                }
-                return response.json(); // Parse the response JSON
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-                // Handle errors here
+                return error.response.data;
             });
     }
 
     Get(group_id, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}`;
+        
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Get_all(query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`;
+        
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Update(group, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}`;
+        
         const options = {
-            method: "PUT",
+            method: "put",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(group),
+            data: JSON.stringify(group),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Children(group_id, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`;
-        console.log(url);
+        
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Parents(group, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
-        console.log(url);
+         
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Assign(group_id, member_id, member_type, token) {
-        const url = `${this.groups_url}/policies`;
+        
         const payload = { "object": group_id, "subject": member_id, "actions": member_type };
-        console.log(url);
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/policies`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(payload),
+            data: JSON.stringify(payload),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                }
-                return "OK";
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Unassign(members_ids, group_id, token) {
-        const url = `${this.groups_url}/policies/${members_ids}/${group_id}`;
+        
         const payload = { "object": group_id, "subject": members_ids };
-        console.log(url);
         const options = {
-            method: "DELETE",
+            method: "delete",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/policies/${members_ids}/${group_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(payload),
+            data: JSON.stringify(payload),
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                    // throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return "OK";
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Disable(group_id, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`;
+        
         const options = {
-            method: "POST",
+            method: "post",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
     Members(group_id, query_params, token) {
-        const url = `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`;
-        console.log(url);
+        
         const options = {
-            method: "GET",
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
             params: query_params,
         };
-        return fetch(url, options)
+        return axios.request(options)
             .then((response) => {
-                if (!response.ok) {
-                    return this.groupError.HandleError(this.groupError.errors, response.status);
-                }
-                return response.json();
+                return response.data;
             })
             .catch((error) => {
-                console.error('Fetch error:', error);
-            });
+                return error.response.data;
+            })
     }
 
 }
 
-export default Groups;
+// export default Groups;
+module.exports = Groups;

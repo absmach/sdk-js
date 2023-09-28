@@ -1,20 +1,27 @@
 const Users = require("./users");
+const Things = require("./things");
+const Groups = require("./groups");
+const Channels = require("./channels");
+const Certs = require("./certs");
+const Bootstrap = require("./bootstrap");
 
 const defaultUrl = "http://localhost";
 
 class SDK {
   constructor({
     usersUrl = defaultUrl,
-    // thingsUrl = defaultUrl,
-    // groupsUrl = defaultUrl,
-    // channelsUrl = defaultUrl,
-    // certsUrl = defaultUrl,
+    thingsUrl = defaultUrl,
+    groupsUrl = defaultUrl,
+    channelsUrl = defaultUrl,
+    certsUrl = defaultUrl,
+    bootstrapsUrl = defaultUrl,
   } = {}) {
     this.users = new Users(usersUrl);
-    // this.things = new Things(thingsUrl);
-    // this.groups = new Groups(groupsUrl);
-    // this.channels = new Channels(channelsUrl);
-    // this.certs = new Certs(certsUrl);
+    this.things = new Things(thingsUrl);
+    this.groups = new Groups(groupsUrl);
+    this.channels = new Channels(channelsUrl);
+    this.certs = new Certs(certsUrl);
+    this.bootstraps = new Bootstrap(bootstrapsUrl);
   }
 }
 

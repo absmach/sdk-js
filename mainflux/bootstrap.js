@@ -1,150 +1,82 @@
-// import fetch from "node-fetch";
-const axios = require("axios");
+const axios = require('axios');
 
-class Channels {
-    constructor(channels_url) {
-        this.channels_url = channels_url;
+class  Bootstrap{
+    constructor(bootstraps_url){
+        this.bootstraps_url = bootstraps_url;
         this.content_type = "application/json";
-        this.channelsEndpoint = "channels";
+        this.bootstrapsEndpoint = "configs";
     }
 
-    Create(channel, token) {
-
-        console.log(url);
+    Create(config, token){
         const options = {
             method: "post",
             maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}`,
+            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: JSON.stringify(config),
         };
         return axios.request(options)
-            .then((response) => {
-                return response.data;
+            .then((_response) => {
+                return "Configuration added";
             })
             .catch((error) => {
                 return error.response.data;
             })
     }
 
-    Create_bulk(channels, token) {
-
-        const options = {
-            method: "post",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/bulk`,
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            data: JSON.stringify(channels),
-        };
-        return axios.request(options)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data;
-            })
-    }
-
-    Get(channel_id, token) {
-
-        const options = {
-            method: "get",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        return axios.request(options)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data;
-            })
-    }
-
-    Get_by_thing(channel_id, query_params, token) {
-        //Retrieves list of things connected to specified channel with pagination metadata.
-
-        const options = {
-            method: "get",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`,
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            params: query_params,
-        };
-        return axios.request(options)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data;
-            })
-    }
-
-    Get_all(query_params, token) {
-
-        const options = {
-            method: "get",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`,
-            headers: {
-                "Content-Type": this.content_type,
-                Authorization: `Bearer ${token}`,
-            },
-            params: query_params,
-        };
-        return axios.request(options)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data;
-            })
-    }
-
-    Update(channel, token) {
-
+    Whitelist(config, token){
         const options = {
             method: "put",
             maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel["id"]}`,
+            url: `${this.bootstraps_url}/things/state/${config["thing_id"]}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: JSON.stringify(config),
         };
         return axios.request(options)
-            .then((response) => {
-                return response.data;
+            .then((_response) => {
+                return "Configuration updated";
             })
             .catch((error) => {
                 return error.response.data;
             })
     }
 
-    Disable(channel, token) {
-
+    Update(config, token){
         const options = {
-            method: "post",
+            method: "put",
             maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel["id"]}/disable`,
+            url: `${this.bootstraps_url}/configs/${config["thing_id"]}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
+            data: JSON.stringify(config),
+        };
+        return axios.request(options)
+            .then((_response) => {
+                return "Configuration updated";
+            })
+            .catch((error) => {
+                return error.response.data;
+            })
+    }
+
+    View(config, token){
+        const options = {
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${thing_id}`,
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            data: JSON.stringify(config),
         };
         return axios.request(options)
             .then((response) => {
@@ -155,25 +87,70 @@ class Channels {
             })
     }
 
-    // Identify_thing(thing_key) {
-    //     const url = `${this.channels_url}/identify`;
-    //     const options = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": this.content_type,
-    //             Authorization: `Bearer ${thing_key}`,
-    //         },
-    //     };
-    //     return axios.request(options)
-    // .then((response) => {
-    //     return response.data;
-    // })
-    // .catch((error) => {
-    //     return error.response.data;
-    // })
-    // }
+    UpdateCerts(config_id,client_cert,client_key, ca, token){
+        const payload = {
+            "client_cert": client_cert,
+            "client_key": client_key,
+            "ca_cert": ca,
+        }
+        const options = {
+            method: "patch",
+            maxBodyLength: Infinity,
+            url: `${this.bootstraps_url}/${this.bootstrapsEndpoint}/${config_id}`,
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            data: JSON.stringify(payload),
+        };
+        return axios.request(options)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error.response.data;
+            })
+    }
+
+    Remove(config_id, token){
+        const options = {
+            method: "delete",
+            maxBodyLength: Infinity,
+            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${config_id}`,
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Bearer ${token}`,
+            },
+            data: JSON.stringify(config),
+        };
+        return axios.request(options)
+            .then((response) => {
+                return "Configuration removed";
+            })
+            .catch((error) => {
+                return error.response.data;
+            })
+    }
+
+    Bootstrap(external_id, external_key){
+        const options = {
+            method: "get",
+            maxBodyLength: Infinity,
+            url: `${this.bootstraps_url}/things/bootstrap/${external_id}`,
+            headers: {
+                "Content-Type": this.content_type,
+                Authorization: `Thing ${external_key}`,
+            },
+        };
+        return axios.request(options)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                return error.response.data;
+            })
+    }
 
 }
 
-// export default Channels;
-module.exports = Channels;
+module.exports = Bootstrap;
