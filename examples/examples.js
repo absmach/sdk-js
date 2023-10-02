@@ -196,8 +196,8 @@ mySdk.things.Authorise_thing(
 //Users.js
 /*
 mySdk.users.Create(
-    { "credentials": { "identity": "boniver@email.com", "secret": "12345678" } },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTUyMjM5MTAsImlhdCI6MTY5NTE2OTkxMCwiaWRlbnRpdHkiOiJlbG9xdWVudF9nYW5ndWx5QGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImQyZmQ4OWIyLWY5OGQtNDViZC1hNDY3LTZhZjYyMjVjY2I2OCIsInR5cGUiOiJhY2Nlc3MifQ.NvmdagoW9F6dNaeBZGuDXt7qD0Jr7IdGGUN60HHN0hV5QfNC2iWhSQ7o9y44Ehy_FeRDInTq5w3txnbUHDE6tQ"
+    { "credentials": { "identity": "<user_email>", "secret": "<user_secret>" } },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -207,8 +207,8 @@ mySdk.users.Create(
     });
 
 mySdk.users.Get(
-    "ec0879b4-48ac-4849-9fe3-b4b1e285cc88",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0MzU0ODYsImlhdCI6MTY5NTM4MTQ4NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.5NJtCK_0kagO9ZeX3dhIMvy9yBnMkenXH9PrSGQ7Ske5K6Hzd6eBagsY8iKtZDaEBd28xUAh5sXmL_b8awlk8Q"
+    "<user_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -218,7 +218,7 @@ mySdk.users.Get(
     });
 
 mySdk.users.Login(
-    { "identity": "boniver@email.com", "secret": "12345678" }
+    { "identity": "<user_id>", "secret": "<user_secret>" }
 )
     .then(response => {
         console.log(response);
@@ -227,9 +227,9 @@ mySdk.users.Login(
         console.error(error);
     });
 
-mySdk.users.Refresh_token(
-    "c52d-3b0d-43b9-8c3e-275c087d875af",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0Njc4ODYsImlhdCI6MTY5NTM4MTQ4NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJyZWZyZXNoIn0.BvL1-aLlA9K1aWaCVhC5DRkkf4RA4PUuwo3X4sdGipCx-V2ZLjyYtezy-glPF9LLwUBXL_c4134izH56dqO0lg"
+mySdk.users.RefreshToken(
+    "<user_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -239,8 +239,8 @@ mySdk.users.Refresh_token(
     });
 
 mySdk.users.Update(
-    { "id": "ec0879b4-48ac-4849-9fe3-b4b1e285cc88", "name": "simone" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0NjAxNjcsImlhdCI6MTY5NTQwNjE2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.eflbJEUqW6Pg6vIVcD_p0RssFTq6DcJ8QR3FxF0hIRCG0uCHMLOddvhfsr1h3O6Zmbv5RmWOAUqcrmFCzgYEsg"
+    { "id": "<user_id>", "name": "<user_name>" },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -249,9 +249,9 @@ mySdk.users.Update(
         console.error(error.response.data);
     });
 
-mySdk.users.Update_user_identity(
-    { "id": "4d9a82e2-bea4-4c24-aec0-4da57aeb8311", "identity": "fkatwigs@email.com" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+mySdk.users.UpdateUserIdentity(
+    { "id": "<user_id>", "identity": "<user_identity>" },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -260,9 +260,9 @@ mySdk.users.Update_user_identity(
         console.error(error.response.data);
     });
 
-mySdk.users.Update_user_tags(
-    { "id": "886b4266-77d1-4258-abae-2931fb4f16de", "tags": ["holy", "terrain"] },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+mySdk.users.UpdateUserTags(
+    { "id": "<user_id>", "tags": ["foo", "bar"] },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -271,9 +271,9 @@ mySdk.users.Update_user_tags(
         console.error(error.response.data);
     });
 
-mySdk.users.Update_user_owner(
-    { "id": "886b4266-77d1-4258-abae-2931fb4f16de", "owner": "hozier@email.com" },
-    "JhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+mySdk.users.UpdateUserOwner(
+    { "id": "<user_id>", "owner": "<owner_identity> },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -283,8 +283,8 @@ mySdk.users.Update_user_owner(
     });
 
 mySdk.users.Disable(
-    { "id": "c565052d-3b0d-43b9-8c3e-275c087d875a" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzkxNDMsImlhdCI6MTY5NDUyNTE0MywiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJhY2Nlc3MifQ.OBVLSkvCfMXW9LAjWLDZ9bznMqsqr9LEvvBckgkXQ6MZrZm3KHrwejL7tG-UNlk7lzsIsPZlZyVrSNuoKBVX2w"
+    { "id": "<user_id>" },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -294,8 +294,8 @@ mySdk.users.Disable(
     });
 
 mySdk.users.Enable(
-    { "id": "c565052d-3b0d-43b9-8c3e-275c087d875a" },
-    "JhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzkxNDMsImlhdCI6MTY5NDUyNTE0MywiaWRlbnRpdHkiOiJzaW5hdHJhQGVtYWlsLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImM1NjUwNTJkLTNiMGQtNDNiOS04YzNlLTI3NWMwODdkODc1YSIsInR5cGUiOiJhY2Nlc3MifQ.OBVLSkvCfMXW9LAjWLDZ9bznMqsqr9LEvvBckgkXQ6MZrZm3KHrwejL7tG-UNlk7lzsIsPZlZyVrSNuoKBVX2w"
+    { "id": "<user_id>" },
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -304,9 +304,9 @@ mySdk.users.Enable(
         console.error(error.response.data);
     });
 
-mySdk.users.Get_all(
+mySdk.users.GetAll(
     { "offset": 0, "limit": 10 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -315,9 +315,9 @@ mySdk.users.Get_all(
         console.error(error.response.data);
     });
 
-mySdk.users.Update_user_password(
-    "12345678", "98765432",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU2Nzg4MDksImlhdCI6MTY5NTYyNDgwOSwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.bcvDB0pxR5fdQ15FCyiZWMswulaOn7g6yV_NfYAvP8pOGyjQBxl3mIUqQgpjSftrSa32h7Jw1V0VUlUOQiYGyw"
+mySdk.users.UpdateUserPassword(
+    "<old_secret>", "<new_secret>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -327,9 +327,9 @@ mySdk.users.Update_user_password(
     });
 
 mySdk.users.Memberships(
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    { "offset": 0, "limit": 5 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NzE1OTYsImlhdCI6MTY5NDUxNzU5NiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.FiW0pphIs2sK9ilLEZU-oAsmesdOeHygT9mtYP7yhjAGFBackNhGBoouyvik623f2PM_YFKkM5sVPyPIbdfLlQ"
+    "<member_id>",
+    {query_params},
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -338,12 +338,12 @@ mySdk.users.Memberships(
         console.error(error.response.data);
     });
 
-mySdk.users.Authorise_user(
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    "3ba0da3f-05ca-4093-ab0d-cdb177c3670c",
-    "m_read",
-    "group",
-    ""
+mySdk.users.AuthoriseUser(
+    "<user_id>",
+    "<group_id>",
+    "<action>",
+    "<entity_type>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -356,8 +356,8 @@ mySdk.users.Authorise_user(
 //Groups.js
 /*
 mySdk.groups.Create(
-    { "name": "hozier", "parent_id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+    { "name": "khaos", "parent_id":"35f5c3ab-f36a-4fe2-aa4f-7cfdfc70a0a2" },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -367,8 +367,8 @@ mySdk.groups.Create(
     });
 
 mySdk.groups.Get(
-    "36c548ab-2e87-40c6-ad3e-640a8191366f",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+    "e1df30a1-41b7-44fd-8f79-d8496cea12d5",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -377,9 +377,9 @@ mySdk.groups.Get(
         console.error(error.response.data);
     });
 
-mySdk.groups.Get_all(
-    { "offset": 0, "limit": 2 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+mySdk.groups.GetAll(
+    { "offset": 0, "limit": 10 },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -400,9 +400,9 @@ mySdk.groups.Update(
     });
 
 mySdk.groups.Children(
-    "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
+    "35f5c3ab-f36a-4fe2-aa4f-7cfdfc70a0a2",
     { "offset": 0, "limit": 2, "tree": true },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -412,9 +412,9 @@ mySdk.groups.Children(
     });
 
 mySdk.groups.Parents(
-    { "id": "410f863-06cc-4064-b021-59acaf7570e9" },
+    { "id": "fff2b6c1-3087-47c8-87af-7c2836b5b8a5" },
     { "offset": 0, "limit": 5 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2NDI2MjIsImlhdCI6MTY5NDU4ODYyMiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.0KWMwABznvZ8Lc_gKINKst4Uqmia63iXsMvStvQqYhnYt9E-HIIc7weODdOsh11iXe7NdXqMjIVNAykSZiy3Dg"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -424,10 +424,10 @@ mySdk.groups.Parents(
     });
 
 mySdk.groups.Assign(
-    "8a3dbaa3-05b5-4358-8d77-3e5b7c5aee2b",
-    "d8f1e354-2841-406c-b438-b151899f30cd",
+    "35f5c3ab-f36a-4fe2-aa4f-7cfdfc70a0a2",
+    "98d22baf-7c48-4c4b-bc37-0468e5faf580",
     ["c_list", "g_add"],
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2ODQ0NjMsImlhdCI6MTY5NDYzMDQ2MywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.GBUkKzowEcGum01nn0AL9PkoiLhjMX0FJC4oOTdpZ84KMlQro432P3Ras5ARNAaLOzOf6TGJNIuKAuZtCJezhg"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -437,9 +437,9 @@ mySdk.groups.Assign(
     });
 
 mySdk.groups.Unassign(
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    "d8f1e354-2841-406c-b438-b151899f30cd",
-    "JhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2ODQ0NjMsImlhdCI6MTY5NDYzMDQ2MywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.GBUkKzowEcGum01nn0AL9PkoiLhjMX0FJC4oOTdpZ84KMlQro432P3Ras5ARNAaLOzOf6TGJNIuKAuZtCJezhg"
+    "98d22baf-7c48-4c4b-bc37-0468e5faf580",
+    "35f5c3ab-f36a-4fe2-aa4f-7cfdfc70a0a2",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -449,20 +449,8 @@ mySdk.groups.Unassign(
     });
 
 mySdk.groups.Disable(
-    "f20e0b0e-b05e-401e-ac53-59b99eea3519",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQyMTkyMDgsImlhdCI6MTY5NDE2NTIwOCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.Rk5Jc_13I3nJVsOtZodmDNVtxDgeE_TKK4CH8EXqDNj5BOkcHljO574kU7p-RNe_y6etT_0trTeqMHXrCj0cCg"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
-mySdk.groups.Members(
-    "3ba0da3f-05ca-4093-ab0d-cdb177c3670c",
-    { "offset": 0, "limit": 5 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ2ODQ0NjMsImlhdCI6MTY5NDYzMDQ2MywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.GBUkKzowEcGum01nn0AL9PkoiLhjMX0FJC4oOTdpZ84KMlQro432P3Ras5ARNAaLOzOf6TGJNIuKAuZtCJezhg"
+    "fff2b6c1-3087-47c8-87af-7c2836b5b8a5",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
 )
     .then(response => {
         console.log(response);
@@ -471,6 +459,18 @@ mySdk.groups.Members(
         console.error(error.response.data);
     });
 */
+mySdk.groups.Members(
+    "e1df30a1-41b7-44fd-8f79-d8496cea12d5",
+    { "offset": 0, "limit": 1 },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYzMDUzMDYsImlhdCI6MTY5NjI1MTMwNiwiaWRlbnRpdHkiOiJ2aWdpbGFudF9zd2FydHpAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiOThkMjJiYWYtN2M0OC00YzRiLWJjMzctMDQ2OGU1ZmFmNTgwIiwidHlwZSI6ImFjY2VzcyJ9.o2Z_2VYt4i3CB_XKxdLjy-0U0tKwWaC2Gn_k2ZyF0FXVw-8bE5eYZyIx9u0768EZmLF1DjVnOHeWioTfCDf0yw"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
+
 
 //Channels.js
 /*

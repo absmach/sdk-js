@@ -1,8 +1,17 @@
-// import fetch from "node-fetch";
 // import Errors from "./errors.js";
 const axios = require("axios");
 
 class Groups {
+    //Groups API client.
+    /**
+     * @class Groups - 
+     * Groups API client is used for managing groups. It is used for
+     * creating, updating, deleting, and retrieving groups.
+     * @param {string} groups_url - The URL of the Groups service.
+     * @param {string} content_type - The content type of the request.
+     * @param {string} groupsEndpoint - The endpoint of the Groups service.
+     * @returns {Groups} - Returns a Groups object.
+     */
     constructor(groups_url) {
         this.groups_url = groups_url;
         this.content_type = "application/json";
@@ -11,7 +20,25 @@ class Groups {
     // groupError = new Errors;
 
     Create(group, token) {
-
+        // Create a new group.
+        /**
+         * @method Create - Creates a new group once the user is authenticated.
+         * and a valid token is provided. The group's parent or child status in the 
+         * heirarchy can also be established.
+         * @param {object} group - The group object to be created.
+         * @param {string} token - The user's token.
+         * @example
+         * const group = {
+         * "name": "groupName",
+         * "description": "long group description",
+         * "parent_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+         * "metadata": {
+         *   "domain": "example.com"
+         * },
+         * "status": "enabled",
+         * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+         * }
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -32,7 +59,16 @@ class Groups {
     }
 
     Get(group_id, token) {
-        
+        //Get a group.
+        /**
+         * @method Get - Provide a group's information once given the group ID and a valid token.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @returns {object} - Returns a group object.
+         * @example
+         * const group_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879" 
+         * 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -51,8 +87,20 @@ class Groups {
             })
     }
 
-    Get_all(query_params, token) {
-        
+    GetAll(query_params, token) {
+        //Get all groups.
+        /**
+         * @method Get_all - Provides a list of all the groups in the database once given a valid token.
+         * @param {string} token - The user's access token.
+         * @param {Object} query_params - Query parameters.
+         * @returns {object} - Returns a list of all the groups in the database.
+         * @example
+         * const query_params = {
+         * "offset": 0,
+         * "limit": 10
+         * }
+         * 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -61,7 +109,6 @@ class Groups {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -73,7 +120,20 @@ class Groups {
     }
 
     Update(group, token) {
-        
+        //Updates a group's information such a name and metadata.
+        /**
+         * @method Update - Updates a group's information such a name and metadata when given a
+         * valid token and group ID.
+         * @param {object} group - The group object to be updated.
+         * @param {string} token - The user's access token.
+         * @returns {object} - Returns the updated group object.
+         * @example
+         * const group = {
+         * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+         * "name": "groupName"
+         * }
+         * 
+         */
         const options = {
             method: "put",
             maxBodyLength: Infinity,
@@ -94,7 +154,15 @@ class Groups {
     }
 
     Children(group_id, query_params, token) {
-        
+        //Get a group's children.
+        /**
+         * @method Children - Provides a list of a groups' children.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @param {object} query_params - The query parameters such as offset and limit.
+         * @returns {object} - Returns a list of a group's children.
+         * 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -103,7 +171,6 @@ class Groups {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -115,7 +182,16 @@ class Groups {
     }
 
     Parents(group, query_params, token) {
-         
+        //Get a group's parents.
+        /**
+         * @method Parents - Provides a list of a groups' parents when provided with 
+         * a valid token and group ID.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @param {object} query_params - The query parameters such as offset and limit.
+         * @returns {object} - Returns a list of a group's parents. 
+         * 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -124,7 +200,6 @@ class Groups {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -136,7 +211,18 @@ class Groups {
     }
 
     Assign(group_id, member_id, member_type, token) {
-        
+        //Assign a member to a group.
+        /**
+         * @method Assign -Assigns a user to a group when given a valid token, group ID, 
+         * member ID, and member type. This allows the user to perform
+         * some action on the group.
+         * @param {string} group_id - The group's ID.
+         * @param {string} member_id - The member's ID.
+         * @param {Array} member_type - The member's actions that they can perform over the group.
+         * @param {string} token - The user's access token.
+         * @returns {string} - "Policy created".
+         * 
+         */
         const payload = { "object": group_id, "subject": member_id, "actions": member_type };
         const options = {
             method: "post",
@@ -149,8 +235,8 @@ class Groups {
             data: JSON.stringify(payload),
         };
         return axios.request(options)
-            .then((response) => {
-                return response.data;
+            .then((_response) => {
+                return "Policy created";
             })
             .catch((error) => {
                 return error.response.data;
@@ -158,7 +244,15 @@ class Groups {
     }
 
     Unassign(members_ids, group_id, token) {
-        
+        //Unassign a member from a group.
+        /**
+         * @method Unassign - Deletes a user's policy over a group through unassigning them. 
+         * Requires a valid token, ID's of members of the group and the group ID.
+         * @param {Array} members_ids - The members' IDs.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @returns {string} - "Policy deleted"
+         */
         const payload = { "object": group_id, "subject": members_ids };
         const options = {
             method: "delete",
@@ -172,7 +266,7 @@ class Groups {
         };
         return axios.request(options)
             .then((response) => {
-                return response.data;
+                return "Policy deleted";
             })
             .catch((error) => {
                 return error.response.data;
@@ -180,7 +274,14 @@ class Groups {
     }
 
     Disable(group_id, token) {
-        
+        //Disable a group.
+        /**
+         * @method Disable - Deletes a group when given a valid token and group ID.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @returns {object} - Returns a group object with the status reading 'Disabled'.
+         * 
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -200,7 +301,15 @@ class Groups {
     }
 
     Members(group_id, query_params, token) {
-        
+        //Retrieves a list of the members of a group.
+        /**
+         * @method Members - Retrieves a list of the members of a group.
+         * @param {string} group_id - The group's ID.
+         * @param {string} token - The user's access token.
+         * @param {object} query_params - The query parameters such as offset and limit.
+         * @returns {list} - Returns a list of the members of a group.
+         * 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -209,7 +318,6 @@ class Groups {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -219,8 +327,6 @@ class Groups {
                 return error.response.data;
             })
     }
-
 }
 
-// export default Groups;
 module.exports = Groups;

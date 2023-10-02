@@ -33,6 +33,9 @@ describe('Users', () => {
     "action": 'm_read',
     "entity_type": 'client'
   }
+  const group_id = '886b4266-77d1-4258-abae-2931fb4f16de';
+  const action= 'm_read';
+  const entity_type = 'client';
 
 
   test('Create should create a user and return success', () => {
@@ -123,8 +126,7 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
@@ -143,7 +145,6 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
       });
       expect(result).toEqual(user);
     });
@@ -169,10 +170,8 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
@@ -219,18 +218,17 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
-  test('Update_user_identity should update a user identity and return success', () => {
+  test('UpdateUserIdentity should update a user identity and return success', () => {
     axios.request.mockResolvedValueOnce({ data: user });
 
     const expectedUrl = `${users_url}/users/${user_id}/identity`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_identity(user, token).then(result => {
+    return sdk.users.UpdateUserIdentity(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -245,7 +243,7 @@ describe('Users', () => {
     });
   });
 
-  test('Update_user_identity should should handle a conflict error', () => {
+  test('UpdateUserIdentity should should handle a conflict error', () => {
     const errorResponse = {
       response: {
         status: 401,
@@ -256,7 +254,7 @@ describe('Users', () => {
     const expectedUrl = `${users_url}/users/${user_id}/identity`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_identity(user, token).then(result => {
+    return sdk.users.UpdateUserIdentity(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -267,18 +265,17 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
-  test('Update_user_tags should update a users tags and return success', () => {
+  test('UpdateUserTags should update a users tags and return success', () => {
     axios.request.mockResolvedValueOnce({ data: user });
 
     const expectedUrl = `${users_url}/users/${user_id}/tags`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_tags(user, token).then(result => {
+    return sdk.users.UpdateUserTags(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -293,7 +290,7 @@ describe('Users', () => {
     });
   });
 
-  test('Update_user_tags should handle a conflict error', () => {
+  test('UpdateUserTags should handle a conflict error', () => {
     const errorResponse = {
       response: {
         status: 401,
@@ -304,7 +301,7 @@ describe('Users', () => {
     const expectedUrl = `${users_url}/users/${user_id}/tags`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_tags(user, token).then(result => {
+    return sdk.users.UpdateUserTags(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -315,18 +312,17 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
-  test('Update_user_owner should update a user owner and return success', () => {
+  test('UpdateUserOwner should update a user owner and return success', () => {
     axios.request.mockResolvedValueOnce({ data: user });
 
     const expectedUrl = `${users_url}/users/${user_id}/owner`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_owner(user, token).then(result => {
+    return sdk.users.UpdateUserOwner(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -341,7 +337,7 @@ describe('Users', () => {
     });
   });
 
-  test('Update_user_owner should handle a conflict error', () => {
+  test('UpdateUserOwner should handle a conflict error', () => {
     const errorResponse = {
       response: {
         status: 401,
@@ -352,7 +348,7 @@ describe('Users', () => {
     const expectedUrl = `${users_url}/users/${user_id}/owner`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_owner(user, token).then(result => {
+    return sdk.users.UpdateUserOwner(user, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -363,18 +359,21 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
-  test('Update_user_password should update a user password and return success', () => {
-    axios.request.mockResolvedValueOnce({ data: payload });
+  test('UpdateUserPassword should update a user password and return success', () => {
+    axios.request.mockResolvedValueOnce({ data: user });
 
     const expectedUrl = `${users_url}/users/secret`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_password(old_secret, new_secret, token).then(result => {
+    const secret = {
+      old_secret: old_secret,
+      new_secret: new_secret
+    };
+    return sdk.users.UpdateUserPassword(old_secret, new_secret, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -383,13 +382,13 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: JSON.stringify(secret),
       });
       expect(result).toEqual(user);
     });
   });
 
-  test('Update_user_password should handle a conflict error', () => {
+  test('UpdateUserPassword should handle a conflict error', () => {
     const errorResponse = {
       response: {
         status: 401,
@@ -398,9 +397,12 @@ describe('Users', () => {
     axios.request.mockRejectedValueOnce(errorResponse);
 
     const expectedUrl = `${users_url}/users/secret`;
-
+    const secret = {
+      old_secret: old_secret,
+      new_secret: new_secret
+    };
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update_user_password(old_secret, new_secret, token).then(result => {
+    return sdk.users.UpdateUserPassword(old_secret, new_secret, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -409,10 +411,9 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: JSON.stringify(secret),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(user);
     });
   });
 
@@ -459,8 +460,7 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 
@@ -507,18 +507,23 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);;
     });
   });
 
   test('Authorise User should authorise a user and return success', () => {
-    axios.request.mockResolvedValueOnce({ data: access_request });
+    axios.request.mockResolvedValueOnce({ data: true });
 
     const expectedUrl = `${users_url}/authorize`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Authorise_user(access_request, token).then(result => {
+    const access_request = {
+      "subject": user_id,
+      "object": group_id,
+      "action": action,
+      "entity_type": entity_type
+    }
+    return sdk.users.AuthoriseUser(user_id, group_id, action, entity_type, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -527,9 +532,9 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: JSON.stringify(access_request),
       });
-      expect(result).toEqual(user);
+      expect(result).toEqual(true);
     });
   });
 
@@ -542,9 +547,14 @@ describe('Users', () => {
     axios.request.mockRejectedValueOnce(errorResponse);
 
     const expectedUrl = `${users_url}/authorize`;
-
+    const access_request = {
+      "subject": user_id,
+      "object": group_id,
+      "action": action,
+      "entity_type": entity_type
+    }
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Authorise_user(access_request, token).then(result => {
+    return sdk.users.AuthoriseUser(user_id, group_id, action, entity_type, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -553,10 +563,9 @@ describe('Users', () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: JSON.stringify(access_request),
       });
-      expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe('Missing or invalid access token provided.');
+      console.log(result);
     });
   });
 

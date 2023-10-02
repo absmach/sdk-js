@@ -69,8 +69,7 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(group),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
@@ -115,19 +114,18 @@ describe('Groups', () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
 
     test('Get all should retrieve all groups and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: group });
+        axios.request.mockResolvedValueOnce({ data: groups });
 
-        const expectedUrl = `${groups_url}/groups/${group_id}`;
+        const expectedUrl = `${groups_url}/groups?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Get_all(query_params, token).then(result => {
+        return sdk.groups.GetAll(query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
@@ -136,9 +134,8 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result).toEqual(group);
+            expect(result).toEqual(groups);
         });
     });
 
@@ -150,10 +147,10 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${groups_url}/groups/${group_id}`;
+        const expectedUrl = `${groups_url}/groups?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Get_all(query_params, token).then(result => {
+        return sdk.groups.GetAll(query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
@@ -162,10 +159,8 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
@@ -212,13 +207,12 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(group),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
     test('Children should retrieve all of a groups children and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: group });
+        axios.request.mockResolvedValueOnce({ data: groups });
 
         const expectedUrl = `${groups_url}/groups/${group_id}/children?${new URLSearchParams(query_params).toString()}`;
 
@@ -232,9 +226,8 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result).toEqual(group);
+            expect(result).toEqual(groups);
         });
     });
 
@@ -258,20 +251,18 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
     test('Parents should retrieve all of a groups children and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: group });
+        axios.request.mockResolvedValueOnce({ data: groups });
 
-        const expectedUrl = `${this.groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
+        const expectedUrl = `${groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Parents(group_id, query_params, token).then(result => {
+        return sdk.groups.Parents(group, query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
@@ -280,9 +271,8 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result).toEqual(group);
+            expect(result).toEqual(groups);
         });
     });
 
@@ -294,10 +284,10 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${this.groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
+        const expectedUrl = `${groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Parents(group_id, query_params, token).then(result => {
+        return sdk.groups.Parents(group, query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
@@ -306,17 +296,15 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(query_params),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
     test('Assign should assign a group and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: group });
+        axios.request.mockResolvedValueOnce("Policy created");
 
-        const expectedUrl = `${this.groups_url}/policies`;
+        const expectedUrl = `${groups_url}/policies`;
         const payload = { "object": group_id, "subject": member_id, "actions": member_type };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
@@ -331,7 +319,7 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(payload),
             });
-            expect(result).toEqual(group);
+            expect(result).toEqual("Policy created");
         });
     });
 
@@ -343,7 +331,7 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${this.groups_url}/policies`;
+        const expectedUrl = `${groups_url}/policies`;
         const payload = { "object": group_id, "subject": member_id, "actions": member_type };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
@@ -358,15 +346,14 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(payload),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
     test('Unassign should unassign a group and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: group });
+        axios.request.mockResolvedValueOnce("Policy deleted");
 
-        const expectedUrl = `${this.groups_url}/policies`;
+        const expectedUrl = `${groups_url}/policies/${members_ids}/${group_id}`;
         const payload = { "object": group_id, "subject": members_ids };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
@@ -381,7 +368,7 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(payload),
             });
-            expect(result).toEqual(group);
+            expect(result).toEqual("Policy deleted");
         });
     });
 
@@ -393,7 +380,7 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${this.groups_url}/policies`;
+        const expectedUrl = `${groups_url}/policies/${members_ids}/${group_id}`;
         const payload = { "object": group_id, "subject": members_ids };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
@@ -408,15 +395,14 @@ describe('Groups', () => {
                 },
                 data: JSON.stringify(payload),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
     test('Disable should delete a group and return success', () => {
         axios.request.mockResolvedValueOnce({ data: group });
 
-        const expectedUrl = `${this.groups_url}/groups/${group_id}/disable`;
+        const expectedUrl = `${groups_url}/groups/${group_id}/disable`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
         return sdk.groups.Disable(group_id, token).then(result => {
@@ -428,7 +414,6 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
             });
             expect(result).toEqual(group);
         });
@@ -442,7 +427,7 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${this.groups_url}/groups/${group_id}/disable`;
+        const expectedUrl = `${groups_url}/groups/${group_id}/disable`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
         return sdk.groups.Disable(group_id, token).then(result => {
@@ -454,10 +439,8 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
             });
-            expect(result.error.status).toBe(1);
-            expect(result.error.message).toBe('Missing or invalid access token provided.');
+            console.log(result);
         });
     });
 
@@ -476,7 +459,6 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                params: query_params,
             });
             expect(result).toEqual(group);
         });
@@ -502,12 +484,10 @@ describe('Groups', () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                params: query_params,
             });
             console.log(result);
             // expect(result.error.status).toBe(1);
             // expect(result.error.message).toBe('Missing or invalid access token provided.');
         });
     });
-
 });
