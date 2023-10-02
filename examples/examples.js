@@ -9,8 +9,10 @@ const mySdk = new SDK({
     groupsUrl: defaultUrl + ":9002",
     thingsUrl: defaultUrl + ":9000",
     channelsUrl: defaultUrl + ":9000",
+    httpadapterUrl: defaultUrl,
+    readersUrl: defaultUrl + ":9011",
     certsUrl: defaultUrl + ":9019",
-    bootstrapsUrl: defaultUrl + ":9090",
+    bootstrapsUrl: defaultUrl + ":9013",
 });
 
 //Things.js examples.
@@ -304,7 +306,7 @@ mySdk.users.Enable(
 
 mySdk.users.Get_all(
     { "offset": 0, "limit": 10 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU0NjAxNjcsImlhdCI6MTY5NTQwNjE2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.eflbJEUqW6Pg6vIVcD_p0RssFTq6DcJ8QR3FxF0hIRCG0uCHMLOddvhfsr1h3O6Zmbv5RmWOAUqcrmFCzgYEsg"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
     .then(response => {
         console.log(response);
@@ -473,8 +475,8 @@ mySdk.groups.Members(
 //Channels.js
 /*
 mySdk.channels.Create(
-    { "name": "neptune" },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQzMDI2NjIsImlhdCI6MTY5NDI0ODY2MiwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.kM5XgANUj501xnwX-DdGaa8XaritRK7mYh6spQjx3zaFGJISQCeehRMAQf7-DQ_I1-QLaFa8OJSUVWhfhbdsYA"
+    { "name": "poseidon" },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
     .then(response => {
         console.log(response);
@@ -506,8 +508,8 @@ mySdk.channels.Create_bulk(
     });
 
 mySdk.channels.Get_all(
-    { "offset": 0, "limit": 2 },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ1NTk0NzcsImlhdCI6MTY5NDUwNTQ3NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6ImE3MjVlMjZkLWRjMWYtNDQ1Mi04MGRjLTQxZmM2NTRhYTM4YiIsInR5cGUiOiJhY2Nlc3MifQ.eW2a7i0N66bhPHGPpUc0Xd_ecPv8IA1RRIXpWp6VglKjLjgxMyCp969baz2UaXxyzpukcPDiFoW-bwxtrGM_iw"
+    { "offset": 0, "limit": 5},
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
     .then(response => {
         console.log(response);
@@ -616,7 +618,7 @@ mySdk.bootstrap.Create(
         "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
         "name": "percius"
     },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU5NTAyODgsImlhdCI6MTY5NTg5NjI4OCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.mwV_wPpu69RKi8T1BtSQLLHvgfjiRW7Jp2uvo3H4nUdxmCuxfzLBsv07V6XOVfoVrrEJ9rSLbWq6ZN6NOEZdKw"
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
     .then(response => {
         console.log(response);
@@ -624,11 +626,16 @@ mySdk.bootstrap.Create(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
 
 mySdk.bootstrap.Whitelist(
-    {},
-    ""
+    {
+        "external_id": "012",
+        "external_key": "345",
+        "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
+        "name": "perseus"
+
+    },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
     .then(response => {
         console.log(response);
@@ -638,10 +645,12 @@ mySdk.bootstrap.Whitelist(
     });
 
 mySdk.bootstrap.Update(
-    {},
-    ""
+    {
+        "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
+        "name": "perseus"
+    },
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
 )
-
     .then(response => {
         console.log(response);
     })
@@ -649,4 +658,76 @@ mySdk.bootstrap.Update(
         console.error(error.response.data);
     });
 
+mySdk.bootstrap.View(
+    "77cbb344-7c41-47f3-a53a-a3d435b67207",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
 
+mySdk.bootstrap.UpdateCerts(
+    "77cbb344-7c41-47f3-a53a-a3d435b67207",
+    "<client_cert>",
+    "<client_key>",
+    "<ca>",
+    "<token>"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
+
+mySdk.bootstrap.Remove(
+    "77cbb344-7c41-47f3-a53a-a3d435b67207",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+)
+    .then(response => {
+        console.log(response);
+    })   
+    .catch(error => {
+        console.error(error.response.data);
+    });
+
+mySdk.bootstrap.Bootstrap(
+    "456",
+    "789"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
+*/
+
+//Messages.js
+/*
+mySdk.messages.Send(
+    "2b86beba-83dd-4b39-8165-4dda4e6eb4ad",
+    '[{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]',
+    "fc68b31b-d7fd-4879-b3a7-0baf4580c5b1"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
+
+mySdk.messages.Read(
+    "2b86beba-83dd-4b39-8165-4dda4e6eb4ad",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+)
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.error(error.response.data);
+    });
+*/

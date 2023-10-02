@@ -9,8 +9,6 @@ class Channels {
     }
 
     Create(channel, token) {
-
-        console.log(url);
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -103,7 +101,6 @@ class Channels {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {

@@ -51,7 +51,7 @@ class  Bootstrap{
         const options = {
             method: "put",
             maxBodyLength: Infinity,
-            url: `${this.bootstraps_url}/configs/${config["thing_id"]}`,
+            url: `${this.bootstraps_url}/things/configs/${config["thing_id"]}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ class  Bootstrap{
             })
     }
 
-    View(config, token){
+    View(thing_id, token){
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -75,8 +75,7 @@ class  Bootstrap{
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
-            },
-            data: JSON.stringify(config),
+            }
         };
         return axios.request(options)
             .then((response) => {
@@ -96,7 +95,7 @@ class  Bootstrap{
         const options = {
             method: "patch",
             maxBodyLength: Infinity,
-            url: `${this.bootstraps_url}/${this.bootstrapsEndpoint}/${config_id}`,
+            url: `${this.bootstraps_url}/configs/certs/${config_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -121,10 +120,9 @@ class  Bootstrap{
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
         };
         return axios.request(options)
-            .then((response) => {
+            .then((_response) => {
                 return "Configuration removed";
             })
             .catch((error) => {
