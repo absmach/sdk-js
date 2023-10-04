@@ -15,6 +15,8 @@ describe('Bootstraps', () => {
     const token= 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9';
     const client_cert = "888888";
     const client_key = "999999";
+    const external_key = "012";
+    const external_id = "345";
     const ca = "777777";
     const config_id = thing_id;
 
@@ -24,7 +26,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/configs`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.Create(config, token).then(result => {
+        return sdk.bootstrap.Create(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'post',
                 maxBodyLength: Infinity,
@@ -45,7 +47,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/state/${config["thing_id"]}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.Whitelist(config, token).then(result => {
+        return sdk.bootstrap.Whitelist(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: Infinity,
@@ -66,7 +68,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/configs/${config["thing_id"]}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.Update(config, token).then(result => {
+        return sdk.bootstrap.Update(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: Infinity,
@@ -87,7 +89,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/configs/${thing_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.View(thing_id, token).then(result => {
+        return sdk.bootstrap.View(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'get',
                 maxBodyLength: Infinity,
@@ -111,7 +113,7 @@ describe('Bootstraps', () => {
             "ca_cert": ca,
         };
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.UpdateCerts(config_id,client_cert,client_key, ca, token).then(result => {
+        return sdk.bootstrap.UpdateCerts(config_id,client_cert,client_key, ca, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'patch',
                 maxBodyLength: Infinity,
@@ -132,7 +134,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/configs/${config_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.Remove(config_id, token).then(result => {
+        return sdk.bootstrap.Remove(config_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'delete',
                 maxBodyLength: Infinity,
@@ -152,7 +154,7 @@ describe('Bootstraps', () => {
         const expectedUrl = `${bootstraps_url}/things/bootstrap/${external_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstraps.Bootstrap(external_id, external_key).then(result => {
+        return sdk.bootstrap.Bootstrap(external_id, external_key).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'get',
                 maxBodyLength: Infinity,

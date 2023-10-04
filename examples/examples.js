@@ -558,9 +558,9 @@ mySdk.channels.GetByThing(
 //Certs.js
 /*
 mySdk.certs.Issue(
-    "d6c81ec9-5187-4335-af37-9fcf57af7c3b",
-    "10h",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ4MjYzNjcsImlhdCI6MTY5NDc3MjM2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.khxEjSpbYfKrBF-FKTuYg3MIffjQXQHzGCLmR2pImdgNKoouHvRLLAfQlIQbX49zE_UvEi6xupVR55u7kjLfuw"
+    "<thing_id>",
+    "<time_limit>",
+    "<token>"
 )
     .then(result => {
         console.log(result);
@@ -569,9 +569,9 @@ mySdk.certs.Issue(
         console.error(error);
     });
 
-mySdk.certs.View_by_thing(
-    "d6c81ec9-5187-4335-af37-9fcf57af7c3b",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ4MjYzNjcsImlhdCI6MTY5NDc3MjM2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.khxEjSpbYfKrBF-FKTuYg3MIffjQXQHzGCLmR2pImdgNKoouHvRLLAfQlIQbX49zE_UvEi6xupVR55u7kjLfuw"
+mySdk.certs.ViewByThing(
+    "<thing_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -580,9 +580,9 @@ mySdk.certs.View_by_thing(
         console.error(error.response.data);
     });
 
-mySdk.certs.View_by_serial(
-    "7c:12:d6:ea:c0:29:d3:5e:59:c8:4d:eb:3e:f9:f8:92:b2:26:46:3c",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ4MjYzNjcsImlhdCI6MTY5NDc3MjM2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.khxEjSpbYfKrBF-FKTuYg3MIffjQXQHzGCLmR2pImdgNKoouHvRLLAfQlIQbX49zE_UvEi6xupVR55u7kjLfuw"
+mySdk.certs.ViewBySerial(
+    "<cert_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -592,8 +592,8 @@ mySdk.certs.View_by_serial(
     });
 
 mySdk.certs.Revoke(
-    "d6c81ec9-5187-4335-af37-9fcf57af7c3b",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTQ4MjYzNjcsImlhdCI6MTY5NDc3MjM2NywiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjRhNDA3MTBlLTgyNTgtNDc0Ni05MTZmLWE4NzY3MDM2MzNkNyIsInR5cGUiOiJhY2Nlc3MifQ.khxEjSpbYfKrBF-FKTuYg3MIffjQXQHzGCLmR2pImdgNKoouHvRLLAfQlIQbX49zE_UvEi6xupVR55u7kjLfuw"
+    "<thing_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -607,12 +607,12 @@ mySdk.certs.Revoke(
 /*
 mySdk.bootstrap.Create(
     {
-        "external_id": "012",
-        "external_key": "345",
-        "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
-        "name": "percius"
+        "external_id": "<external_id>",
+        "external_key": "<external_key>",
+        "thing_id": "<thing_id>",
+        "name": "<name>"
     },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -623,13 +623,13 @@ mySdk.bootstrap.Create(
 
 mySdk.bootstrap.Whitelist(
     {
-        "external_id": "012",
-        "external_key": "345",
-        "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
-        "name": "perseus"
+        "external_id": "<external_i>",
+        "external_key": "<external_key>",
+        "thing_id": "<thing_id>",
+        "name": "<name>"
 
     },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -640,10 +640,10 @@ mySdk.bootstrap.Whitelist(
 
 mySdk.bootstrap.Update(
     {
-        "thing_id": "77cbb344-7c41-47f3-a53a-a3d435b67207",
-        "name": "perseus"
+        "thing_id": "<thing_id>",
+        "name": "<name>"
     },
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -653,8 +653,8 @@ mySdk.bootstrap.Update(
     });
 
 mySdk.bootstrap.View(
-    "77cbb344-7c41-47f3-a53a-a3d435b67207",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<thing_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -664,7 +664,7 @@ mySdk.bootstrap.View(
     });
 
 mySdk.bootstrap.UpdateCerts(
-    "77cbb344-7c41-47f3-a53a-a3d435b67207",
+    "<config_id>",
     "<client_cert>",
     "<client_key>",
     "<ca>",
@@ -678,8 +678,8 @@ mySdk.bootstrap.UpdateCerts(
     });
 
 mySdk.bootstrap.Remove(
-    "77cbb344-7c41-47f3-a53a-a3d435b67207",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<config_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);
@@ -689,8 +689,8 @@ mySdk.bootstrap.Remove(
     });
 
 mySdk.bootstrap.Bootstrap(
-    "456",
-    "789"
+    "<external_id>",
+    "<external_key>"
 )
     .then(response => {
         console.log(response);
@@ -703,9 +703,9 @@ mySdk.bootstrap.Bootstrap(
 //Messages.js
 /*
 mySdk.messages.Send(
-    "2b86beba-83dd-4b39-8165-4dda4e6eb4ad",
+    "<channel_id>",
     '[{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]',
-    "fc68b31b-d7fd-4879-b3a7-0baf4580c5b1"
+    "<thing_key>"
 )
     .then(response => {
         console.log(response);
@@ -715,8 +715,8 @@ mySdk.messages.Send(
     });
 
 mySdk.messages.Read(
-    "2b86beba-83dd-4b39-8165-4dda4e6eb4ad",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTYwMzc4NjQsImlhdCI6MTY5NTk4Mzg2NCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.6c3SW6ejKn9SzPSDws10FEKb7WyC_3bOlyvKcdMIZGyL7Zu3hB6ghlpwBG7pwEoXJpi9gOCASchZlGCZrDdgVQ"
+    "<channel_id>",
+    "<token>"
 )
     .then(response => {
         console.log(response);

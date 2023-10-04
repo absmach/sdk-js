@@ -1,6 +1,19 @@
 const axios = require('axios');
 
 class  Bootstrap{
+    //Bootstraps API Client
+    /**
+     * @class Bootstrap
+     * Bootstrap is used to manage bootstrap configurations.
+     * It is used to create, update, view and remove bootstrap configurations.
+     * It is also used to bootstrap a thing.
+     * @param {string} bootstraps_url - The url of the bootstraps service.
+     * @param {string} content_type - The content type of the request.
+     * @param {string} bootstrapsEndpoint - The endpoint of the bootstraps service which is 
+     * configs.
+     * @returns {Bootstrap} - Returns a Bootstrap object.
+     * 
+     */
     constructor(bootstraps_url){
         this.bootstraps_url = bootstraps_url;
         this.content_type = "application/json";
@@ -8,6 +21,22 @@ class  Bootstrap{
     }
 
     Create(config, token){
+        //Create a bootstrap configuration
+        /**
+         * @method Create - Create a new bootstrap configuration. 
+         * Some of the key data needed include the external_key and external_id which must be
+         * specific to the thing provided with the thing_id. Mind that every configuration 
+         * must have a specific thing_id.
+         * @param {object} config - The configuration object.
+         * @param {string} token - The token to be used for authentication.
+         * @example
+         * const config = {
+         *      "external_id": "345",
+         *      "external_key": "012",
+         *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
+         *      "name": "thing_name"
+         *   } 
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -28,6 +57,20 @@ class  Bootstrap{
     }
 
     Whitelist(config, token){
+        //Update a bootstrap configuration
+        /**
+         * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
+         * This changes the status of the config to whitelisted.
+         * @param {object} config - The configuration object.
+         * @param {string} token - The token to be used for authentication.
+         * @example
+         * const config = {
+         *      "external_id": "345",
+         *      "external_key": "012",
+         *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
+         *      "name": "thing_name"
+         * }
+         */
         const options = {
             method: "put",
             maxBodyLength: Infinity,
@@ -48,6 +91,20 @@ class  Bootstrap{
     }
 
     Update(config, token){
+        //Update a bootstrap configuration
+        /**
+         * @method Update - Allows a logged in user to update a bootstrap configuration.
+         * This can change the name of the config and metadata. 
+         * @param {object} config - The configuration object.
+         * @param {string} token - The token to be used for authentication.
+         * @example
+         * const config = {
+         *      "external_id": "345",
+         *      "external_key": "012",
+         *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
+         *      "name": "thing_name"
+         * }
+         */
         const options = {
             method: "put",
             maxBodyLength: Infinity,
@@ -68,6 +125,13 @@ class  Bootstrap{
     }
 
     View(thing_id, token){
+        //View a bootstrap configuration
+        /**
+         * @method View - Allows a logged in user to view a bootstrap configuration.
+         * Once provided with the thing_id and a valid token, it returns the configuration object.
+         * @param {string} thing_id - The thing_id of the configuration to be viewed.
+         * @param {string} token - The token to be used for authentication.
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -87,6 +151,17 @@ class  Bootstrap{
     }
 
     UpdateCerts(config_id,client_cert,client_key, ca, token){
+        //Update certs of a bootstrap configuration
+        /**
+         * @method UpdateCerts - Allows a logged in user to update the certs of a bootstrap configuration.
+         * Update is performed by replacing the current certificate data with values provided in a request payload.
+         * @param {string} config_id - The config_id of the configuration to be updated. This can also mean the thing_id.
+         * @param {string} client_cert - The client certificate to be used.
+         * @param {string} client_key - The client key to be used.
+         * @param {string} ca - The certificate authority to be used.
+         * @param {string} token - The token to be used for authentication.
+         * 
+         */
         const payload = {
             "client_cert": client_cert,
             "client_key": client_key,
@@ -112,6 +187,14 @@ class  Bootstrap{
     }
 
     Remove(config_id, token){
+        //Remove a bootstrap configuration
+        /**
+         * @method Remove - Allows a logged in user to delete a bootstrap configuration.
+         * @param {string} config_id - The config_id of the configuration to be deleted. 
+         * This can also mean the thing_id.
+         * @param {string} token - The token to be used for authentication.
+         * 
+         */
         const options = {
             method: "delete",
             maxBodyLength: Infinity,
@@ -131,6 +214,13 @@ class  Bootstrap{
     }
 
     Bootstrap(external_id, external_key){
+        //Retrive a bootstrap configuration
+        /**
+         * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
+         * @param {string} external_id - The external ID of the configuration to be retrieved.
+         * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
+         * @return {object} - Returns a config object.
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
