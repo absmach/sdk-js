@@ -105,7 +105,7 @@ describe('Users', () => {
     });
   });
 
-  test('Login should handle a confilict error', () => {
+  test('Login should handle a conflict error', () => {
     const errorResponse = {
       response: {
         status: 401,
@@ -507,7 +507,7 @@ describe('Users', () => {
         },
         data: JSON.stringify(user),
       });
-      console.log(result);;
+      console.log(result);
     });
   });
 

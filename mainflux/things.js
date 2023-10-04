@@ -2,6 +2,16 @@
 const axios = require("axios");
 
 class Things {
+  // Things service client.
+  /**
+   * @class Things - 
+   * Things API is used for creating and managing things.
+   * It is used for creating, updating, deleting and retrieving things.
+   * @param {string} things_url - Things service URL.
+   * @param {string} content_type - Content type.
+   * @param {string} thingsEndpoint - Things endpoint.
+   * @returns {Object} - Things service client.  
+   */
   constructor(things_url) {
     this.things_url = things_url;
     this.content_type = "application/json";
@@ -9,7 +19,32 @@ class Things {
   }
 
   Create(thing, token) {
-    
+    //Creates a new thing.
+    /**
+     * @method Create - Creates a new thing when provided with 
+     * the things information and a valid token.
+     * @param {Object} thing - Thing object.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name": "string",
+     * "tags": [
+     * "tag1",
+     * "tag2"
+     * ],
+     * "credentials": {
+     * "identity": "thingidentity",
+     * "secret": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+     * },
+     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "metadata": {
+     * "domain": "example.com"
+     * },
+     * "status": "enabled"
+     * }
+     */
+
     const options = {
       method: "post",
       maxBodyLength: Infinity,
@@ -29,8 +64,24 @@ class Things {
       })
   }
 
-  Create_bulk(things, token) {
-    
+  CreateBulk(things, token) {
+    //Creates multiple things.
+    /**
+     * @method Create_bulk - Creates multiple things when provided with a valid
+     * token and an array of things information such as names. 
+     * @param {list} things - An array of things information.
+     * @param {string} token - User token.
+     * @returns {list} - Things list.
+     * @example
+     * const things = [
+     * {
+     * "name": "thing1"
+     * },
+     * {
+     * "name": "thing2"
+     * }
+     * ]
+     */
     const options = {
       method: "post",
       maxBodyLength: Infinity,
@@ -51,10 +102,21 @@ class Things {
   }
 
   Get(thing_id, token) {
-    
+    //Retrieves thing information.
+    /**
+     * @method Get - Retrieves thing information when provided with a valid token
+     * and thing ID.
+     * @param {string} thing_id - Thing ID.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+     * 
+     */
+
     const options = {
       method: "get",
-      maxBodyLength: Infinity, 
+      maxBodyLength: Infinity,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
       headers: {
         "Content-Type": this.content_type,
@@ -70,9 +132,15 @@ class Things {
       })
   }
 
-  Get_by_channel(thing_id, query_params, token) {
+  GetByChannel(thing_id, query_params, token) {
     //Retrieves list of channels connected to specified thing with pagination metadata.
-    
+    /**
+     * @method GetByChannel - Retrieves list of channels connected to specified thing 
+     * with pagination metadata.
+     * @param {string} thing_id - Thing ID.
+     * @param {Object} query_params - Query parameters such as offset and limit.
+     * @returns {Object} - Channels list.
+     */
     const options = {
       method: "get",
       maxBodyLength: Infinity,
@@ -81,7 +149,6 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      params: query_params,
     };
     return axios.request(options)
       .then((response) => {
@@ -92,8 +159,15 @@ class Things {
       })
   }
 
-  Get_all(query_params, token) {
-    
+  GetAll(query_params, token) {
+    //Retrieves list of things with pagination metadata.
+    /**
+     * @method GetAll - Retrieves list of things with pagination metadata when provided with a 
+     * valid token and correct query parameters such as offset and limit.
+     * @param {Object} query_params - Query parameters.
+     * @param {string} token - User token.
+     * @returns {Object} - Things list.
+     */
     const options = {
       method: "get",
       maxBodyLength: Infinity,
@@ -102,7 +176,6 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      params: query_params,
     };
     return axios.request(options)
       .then((response) => {
@@ -114,7 +187,13 @@ class Things {
   }
 
   Disable(thing_id, token) {
-    
+    //Disables thing.
+    /**
+     * @method Disable - Deletes a thing when provided with a valid token and thing ID.
+     * @param {string} thing_id - Thing ID.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object with statys disabled. 
+     */
     const options = {
       method: "post",
       maxBodyLength: Infinity,
@@ -134,7 +213,28 @@ class Things {
   }
 
   Update(thing_id, thing, token) {
-    
+    //Updates thing.
+    /**
+     * @method Update - Updates thing when provided with a valid token, 
+     * thing ID and thing object.
+     * @param {string} thing_id - Thing ID.
+     * @param {Object} thing - Thing object.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name": "thing3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * "credentials": {
+     * "identity": "thingidentity",
+     * "secret":"12345678"
+     * },
+     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * }
+     */
     const options = {
       method: "patch",
       maxBodyLength: Infinity,
@@ -154,8 +254,29 @@ class Things {
       })
   }
 
-  Update_thing_secret(thing_id, thing, token) {
-    
+  UpdateThingSecret(thing_id, thing, token) {
+    //Updates thing secret.
+    /**
+     * @method UpdateThingSecret - Updates thing secret when provided with a valid token,
+     * thing ID and thing object.
+     * @param {string} thing_id - Thing ID.
+     * @param {Object} thing - Thing object.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name": "thing3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * "credentials": {
+     * "identity": "thingidentity",
+     * "secret":"56788912"
+     * },
+     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * }
+     */
     const options = {
       method: "patch",
       maxBodyLength: Infinity,
@@ -175,8 +296,30 @@ class Things {
       })
   }
 
-  Update_thing_tags(thing_id, thing, token) {
-    
+  UpdateThingTags(thing_id, thing, token) {
+    //Updates thing tags.
+    /**
+     * @method UpdateThingTags - Updates thing tags when provided with a valid token,
+     * thing ID and thing object.
+     * 
+     * @param {string} thing_id - Thing ID.
+     * @param {Object} thing - Thing object.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name": "thing3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * "credentials": {
+     * "identity": "thingidentity",
+     * "secret":"56788912"
+     * },
+     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * }
+     */
     const options = {
       method: "patch",
       maxBodyLength: Infinity,
@@ -196,12 +339,33 @@ class Things {
       })
   }
 
-  Update_thing_owner(thing_id, thing, token) {
-    
+  UpdateThingOwner(thing_id, thing, token) {
+    //Updates thing owner.
+    /**
+     * @method UpdateThingOwner - Updates thing owner when provided with a valid token,
+     * thing ID and thing object.
+     * @param {string} thing_id - Thing ID.
+     * @param {Object} thing - Thing object.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name": "thing3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * "credentials": {
+     * "identity": "thingidentity",
+     * "secret":"56788912"
+     * },
+     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * }
+     */
     const options = {
       method: "patch",
       maxBodyLength: Infinity,
-      ul: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
+      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -218,7 +382,18 @@ class Things {
   }
 
   Connect(thing_id, channel_id, action, token) {
-    
+    //Connects thing to channel.
+    /**
+     * @method Connect - Connects thing to channel when provided with a valid token,
+     * channel id and a thing id. The thing must have an action that it can perform over 
+     * the channel.
+     * @param {string} thing_id - Thing ID.
+     * @param {string} channel_id - Channel ID.
+     * @param {list} action - Action for example: ["m_read", "m_write"].
+     * @param {string} token - User token.
+     * 
+     */
+
     const payload = { "subject": thing_id, "object": channel_id, "action": action }
     const options = {
       method: "post",
@@ -231,8 +406,8 @@ class Things {
       data: JSON.stringify(payload),
     };
     return axios.request(options)
-      .then((response) => {
-        return response.data;
+      .then((_response) => {
+        return "Policy created.";
       })
       .catch((error) => {
         return error.response.data;
@@ -240,7 +415,18 @@ class Things {
   }
 
   Connects(thing_ids, channel_ids, actions, token) {
-    
+    //Connects multiple things to multiple channels.
+    /**
+     * @method Connects - Connects multiple things to multiple channels when provided with a valid token,
+     * arrays of channel ids, thing ids and actions.
+     * @param {list} thing_ids - Array of thing IDs.
+     * @param {list} channel_ids - Array of channel IDs.
+     * @param {list} actions - Array of actions for example: ["m_read", "m_write"].
+     * @param {string} token - User token.
+     * @returns {Object} - Policy object.
+     * 
+     */
+
     const payload = { "subjects": thing_ids, "objects": channel_ids, "actions": actions }
     const options = {
       method: "post",
@@ -253,8 +439,8 @@ class Things {
       data: JSON.stringify(payload),
     };
     return axios.request(options)
-      .then((response) => {
-        return response.data;
+      .then((_response) => {
+        return "Policy created.";
       })
       .catch((error) => {
         return error.response.data;
@@ -262,7 +448,15 @@ class Things {
   }
 
   Disconnect(thing_id, channel_id, token) {
-    
+    //Disconnects thing from channel.
+    /**
+     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
+     * channel id and a thing id.
+     * @param {list} thing_id - Thing ID.
+     * @param {list} channel_id - Channel ID.
+     * @param {string} token - User token.
+     * 
+     */
     const payload = { "subjects": thing_id, "objects": channel_id }
     const options = {
       method: "post",
@@ -275,17 +469,23 @@ class Things {
       data: JSON.stringify(payload),
     };
     return axios.request(options)
-      .then((response) => {
-        return response.data;
+      .then((_response) => {
+        return "Policy deleted.";
       })
       .catch((error) => {
         return error.response.data;
       })
   }
 
-  Identify_thing(thing_key) {
+  IdentifyThing(thing_key) {
     //Validates thing's key and returns it's ID if key is valid
-    
+    /**
+     * @method IdentifyThing - Validates thing's key and returns it's ID if key is valid. The method
+     * does not require a token.
+     * @param {string} thing_key - Thing secret.
+     * @returns {Object} - Thing object.
+     * 
+     */
     const options = {
       method: "post",
       maxBodyLength: Infinity,
@@ -304,9 +504,18 @@ class Things {
       })
   }
 
-  Authorise_thing(thing_id, channel_id, action, entity_type, token) {
+  AuthoriseThing(thing_id, channel_id, action, entity_type, token) {
     //Authorises thing
-    
+    /**
+     * @method AuthoriseThing - Authorises a thing to perform an action on a channel 
+     * when provided with a valid token, thing ID, channel ID, action and entity type.
+     * @param {string} thing_id - Thing ID.
+     * @param {string} channel_id - Channel ID.
+     * @param {string} action - Action for example: ["m_read", "m_write"].
+     * @param {string} entity_type - Type of the thing class for example: "client"
+     * @param {string} token - User token.
+     * @return {Object} - True if thing is authorised, false if not.
+     */
     const access_request = {
       "subject": thing_id,
       "object": channel_id,
@@ -324,15 +533,14 @@ class Things {
       data: JSON.stringify(access_request),
     };
     return axios.request(options)
-      .then((response) => {
-        return response.data;
+      .then((_response) => {
+        return true;
       })
-      .catch((error) => {
-        return error.response.data;
+      .catch((_error) => {
+        return false;
       })
   }
 
 }
 
-// export default Things;
 module.exports = Things;

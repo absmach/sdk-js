@@ -2,6 +2,18 @@
 const axios = require("axios");
 
 class Channels {
+    //Channels API client
+    /**
+     * @class Channels - 
+     * Channels API is used for managing Channels. It is used for creating new 
+     * channels, retrieving them, updating them and disabling them 
+     * @param {string} channels_url - URL to the Channels service
+     * @param {string} content_type - Content type for the requests which is an application
+     * json
+     * @param {string} channelsEndpoint - Endpoint for the channels' service.
+     * @returns {Object} -Channels object
+     * 
+     */
     constructor(channels_url) {
         this.channels_url = channels_url;
         this.content_type = "application/json";
@@ -9,6 +21,26 @@ class Channels {
     }
 
     Create(channel, token) {
+        //Creates a new channel
+        /**
+         * @method Create - Creates new channels when provided with a channel object 
+         * with viable fresh information and a valid token.
+         * @param {Object} channel - Channel Object with a name and id.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - User object.
+         * @example
+         * const channel = {
+         * "name": "channelName",
+         * "description": "long channel description",
+         * "parent_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+         *  "metadata": {
+         *       "domain": "example.com"
+         *  },
+         * "status": "enabled",
+         * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+         * }
+         * 
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -28,8 +60,20 @@ class Channels {
             })
     }
 
-    Create_bulk(channels, token) {
-
+    CreateBulk(channels, token) {
+        //Creates multiple channels.
+        /**
+         * @method Create_bulk - Creates multiple channels when provided with a channel object
+         * with viable fresh information and a valid token.
+         * @param {List} channels - Channel Object with a name and id.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - User object.
+         * @example
+         * const channels = [
+         * { "name": "channelA", "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
+         * { "name": "channelB", "id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9" }
+         * ]
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -50,7 +94,13 @@ class Channels {
     }
 
     Get(channel_id, token) {
-
+        //Retrieves channel with specified id.
+        /**
+         * @method Get - Retrieves channel with specified id and a valid token.
+         * @param {String} channel_id - Channel id.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - Channel object. 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -69,9 +119,15 @@ class Channels {
             })
     }
 
-    Get_by_thing(channel_id, query_params, token) {
+    GetByThing(channel_id, query_params, token) {
         //Retrieves list of things connected to specified channel with pagination metadata.
-
+        /**
+         * @method GetByThing - Retrieves list of things connected to specified channel with pagination metadata.
+         * @param {String} channel_id - Channel id.
+         * @param {Object} query_params - Query parameters for the request.
+         * @param {String} token - An access token that is valid.
+         * @returns {List} - Things list. 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -80,7 +136,6 @@ class Channels {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -91,8 +146,14 @@ class Channels {
             })
     }
 
-    Get_all(query_params, token) {
-
+    GetAll(query_params, token) {
+        //Provides a list of all channels with pagination metadata.
+        /**
+         * @method GetAll - Provides a list of all channels with pagination metadata.
+         * @param {Object} query_params - Query parameters for the request.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - Channel Object. 
+         */
         const options = {
             method: "get",
             maxBodyLength: Infinity,
@@ -112,7 +173,13 @@ class Channels {
     }
 
     Update(channel, token) {
-
+        //Updates channel with specified id.
+        /**
+         * @method Update - Updates channel with specified id.
+         * @param {Object} channel - Channel object with new information.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - Channel Object. 
+         */
         const options = {
             method: "put",
             maxBodyLength: Infinity,
@@ -133,7 +200,13 @@ class Channels {
     }
 
     Disable(channel, token) {
-
+        //Disables channel with specified id.
+        /**
+         * @method Disable - Disables channel with specified id.
+         * @param {Object} channel - Channel object with new information.
+         * @param {String} token - An access token that is valid.
+         * @returns {Object} - Channel Object. 
+         */
         const options = {
             method: "post",
             maxBodyLength: Infinity,
@@ -151,24 +224,6 @@ class Channels {
                 return error.response.data;
             })
     }
-
-    // Identify_thing(thing_key) {
-    //     const url = `${this.channels_url}/identify`;
-    //     const options = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": this.content_type,
-    //             Authorization: `Bearer ${thing_key}`,
-    //         },
-    //     };
-    //     return axios.request(options)
-    // .then((response) => {
-    //     return response.data;
-    // })
-    // .catch((error) => {
-    //     return error.response.data;
-    // })
-    // }
 
 }
 
