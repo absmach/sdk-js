@@ -2,7 +2,25 @@
 const axios = require("axios");
 
 class Groups {
-    //Groups API client.
+  //Groups API client.
+  /**
+   * @class Groups -
+   * Groups API client is used for managing groups. It is used for
+   * creating, updating, deleting, and retrieving groups.
+   * @param {string} groups_url - The URL of the Groups service.
+   * @param {string} content_type - The content type of the request.
+   * @param {string} groupsEndpoint - The endpoint of the Groups service.
+   * @returns {Groups} - Returns a Groups object.
+   */
+  constructor(groups_url) {
+    this.groups_url = groups_url;
+    this.content_type = "application/json";
+    this.groupsEndpoint = "groups";
+  }
+  // groupError = new Errors;
+
+  Create(group, token) {
+    // Create a new group.
     /**
      * @class Groups - 
      * Groups API client is used for managing groups. It is used for

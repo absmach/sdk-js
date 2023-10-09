@@ -1,7 +1,26 @@
-const axios = require('axios');
+const axios = require("axios");
 
 class Users {
-    // Users API client
+  // Users API client
+  /**
+   * @class Users -
+   * Users API is used for creating and managing users.
+   * It is used for creating new users, logging in, refreshing tokens,
+   * getting user information, updating user information, disabling
+   * and enabling users.
+   * @param {String} users_url - URL to the Users service.
+   * @param {String} content_type - Content type for the requests.
+   * @param {String} usersEndpoint - Endpoint for the users service.
+   * @returns {Object} - Users object.
+   */
+  constructor(users_url) {
+    this.users_url = users_url;
+    this.content_type = "application/json";
+    this.usersEndpoint = "users";
+  }
+
+  Create(user, token) {
+    // Creates a new user
     /**
      * @class Users -
      * Users API is used for creating and managing users.
@@ -11,11 +30,6 @@ class Users {
      * @param {String} users_url - URL to the Users service.
      * @returns {Object} - Users object.
      */
-    constructor(users_url) {
-        this.users_url = users_url;
-        this.content_type = "application/json";
-        this.usersEndpoint = "users";
-    }
 
     // Validation function
     ValidateUserAndToken(user, token) {
@@ -66,20 +80,24 @@ class Users {
             })
     }
 
-    Login(user) {
-        // Issue Access and Refresh Token used for authenticating into the system
-        /**
-         * @method Login - Issue Access and Refresh Token used for authenticating into the system.
-         * @param {Object} user - User object.
-         * @returns {Object} - Access and Refresh Token.
-         * @example
-         * const user = {
-         * "credentials": {
-         *   "identity": "admin@example.com",
-         *  "password": "12345678"
-         * }
-         * }
-         */
+    const options = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.users_url}/${this.usersEndpoint}/tokens/issue`,
+      headers: {
+        "Content-Type": this.content_type,
+      },
+      data: JSON.stringify(user),
+    };
+    return axios
+      .request(options)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  }
 
         this.ValidateUserAndToken(user);
 
@@ -253,14 +271,49 @@ class Users {
             data: JSON.stringify(user),
         };
 
-        return axios.request(options)
-            .then((response) => {
-                return response.data;
-            })
-            .catch((error) => {
-                return error.response.data;
-            });
-    }
+  UpdateUserOwner(user, token) {
+    // Update a user's owner.
+    /**
+     *  Updates owner of the user with provided ID. The owner is updated using
+     * authorization user_tokeN.
+     * @method UpdateUserOwner - Update a user's owner.
+     * @param {Object} user - User object.
+     * @param{String} token - Access token.
+     * @returns {Object} - User object.
+     * @example
+     * const user = {
+     *  "name": "example",
+     *      "id": "886b4266-77d1-4258-abae-2931fb4f16de"
+     *      "tags": [
+     *          "back",
+     *           "end"
+     *       ]
+     *       "metadata": {
+     *          "foo": "bar"
+     *       }
+     *  "owner":"886b4266-77d1-4258-abae-2931fb4f16de"
+     *  }
+     *
+     */
+    const options = {
+      method: "patch",
+      url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
+      maxBodyLength: Infinity,
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      data: JSON.stringify(user),
+    };
+    return axios
+      .request(options)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  }
 
     UpdateUserOwner(user, token) {
         // Update a user's owner.

@@ -1,9 +1,15 @@
-const axios = require('axios');
+const axios = require("axios");
 const mfsdk = require("mainflux-sdk");
 
-jest.mock('axios');
+jest.mock("axios");
 
-describe('Messages', () => {
+describe("Messages", () => {
+  const httpadapter_url = "http://localhost";
+  const readers_url = "http://localhost";
+  const channel_id = "2b86beba-83dd-4b39-8165-4dda4e6eb4ad";
+  const msg = '[{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]';
+  const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
+  const thing_key = "fc68b31b-d7fd-4879-b3a7-0baf4580c5b1";
 
     const httpadapter_url = 'http://localhost';
     const readers_url = 'http://localhost';
@@ -19,8 +25,7 @@ describe('Messages', () => {
         subtopic = chan_name_parts[1].replace(".", "/", -1);
     }
 
-    test('Send should send a message and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: msg });
+    const expectedUrl = `${httpadapter_url}/http/channels/${channel_id}/messages/subtopic`;
 
         const expectedUrl = `${httpadapter_url}/http/channels/${chan_id}/messages/${subtopic}`;
 
@@ -39,9 +44,10 @@ describe('Messages', () => {
             expect(result).toEqual('Message Sent!');
         });
     });
+  });
 
-    test('Read should read a message and return success', () => {
-        axios.request.mockResolvedValueOnce({ data: msg });
+  test("Read should read a message and return success", () => {
+    axios.request.mockResolvedValueOnce({ data: msg });
 
         const expectedUrl = `${readers_url}/channels/${chan_id}/messages`;
 
@@ -60,5 +66,5 @@ describe('Messages', () => {
             expect(result).toEqual(msg);
         });
     });
-
-})
+  });
+});

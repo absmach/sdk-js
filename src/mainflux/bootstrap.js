@@ -1,7 +1,27 @@
-const axios = require('axios');
+const axios = require("axios");
 
-class  Bootstrap{
-    //Bootstraps API Client
+class Bootstrap {
+  //Bootstraps API Client
+  /**
+   * @class Bootstrap
+   * Bootstrap is used to manage bootstrap configurations.
+   * It is used to create, update, view and remove bootstrap configurations.
+   * It is also used to bootstrap a thing.
+   * @param {string} bootstraps_url - The url of the bootstraps service.
+   * @param {string} content_type - The content type of the request.
+   * @param {string} bootstrapsEndpoint - The endpoint of the bootstraps service which is
+   * configs.
+   * @returns {Bootstrap} - Returns a Bootstrap object.
+   *
+   */
+  constructor(bootstraps_url) {
+    this.bootstraps_url = bootstraps_url;
+    this.content_type = "application/json";
+    this.bootstrapsEndpoint = "configs";
+  }
+
+  Create(config, token) {
+    //Create a bootstrap configuration
     /**
      * @class Bootstrap
      * Bootstrap is used to manage bootstrap configurations.
@@ -11,11 +31,25 @@ class  Bootstrap{
      * @returns {Bootstrap} - Returns a Bootstrap object.
      * 
      */
-    constructor(bootstraps_url){
-        this.bootstraps_url = bootstraps_url;
-        this.content_type = "application/json";
-        this.bootstrapsEndpoint = "configs";
-    }
+    const options = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+      data: JSON.stringify(config),
+    };
+    return axios
+      .request(options)
+      .then((_response) => {
+        return "Configuration added";
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  }
 
     ValidateConfigAndToken(config, token){
     //Validate config
@@ -285,6 +319,32 @@ class  Bootstrap{
             })
     }
 
+  Bootstrap(external_id, external_key) {
+    //Retrive a bootstrap configuration
+    /**
+     * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
+     * @param {string} external_id - The external ID of the configuration to be retrieved.
+     * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
+     * @return {object} - Returns a config object.
+     */
+    const options = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: `${this.bootstraps_url}/things/bootstrap/${external_id}`,
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Thing ${external_key}`,
+      },
+    };
+    return axios
+      .request(options)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  }
 }
 
 module.exports = Bootstrap;

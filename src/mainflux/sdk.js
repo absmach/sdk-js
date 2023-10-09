@@ -31,7 +31,7 @@ class SDK {
 
 // module.exports = SDK;
 // Export the SDK class for use in a web browser
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   module.exports = SDK; // For Node.js
 } else {
   window.SDK = SDK; // For browsers
