@@ -12,7 +12,9 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack",
+    "lint": "prettier . --write"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Getting Started</title>
+  </head>
+  <body>
+    <script src="main.js">
+      const defaultUrl = "http://localhost";
+      const mySdk = new SDK({
+          usersUrl: defaultUrl + ":9002",
+          groupsUrl: defaultUrl + ":9002",
+          thingsUrl: defaultUrl + ":9000",
+          channelsUrl: defaultUrl + ":9000",
+          httpadapterUrl: defaultUrl,
+          readersUrl: defaultUrl + ":9011",
+          certsUrl: defaultUrl + ":9019",
+          bootstrapsUrl: defaultUrl + ":9013",
+      })
+      mySdk.things.GetAll(
+          { "offset": 0, "limit": 10 },
+          "<token>"
+              )
+              .then(response => {
+                  console.log(response);
+              })
+              .catch(error => {
+                  console.error(error.response.data);
+              });
+    </script>
+  </body>
+</html>
