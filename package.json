@@ -37,6 +37,11 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
-    "jsdoc": "^4.0.2"
+    "jsdoc": "^4.0.2",
+    "rollup": "^4.0.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   }
 }
