@@ -1,5 +1,4 @@
 // Import the SDK class from the mainflux-sdk package
-// import SDK from '../mainflux/sdk.js';
 const SDK = require("../mainflux/sdk");
 
 const defaultUrl = "http://localhost";
@@ -16,7 +15,7 @@ const mySdk = new SDK({
 });
 
 //Things.js examples.
-/*
+
 mySdk.things.Create(
     { "name": "<thing_name>"},
     "<token>"
@@ -182,7 +181,7 @@ mySdk.things.IdentifyThing({
 
 mySdk.things.AuthoriseThing(
     "<thing_id>",
-    <channel_id>",
+    "<channel_id>",
     "<action>",
     "<enity_type>",
     "<token>"
@@ -193,10 +192,10 @@ mySdk.things.AuthoriseThing(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 //Users.js
-/*
+
 mySdk.users.Create(
     { "credentials": { "identity": "<user_email>", "secret": "<user_secret>" } },
     "<token>"
@@ -205,7 +204,7 @@ mySdk.users.Create(
         console.log(response);
     })
     .catch(error => {
-        console.error(error.response.data);
+        console.error(error.response);
     });
 
 mySdk.users.Get(
@@ -274,7 +273,7 @@ mySdk.users.UpdateUserTags(
     });
 
 mySdk.users.UpdateUserOwner(
-    { "id": "<user_id>", "owner": "<owner_identity> },
+    { "id": "<user_id>", "owner": "<owner_identity>" },
     "<token>"
 )
     .then(response => {
@@ -353,10 +352,10 @@ mySdk.users.AuthoriseUser(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 //Groups.js
-/*
+
 mySdk.groups.Create(
     { "name": "<group_name>", "parent_id":"<parent_id>" },
     "<token>"
@@ -472,10 +471,10 @@ mySdk.groups.Members(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 //Channels.js
-/*
+
 mySdk.channels.Create(
     { "name": "<channel_name>" },
     "<token>"
@@ -553,14 +552,14 @@ mySdk.channels.GetByThing(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 //Certs.js
-/*
+
 mySdk.certs.Issue(
-    "<thing_id>",
-    "<time_limit>",
-    "<token>"
+    "9745f2ea-f776-46b1-9b44-1cfd1ad4c6f1",
+    "10h",
+    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTY1NjM2NjQsImlhdCI6MTY5NjUwOTY2NCwiaWRlbnRpdHkiOiJ3aXphcmRseV9ob3BwZXJAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiMGE1ZjJlMjEtMWE4Yi00NjBlLWJmYTktNzMyZTU3MGRmMDk1IiwidHlwZSI6ImFjY2VzcyJ9.RWFnWUL9JYxLjAiFfbnnW14ZCv033aux8-8qFmCqiczCNGxc6EXsy8hawuXVkCUwk0vWnCe42TieqEIwwlbvHg"
 )
     .then(result => {
         console.log(result);
@@ -601,10 +600,10 @@ mySdk.certs.Revoke(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 // Bootstrap.js
-/*
+
 mySdk.bootstrap.Create(
     {
         "external_id": "<external_id>",
@@ -698,10 +697,10 @@ mySdk.bootstrap.Bootstrap(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
+
 
 //Messages.js
-/*
+
 mySdk.messages.Send(
     "<channel_id>",
     '[{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]',
@@ -724,4 +723,3 @@ mySdk.messages.Read(
     .catch(error => {
         console.error(error.response.data);
     });
-*/
