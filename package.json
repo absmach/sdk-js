@@ -13,8 +13,10 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "browserify -e index.js -o bundle.js -p esmify ",
-    "lint": "prettier . --write"
+    "replace-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/const axios = require(\"axios\");/import axios from \"axios\";/g' {} +",
+    "restore-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/import axios from \"axios\";/const axios = require(\"axios\");/g' {} +",
+    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import",
+    "format": "prettier . --write"
   },
   "repository": {
     "type": "git",
@@ -45,8 +47,6 @@
     "prettier": "3.0.3",
     "rollup": "^4.0.2",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "rollup-plugin-node-resolve": "^5.2.0"
   }
 }
