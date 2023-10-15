@@ -30,12 +30,9 @@ class Errors {
         },
         login: {
             404: "A non-existent entity request.",
-            401: "Missing or invalid access token provided.",
-            404: "A non-existent entity request.",
         },
         refreshtoken: {
             404: "A non-existent entity request.",
-            401: "Missing or invalid access token provided.",
         },
         update: {
             404: "Failed due to a non-existing user.",

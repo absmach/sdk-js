@@ -3,10 +3,10 @@ name: Testing
 on:
     push:
       branches:
-        - main
+        - JSSDK
     pull_request:
       branches:
-        - main
+        - JSSDK
 jobs:
   build:
     name: Testing

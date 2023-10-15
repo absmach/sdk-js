@@ -64,7 +64,7 @@ try {
 try {
     mySdk.things.GetAll(
         { "offset": 0, "limit": 10 },
-        "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTczOTEyMjAsImlhdCI6MTY5NzM5MDMyMCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.pa1rXfdp3bBck3Bku-wH4iyo8rMEqd-YcH16n7QHRYuCdf6j-XzpyJZwahE5YQ5_B8Z-EfPQXG0j8qQOwxl8Tg"
+        "<token>"
     )
         .then(response => {
             console.log(response);
