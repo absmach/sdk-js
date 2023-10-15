@@ -9,14 +9,23 @@ class Users {
      * getting user information, updating user information, disabling 
      * and enabling users.
      * @param {String} users_url - URL to the Users service.
-     * @param {String} content_type - Content type for the requests.
-     * @param {String} usersEndpoint - Endpoint for the users service.
      * @returns {Object} - Users object.
      */
     constructor(users_url) {
         this.users_url = users_url;
         this.content_type = "application/json";
         this.usersEndpoint = "users";
+    }
+
+    // Validation function
+    ValidateUserAndToken(user, token) {
+        if (typeof user !== 'object' || user === null || Array.isArray(user)) {
+            throw new Error('Invalid user parameter. Expected an object.');
+        }
+
+        if (typeof token !== 'string') {
+            throw new Error('Invalid token parameter. Expected a string.');
+        }
     }
 
     Create(user, token) {
@@ -36,9 +45,11 @@ class Users {
          * 
          */
 
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -70,9 +81,11 @@ class Users {
          * }
          */
 
+        this.ValidateUserAndToken(user);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/tokens/issue`,
             headers: {
                 "Content-Type": this.content_type,
@@ -101,10 +114,17 @@ class Users {
          * }
          * 
          */
+        if (typeof user !== 'object' || user === null || Array.isArray(user)) {
+            throw new Error('Invalid user parameter. Expected an object.');
+        };
 
+        if (typeof refresh_token !== 'string') {
+            throw new Error('Invalid token parameter. Expected a string.');
+        };
+        
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/tokens/refresh`,
             headers: {
                 "Content-Type": this.content_type,
@@ -135,10 +155,13 @@ class Users {
          * }
          * 
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "patch",
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}`,
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -171,10 +194,13 @@ class Users {
          * 
          * }
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "patch",
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`,
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -213,10 +239,13 @@ class Users {
          *  }
          * 
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "patch",
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`,
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -257,10 +286,13 @@ class Users {
          *  }
          * 
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "patch",
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -288,11 +320,16 @@ class Users {
          * @returns {Object} - User object.
          * 
          */
+
+        if (typeof old_secret !== 'string' || typeof new_secret !== 'string' || typeof token !== 'string') {
+            throw new Error('Invalid parameter types. Expected strings for old_secret, new_secret, and token.');
+        };
+
         const secret = { old_secret: old_secret, new_secret: new_secret }
         const options = {
             method: "patch",
             url: `${this.users_url}/${this.usersEndpoint}/secret`,
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -321,9 +358,16 @@ class Users {
          * const user_id = "886b4266-77d1-4258-abae-2931fb4f16de"
          * 
          */
+
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        };
+
+        this.ValidateUserAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/${user_id}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -356,9 +400,16 @@ class Users {
          * }
          * 
          */
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        this.ValidateUserAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -399,9 +450,12 @@ class Users {
          * "status": "disabled"
          * }
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`,
             headers: {
                 "Content-Type": this.content_type,
@@ -433,9 +487,12 @@ class Users {
          * }
          * 
          */
+
+        this.ValidateUserAndToken(user, token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`,
             headers: {
                 "Content-Type": this.content_type,
@@ -462,9 +519,20 @@ class Users {
          * @param {String} token - Access token.
          * @returns {Object} - User object.
          */
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        if (typeof member_id !== 'string' || member_id === null) {
+            throw new Error('Invalid member_id parameter. Expected a string.');
+        }
+
+        this.ValidateUserAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -489,8 +557,20 @@ class Users {
          * @method AuthoriseUser - Authorises user to perform an action on an entity.
          * @param {String} user_id - User ID which is the Subject.
          * @param {String} group_id - Group ID which is the Object.
+         * @param {String} action - Action to be performed on the entity.
+         * @param {String} entity_type - Type of entity eg client.
          * @return {Boolean} - Returns true if the user is authorised to perform the action.
          */
+
+        if (
+            typeof user_id !== 'string' || 
+            typeof group_id !== 'string' || 
+            typeof action !== 'string' || 
+            typeof entity_type !== 'string' || 
+            typeof token !== 'string') {
+            throw new Error('Invalid parameter types. Expected strings for user_id, group_id, action, entity_type, and token.');
+        };
+
         const access_request = {
             "subject": user_id,
             "object": group_id,
@@ -499,7 +579,7 @@ class Users {
         }
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.users_url}/authorize`,
             headers: {
                 "Content-Type": this.content_type,

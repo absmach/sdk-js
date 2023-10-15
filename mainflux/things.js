@@ -1,4 +1,3 @@
-// import fetch from "node-fetch";
 const axios = require("axios");
 
 class Things {
@@ -8,14 +7,29 @@ class Things {
    * Things API is used for creating and managing things.
    * It is used for creating, updating, deleting and retrieving things.
    * @param {string} things_url - Things service URL.
-   * @param {string} content_type - Content type.
-   * @param {string} thingsEndpoint - Things endpoint.
    * @returns {Object} - Things service client.  
    */
   constructor(things_url) {
     this.things_url = things_url;
     this.content_type = "application/json";
     this.thingsEndpoint = "things";
+  }
+
+  ValidateThingIdThingAndToken(thing_id, thing, token) {
+    // Validate thing_id
+    if (typeof thing_id !== 'string' || thing_id === null) {
+        throw new Error('Invalid parameter. Expected a string for the "thing_id" parameter.');
+    }
+
+    // Validate thing
+    if (typeof thing !== 'object' || thing === null || Array.isArray(thing)) {
+        throw new Error('Invalid parameter. Expected an object for the "thing" parameter.');
+    }
+
+    // Validate token
+    if (typeof token !== 'string' || token === null) {
+        throw new Error('Invalid parameter. Expected a string for the "token" parameter.');
+    }
   }
 
   Create(thing, token) {
@@ -45,9 +59,11 @@ class Things {
      * }
      */
 
+    this.ValidateThingIdThingAndToken('', thing, token);
+
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}`,
       headers: {
         "Content-Type": this.content_type,
@@ -82,9 +98,16 @@ class Things {
      * }
      * ]
      */
+
+    if (!Array.isArray(things)) {
+      throw new Error('Invalid parameter. Expected an array for the "things" parameter.');
+    }
+
+    this.ValidateThingIdThingAndToken('', {}, token);
+
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/bulk`,
       headers: {
         "Content-Type": this.content_type,
@@ -114,9 +137,11 @@ class Things {
      * 
      */
 
+    this.ValidateThingIdThingAndToken(thing_id, {}, token);
+
     const options = {
       method: "get",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
       headers: {
         "Content-Type": this.content_type,
@@ -141,9 +166,16 @@ class Things {
      * @param {Object} query_params - Query parameters such as offset and limit.
      * @returns {Object} - Channels list.
      */
+
+    if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+      throw new Error('Invalid query parameters. Expected an object.');
+    };
+
+    this.ValidateThingIdThingAndToken(thing_id, {}, token);
+
     const options = {
       method: "get",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`,
       headers: {
         "Content-Type": this.content_type,
@@ -168,9 +200,16 @@ class Things {
      * @param {string} token - User token.
      * @returns {Object} - Things list.
      */
+
+    if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+      throw new Error('Invalid query parameters. Expected an object.');
+    };
+
+    this.ValidateThingIdThingAndToken('', {}, token);
+
     const options = {
       method: "get",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`,
       headers: {
         "Content-Type": this.content_type,
@@ -194,9 +233,12 @@ class Things {
      * @param {string} token - User token.
      * @returns {Object} - Thing object with statys disabled. 
      */
+
+    this.ValidateThingIdThingAndToken(thing_id, {}, token);
+
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`,
       headers: {
         "Content-Type": this.content_type,
@@ -235,9 +277,12 @@ class Things {
      * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
      * }
      */
+
+    this.ValidateThingIdThingAndToken(thing_id, thing, token);
+
     const options = {
       method: "patch",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
       headers: {
         "Content-Type": this.content_type,
@@ -277,9 +322,12 @@ class Things {
      * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
      * }
      */
+
+    this.ValidateThingIdThingAndToken(thing_id, thing, token);
+
     const options = {
       method: "patch",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`,
       headers: {
         "Content-Type": this.content_type,
@@ -320,9 +368,12 @@ class Things {
      * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
      * }
      */
+
+    this.ValidateThingIdThingAndToken(thing_id, thing, token);
+
     const options = {
       method: "patch",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`,
       headers: {
         "Content-Type": this.content_type,
@@ -362,9 +413,12 @@ class Things {
      * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
      * }
      */
+
+    this.ValidateThingIdThingAndToken(thing_id, thing, token);
+
     const options = {
       method: "patch",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
       headers: {
         "Content-Type": this.content_type,
@@ -393,11 +447,20 @@ class Things {
      * @param {string} token - User token.
      * 
      */
+    if (typeof channel_id !== 'string' || channel_id === null) {
+      throw new Error('Invalid channel_id parameter. Expected a string.');
+    };
+
+    if (!Array.isArray(action)) {
+      throw new Error('Invalid parameter. Expected an array for action.');
+    };
+
+    this.ValidateThingIdThingAndToken(thing_id, {}, token);
 
     const payload = { "subject": thing_id, "object": channel_id, "action": action }
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/policies`,
       headers: {
         "Content-Type": this.content_type,
@@ -427,10 +490,16 @@ class Things {
      * 
      */
 
+    if (!Array.isArray(thing_ids) || !Array.isArray(channel_ids) || !Array.isArray(actions)) {
+      throw new Error('Invalid parameters. Expected arrays for actions, things_ids and channel_ids.');
+    };
+
+    this.ValidateThingIdThingAndToken('', {}, token);
+
     const payload = { "subjects": thing_ids, "objects": channel_ids, "actions": actions }
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/connect`,
       headers: {
         "Content-Type": this.content_type,
@@ -457,10 +526,17 @@ class Things {
      * @param {string} token - User token.
      * 
      */
+
+    if (typeof channel_id !== 'string' || channel_id === null) {
+      throw new Error('Invalid channel_id parameter. Expected a string.');
+    };
+
+    this.ValidateThingIdThingAndToken(thing_id, {}, token);
+    
     const payload = { "subjects": thing_id, "objects": channel_id }
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/disconnect`,
       headers: {
         "Content-Type": this.content_type,
@@ -486,9 +562,14 @@ class Things {
      * @returns {Object} - Thing object.
      * 
      */
+
+    if (typeof thing_key !== 'string' || thing_key === null) {
+      throw new Error('Invalid thing_key parameter. Expected a string.');
+    };
+
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/identify`,
       headers: {
         "Content-Type": this.content_type,
@@ -516,6 +597,15 @@ class Things {
      * @param {string} token - User token.
      * @return {Object} - True if thing is authorised, false if not.
      */
+
+    if (
+      typeof thing_id !== 'string' || 
+      typeof channel_id !== 'string' || 
+      typeof action !== 'string' || 
+      typeof entity_type !== 'string' || 
+      typeof token !== 'string') {
+      throw new Error('Invalid parameter types. Expected strings for thing_id, channel_id, action, entity_type, and token.');
+    };
     const access_request = {
       "subject": thing_id,
       "object": channel_id,
@@ -524,7 +614,7 @@ class Things {
     }
     const options = {
       method: "post",
-      maxBodyLength: Infinity,
+      maxBodyLength: 2000,
       url: `${this.things_url}/channels/object/access`,
       headers: {
         "Content-Type": this.content_type,

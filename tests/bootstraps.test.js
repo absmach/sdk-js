@@ -29,7 +29,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.Create(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.Whitelist(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.Update(config, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.View(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.UpdateCerts(config_id,client_cert,client_key, ca, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'patch',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.Remove(config_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'delete',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ describe('Bootstraps', () => {
         return sdk.bootstrap.Bootstrap(external_id, external_key).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',

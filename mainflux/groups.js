@@ -8,8 +8,6 @@ class Groups {
      * Groups API client is used for managing groups. It is used for
      * creating, updating, deleting, and retrieving groups.
      * @param {string} groups_url - The URL of the Groups service.
-     * @param {string} content_type - The content type of the request.
-     * @param {string} groupsEndpoint - The endpoint of the Groups service.
      * @returns {Groups} - Returns a Groups object.
      */
     constructor(groups_url) {
@@ -18,6 +16,17 @@ class Groups {
         this.groupsEndpoint = "groups";
     }
     // groupError = new Errors;
+    //Validation function
+
+    ValidateGroupAndToken(group, token) {
+        if (typeof group !== 'object' || group === null || Array.isArray(group)) {
+            throw new Error('Invalid group parameter. Expected an object.');
+        }
+
+        if (typeof token !== 'string') {
+            throw new Error('Invalid token parameter. Expected a string.');
+        }
+    }
 
     Create(group, token) {
         // Create a new group.
@@ -39,9 +48,12 @@ class Groups {
          * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
          * }
          */
+
+        this.ValidateGroupAndToken(group, token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -69,9 +81,16 @@ class Groups {
          * const group_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879" 
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -101,9 +120,16 @@ class Groups {
          * }
          * 
          */
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -119,7 +145,7 @@ class Groups {
             })
     }
 
-    Update(group, token) {
+    Update(group_id, group, token) {
         //Updates a group's information such a name and metadata.
         /**
          * @method Update - Updates a group's information such a name and metadata when given a
@@ -134,10 +160,17 @@ class Groups {
          * }
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        this.ValidateGroupAndToken(group, token);
+
         const options = {
             method: "put",
-            maxBodyLength: Infinity,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}`,
+            maxBodyLength: 2000,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -163,9 +196,20 @@ class Groups {
          * @returns {object} - Returns a list of a group's children.
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -181,7 +225,7 @@ class Groups {
             })
     }
 
-    Parents(group, query_params, token) {
+    Parents(group_id, query_params, token) {
         //Get a group's parents.
         /**
          * @method Parents - Provides a list of a groups' parents when provided with 
@@ -192,10 +236,21 @@ class Groups {
          * @returns {object} - Returns a list of a group's parents. 
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`,
+            maxBodyLength: 2000,
+            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/parents?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -223,10 +278,21 @@ class Groups {
          * @returns {string} - "Policy created".
          * 
          */
+
+        if (typeof group_id !== 'string' || typeof member_id !== 'string' ) {
+            throw new Error('Invalid parameters. Expected strings for group_id and member_id.');
+        };
+
+        if (!Array.isArray(member_type)) {
+            throw new Error('Invalid parameter. Expected an array for member_type.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const payload = { "object": group_id, "subject": member_id, "actions": member_type };
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/policies`,
             headers: {
                 "Content-Type": this.content_type,
@@ -243,21 +309,28 @@ class Groups {
             })
     }
 
-    Unassign(members_ids, group_id, token) {
+    Unassign(member_id, group_id, token) {
         //Unassign a member from a group.
         /**
          * @method Unassign - Deletes a user's policy over a group through unassigning them. 
          * Requires a valid token, ID's of members of the group and the group ID.
-         * @param {Array} members_ids - The members' IDs.
+         * @param {String} member_id - The member's ID.
          * @param {string} group_id - The group's ID.
          * @param {string} token - The user's access token.
          * @returns {string} - "Policy deleted"
          */
-        const payload = { "object": group_id, "subject": members_ids };
+
+        if (typeof group_id !== 'string' || typeof member_id !== 'string' ) {
+            throw new Error('Invalid parameters. Expected strings for group_id and member_id.');
+        }
+
+        this.ValidateGroupAndToken({}, token);
+
+        const payload = { "object": group_id, "subject": member_id };
         const options = {
             method: "delete",
-            maxBodyLength: Infinity,
-            url: `${this.groups_url}/policies/${members_ids}/${group_id}`,
+            maxBodyLength: 2000,
+            url: `${this.groups_url}/policies/${member_id}/${group_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -265,7 +338,7 @@ class Groups {
             data: JSON.stringify(payload),
         };
         return axios.request(options)
-            .then((response) => {
+            .then((_response) => {
                 return "Policy deleted";
             })
             .catch((error) => {
@@ -282,9 +355,16 @@ class Groups {
          * @returns {object} - Returns a group object with the status reading 'Disabled'.
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`,
             headers: {
                 "Content-Type": this.content_type,
@@ -310,9 +390,20 @@ class Groups {
          * @returns {list} - Returns a list of the members of a group.
          * 
          */
+
+        if (typeof group_id !== 'string' || group_id === null) {
+            throw new Error('Invalid group_id parameter. Expected a string.');
+        };
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        }
+
+        this.ValidateGroupAndToken({}, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,

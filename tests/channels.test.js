@@ -39,7 +39,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -130,7 +130,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -155,7 +155,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -175,7 +175,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -200,7 +200,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -220,7 +220,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -245,7 +245,7 @@ describe('Channels', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -264,14 +264,14 @@ describe('Channels', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${channels_url}/channels/${channel["id"]}`;
+        const expectedUrl = `${channels_url}/channels/${channel_id}`;
 
         const sdk = new mfsdk({ channelsUrl: channels_url });
-        return sdk.channels.Update(channel, token).then(result => {
+        return sdk.channels.Update(channel_id,channel, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -285,14 +285,14 @@ describe('Channels', () => {
     test('Update should update a channel and return success', () => {
         axios.request.mockResolvedValueOnce({ data: channel });
 
-        const expectedUrl = `${channels_url}/channels/${channel["id"]}`;
+        const expectedUrl = `${channels_url}/channels/${channel_id}`;
 
         const sdk = new mfsdk({ channelsUrl: channels_url });
-        return sdk.channels.Update(channel, token).then(result => {
+        return sdk.channels.Update(channel_id, channel, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -306,14 +306,14 @@ describe('Channels', () => {
     test('Disable should delete a channel and return success', () => {
         axios.request.mockResolvedValueOnce({ data: channel });
 
-        const expectedUrl = `${channels_url}/channels/${channel["id"]}/disable`;
+        const expectedUrl = `${channels_url}/channels/${channel_id}/disable`;
 
         const sdk = new mfsdk({ channelsUrl: channels_url });
-        return sdk.channels.Disable(channel, token).then(result => {
+        return sdk.channels.Disable(channel_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -331,14 +331,14 @@ describe('Channels', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${channels_url}/channels/${channel["id"]}/disable`;
+        const expectedUrl = `${channels_url}/channels/${channel_id}/disable`;
 
         const sdk = new mfsdk({ channelsUrl: channels_url });
-        return sdk.channels.Disable(channel, token).then(result => {
+        return sdk.channels.Disable(channel_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,

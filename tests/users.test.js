@@ -48,7 +48,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -120,7 +120,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json'
         },
@@ -140,7 +140,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'get',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -165,7 +165,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'get',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
@@ -185,7 +185,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -211,7 +211,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -232,7 +232,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -258,7 +258,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -279,7 +279,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -305,7 +305,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -326,7 +326,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -352,7 +352,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -377,7 +377,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -406,7 +406,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -427,7 +427,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -453,7 +453,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -474,7 +474,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -500,7 +500,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -527,7 +527,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -558,7 +558,7 @@ describe('Users', () => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
-        maxBodyLength: Infinity,
+        maxBodyLength: 2000,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

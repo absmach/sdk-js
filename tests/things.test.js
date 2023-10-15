@@ -53,7 +53,7 @@ describe('Things', () => {
             expect(result).toEqual(thing);
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -78,7 +78,7 @@ describe('Things', () => {
         return sdk.things.Create(thing, token).catch(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -100,7 +100,7 @@ describe('Things', () => {
         return sdk.things.CreateBulk(things, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -121,7 +121,7 @@ describe('Things', () => {
         return sdk.things.Update(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -142,7 +142,7 @@ describe('Things', () => {
         return sdk.things.Get(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "get",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -162,7 +162,7 @@ describe('Things', () => {
         return sdk.things.GetByChannel(thing_id, query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "get",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -182,7 +182,7 @@ describe('Things', () => {
         return sdk.things.GetAll(query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "get",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -202,7 +202,7 @@ describe('Things', () => {
         return sdk.things.Disable(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -213,8 +213,13 @@ describe('Things', () => {
         });
     });
 
-    test('Update should update a thing and return success', ()=>{
-        axios.request.mockResolvedValue({ data: thing});
+    test('Update should handle a conflict error', ()=>{
+        const errorResponse = {
+            response: {
+                status: 401,
+            },
+        };
+        axios.request.mockRejectedValue(errorResponse);
 
         const expectedUrl = `${things_url}/things/${thing_id}`;
 
@@ -222,7 +227,7 @@ describe('Things', () => {
         return sdk.things.Update(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -230,7 +235,7 @@ describe('Things', () => {
                 },
                 data: JSON.stringify(thing),
             });
-            expect(result).toEqual(thing);
+            console.log(result);
         });
     });
 
@@ -243,7 +248,7 @@ describe('Things', () => {
         return sdk.things.UpdateThingSecret(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -264,7 +269,7 @@ describe('Things', () => {
         return sdk.things.UpdateThingTags(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -285,7 +290,7 @@ describe('Things', () => {
         return sdk.things.UpdateThingOwner(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -297,16 +302,21 @@ describe('Things', () => {
         });
     });
 
-    test('Update should update a thing and return success', ()=>{
-        axios.request.mockResolvedValue({ data: thing});
+    test('Update thing secret should handle a conflict error', ()=>{
+        const errorResponse = {
+            response: {
+                status: 401,
+            },
+        };
+        axios.request.mockRejectedValue(errorResponse);
 
-        const expectedUrl = `${things_url}/things/${thing_id}`;
+        const expectedUrl = `${things_url}/things/${thing_id}/secret`;
 
         const sdk = new mfsdk({thingsUrl: things_url});
-        return sdk.things.Update(thing_id, thing, token).then(result => {
+        return sdk.things.UpdateThingSecret(thing_id, thing, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "patch",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -314,7 +324,7 @@ describe('Things', () => {
                 },
                 data: JSON.stringify(thing),
             });
-            expect(result).toEqual(thing);
+            console.log(result);
         });
     });
 
@@ -328,7 +338,7 @@ describe('Things', () => {
         return sdk.things.Connect(thing_id, channel_id, action, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -350,7 +360,7 @@ describe('Things', () => {
         return sdk.things.Connects(thing_ids, channel_ids, actions, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -372,7 +382,7 @@ describe('Things', () => {
         return sdk.things.Disconnect(thing_id, channel_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -393,7 +403,7 @@ describe('Things', () => {
         return sdk.things.IdentifyThing(thing_key).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",
@@ -419,7 +429,7 @@ describe('Things', () => {
         return sdk.things.AuthoriseThing(thing_id, channel_id, action, entity_type, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: "post",
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     "Content-Type": "application/json",

@@ -7,10 +7,7 @@ class Channels {
      * @class Channels - 
      * Channels API is used for managing Channels. It is used for creating new 
      * channels, retrieving them, updating them and disabling them 
-     * @param {string} channels_url - URL to the Channels service
-     * @param {string} content_type - Content type for the requests which is an application
-     * json
-     * @param {string} channelsEndpoint - Endpoint for the channels' service.
+     * @param {string} channels_url - URL to the Channels service.
      * @returns {Object} -Channels object
      * 
      */
@@ -19,6 +16,22 @@ class Channels {
         this.content_type = "application/json";
         this.channelsEndpoint = "channels";
     }
+    ValidateChannelChannelIDAndToken(channel, channel_id, token) {
+        //Validate channel
+        if (typeof channel !== "object" || channel === null) {
+            throw new Error('Invalid channel parameter. Expected an object.');
+        }
+
+        // Validate channel_id
+        if (typeof channel_id !== "string" || channel_id === null) {
+            throw new Error('Invalid channel_id parameter. Expected a string.');
+        }
+
+        // Validate token
+        if (typeof token !== "string" || token === null) {
+            throw new Error('Invalid token parameter. Expected a string.');
+        }
+    };
 
     Create(channel, token) {
         //Creates a new channel
@@ -41,9 +54,12 @@ class Channels {
          * }
          * 
          */
+
+        this.ValidateChannelChannelIDAndToken(channel, '', token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.channels_url}/${this.channelsEndpoint}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -74,9 +90,16 @@ class Channels {
          * { "name": "channelB", "id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9" }
          * ]
          */
+
+        if (!Array.isArray(channels)) {
+            throw new Error('Invalid parameter. Expected an array for the "channels" parameter.');
+        }
+
+        this.ValidateChannelChannelIDAndToken({}, '', token);
+
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.channels_url}/${this.channelsEndpoint}/bulk`,
             headers: {
                 "Content-Type": this.content_type,
@@ -101,9 +124,12 @@ class Channels {
          * @param {String} token - An access token that is valid.
          * @returns {Object} - Channel object. 
          */
+
+        this.ValidateChannelChannelIDAndToken({}, channel_id, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -128,9 +154,16 @@ class Channels {
          * @param {String} token - An access token that is valid.
          * @returns {List} - Things list. 
          */
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+        };
+
+        this.ValidateChannelChannelIDAndToken({}, channel_id, token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -154,9 +187,16 @@ class Channels {
          * @param {String} token - An access token that is valid.
          * @returns {Object} - Channel Object. 
          */
+
+        if (typeof query_params !== 'object' || query_params === null || Array.isArray(query_params)) {
+            throw new Error('Invalid query parameters. Expected an object.');
+          };
+
+        this.ValidateChannelChannelIDAndToken({}, '', token);
+
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.channels_url}/${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`,
             headers: {
                 "Content-Type": this.content_type,
@@ -172,7 +212,7 @@ class Channels {
             })
     }
 
-    Update(channel, token) {
+    Update(channel_id, channel, token) {
         //Updates channel with specified id.
         /**
          * @method Update - Updates channel with specified id.
@@ -180,10 +220,13 @@ class Channels {
          * @param {String} token - An access token that is valid.
          * @returns {Object} - Channel Object. 
          */
+
+        this.ValidateChannelChannelIDAndToken(channel, channel_id, token);
+
         const options = {
             method: "put",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel["id"]}`,
+            maxBodyLength: 2000,
+            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -199,7 +242,7 @@ class Channels {
             })
     }
 
-    Disable(channel, token) {
+    Disable(channel_id, token) {
         //Disables channel with specified id.
         /**
          * @method Disable - Disables channel with specified id.
@@ -207,10 +250,13 @@ class Channels {
          * @param {String} token - An access token that is valid.
          * @returns {Object} - Channel Object. 
          */
+
+        this.ValidateChannelChannelIDAndToken({}, channel_id, token);
+        
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel["id"]}/disable`,
+            maxBodyLength: 2000,
+            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/disable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,

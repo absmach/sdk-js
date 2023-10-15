@@ -26,7 +26,7 @@ describe('Certs', () => {
         return sdk.certs.Issue(thing_id, valid, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ describe('Certs', () => {
         return sdk.certs.ViewByThing(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ describe('Certs', () => {
         return sdk.certs.ViewBySerial(cert_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ describe('Certs', () => {
         return sdk.certs.Revoke(thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'delete',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 url: expectedUrl,
                 headers: {
                     'Content-Type': 'application/json',

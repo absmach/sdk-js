@@ -6,8 +6,6 @@ class Messages{
      * @method Messages - Messages is used to manage messages.
      * It provides methods for sending and reading messages.
      * @param {string} readers_url - The url of the readers service.
-     * @param {string} httpadapter_url - The URL of the Mainflux Messages adapter.
-     * @param {string} content_type - The content type of the request.
      * @returns {Messages} - Returns a Messages object.
      */
     constructor(readers_url, httpadapter_url){
@@ -29,6 +27,19 @@ class Messages{
          *       [{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]
          * @param {string} thing_key - The secret of the thing sending the message.
          */
+
+        if (typeof channel_id !== "string" || channel_id === null) {
+            throw new Error('Invalid channel_id parameter. Expected a string.');
+        }
+
+        if (typeof thing_key !== "string" || thing_key === null) {
+            throw new Error('Invalid thing_key parameter. Expected a string.');
+        }
+
+        if (!Array.isArray(msg)) {
+            throw new Error('Invalid msg parameter. Expected an array.');
+        }
+
         const chan_name_parts = channel_id.split(".", 2);
         const chan_id = chan_name_parts[0];
         let subtopic = "";
@@ -39,8 +50,8 @@ class Messages{
 
         const options = {
             method: "post",
-            maxBodyLength: Infinity,
-            url: `${this.httpadapter_url}/http/channels/${chan_id}/messages/subtopic`,
+            maxBodyLength: 2000,
+            url: `${this.httpadapter_url}/http/channels/${chan_id}/messages/${subtopic}`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Thing ${thing_key}`,
@@ -65,6 +76,15 @@ class Messages{
          * @param {string} channel_id - The channel_id of the channel to read the message from.
          * @param {string} token - The token to be used for authentication.
          */
+
+        if (typeof channel_id !== "string" || channel_id === null) {
+            throw new Error('Invalid channel_id parameter. Expected a string.');
+        }
+
+        if (typeof token !== "string" || token === null) {
+            throw new Error('Invalid token parameter. Expected a string.');
+        }
+        
         const chan_name_parts = channel_id.split(".", 2);
         const chan_id = chan_name_parts[0];
         let subtopic = "";
@@ -75,7 +95,7 @@ class Messages{
 
         const options = {
             method: "get",
-            maxBodyLength: Infinity,
+            maxBodyLength: 2000,
             url: `${this.readers_url}/channels/${chan_id}/messages`,
             headers: {
                 "Content-Type": this.content_type,

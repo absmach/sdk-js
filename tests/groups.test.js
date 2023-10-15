@@ -36,7 +36,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -129,7 +129,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -154,7 +154,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -170,11 +170,11 @@ describe('Groups', () => {
         const expectedUrl = `${groups_url}/groups/${group_id}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Update(group, token).then(result => {
+        return sdk.groups.Update(group_id, group, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -196,11 +196,11 @@ describe('Groups', () => {
         const expectedUrl = `${groups_url}/groups/${group_id}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Update(group, token).then(result => {
+        return sdk.groups.Update(group_id, group, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'put',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -221,7 +221,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -246,7 +246,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -259,14 +259,14 @@ describe('Groups', () => {
     test('Parents should retrieve all of a groups children and return success', () => {
         axios.request.mockResolvedValueOnce({ data: groups });
 
-        const expectedUrl = `${groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
+        const expectedUrl = `${groups_url}/groups/${group_id}/parents?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Parents(group, query_params, token).then(result => {
+        return sdk.groups.Parents(group_id, query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -284,14 +284,14 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${groups_url}/groups/${group["id"]}/parents?${new URLSearchParams(query_params).toString()}`;
+        const expectedUrl = `${groups_url}/groups/${group_id}/parents?${new URLSearchParams(query_params).toString()}`;
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Parents(group, query_params, token).then(result => {
+        return sdk.groups.Parents(group_id, query_params, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -312,7 +312,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -339,7 +339,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -353,15 +353,15 @@ describe('Groups', () => {
     test('Unassign should unassign a group and return success', () => {
         axios.request.mockResolvedValueOnce("Policy deleted");
 
-        const expectedUrl = `${groups_url}/policies/${members_ids}/${group_id}`;
-        const payload = { "object": group_id, "subject": members_ids };
+        const expectedUrl = `${groups_url}/policies/${member_id}/${group_id}`;
+        const payload = { "object": group_id, "subject": member_id };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Unassign(members_ids, group_id, token).then(result => {
+        return sdk.groups.Unassign(member_id, group_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'delete',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -380,15 +380,15 @@ describe('Groups', () => {
         };
         axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${groups_url}/policies/${members_ids}/${group_id}`;
-        const payload = { "object": group_id, "subject": members_ids };
+        const expectedUrl = `${groups_url}/policies/${member_id}/${group_id}`;
+        const payload = { "object": group_id, "subject": member_id };
 
         const sdk = new mfsdk({ groupsUrl: groups_url });
-        return sdk.groups.Unassign(members_ids, group_id, token).then(result => {
+        return sdk.groups.Unassign(member_id, group_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'delete',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -409,7 +409,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -434,7 +434,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'post',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -454,7 +454,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -479,7 +479,7 @@ describe('Groups', () => {
             expect(axios.request).toHaveBeenCalledWith({
                 url: expectedUrl,
                 method: 'get',
-                maxBodyLength: Infinity,
+                maxBodyLength: 2000,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,

@@ -16,694 +16,937 @@ const mySdk = new SDK({
 
 //Things.js examples.
 
-mySdk.things.Create(
-    { "name": "<thing_name>"},
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Create(
+        { "name": "<thing_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Get(
-    "<thing_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Get(
+        "<thing_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.CreateBulk(
-    [{ "name": "<thing_name>" }, { "name": "<thing_name>" }],
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.CreateBulk(
+        [{ "name": "<thing_name>" }, { "name": "<thing_name>" }],
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.GetAll(
-    { "offset": 0, "limit": 10 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.GetAll(
+        { "offset": 0, "limit": 10 },
+        "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTczOTEyMjAsImlhdCI6MTY5NzM5MDMyMCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.pa1rXfdp3bBck3Bku-wH4iyo8rMEqd-YcH16n7QHRYuCdf6j-XzpyJZwahE5YQ5_B8Z-EfPQXG0j8qQOwxl8Tg"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Disable(
-    "<thing_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Disable(
+        "<thing_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Update(
-    "<thing_id>",
-    { "name": "<thing_name>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Update(
+        "<thing_id>",
+        { "name": "<thing_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.UpdateThingSecret(
-    "<thing_id>",
-    { "secret": "<thing_secret>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.UpdateThingSecret(
+        "<thing_id>",
+        { "secret": "<thing_secret>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.UpdateThingTags(
-    "<thing_id>",
-    { "tags": ["stheno", "euryale"] },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.UpdateThingTags(
+        "<thing_id>",
+        { "tags": ["stheno", "euryale"] },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.UpdateThingOwner(
-    "<thing_id>",
-    { "owner": "<thing_owner>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.UpdateThingOwner(
+        "<thing_id>",
+        { "owner": "<thing_owner>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Connect(
-    "<thing_id>",
-    "<channel_id>",
-    ["action"],
-    "token"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Connect(
+        "<thing_id>",
+        "<channel_id>",
+        ["action"],
+        "token"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Disconnect(
-    ["<thing_id>"],
-    ["<channel_id>"],
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Disconnect(
+        ["<thing_id>"],
+        ["<channel_id>"],
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.Connects(
-    ["<thing_id>", "<thing_id>"],
-    ["<channel_id>", "<channel_id>"],
-    ["<action>", "<action>", "<action>"],
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.Connects(
+        ["<thing_id>", "<thing_id>"],
+        ["<channel_id>", "<channel_id>"],
+        ["<action>", "<action>", "<action>"],
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.GetByChannel(
-    "<thing_id>",
-    { "offset": 0, "limit": 5 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.things.GetByChannel(
+        "<thing_id>",
+        { "offset": 0, "limit": 5 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.IdentifyThing({
-    "secret": "<thing_secret>"
-  })
-    .then(response => {
-        console.log(response);
+try {
+    mySdk.things.IdentifyThing({
+        "secret": "<thing_secret>"
     })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.things.AuthoriseThing(
-    "<thing_id>",
-    "<channel_id>",
-    "<action>",
-    "<enity_type>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.things.AuthoriseThing(
+        "<thing_id>",
+        "<channel_id>",
+        "<action>",
+        "<enity_type>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
 //Users.js
 
-mySdk.users.Create(
-    { "credentials": { "identity": "<user_email>", "secret": "<user_secret>" } },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response);
-    });
+try {
+    mySdk.users.Create(
+        { "name": "<user_name>", "credentials": { "identity": "<user_email>", "secret": "<user_secret>" } },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Get(
-    "<user_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.Get(
+        "<user_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Login(
-    { "identity": "<user_id>", "secret": "<user_secret>" }
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error);
-    });
+try {
+    mySdk.users.Login(
+        { "identity": "<user_id>", "secret": "<user_secret>" }
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.RefreshToken(
-    "<user_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.RefreshToken(
+        "<user_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Update(
-    { "id": "<user_id>", "name": "<user_name>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.Update(
+        { "id": "<user_id>", "name": "<user_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.UpdateUserIdentity(
-    { "id": "<user_id>", "identity": "<user_identity>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.UpdateUserIdentity(
+        { "id": "<user_id>", "identity": "<user_identity>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.UpdateUserTags(
-    { "id": "<user_id>", "tags": ["foo", "bar"] },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.UpdateUserTags(
+        { "id": "<user_id>", "tags": ["foo", "bar"] },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.UpdateUserOwner(
-    { "id": "<user_id>", "owner": "<owner_identity>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.UpdateUserOwner(
+        { "id": "<user_id>", "owner": "<owner_identity>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Disable(
-    { "id": "<user_id>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.Disable(
+        { "id": "<user_id>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Enable(
-    { "id": "<user_id>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.Enable(
+        { "id": "<user_id>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.GetAll(
-    { "offset": 0, "limit": 10 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.GetAll(
+        { "offset": 0, "limit": 10 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.UpdateUserPassword(
-    "<old_secret>", "<new_secret>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.UpdateUserPassword(
+        "<old_secret>", "<new_secret>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.Memberships(
-    "<member_id>",
-    {query_params},
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.users.Memberships(
+        "<member_id>",
+        { query_params },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.users.AuthoriseUser(
-    "<user_id>",
-    "<group_id>",
-    "<action>",
-    "<entity_type>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.users.AuthoriseUser(
+        "<user_id>",
+        "<group_id>",
+        "<action>",
+        "<entity_type>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
 //Groups.js
 
-mySdk.groups.Create(
-    { "name": "<group_name>", "parent_id":"<parent_id>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Create(
+        { "name": "hatshepsut" },
+        "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTczODcxNjgsImlhdCI6MTY5NzM4NjI2OCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.kPctWq5eR1UdK1bEERlY42O2oqW1TNdA-N4IYQ24lLxdZ6HOGU7vR9FgtXdH0S2XXcSJR3flq8lmsPOB_s9zAA"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Get(
-    "<group_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Get(
+        "<group_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.GetAll(
-    { "offset": 0, "limit": 10 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.GetAll(
+        { "offset": 0, "limit": 10 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Update(
-    { "id": "<group_id>", "name": "<group_name>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Update(
+        "<group_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Children(
-    "<group_id>",
-    { "offset": 0, "limit": 2, "tree": true },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Children(
+        "<group_id>",
+        { "offset": 0, "limit": 2, "tree": true },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Parents(
-    { "id": "<group_id>" },
-    { "offset": 0, "limit": 5 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Parents(
+        "<group_id>",
+        { "offset": 0, "limit": 5 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Assign(
-    "<group_id>",
-    "<member_id>",
-    ["member_type"],
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Assign(
+        "<group_id>",
+        "<member_id>",
+        ["<action>"],
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Unassign(
-    "<members_ids>",
-    "<group_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Unassign(
+        "<member_id>",
+        "<group_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Disable(
-    "<group_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.groups.Disable(
+        "<group_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.groups.Members(
-    "<group_id>",
-    { "offset": 0, "limit": 10 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.groups.Members(
+        "<group_id>",
+        { "offset": 0, "limit": 10 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
 //Channels.js
 
-mySdk.channels.Create(
-    { "name": "<channel_name>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.Create(
+        { "name": "<channel_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.Get(
-    "<channel_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.Get(
+        "<channel_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.CreateBulk(
-    [{ "name": "<channel_name>" }, { "name": "<channel_name>" }],
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.CreateBulk(
+        [{ "name": "<channel_name>" }, { "name": "<channel_name>" }],
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.GetAll(
-    { "offset": 0, "limit": 10},
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.GetAll(
+        { "offset": 0, "limit": 10},
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.Update(
-    { "id": "<channel_id>", "name": "<channel_name>" },
-   "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.Update(
+        "<channel_id>",
+        { "name": "<channel_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.Disable(
-    { "id": "<channel_id>" },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.channels.Disable(
+        { "id": "<channel_id>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
-mySdk.channels.GetByThing(
-    "<channel_id>",
-    { "offset": 0, "limit": 5 },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.channels.GetByThing(
+        "<channel_id>",
+        { "offset": 0, "limit": 5 },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+}
+catch (error) {
+    console.error(error.message);
+}
 
 //Certs.js
 
-mySdk.certs.Issue(
-    "9745f2ea-f776-46b1-9b44-1cfd1ad4c6f1",
-    "10h",
-    "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTY1NjM2NjQsImlhdCI6MTY5NjUwOTY2NCwiaWRlbnRpdHkiOiJ3aXphcmRseV9ob3BwZXJAZW1haWwuY29tIiwiaXNzIjoiY2xpZW50cy5hdXRoIiwic3ViIjoiMGE1ZjJlMjEtMWE4Yi00NjBlLWJmYTktNzMyZTU3MGRmMDk1IiwidHlwZSI6ImFjY2VzcyJ9.RWFnWUL9JYxLjAiFfbnnW14ZCv033aux8-8qFmCqiczCNGxc6EXsy8hawuXVkCUwk0vWnCe42TieqEIwwlbvHg"
-)
-    .then(result => {
-        console.log(result);
-    })
-    .catch(error => {
-        console.error(error);
-    });
+try {
+    mySdk.certs.Issue(
+        "<thing_id>",
+        "<time_limit>",
+        "<token>"
+    )
+        .then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.certs.ViewByThing(
-    "<thing_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.certs.ViewByThing(
+        "<thing_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.certs.ViewBySerial(
-    "<cert_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.certs.ViewBySerial(
+        "<cert_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.certs.Revoke(
-    "<thing_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.certs.Revoke(
+        "<thing_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
 // Bootstrap.js
 
-mySdk.bootstrap.Create(
-    {
-        "external_id": "<external_id>",
-        "external_key": "<external_key>",
-        "thing_id": "<thing_id>",
-        "name": "<name>"
-    },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.bootstrap.Create(
+        {
+            "external_id": "<external_id>",
+            "external_key": "<external_key>",
+            "thing_id": "<thing_id>",
+            "name": "<name>"
+        },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.Whitelist(
-    {
-        "external_id": "<external_i>",
-        "external_key": "<external_key>",
-        "thing_id": "<thing_id>",
-        "name": "<name>"
+try {
+    mySdk.bootstrap.Whitelist(
+        {
+            "external_id": "<external_i>",
+            "external_key": "<external_key>",
+            "thing_id": "<thing_id>",
+            "name": "<name>"
 
-    },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+        },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.Update(
-    {
-        "thing_id": "<thing_id>",
-        "name": "<name>"
-    },
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.bootstrap.Update(
+        {
+            "thing_id": "<thing_id>",
+            "name": "<name>"
+        },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.View(
-    "<thing_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.bootstrap.View(
+        "<thing_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.UpdateCerts(
-    "<config_id>",
-    "<client_cert>",
-    "<client_key>",
-    "<ca>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.bootstrap.UpdateCerts(
+        "<config_id>",
+        "<client_cert>",
+        "<client_key>",
+        "<ca>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.Remove(
-    "<config_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })   
-    .catch(error => {
-        console.error(error.response.data);
-    });
+try {
+    mySdk.bootstrap.Remove(
+        "<config_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch {
+    console.error(error.message);
+}
 
-mySdk.bootstrap.Bootstrap(
-    "<external_id>",
-    "<external_key>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
-
+try {
+    mySdk.bootstrap.Bootstrap(
+        "<external_id>",
+        "<external_key>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch {
+    console.error(error.message);
+}
 
 //Messages.js
 
+try {
 mySdk.messages.Send(
     "<channel_id>",
-    '[{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]',
+    '<msg>',
     "<thing_key>"
 )
     .then(response => {
@@ -712,7 +955,11 @@ mySdk.messages.Send(
     .catch(error => {
         console.error(error.response.data);
     });
+} catch (error) {
+    console.error(error.message);
+}
 
+try {
 mySdk.messages.Read(
     "<channel_id>",
     "<token>"
@@ -723,3 +970,6 @@ mySdk.messages.Read(
     .catch(error => {
         console.error(error.response.data);
     });
+} catch (error) {
+    console.error(error.message);
+}
