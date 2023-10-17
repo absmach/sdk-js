@@ -1,6 +1,5 @@
-// import Errors from "./errors.js";
-
 const axios = require("axios");
+const Errors = require("./errors");
 
 class Certs {
   //Certs API Client
@@ -40,6 +39,8 @@ class Certs {
         }
     }
 
+    certsError = new Errors;
+
     Issue(thing_id , valid, token) {
         //Issue a certificate
         /**
@@ -75,8 +76,13 @@ class Certs {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.certsError.HandleError(
+                        this.certsError.certs.issue,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     ViewByThing(thing_id, token) {
@@ -106,8 +112,13 @@ class Certs {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.certsError.HandleError(
+                        this.certsError.certs.viewbything,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     ViewBySerial(cert_id, token) {
@@ -140,8 +151,13 @@ class Certs {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.certsError.HandleError(
+                        this.certsError.certs.viewbyserial,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Revoke(thing_id, token) {
@@ -169,8 +185,13 @@ class Certs {
                 return "DELETED";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.certsError.HandleError(
+                        this.certsError.certs.revoke,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
   Revoke(thing_id, token) {

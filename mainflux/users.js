@@ -103,7 +103,7 @@ class Users {
          * }
          */
 
-        this.ValidateUserAndToken(user);
+        this.ValidateUserAndToken(user, '');
 
         const options = {
             method: "post",

@@ -1,5 +1,5 @@
-// import fetch from "node-fetch";
 const axios = require("axios");
+const Errors = require("./errors");
 
 class Channels {
   //Channels API client
@@ -52,6 +52,8 @@ class Channels {
         }
     };
 
+    channelError = new Errors;
+
     Create(channel, token) {
         //Creates a new channel
         /**
@@ -91,8 +93,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.create,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     CreateBulk(channels, token) {
@@ -131,8 +138,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.createbulk,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Get(channel_id, token) {
@@ -160,8 +172,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.get,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     GetByThing(channel_id, query_params, token) {
@@ -194,8 +211,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.getbything,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     GetAll(query_params, token) {
@@ -227,8 +249,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.getall,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Update(channel_id, channel, token) {
@@ -257,8 +284,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.update,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Disable(channel_id, token) {
@@ -286,8 +318,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.disable,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
   Disable(channel, token) {
