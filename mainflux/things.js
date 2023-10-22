@@ -72,7 +72,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -122,7 +122,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(things),
+      data: things,
     };
     return axios
       .request(options)
@@ -327,7 +327,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -378,7 +378,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -430,7 +430,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -481,7 +481,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -498,7 +498,7 @@ class Things {
       });
   }
 
-  Connect(thing_id, channel_id, action, token) {
+  Connect(thing_id, channel_id, actions, token) {
     //Connects thing to channel.
     /**
      * @method Connect - Connects thing to channel when provided with a valid token,
@@ -514,7 +514,7 @@ class Things {
       throw new Error('Invalid channel_id parameter. Expected a string.');
     };
 
-    if (!Array.isArray(action)) {
+    if (!Array.isArray(actions)) {
       throw new Error('Invalid parameter. Expected an array for action.');
     };
 
@@ -529,7 +529,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
     return axios
       .request(options)
@@ -574,7 +574,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
     return axios
       .request(options)
@@ -591,28 +591,28 @@ class Things {
       });
   }
 
-  Disconnect(thing_id, channel_id, token) {
+  Disconnect(thing_ids, channel_ids, token) {
     //Disconnects thing from channel.
     /**
      * @method Disconnect - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id.
-     * @param {list} thing_id - Thing ID.
-     * @param {list} channel_id - Channel ID.
+     * @param {list} thing_ids - Thing ID.
+     * @param {list} channel_ids - Channel ID.
      * @param {string} token - User token.
      *
      */
 
-    if (!Array.isArray(channel_id)) {
+    if (!Array.isArray(channel_ids)) {
       throw new Error('Invalid parameter. Expected an array for channel_id.');
     };
 
-    if (!Array.isArray(thing_id)) {
+    if (!Array.isArray(thing_ids)) {
       throw new Error('Invalid parameter. Expected an array for thing_id.');
     };
 
     this.ValidateThingIdThingAndToken('', {}, token);
     
-    const payload = { "subjects": thing_id, "objects": channel_id }
+    const payload = { "subjects": thing_ids, "objects": channel_ids }
     const options = {
       method: "post",
       maxBodyLength: 2000,
@@ -621,7 +621,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
     return axios
       .request(options)
@@ -711,7 +711,7 @@ class Things {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(access_request),
+      data: access_request,
     };
     return axios
       .request(options)

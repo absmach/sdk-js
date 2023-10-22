@@ -72,7 +72,7 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -112,7 +112,7 @@ class Users {
             headers: {
                 "Content-Type": this.content_type,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -157,7 +157,7 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${refresh_token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -173,7 +173,7 @@ class Users {
             });
     }
 
-    Update(user, token) {
+    Update(user, user_id, token) {
         // Update a user
         /**
          * @method Update - Update a user. Updates a user's name and metadata.
@@ -188,17 +188,21 @@ class Users {
          * 
          */
 
-        this.ValidateUserAndToken(user, token);
+        this.ValidateUserAndToken({}, token);
+
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}`,
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -214,7 +218,7 @@ class Users {
             });
     }
 
-    UpdateUserIdentity(user, token) {
+    UpdateUserIdentity(user, user_id, token) {
         // Update a user identity
         /**
          * @method UpdateUserIdentity - Update a user identity for a currently logged in user.
@@ -233,16 +237,20 @@ class Users {
          */
 
         this.ValidateUserAndToken(user, token);
+        
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}/identity`,
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -258,7 +266,7 @@ class Users {
             });
     }
 
-    UpdateUserTags(user, token) {
+    UpdateUserTags(user,user_id, token) {
         // Update a user's tags.
         /**
          *  Updates tags of the user with provided ID. Tags is updated using 
@@ -283,16 +291,20 @@ class Users {
          */
 
         this.ValidateUserAndToken(user, token);
+        
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}/tags`,
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
 
         return axios.request(options)
@@ -309,7 +321,7 @@ class Users {
             });
     }
 
-    UpdateUserOwner(user, token) {
+    UpdateUserOwner(user, user_id, token) {
         // Update a user's owner.
         /**
         *  Updates owner of the user with provided ID. The owner is updated using 
@@ -336,15 +348,19 @@ class Users {
 
         this.ValidateUserAndToken(user, token);
 
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
+
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}/owner`,
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -386,7 +402,7 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(secret),
+            data: secret,
         };
         return axios.request(options)
             .then((response) => {
@@ -492,7 +508,7 @@ class Users {
             });
     }
 
-    Disable(user, token) {
+    Disable(user, user_id, token) {
         // Disable a user
         /**
          * Disables a user with provided ID and valid token.
@@ -509,15 +525,19 @@ class Users {
 
         this.ValidateUserAndToken(user, token);
 
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
+
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}/disable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -533,7 +553,7 @@ class Users {
             });
     }
 
-    Enable(user, token) {
+    Enable(user, user_id, token) {
         // Enable a user.
         /**
          * Enables a previously disabled user when provided with token and valid ID.
@@ -554,12 +574,12 @@ class Users {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`,
+            url: `${this.users_url}/${this.usersEndpoint}/${user_id}/enable`,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
@@ -604,7 +624,6 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
@@ -656,7 +675,7 @@ class Users {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(access_request),
+            data: access_request,
         };
         return axios.request(options)
             .then((_response) => {

@@ -86,7 +86,7 @@ class Channels {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: channel,
         };
         return axios.request(options)
             .then((response) => {
@@ -131,7 +131,7 @@ class Channels {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channels),
+            data: channels,
         };
         return axios.request(options)
             .then((response) => {
@@ -277,7 +277,7 @@ class Channels {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: channel,
         };
         return axios.request(options)
             .then((response) => {
@@ -355,5 +355,4 @@ class Channels {
   }
 }
 
-// export default Channels;
 module.exports = Channels;

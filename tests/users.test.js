@@ -20,22 +20,42 @@ describe("Users", () => {
     status: "enabled",
   };
   const user_id = "886b4266-77d1-4258-abae-2931fb4f16de";
-  const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
-  const old_secret = "12345678";
-  const new_secret = "87654321";
-  const payload = {
-    old_secret: old_secret,
-    new_secret: new_secret,
+  const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9';
+  const old_secret = '12345678';
+  const new_secret = '87654321';
+  const tokens = {
+    'access_token': 'eyJhbGciOiJIUzUxMiIsInR5cCI6IJhZG1pbkBleGFtcGxlLmNvbSIsA', 
+    'refresh_token': 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc3OD',
+    'access_type': 'Bearer'};
+  const users = [
+    {
+      "name":'sekhmet',
+      "id": '886b4266-77d1-4258-abae-2931fb4f16de', 
+      "credentials": {
+        "identity": 'sekhmet@email.com'
+      }
+    },
+    {
+      "name":'bastet',
+      "id": '886b4266-77d1-4258-abae-2931fb4f16de', 
+      "credentials": {
+        "identity": 'bastet@email.com'
+      }
+    },
+  ];
+  const member_id = '886b4266-77d1-4258-abae-2931fb4f16de';
+  const memberships = [
+    {"name":"vhagar"},
+    {"name":"balerion"},
+  ];
+  const group_id = '886b4266-77d1-4258-abae-2931fb4f16de';
+  const action= 'm_read';
+  const entity_type = 'client';
+  const query_params = {
+    "offset": 0,
+    "limit": 10,
   };
-  const access_request = {
-    subject: user_id,
-    object: "886b4266-77d1-4258-abae-2931fb4f16de",
-    action: "m_read",
-    entity_type: "client",
-  };
-  const group_id = "886b4266-77d1-4258-abae-2931fb4f16de";
-  const action = "m_read";
-  const entity_type = "client";
+
 
   test("Create should create a user and return success", () => {
     axios.request.mockResolvedValueOnce({ data: user });
@@ -52,7 +72,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -77,17 +97,15 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result.error.status).toBe(1);
-      expect(result.error.message).toBe(
-        "Failed due to using an existing identity.",
-      );
+      expect(result.error.message).toBe('Entity already exists.');
     });
   });
 
-  test("Login should create a token for a user and return success", () => {
-    axios.request.mockResolvedValueOnce({ data: user });
+  test('Login should create a token for a user and return success', () => {
+    axios.request.mockResolvedValueOnce({ data: tokens });
 
     const expectedUrl = `${users_url}/users/tokens/issue`;
 
@@ -100,16 +118,16 @@ describe("Users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      expect(result).toEqual(user);
+      expect(result).toEqual(tokens);
     });
   });
 
   test("Login should handle a conflict error", () => {
     const errorResponse = {
       response: {
-        status: 401,
+        status: 404,
       },
     };
     axios.request.mockRejectedValueOnce(errorResponse);
@@ -125,9 +143,9 @@ describe("Users", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe('A non-existent entity request.');
     });
   });
 
@@ -162,17 +180,62 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Get(user_id, token).then((result) => {
+    return sdk.users.Get(user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'get',
         maxBodyLength: 2000,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+      });
+      expect(result).toBe("Missing or invalid access token provided.");
+    });
+  });
+
+  test('GetAll should get a list of users and return success', () => {
+    axios.request.mockResolvedValueOnce({ data: users });
+
+    const expectedUrl = `${users_url}/users?${new URLSearchParams(query_params).toString()}`;
+
+    const sdk = new mfsdk({ usersUrl: users_url });
+    return sdk.users.GetAll(query_params, token).then(result => {
+      expect(axios.request).toHaveBeenCalledWith({
+        url: expectedUrl,
+        method: 'get',
+        maxBodyLength: 2000,
+        headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(result);
+      expect(result).toEqual(users);
+    });
+  });
+
+  test('GetAll should handle a conflict error', () => {
+    const errorResponse = {
+      response: {
+        status: 401,
+      },
+    };
+    axios.request.mockRejectedValueOnce(errorResponse);
+
+    const expectedUrl = `${users_url}/users?${new URLSearchParams(query_params).toString()}`;
+
+    const sdk = new mfsdk({ usersUrl: users_url });
+    return sdk.users.GetAll(query_params, token).then(result => {
+      expect(axios.request).toHaveBeenCalledWith({
+        url: expectedUrl,
+        method: 'get',
+        maxBodyLength: 2000,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -182,7 +245,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update(user, token).then((result) => {
+    return sdk.users.Update(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -191,7 +254,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -208,7 +271,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Update(user, token).then((result) => {
+    return sdk.users.Update(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -217,9 +280,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -229,7 +292,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/identity`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserIdentity(user, token).then((result) => {
+    return sdk.users.UpdateUserIdentity(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -238,7 +301,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -255,7 +318,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/identity`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserIdentity(user, token).then((result) => {
+    return sdk.users.UpdateUserIdentity(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -264,9 +327,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -276,7 +339,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/tags`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserTags(user, token).then((result) => {
+    return sdk.users.UpdateUserTags(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -285,7 +348,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -302,7 +365,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/tags`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserTags(user, token).then((result) => {
+    return sdk.users.UpdateUserTags(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -311,9 +374,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -323,7 +386,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/owner`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserOwner(user, token).then((result) => {
+    return sdk.users.UpdateUserOwner(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -332,7 +395,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -349,7 +412,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/owner`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.UpdateUserOwner(user, token).then((result) => {
+    return sdk.users.UpdateUserOwner(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'patch',
@@ -358,9 +421,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -383,8 +446,10 @@ describe("Users", () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(secret),
+        data: secret,
       });
+      expect(result).toEqual(user);
+    });
   });
 
   test("UpdateUserPassword should handle a conflict error", () => {
@@ -410,8 +475,10 @@ describe("Users", () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(secret),
+        data: secret,
       });
+      expect(result).toBe("Missing or invalid access token provided.");
+    });
   });
 
   test("Disable should disable user and return success", () => {
@@ -420,7 +487,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/disable`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Disable(user, token).then((result) => {
+    return sdk.users.Disable(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -429,7 +496,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -446,7 +513,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/disable`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Disable(user, token).then((result) => {
+    return sdk.users.Disable(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -455,9 +522,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -467,7 +534,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/enable`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Enable(user, token).then((result) => {
+    return sdk.users.Enable(user,user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -476,7 +543,7 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
       expect(result).toEqual(user);
     });
@@ -493,7 +560,7 @@ describe("Users", () => {
     const expectedUrl = `${users_url}/users/${user_id}/enable`;
 
     const sdk = new mfsdk({ usersUrl: users_url });
-    return sdk.users.Enable(user, token).then((result) => {
+    return sdk.users.Enable(user, user_id, token).then(result => {
       expect(axios.request).toHaveBeenCalledWith({
         url: expectedUrl,
         method: 'post',
@@ -502,9 +569,9 @@ describe("Users", () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(user),
+        data: user,
       });
-      console.log(result);
+      expect(result).toBe("Missing or invalid access token provided.");
     });
   });
 
@@ -529,8 +596,10 @@ describe("Users", () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(access_request),
+        data: access_request,
       });
+      expect(result).toEqual(true);
+    });
   });
 
   test("Authorise User should handle a conflict error", () => {
@@ -558,7 +627,54 @@ describe("Users", () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        data: JSON.stringify(access_request),
+        data: access_request,
       });
+      expect(result).toBe(false);
+    });
+  });
+
+  test('Memberships should get a list of groups associated with users and return success', () => {
+    axios.request.mockResolvedValueOnce({ data: memberships });
+
+    const expectedUrl = `${users_url}/users/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`;
+
+    const sdk = new mfsdk({ usersUrl: users_url });
+    return sdk.users.Memberships(member_id, query_params, token).then(result => {
+      expect(axios.request).toHaveBeenCalledWith({
+        url: expectedUrl,
+        method: 'get',
+        maxBodyLength: 2000,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      expect(result).toEqual(memberships);
+    });
+  });
+
+  test('Memberships should handle a conflict error', () => {
+    const errorResponse = {
+      response: {
+        status: 401,
+      },
+    };
+    axios.request.mockRejectedValueOnce(errorResponse);
+
+    const expectedUrl = `${users_url}/users/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`;
+
+    const sdk = new mfsdk({ usersUrl: users_url });
+    return sdk.users.Memberships(member_id, query_params, token).then(result => {
+      expect(axios.request).toHaveBeenCalledWith({
+        url: expectedUrl,
+        method: 'get',
+        maxBodyLength: 2000,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      expect(result).toBe("Missing or invalid access token provided.");
+    });
   });
 });

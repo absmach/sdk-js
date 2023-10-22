@@ -94,7 +94,7 @@ class Bootstrap {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
@@ -140,7 +140,7 @@ class Bootstrap {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
@@ -186,7 +186,7 @@ class Bootstrap {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
@@ -274,7 +274,7 @@ class Bootstrap {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(payload),
+            data: payload,
         };
         return axios.request(options)
             .then((response) => {
