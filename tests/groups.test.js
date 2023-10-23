@@ -3,32 +3,27 @@ const mfsdk = require("mainflux-sdk");
 
 jest.mock("axios");
 
-describe("Groups", () => {
-  const groups_url = "http://localhost";
-  const group = {
-    name: "group_test",
-    id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
-    parent_id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
-    status: "enabled",
-    owner_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-  };
-  const group_id = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
-  const query_params = {
-    offset: 0,
-    limit: 10,
-  };
-  const groups = [
-    { name: "groupA", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
-    { name: "groupB", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
-  ];
-  const member_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
-  const member_type = "m_read";
-  const members_ids = [
-    "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-  ];
+describe('Groups', () => {
+    const groups_url = "http://localhost";
+    const group = {
+        "name": "group_test",
+        "id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
+        "parent_id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
+        "status": "enabled",
+        "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+    };
+    const group_id = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
+    const query_params = {
+        "offset": 0, "limit": 10
+    };
+    const groups = [
+        { "name": "groupA", "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
+        { "name": "groupB", "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879" }
+    ];
+    const member_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
+    const member_type = ["m_read", "m_write"];
+    const members_ids = ["bb7edb32-2eac-4aad-aebe-ed96fe073879", "bb7edb32-2eac-4aad-aebe-ed96fe073879"];
 
   test("Create should create a group and return success", () => {
     axios.request.mockResolvedValueOnce({ data: group });

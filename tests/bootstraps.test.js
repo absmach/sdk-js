@@ -180,10 +180,10 @@ describe("Bootstraps", () => {
     test( 'Whitelist should update a config and return success', ()=>{
         axios.request.mockResolvedValueOnce({data: 'Configuration updated'});
 
-        const expectedUrl = `${bootstraps_url}/things/state/${config["thing_id"]}`;
+        const expectedUrl = `${bootstraps_url}/things/state/${thing_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstrap.Whitelist(config, token).then(result => {
+        return sdk.bootstrap.Whitelist(config, thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: 2000,
@@ -207,10 +207,10 @@ describe("Bootstraps", () => {
           axios.request.mockRejectedValueOnce(errorResponse);
 
 
-        const expectedUrl = `${bootstraps_url}/things/state/${config["thing_id"]}`;
+        const expectedUrl = `${bootstraps_url}/things/state/${thing_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstrap.Whitelist(config, token).then(result => {
+        return sdk.bootstrap.Whitelist(config, thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: 2000,
@@ -228,10 +228,10 @@ describe("Bootstraps", () => {
     test( 'Update should update a config and return success', ()=>{
         axios.request.mockResolvedValueOnce({data: 'Configuration updated'});
 
-        const expectedUrl = `${bootstraps_url}/things/configs/${config["thing_id"]}`;
+        const expectedUrl = `${bootstraps_url}/things/configs/${thing_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstrap.Update(config, token).then(result => {
+        return sdk.bootstrap.Update(config, thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: 2000,
@@ -254,10 +254,10 @@ describe("Bootstraps", () => {
           };
           axios.request.mockRejectedValueOnce(errorResponse);
 
-        const expectedUrl = `${bootstraps_url}/things/configs/${config["thing_id"]}`;
+        const expectedUrl = `${bootstraps_url}/things/configs/${thing_id}`;
 
         const sdk = new mfsdk({bootstrapsUrl : bootstraps_url});
-        return sdk.bootstrap.Update(config, token).then(result => {
+        return sdk.bootstrap.Update(config, thing_id, token).then(result => {
             expect(axios.request).toHaveBeenCalledWith({
                 method: 'put',
                 maxBodyLength: 2000,
