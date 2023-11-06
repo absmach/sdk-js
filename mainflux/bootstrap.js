@@ -32,25 +32,11 @@ class Bootstrap {
      * @returns {Bootstrap} - Returns a Bootstrap object.
      * 
      */
-    const options = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
-      headers: {
-        "Content-Type": this.content_type,
-        Authorization: `Bearer ${token}`,
-      },
-      data: JSON.stringify(config),
-    };
-    return axios
-      .request(options)
-      .then((_response) => {
-        return "Configuration added";
-      })
-      .catch((error) => {
-        return error.response.data;
-      });
-  }
+    constructor(bootstraps_url){
+        this.bootstraps_url = new URL (bootstraps_url);
+        this.content_type = "application/json";
+        this.bootstrapsEndpoint = "configs";
+    }
 
     ValidateConfigAndToken(config, token){
     //Validate config
@@ -89,7 +75,7 @@ class Bootstrap {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -135,7 +121,7 @@ class Bootstrap {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/state/${thing_id}`,
+            url: new URL (`things/state/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -181,7 +167,7 @@ class Bootstrap {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/configs/${thing_id}`,
+            url: new URL (`things/configs/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -220,7 +206,7 @@ class Bootstrap {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${thing_id}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -269,7 +255,7 @@ class Bootstrap {
         const options = {
             method: "patch",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/configs/certs/${config_id}`,
+            url: new URL(`configs/certs/${config_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -309,7 +295,7 @@ class Bootstrap {
         const options = {
             method: "delete",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${config_id}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}/${config_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -345,7 +331,7 @@ class Bootstrap {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/bootstrap/${external_id}`,
+            url: new URL (`things/bootstrap/${external_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Thing ${external_key}`,

@@ -11,7 +11,7 @@ class Things {
    * @returns {Object} - Things service client.  
    */
   constructor(things_url) {
-    this.things_url = things_url;
+    this.things_url = new URL (things_url);
     this.content_type = "application/json";
     this.thingsEndpoint = "things";
   }
@@ -67,7 +67,7 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}`,
+      url: new URL(this.thingsEndpoint, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/bulk`,
+      url: new URL (`${this.thingsEndpoint}/bulk`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -157,7 +157,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
+      url: new URL(`${this.thingsEndpoint}/${thing_id}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -197,7 +197,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -237,7 +237,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+      url: new URL (`${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -272,7 +272,7 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/disable`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -322,7 +322,7 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -373,7 +373,7 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/secret`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -425,7 +425,7 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/tags`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -476,7 +476,7 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/owner`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -524,15 +524,15 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/policies`,
+      url: new URL (`connect`, this.things_url.toString()),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
       data: payload,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString())
+    return axios.request(options)
       .then((_response) => {
         return "Policy created.";
       })
@@ -569,15 +569,15 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/connect`,
+      url: new URL (`connect`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
       data: payload,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((_response) => {
         return "Policy created.";
       })
@@ -616,7 +616,7 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/disconnect`,
+      url: new URL (`disconnect`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -655,14 +655,14 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/identify`,
+      url: new URL(`identify`, this.things_url.toString()),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Thing ${thing_key}`,
       },
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((response) => {
         return response.data;
       })
@@ -706,15 +706,15 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/channels/object/access`,
+      url: new URL (this.things_url + `channels/object/access`),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
       data: access_request,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((_response) => {
         return true;
       })

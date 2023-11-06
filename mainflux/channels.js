@@ -31,7 +31,7 @@ class Channels {
      * 
      */
     constructor(channels_url) {
-        this.channels_url = channels_url;
+        this.channels_url = new URL (channels_url);
         this.content_type = "application/json";
         this.channelsEndpoint = "channels";
     }
@@ -81,7 +81,7 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}`,
+            url: new URL (this.channelsEndpoint, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -126,7 +126,7 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/bulk`,
+            url: new URL (`${this.channelsEndpoint}/bulk`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -161,7 +161,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -200,7 +200,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -238,7 +238,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -272,7 +272,7 @@ class Channels {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -307,7 +307,7 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/disable`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}/disable`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,

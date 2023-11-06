@@ -29,7 +29,7 @@ class Groups {
      * @returns {Groups} - Returns a Groups object.
      */
     constructor(groups_url) {
-        this.groups_url = groups_url;
+        this.groups_url = new URL (groups_url);
         this.content_type = "application/json";
         this.groupsEndpoint = "groups";
     }
@@ -74,7 +74,7 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}`,
+            url: new URL (this.groupsEndpoint, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -116,7 +116,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -160,7 +160,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -205,7 +205,7 @@ class Groups {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -250,7 +250,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -295,7 +295,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/parents?${new URLSearchParams(query_params).toString()}`,
+            url: new URL(`${this.groupsEndpoint}/${group_id}/parents?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -343,7 +343,7 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/policies`,
+            url: new URL (`policies`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -385,7 +385,7 @@ class Groups {
         const options = {
             method: "delete",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/policies/${member_id}/${group_id}`,
+            url: new URL (`policies/${member_id}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -425,7 +425,7 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/disable`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -469,7 +469,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
