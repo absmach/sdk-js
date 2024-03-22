@@ -2,7 +2,26 @@
 const axios = require("axios");
 
 class Channels {
-    //Channels API client
+  //Channels API client
+  /**
+   * @class Channels -
+   * Channels API is used for managing Channels. It is used for creating new
+   * channels, retrieving them, updating them and disabling them
+   * @param {string} channels_url - URL to the Channels service
+   * @param {string} content_type - Content type for the requests which is an application
+   * json
+   * @param {string} channelsEndpoint - Endpoint for the channels' service.
+   * @returns {Object} -Channels object
+   *
+   */
+  constructor(channels_url) {
+    this.channels_url = channels_url;
+    this.content_type = "application/json";
+    this.channelsEndpoint = "channels";
+  }
+
+  Create(channel, token) {
+    //Creates a new channel
     /**
      * @class Channels - 
      * Channels API is used for managing Channels. It is used for creating new 
@@ -271,6 +290,32 @@ class Channels {
             })
     }
 
+  Disable(channel, token) {
+    //Disables channel with specified id.
+    /**
+     * @method Disable - Disables channel with specified id.
+     * @param {Object} channel - Channel object with new information.
+     * @param {String} token - An access token that is valid.
+     * @returns {Object} - Channel Object.
+     */
+    const options = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${this.channels_url}/${this.channelsEndpoint}/${channel["id"]}/disable`,
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return axios
+      .request(options)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  }
 }
 
 // export default Channels;

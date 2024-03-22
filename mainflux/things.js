@@ -3,7 +3,7 @@ const axios = require("axios");
 class Things {
   // Things service client.
   /**
-   * @class Things - 
+   * @class Things -
    * Things API is used for creating and managing things.
    * It is used for creating, updating, deleting and retrieving things.
    * @param {string} things_url - Things service URL.
@@ -35,7 +35,7 @@ class Things {
   Create(thing, token) {
     //Creates a new thing.
     /**
-     * @method Create - Creates a new thing when provided with 
+     * @method Create - Creates a new thing when provided with
      * the things information and a valid token.
      * @param {Object} thing - Thing object.
      * @param {string} token - User token.
@@ -71,20 +71,21 @@ class Things {
       },
       data: JSON.stringify(thing),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   CreateBulk(things, token) {
     //Creates multiple things.
     /**
      * @method Create_bulk - Creates multiple things when provided with a valid
-     * token and an array of things information such as names. 
+     * token and an array of things information such as names.
      * @param {list} things - An array of things information.
      * @param {string} token - User token.
      * @returns {list} - Things list.
@@ -115,13 +116,14 @@ class Things {
       },
       data: JSON.stringify(things),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Get(thing_id, token) {
@@ -134,7 +136,7 @@ class Things {
      * @returns {Object} - Thing object.
      * @example
      * const thing_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
-     * 
+     *
      */
 
     this.ValidateThingIdThingAndToken(thing_id, {}, token);
@@ -148,19 +150,20 @@ class Things {
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   GetByChannel(thing_id, query_params, token) {
     //Retrieves list of channels connected to specified thing with pagination metadata.
     /**
-     * @method GetByChannel - Retrieves list of channels connected to specified thing 
+     * @method GetByChannel - Retrieves list of channels connected to specified thing
      * with pagination metadata.
      * @param {string} thing_id - Thing ID.
      * @param {Object} query_params - Query parameters such as offset and limit.
@@ -182,19 +185,20 @@ class Things {
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   GetAll(query_params, token) {
     //Retrieves list of things with pagination metadata.
     /**
-     * @method GetAll - Retrieves list of things with pagination metadata when provided with a 
+     * @method GetAll - Retrieves list of things with pagination metadata when provided with a
      * valid token and correct query parameters such as offset and limit.
      * @param {Object} query_params - Query parameters.
      * @param {string} token - User token.
@@ -216,13 +220,14 @@ class Things {
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Disable(thing_id, token) {
@@ -231,7 +236,7 @@ class Things {
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Thing object with statys disabled. 
+     * @returns {Object} - Thing object with statys disabled.
      */
 
     this.ValidateThingIdThingAndToken(thing_id, {}, token);
@@ -245,19 +250,20 @@ class Things {
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Update(thing_id, thing, token) {
     //Updates thing.
     /**
-     * @method Update - Updates thing when provided with a valid token, 
+     * @method Update - Updates thing when provided with a valid token,
      * thing ID and thing object.
      * @param {string} thing_id - Thing ID.
      * @param {Object} thing - Thing object.
@@ -290,13 +296,14 @@ class Things {
       },
       data: JSON.stringify(thing),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   UpdateThingSecret(thing_id, thing, token) {
@@ -335,13 +342,14 @@ class Things {
       },
       data: JSON.stringify(thing),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   UpdateThingTags(thing_id, thing, token) {
@@ -349,7 +357,7 @@ class Things {
     /**
      * @method UpdateThingTags - Updates thing tags when provided with a valid token,
      * thing ID and thing object.
-     * 
+     *
      * @param {string} thing_id - Thing ID.
      * @param {Object} thing - Thing object.
      * @param {string} token - User token.
@@ -381,13 +389,14 @@ class Things {
       },
       data: JSON.stringify(thing),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   UpdateThingOwner(thing_id, thing, token) {
@@ -426,26 +435,27 @@ class Things {
       },
       data: JSON.stringify(thing),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Connect(thing_id, channel_id, action, token) {
     //Connects thing to channel.
     /**
      * @method Connect - Connects thing to channel when provided with a valid token,
-     * channel id and a thing id. The thing must have an action that it can perform over 
+     * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
      * @param {list} action - Action for example: ["m_read", "m_write"].
      * @param {string} token - User token.
-     * 
+     *
      */
     if (typeof channel_id !== 'string' || channel_id === null) {
       throw new Error('Invalid channel_id parameter. Expected a string.');
@@ -457,7 +467,7 @@ class Things {
 
     this.ValidateThingIdThingAndToken(thing_id, {}, token);
 
-    const payload = { "subject": thing_id, "object": channel_id, "action": action }
+    const payload = { subject: thing_id, object: channel_id, action: action };
     const options = {
       method: "post",
       maxBodyLength: 2000,
@@ -468,13 +478,14 @@ class Things {
       },
       data: JSON.stringify(payload),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((_response) => {
         return "Policy created.";
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Connects(thing_ids, channel_ids, actions, token) {
@@ -487,7 +498,7 @@ class Things {
      * @param {list} actions - Array of actions for example: ["m_read", "m_write"].
      * @param {string} token - User token.
      * @returns {Object} - Policy object.
-     * 
+     *
      */
 
     if (!Array.isArray(thing_ids) || !Array.isArray(channel_ids) || !Array.isArray(actions)) {
@@ -507,13 +518,14 @@ class Things {
       },
       data: JSON.stringify(payload),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((_response) => {
         return "Policy created.";
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   Disconnect(thing_id, channel_id, token) {
@@ -524,7 +536,7 @@ class Things {
      * @param {list} thing_id - Thing ID.
      * @param {list} channel_id - Channel ID.
      * @param {string} token - User token.
-     * 
+     *
      */
 
     if (typeof channel_id !== 'string' || channel_id === null) {
@@ -544,13 +556,14 @@ class Things {
       },
       data: JSON.stringify(payload),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((_response) => {
         return "Policy deleted.";
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   IdentifyThing(thing_key) {
@@ -560,7 +573,7 @@ class Things {
      * does not require a token.
      * @param {string} thing_key - Thing secret.
      * @returns {Object} - Thing object.
-     * 
+     *
      */
 
     if (typeof thing_key !== 'string' || thing_key === null) {
@@ -576,19 +589,20 @@ class Things {
         Authorization: `Thing ${thing_key}`,
       },
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         return error.response.data;
-      })
+      });
   }
 
   AuthoriseThing(thing_id, channel_id, action, entity_type, token) {
     //Authorises thing
     /**
-     * @method AuthoriseThing - Authorises a thing to perform an action on a channel 
+     * @method AuthoriseThing - Authorises a thing to perform an action on a channel
      * when provided with a valid token, thing ID, channel ID, action and entity type.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
@@ -607,11 +621,11 @@ class Things {
       throw new Error('Invalid parameter types. Expected strings for thing_id, channel_id, action, entity_type, and token.');
     };
     const access_request = {
-      "subject": thing_id,
-      "object": channel_id,
-      "action": action,
-      "entity_type": entity_type
-    }
+      subject: thing_id,
+      object: channel_id,
+      action: action,
+      entity_type: entity_type,
+    };
     const options = {
       method: "post",
       maxBodyLength: 2000,
@@ -622,15 +636,15 @@ class Things {
       },
       data: JSON.stringify(access_request),
     };
-    return axios.request(options)
+    return axios
+      .request(options)
       .then((_response) => {
         return true;
       })
       .catch((_error) => {
         return false;
-      })
+      });
   }
-
 }
 
 module.exports = Things;

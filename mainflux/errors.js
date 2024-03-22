@@ -1,22 +1,22 @@
 class Errors {
-    HandleError(error_dict, status_code) {
-        if (error_dict.hasOwnProperty(status_code)) {
-            return error_dict[status_code];
-        } else {
-            return errors[status_code];
-        }
+  HandleError(error_dict, status_code) {
+    if (error_dict.hasOwnProperty(status_code)) {
+      return error_dict[status_code];
+    } else {
+      return errors[status_code];
     }
+  }
 
-    errors = {
-        400: "Failed due to malformed JSON.",
-        401: "Missing or invalid access token provided.",
-        403: "Missing or invalid access token provided.",
-        404: "A non-existent entity request.",
-        409: "Entity already exists.",
-        415: "Missing or invalid content type.",
-        422: "Database can't process the request.",
-        500: "Unexpected server-side error occurred.",
-    };
+  errors = {
+    400: "Failed due to malformed JSON.",
+    401: "Missing or invalid access token provided.",
+    403: "Missing or invalid access token provided.",
+    404: "A non-existent entity request.",
+    409: "Entity already exists.",
+    415: "Missing or invalid content type.",
+    422: "Database can't process the request.",
+    500: "Unexpected server-side error occurred.",
+  };
 
     users = {
         get : {

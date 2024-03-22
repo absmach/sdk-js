@@ -3,7 +3,23 @@
 const axios = require("axios");
 
 class Certs {
-    //Certs API Client
+  //Certs API Client
+  /**
+   *@class Certs - Certs is used to manage certificates.
+   *It is used to issue, view and revoke certificates.
+   * @param {string} certs_url - The url of the certs service.
+   * @param {string} content_type - The content type of the request.
+   * @param {string} certsEndpoint - The endpoint of the certs service which is certs.
+   * @returns {Certs} - Returns a Certs object.
+   */
+  constructor(certs_url) {
+    this.certs_url = certs_url;
+    this.content_type = "application/json";
+    this.certsEndpoint = "certs";
+  }
+
+  Issue(thing_id, valid, token) {
+    //Issue a certificate
     /**
      *@class Certs - Certs is used to manage certificates.
      *It is used to issue, view and revoke certificates.
@@ -157,6 +173,32 @@ class Certs {
             })
     }
 
+  Revoke(thing_id, token) {
+    //Revoke a certificate
+    /**
+     * @method Revoke - Allows a logged in user to delete a certificate once they
+     * provide a valid thing-id and token.
+     * @param {string} thing_id - The thing_id of the certificate to be revoked.
+     * @param {string} token - The token to be used for authentication.
+     */
+    const options = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: `${this.certs_url}/${this.certsEndpoint}/${thing_id}`,
+      headers: {
+        "Content-Type": this.content_type,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    return axios
+      .request(options)
+      .then((_response) => {
+        return "DELETED";
+      })
+      .catch((error) => {
+        return error.response.data;
+      });
+  }
 }
 
 module.exports = Certs;
