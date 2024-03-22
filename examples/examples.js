@@ -25,7 +25,7 @@ try {
             console.log(response);
         })
         .catch(error => {
-            console.error(error.response.data);
+            console.error(error.response);
         });
 } catch (error) {
     console.error(error.message);
@@ -40,7 +40,7 @@ try {
             console.log(response);
         })
         .catch(error => {
-            console.error(error.response.data);
+            console.error(error.response);
         });
 } catch (error) {
     console.error(error.message);
@@ -130,7 +130,7 @@ catch (error) {
 try {
     mySdk.things.UpdateThingTags(
         "<thing_id>",
-        { "tags": ["stheno", "euryale"] },
+        { "tags": ["<foo>", "<bar>"] },
         "<token>"
     )
         .then(response => {
@@ -165,8 +165,8 @@ try {
     mySdk.things.Connect(
         "<thing_id>",
         "<channel_id>",
-        ["action"],
-        "token"
+        ["<actions>"],
+        "<token>"
     )
         .then(response => {
             console.log(response);
@@ -181,8 +181,8 @@ catch (error) {
 
 try {
     mySdk.things.Disconnect(
-        ["<thing_id>"],
-        ["<channel_id>"],
+        ["<thing_ids>"],
+        ["<channel_ids>"],
         "<token>"
     )
         .then(response => {
@@ -232,9 +232,9 @@ catch (error) {
 }
 
 try {
-    mySdk.things.IdentifyThing({
-        "secret": "<thing_secret>"
-    })
+    mySdk.things.IdentifyThing(
+        "<thing_secret>"
+    )
         .then(response => {
             console.log(response);
         })
@@ -313,7 +313,7 @@ try {
 
 try {
     mySdk.users.RefreshToken(
-        "<user_id>",
+        {"id":"user_id"},
         "<token>"
     )
         .then(response => {
@@ -329,6 +329,7 @@ try {
 try {
     mySdk.users.Update(
         { "id": "<user_id>", "name": "<user_name>" },
+        "<user_id>",
         "<token>"
     )
         .then(response => {
@@ -343,7 +344,8 @@ try {
 
 try {
     mySdk.users.UpdateUserIdentity(
-        { "id": "<user_id>", "identity": "<user_identity>" },
+        {"identity": "<user_identity>"},
+        "<user_id>",
         "<token>"
     )
         .then(response => {
@@ -358,7 +360,8 @@ try {
 
 try {
     mySdk.users.UpdateUserTags(
-        { "id": "<user_id>", "tags": ["foo", "bar"] },
+        {"tags": ["foo", "bar"] },
+        "<user_id>",
         "<token>"
     )
         .then(response => {
@@ -373,7 +376,8 @@ try {
 
 try {
     mySdk.users.UpdateUserOwner(
-        { "id": "<user_id>", "owner": "<owner_identity>" },
+        { "owner": "<owner_id>" },
+        "<user_id>",
         "<token>"
     )
         .then(response => {
@@ -389,6 +393,7 @@ try {
 try {
     mySdk.users.Disable(
         { "id": "<user_id>" },
+        "user_id",
         "<token>"
     )
         .then(response => {
@@ -404,6 +409,7 @@ try {
 try {
     mySdk.users.Enable(
         { "id": "<user_id>" },
+        "<user_id>",
         "<token>"
     )
         .then(response => {
@@ -449,7 +455,7 @@ try {
 try {
     mySdk.users.Memberships(
         "<member_id>",
-        { query_params },
+        { "offset": 0, "limit": 10 },
         "<token>"
     )
         .then(response => {
@@ -484,8 +490,8 @@ try {
 
 try {
     mySdk.groups.Create(
-        { "name": "hatshepsut" },
-        "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTczODcxNjgsImlhdCI6MTY5NzM4NjI2OCwiaWRlbnRpdHkiOiJhZG1pbkBleGFtcGxlLmNvbSIsImlzcyI6ImNsaWVudHMuYXV0aCIsInN1YiI6IjViNDA3MTgzLTEwNGYtNDc2NC04MDYyLTg3ZGQ2MTM5MTA0NiIsInR5cGUiOiJhY2Nlc3MifQ.kPctWq5eR1UdK1bEERlY42O2oqW1TNdA-N4IYQ24lLxdZ6HOGU7vR9FgtXdH0S2XXcSJR3flq8lmsPOB_s9zAA"
+        { "name": "<group_name>" },
+        "<token>"
     )
         .then(response => {
             console.log(response);
@@ -530,6 +536,7 @@ try {
 try {
     mySdk.groups.Update(
         "<group_id>",
+        {"name": "<group_name>"},
         "<token>"
     )
         .then(response => {
@@ -578,7 +585,7 @@ try {
     mySdk.groups.Assign(
         "<group_id>",
         "<member_id>",
-        ["<action>"],
+        ["<member_type>"],
         "<token>"
     )
         .then(response => {
@@ -723,7 +730,7 @@ catch (error) {
 
 try {
     mySdk.channels.Disable(
-        { "id": "<channel_id>" },
+        "<channel_id>",
         "<token>"
     )
         .then(response => {
@@ -848,6 +855,7 @@ try {
             "name": "<name>"
 
         },
+        "<thing_id>",
         "<token>"
     )
         .then(response => {
@@ -863,9 +871,9 @@ try {
 try {
     mySdk.bootstrap.Update(
         {
-            "thing_id": "<thing_id>",
-            "name": "<name>"
+            "name": "<config_name>"
         },
+        "<thing_id>",
         "<token>"
     )
         .then(response => {
@@ -944,32 +952,32 @@ try {
 //Messages.js
 
 try {
-mySdk.messages.Send(
-    "<channel_id>",
-    '<msg>',
-    "<thing_key>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+    mySdk.messages.Send(
+        "<channel_id>",
+        ['<msg>'],
+        "<thing_key>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
 } catch (error) {
     console.error(error.message);
 }
 
 try {
-mySdk.messages.Read(
-    "<channel_id>",
-    "<token>"
-)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(error => {
-        console.error(error.response.data);
-    });
+    mySdk.messages.Read(
+        "<channel_id>",
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
 } catch (error) {
     console.error(error.message);
 }

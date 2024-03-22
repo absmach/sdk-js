@@ -3,32 +3,27 @@ const mfsdk = require("mainflux-sdk");
 
 jest.mock("axios");
 
-describe("Groups", () => {
-  const groups_url = "http://localhost";
-  const group = {
-    name: "group_test",
-    id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
-    parent_id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
-    status: "enabled",
-    owner_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-  };
-  const group_id = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
-  const query_params = {
-    offset: 0,
-    limit: 10,
-  };
-  const groups = [
-    { name: "groupA", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
-    { name: "groupB", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
-  ];
-  const member_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
-  const member_type = "m_read";
-  const members_ids = [
-    "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-  ];
+describe('Groups', () => {
+    const groups_url = "http://localhost";
+    const group = {
+        "name": "group_test",
+        "id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
+        "parent_id": "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
+        "status": "enabled",
+        "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+    };
+    const group_id = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
+    const query_params = {
+        "offset": 0, "limit": 10
+    };
+    const groups = [
+        { "name": "groupA", "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
+        { "name": "groupB", "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879" }
+    ];
+    const member_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
+    const member_type = ["m_read", "m_write"];
+    const members_ids = ["bb7edb32-2eac-4aad-aebe-ed96fe073879", "bb7edb32-2eac-4aad-aebe-ed96fe073879"];
 
   test("Create should create a group and return success", () => {
     axios.request.mockResolvedValueOnce({ data: group });
@@ -122,7 +117,7 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
+                data: group,
             });
             expect(result).toEqual(group);
         });
@@ -146,9 +141,9 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
+                data: group,
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -197,7 +192,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -248,7 +243,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -275,7 +270,7 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
+                data: group,
             });
             expect(result).toEqual(group);
         });
@@ -299,9 +294,9 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(group),
+                data: group,
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -355,7 +350,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
         expect(result).toEqual("Policy created");
       });
@@ -431,7 +426,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -451,7 +446,7 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(payload),
+                data: payload,
             });
             expect(result).toEqual("Policy created");
         });
@@ -478,9 +473,9 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(payload),
+                data: payload,
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });
@@ -501,7 +496,7 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(payload),
+                data: payload,
             });
             expect(result).toEqual("Policy deleted");
         });
@@ -529,9 +524,9 @@ describe("Groups", () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                data: JSON.stringify(payload),
+                data: payload,
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
 
@@ -576,7 +571,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
 
@@ -621,9 +616,7 @@ describe("Groups", () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log(result);
-            // expect(result.error.status).toBe(1);
-            // expect(result.error.message).toBe('Missing or invalid access token provided.');
+            expect(result).toEqual("Missing or invalid access token provided.");
         });
     });
   });

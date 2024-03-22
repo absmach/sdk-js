@@ -1,4 +1,5 @@
-const axios = require("axios");
+const axios = require('axios');
+const Errors = require('./errors');
 
 class Bootstrap {
   //Bootstraps API Client
@@ -31,25 +32,11 @@ class Bootstrap {
      * @returns {Bootstrap} - Returns a Bootstrap object.
      * 
      */
-    const options = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
-      headers: {
-        "Content-Type": this.content_type,
-        Authorization: `Bearer ${token}`,
-      },
-      data: JSON.stringify(config),
-    };
-    return axios
-      .request(options)
-      .then((_response) => {
-        return "Configuration added";
-      })
-      .catch((error) => {
-        return error.response.data;
-      });
-  }
+    constructor(bootstraps_url){
+        this.bootstraps_url = new URL (bootstraps_url);
+        this.content_type = "application/json";
+        this.bootstrapsEndpoint = "configs";
+    }
 
     ValidateConfigAndToken(config, token){
     //Validate config
@@ -62,6 +49,8 @@ class Bootstrap {
             throw new Error('Invalid token parameter. Expected a string.');
         }    
     }
+
+    bootstrapError = new Errors;
 
     Create(config, token){
         //Create a bootstrap configuration
@@ -86,23 +75,28 @@ class Bootstrap {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
                 return "Configuration added";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.create,
+                        error.response.status
+                    );
+                };
+            });
     }
 
-    Whitelist(config, token){
+    Whitelist(config, thing_id, token){
         //Update a bootstrap configuration
         /**
          * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
@@ -118,28 +112,37 @@ class Bootstrap {
          * }
          */
 
+        if (typeof thing_id !== "string" || thing_id === null) {
+            throw new Error('Invalid thing_id parameter. Expected a string.');
+        }
+        
         this.ValidateConfigAndToken(config, token);
 
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/state/${config["thing_id"]}`,
+            url: new URL (`things/state/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
                 return "Configuration updated";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.whitelist,
+                        error.response.status
+                    );
+                };
+            });
     }
 
-    Update(config, token){
+    Update(config, thing_id, token){
         //Update a bootstrap configuration
         /**
          * @method Update - Allows a logged in user to update a bootstrap configuration.
@@ -155,25 +158,34 @@ class Bootstrap {
          * }
          */
 
+        if (typeof thing_id !== "string" || thing_id === null) {
+            throw new Error('Invalid thing_id parameter. Expected a string.');
+        }
+
         this.ValidateConfigAndToken(config, token);
 
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/configs/${config["thing_id"]}`,
+            url: new URL (`things/configs/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(config),
+            data: config,
         };
         return axios.request(options)
             .then((_response) => {
                 return "Configuration updated";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.update,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     View(thing_id, token){
@@ -194,7 +206,7 @@ class Bootstrap {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${thing_id}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}/${thing_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -205,8 +217,13 @@ class Bootstrap {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.view,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     UpdateCerts(config_id,client_cert,client_key, ca, token){
@@ -238,20 +255,25 @@ class Bootstrap {
         const options = {
             method: "patch",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/configs/certs/${config_id}`,
+            url: new URL(`configs/certs/${config_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(payload),
+            data: payload,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.updatecerts,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Remove(config_id, token){
@@ -273,7 +295,7 @@ class Bootstrap {
         const options = {
             method: "delete",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/${this.bootstrapsEndpoint}/${config_id}`,
+            url: new URL (`things/${this.bootstrapsEndpoint}/${config_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -284,8 +306,13 @@ class Bootstrap {
                 return "Configuration removed";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.remove,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Bootstrap(external_id, external_key){
@@ -300,11 +327,11 @@ class Bootstrap {
         if (typeof external_id !== "string" || typeof external_key !== "string") {
             throw new Error('Invalid type of parameters. Expected strings for external_key and external_id.');
         }
-        
+
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.bootstraps_url}/things/bootstrap/${external_id}`,
+            url: new URL (`things/bootstrap/${external_id}`, this.bootstraps_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Thing ${external_key}`,
@@ -315,8 +342,13 @@ class Bootstrap {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.bootstrapError.HandleError(
+                        this.bootstrapError.bootstraps.bootstrap,
+                        error.response.status
+                    );
+                };
+            });
     }
 
   Bootstrap(external_id, external_key) {

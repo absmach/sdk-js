@@ -1,4 +1,5 @@
 const axios = require("axios");
+const Errors = require("./errors");
 
 class Things {
   // Things service client.
@@ -10,7 +11,7 @@ class Things {
    * @returns {Object} - Things service client.  
    */
   constructor(things_url) {
-    this.things_url = things_url;
+    this.things_url = new URL (things_url);
     this.content_type = "application/json";
     this.thingsEndpoint = "things";
   }
@@ -31,6 +32,8 @@ class Things {
         throw new Error('Invalid parameter. Expected a string for the "token" parameter.');
     }
   }
+
+  thingError = new Errors;
 
   Create(thing, token) {
     //Creates a new thing.
@@ -64,12 +67,12 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}`,
+      url: new URL(this.thingsEndpoint, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -77,7 +80,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.create,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -109,12 +117,12 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/bulk`,
+      url: new URL (`${this.thingsEndpoint}/bulk`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(things),
+      data: things,
     };
     return axios
       .request(options)
@@ -122,7 +130,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.createbulk,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -144,7 +157,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
+      url: new URL(`${this.thingsEndpoint}/${thing_id}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -156,7 +169,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.get,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -179,7 +197,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(query_params).toString()}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -191,7 +209,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.getbychannel,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -214,7 +237,7 @@ class Things {
     const options = {
       method: "get",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+      url: new URL (`${this.thingsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -226,7 +249,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.getall,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -244,7 +272,7 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/disable`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/disable`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
@@ -256,7 +284,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.disable,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -289,12 +322,12 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -302,7 +335,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.update,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -335,12 +373,12 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/secret`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/secret`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -348,7 +386,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.updatethingsecret,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -382,12 +425,12 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/tags`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/tags`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -395,7 +438,12 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.updatethingtags,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -428,12 +476,12 @@ class Things {
     const options = {
       method: "patch",
       maxBodyLength: 2000,
-      url: `${this.things_url}/${this.thingsEndpoint}/${thing_id}/owner`,
+      url: new URL (`${this.thingsEndpoint}/${thing_id}/owner`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(thing),
+      data: thing,
     };
     return axios
       .request(options)
@@ -441,11 +489,16 @@ class Things {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.updatethingowner,
+            error.response.status
+          );
+        };
       });
   }
 
-  Connect(thing_id, channel_id, action, token) {
+  Connect(thing_id, channel_id, actions, token) {
     //Connects thing to channel.
     /**
      * @method Connect - Connects thing to channel when provided with a valid token,
@@ -453,7 +506,7 @@ class Things {
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {list} action - Action for example: ["m_read", "m_write"].
+     * @param {list} actions - Action for example: ["m_read", "m_write"].
      * @param {string} token - User token.
      *
      */
@@ -461,30 +514,35 @@ class Things {
       throw new Error('Invalid channel_id parameter. Expected a string.');
     };
 
-    if (!Array.isArray(action)) {
+    if (!Array.isArray(actions)) {
       throw new Error('Invalid parameter. Expected an array for action.');
     };
 
     this.ValidateThingIdThingAndToken(thing_id, {}, token);
 
-    const payload = { subject: thing_id, object: channel_id, action: action };
+    const payload = { "subject": thing_id, "object": channel_id, "actions": actions }
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/policies`,
+      url: new URL (`connect`, this.things_url.toString()),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString())
+    return axios.request(options)
       .then((_response) => {
         return "Policy created.";
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.connect,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -511,50 +569,59 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/connect`,
+      url: new URL (`connect`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((_response) => {
         return "Policy created.";
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.connects,
+            error.response.status
+          );
+        };
       });
   }
 
-  Disconnect(thing_id, channel_id, token) {
+  Disconnect(thing_ids, channel_ids, token) {
     //Disconnects thing from channel.
     /**
      * @method Disconnect - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id.
-     * @param {list} thing_id - Thing ID.
-     * @param {list} channel_id - Channel ID.
+     * @param {list} thing_ids - Thing ID.
+     * @param {list} channel_ids - Channel ID.
      * @param {string} token - User token.
      *
      */
 
-    if (typeof channel_id !== 'string' || channel_id === null) {
-      throw new Error('Invalid channel_id parameter. Expected a string.');
+    if (!Array.isArray(channel_ids)) {
+      throw new Error('Invalid parameter. Expected an array for channel_id.');
     };
 
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
+    if (!Array.isArray(thing_ids)) {
+      throw new Error('Invalid parameter. Expected an array for thing_id.');
+    };
+
+    this.ValidateThingIdThingAndToken('', {}, token);
     
-    const payload = { "subjects": thing_id, "objects": channel_id }
+    const payload = { "subjects": thing_ids, "objects": channel_ids }
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/disconnect`,
+      url: new URL (`disconnect`, this.things_url),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(payload),
+      data: payload,
     };
     return axios
       .request(options)
@@ -562,7 +629,12 @@ class Things {
         return "Policy deleted.";
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.disconnect,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -583,19 +655,24 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/identify`,
+      url: new URL(`identify`, this.things_url.toString()),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Thing ${thing_key}`,
       },
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
-        return error.response.data;
+        if (error.response) {
+          return this.thingError.HandleError(
+            this.thingError.things.identifything,
+            error.response.status
+          );
+        };
       });
   }
 
@@ -607,7 +684,7 @@ class Things {
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
      * @param {string} action - Action for example: ["m_read", "m_write"].
-     * @param {string} entity_type - Type of the thing class for example: "client"
+     * @param {string} entity_type - Type of the thing class for example: "group".
      * @param {string} token - User token.
      * @return {Object} - True if thing is authorised, false if not.
      */
@@ -629,15 +706,15 @@ class Things {
     const options = {
       method: "post",
       maxBodyLength: 2000,
-      url: `${this.things_url}/channels/object/access`,
+      url: new URL (this.things_url + `channels/object/access`),
       headers: {
         "Content-Type": this.content_type,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify(access_request),
+      data: access_request,
     };
-    return axios
-      .request(options)
+    console.log(options.url.toString());
+    return axios.request(options)
       .then((_response) => {
         return true;
       })

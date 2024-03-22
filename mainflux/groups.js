@@ -1,5 +1,5 @@
-// import Errors from "./errors.js";
 const axios = require("axios");
+const Errors = require("./errors");
 
 class Groups {
   //Groups API client.
@@ -29,7 +29,7 @@ class Groups {
      * @returns {Groups} - Returns a Groups object.
      */
     constructor(groups_url) {
-        this.groups_url = groups_url;
+        this.groups_url = new URL (groups_url);
         this.content_type = "application/json";
         this.groupsEndpoint = "groups";
     }
@@ -45,6 +45,8 @@ class Groups {
             throw new Error('Invalid token parameter. Expected a string.');
         }
     }
+
+    groupError = new Errors;
 
     Create(group, token) {
         // Create a new group.
@@ -72,24 +74,29 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}`,
+            url: new URL (this.groupsEndpoint, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(group),
+            data: group,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.create,
+                        error.response.status
+                    );
+                };
             });
     }
 
     Get(group_id, token) {
-        //Get a group.
+        //Get information about a group.
         /**
          * @method Get - Provide a group's information once given the group ID and a valid token.
          * @param {string} group_id - The group's ID.
@@ -109,7 +116,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -120,8 +127,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.get,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     GetAll(query_params, token) {
@@ -148,7 +160,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -159,8 +171,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.getall,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Update(group_id, group, token) {
@@ -188,20 +205,25 @@ class Groups {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(group),
+            data: group,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.update,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Children(group_id, query_params, token) {
@@ -228,7 +250,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/children?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -239,8 +261,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.children,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Parents(group_id, query_params, token) {
@@ -268,7 +295,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/parents?${new URLSearchParams(query_params).toString()}`,
+            url: new URL(`${this.groupsEndpoint}/${group_id}/parents?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -279,8 +306,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.parents,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Assign(group_id, member_id, member_type, token) {
@@ -311,20 +343,25 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/policies`,
+            url: new URL (`policies`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(payload),
+            data: payload,
         };
         return axios.request(options)
             .then((_response) => {
                 return "Policy created";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.assign,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Unassign(member_id, group_id, token) {
@@ -348,20 +385,25 @@ class Groups {
         const options = {
             method: "delete",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/policies/${member_id}/${group_id}`,
+            url: new URL (`policies/${member_id}/${group_id}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(payload),
+            data: payload,
         };
         return axios.request(options)
             .then((_response) => {
                 return "Policy deleted";
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.unassign,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Disable(group_id, token) {
@@ -383,7 +425,7 @@ class Groups {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/disable`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/disable`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -394,8 +436,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.disable,
+                        error.response.status
+                    );
+                };
+            });
     }
 
     Members(group_id, query_params, token) {
@@ -422,7 +469,7 @@ class Groups {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.groups_url}/${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.groupsEndpoint}/${group_id}/members?${new URLSearchParams(query_params).toString()}`, this.groups_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -433,8 +480,13 @@ class Groups {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response){
+                    return this.groupError.HandleError(
+                        this.groupError.groups.members,
+                        error.response.status
+                    );
+                };
+            });
     }
 }
 

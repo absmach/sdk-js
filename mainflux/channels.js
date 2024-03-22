@@ -1,5 +1,5 @@
-// import fetch from "node-fetch";
 const axios = require("axios");
+const Errors = require("./errors");
 
 class Channels {
   //Channels API client
@@ -31,7 +31,7 @@ class Channels {
      * 
      */
     constructor(channels_url) {
-        this.channels_url = channels_url;
+        this.channels_url = new URL (channels_url);
         this.content_type = "application/json";
         this.channelsEndpoint = "channels";
     }
@@ -51,6 +51,8 @@ class Channels {
             throw new Error('Invalid token parameter. Expected a string.');
         }
     };
+
+    channelError = new Errors;
 
     Create(channel, token) {
         //Creates a new channel
@@ -79,20 +81,25 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}`,
+            url: new URL (this.channelsEndpoint, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: channel,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.create,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     CreateBulk(channels, token) {
@@ -119,20 +126,25 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/bulk`,
+            url: new URL (`${this.channelsEndpoint}/bulk`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channels),
+            data: channels,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.createbulk,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Get(channel_id, token) {
@@ -149,7 +161,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -160,8 +172,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.get,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     GetByThing(channel_id, query_params, token) {
@@ -183,7 +200,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(query_params).toString()}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -194,8 +211,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.getbything,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     GetAll(query_params, token) {
@@ -216,7 +238,7 @@ class Channels {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.channelsEndpoint}?${new URLSearchParams(query_params).toString()}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -227,8 +249,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.getall,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Update(channel_id, channel, token) {
@@ -245,20 +272,25 @@ class Channels {
         const options = {
             method: "put",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(channel),
+            data: channel,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.update,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
     Disable(channel_id, token) {
@@ -275,7 +307,7 @@ class Channels {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.channels_url}/${this.channelsEndpoint}/${channel_id}/disable`,
+            url: new URL (`${this.channelsEndpoint}/${channel_id}/disable`, this.channels_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -286,8 +318,13 @@ class Channels {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.channelError.HandleError(
+                        this.channelError.channels.disable,
+                        error.response.status,
+                    );
+                };
+            });
     }
 
   Disable(channel, token) {
@@ -318,5 +355,4 @@ class Channels {
   }
 }
 
-// export default Channels;
 module.exports = Channels;

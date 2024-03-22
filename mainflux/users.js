@@ -1,23 +1,22 @@
-const axios = require("axios");
+const axios = require('axios');
+const Errors = require("./errors");
 
 class Users {
-  // Users API client
-  /**
-   * @class Users -
-   * Users API is used for creating and managing users.
-   * It is used for creating new users, logging in, refreshing tokens,
-   * getting user information, updating user information, disabling
-   * and enabling users.
-   * @param {String} users_url - URL to the Users service.
-   * @param {String} content_type - Content type for the requests.
-   * @param {String} usersEndpoint - Endpoint for the users service.
-   * @returns {Object} - Users object.
-   */
-  constructor(users_url) {
-    this.users_url = users_url;
-    this.content_type = "application/json";
-    this.usersEndpoint = "users";
-  }
+    // Users API client
+    /**
+     * @class Users -
+     * Users API is used for creating and managing users.
+     * It is used for creating new users, logging in, refreshing tokens,
+     * getting user information, updating user information, disabling 
+     * and enabling users.
+     * @param {String} users_url - URL to the Users service.
+     * @returns {Object} - Users object.
+     */
+    constructor(users_url) {
+        this.users_url = new URL (users_url);
+        this.content_type = "application/json";
+        this.usersEndpoint = "users";
+    }
 
   Create(user, token) {
     // Creates a new user
@@ -42,6 +41,8 @@ class Users {
         }
     }
 
+    userError = new Errors;
+
     Create(user, token) {
         // Creates a new user
         /**
@@ -56,7 +57,6 @@ class Users {
          *   "password": "12345678"
          * }
          * }
-         * 
          */
 
         this.ValidateUserAndToken(user, token);
@@ -64,58 +64,64 @@ class Users {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}`,
+            url: new URL (this.usersEndpoint, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
-            })
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.create,
+                        error.response.status
+                    );
+                };
+            });
     }
 
-    const options = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${this.users_url}/${this.usersEndpoint}/tokens/issue`,
-      headers: {
-        "Content-Type": this.content_type,
-      },
-      data: JSON.stringify(user),
-    };
-    return axios
-      .request(options)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return error;
-      });
-  }
+    Login(user) {
+        // Issue Access and Refresh Token used for authenticating into the system
+        /**
+         * @method Login - Issue Access and Refresh Token used for authenticating into the system.
+         * @param {Object} user - User object.
+         * @returns {Object} - Access and Refresh Token.
+         * @example
+         * const user = {
+         * "credentials": {
+         *   "identity": "admin@example.com",
+         *  "password": "12345678"
+         * }
+         * }
+         */
 
-        this.ValidateUserAndToken(user);
+        this.ValidateUserAndToken(user, '');
 
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/tokens/issue`,
+            url: new URL (`${this.usersEndpoint}/tokens/issue`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.login,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -139,27 +145,32 @@ class Users {
         if (typeof refresh_token !== 'string') {
             throw new Error('Invalid token parameter. Expected a string.');
         };
-        
+
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/tokens/refresh`,
+            url: new URL (`${this.usersEndpoint}/tokens/refresh`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${refresh_token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.refreshtoken,
+                        error.response.status
+                    );
+                };
             });
     }
 
-    Update(user, token) {
+    Update(user, user_id, token) {
         // Update a user
         /**
          * @method Update - Update a user. Updates a user's name and metadata.
@@ -174,28 +185,37 @@ class Users {
          * 
          */
 
-        this.ValidateUserAndToken(user, token);
+        this.ValidateUserAndToken({}, token);
+
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}`,
+            url: new URL (`${this.usersEndpoint}/${user_id}`, this.users_url),
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.update,
+                        error.response.status
+                    );
+                };
             });
     }
 
-    UpdateUserIdentity(user, token) {
+    UpdateUserIdentity(user, user_id, token) {
         // Update a user identity
         /**
          * @method UpdateUserIdentity - Update a user identity for a currently logged in user.
@@ -214,27 +234,36 @@ class Users {
          */
 
         this.ValidateUserAndToken(user, token);
+        
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/identity`,
+            url: new URL (`${this.usersEndpoint}/${user_id}/identity`, this.users_url),
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.updateuseridentity,
+                        error.response.status
+                    );
+                };
             });
     }
 
-    UpdateUserTags(user, token) {
+    UpdateUserTags(user,user_id, token) {
         // Update a user's tags.
         /**
          *  Updates tags of the user with provided ID. Tags is updated using 
@@ -259,105 +288,88 @@ class Users {
          */
 
         this.ValidateUserAndToken(user, token);
+        
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
 
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/tags`,
+            url: new URL(`${this.usersEndpoint}/${user_id}/tags`, this.users_url),
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
 
-  UpdateUserOwner(user, token) {
-    // Update a user's owner.
-    /**
-     *  Updates owner of the user with provided ID. The owner is updated using
-     * authorization user_tokeN.
-     * @method UpdateUserOwner - Update a user's owner.
-     * @param {Object} user - User object.
-     * @param{String} token - Access token.
-     * @returns {Object} - User object.
-     * @example
-     * const user = {
-     *  "name": "example",
-     *      "id": "886b4266-77d1-4258-abae-2931fb4f16de"
-     *      "tags": [
-     *          "back",
-     *           "end"
-     *       ]
-     *       "metadata": {
-     *          "foo": "bar"
-     *       }
-     *  "owner":"886b4266-77d1-4258-abae-2931fb4f16de"
-     *  }
-     *
-     */
-    const options = {
-      method: "patch",
-      url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
-      maxBodyLength: Infinity,
-      headers: {
-        "Content-Type": this.content_type,
-        Authorization: `Bearer ${token}`,
-      },
-      data: JSON.stringify(user),
-    };
-    return axios
-      .request(options)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return error.response.data;
-      });
-  }
+        return axios.request(options)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => {
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.updateusertags,
+                        error.response.status
+                    );
+                };
+            });
+    }
 
-    UpdateUserOwner(user, token) {
+    UpdateUserOwner(user, user_id, token) {
         // Update a user's owner.
-         /**
-         *  Updates owner of the user with provided ID. The owner is updated using 
-         * authorization user_tokeN.
-         * @method UpdateUserOwner - Update a user's owner.
-         * @param {Object} user - User object.
-         * @param{String} token - Access token.
-         * @returns {Object} - User object.
-         * @example
-         * const user = {
-         *  "name": "example",
-         *      "id": "886b4266-77d1-4258-abae-2931fb4f16de"
-         *      "tags": [
-         *          "back",
-         *           "end"
-         *       ]
-         *       "metadata": {
-         *          "foo": "bar"
-         *       }
-         *  "owner":"886b4266-77d1-4258-abae-2931fb4f16de"
-         *  }
-         * 
-         */
+        /**
+        *  Updates owner of the user with provided ID. The owner is updated using 
+        * authorization user_tokeN.
+        * @method UpdateUserOwner - Update a user's owner.
+        * @param {Object} user - User object.
+        * @param{String} token - Access token.
+        * @returns {Object} - User object.
+        * @example
+        * const user = {
+        *  "name": "example",
+        *      "id": "886b4266-77d1-4258-abae-2931fb4f16de"
+        *      "tags": [
+        *          "back",
+        *           "end"
+        *       ]
+        *       "metadata": {
+        *          "foo": "bar"
+        *       }
+        *  "owner":"886b4266-77d1-4258-abae-2931fb4f16de"
+        *  }
+        * 
+        */
 
         this.ValidateUserAndToken(user, token);
 
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
+
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/owner`,
+            url: new URL(`${this.usersEndpoint}/${user_id}/owner`, this.users_url),
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.updateuserowner,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -381,20 +393,25 @@ class Users {
         const secret = { old_secret: old_secret, new_secret: new_secret }
         const options = {
             method: "patch",
-            url: `${this.users_url}/${this.usersEndpoint}/secret`,
+            url: new URL (`${this.usersEndpoint}/secret`, this.users_url),
             maxBodyLength: 2000,
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(secret),
+            data: secret,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.updateuserpassword,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -421,7 +438,7 @@ class Users {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${user_id}`,
+            url: new URL (`${this.usersEndpoint}/${user_id}`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -432,7 +449,12 @@ class Users {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.get,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -463,7 +485,7 @@ class Users {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.usersEndpoint}?${new URLSearchParams(query_params).toString()}`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
@@ -474,22 +496,16 @@ class Users {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.getall,
+                        error.response.status
+                    );
+                };
             });
-        // return fetch(url , options)
-        //     .then((response) => {
-        //         if (!response.ok) {
-        //             return this.userError.HandleError(this.userError.errors, response.status);
-        //             // throw new Error(`HTTP error! Status: ${response.status}`);
-        //         }
-        //         return response.json();
-        //     })
-        //     .catch((error) => {
-        //         console.error('Fetch error:', error);
-        //     });
     }
 
-    Disable(user, token) {
+    Disable(user, user_id, token) {
         // Disable a user
         /**
          * Disables a user with provided ID and valid token.
@@ -506,26 +522,35 @@ class Users {
 
         this.ValidateUserAndToken(user, token);
 
+        if (typeof user_id !== 'string' || user_id === null) {
+            throw new Error('Invalid user_id parameter. Expected a string.');
+        }
+
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/disable`,
+            url: new URL (`${this.usersEndpoint}/${user_id}/disable`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.disable,
+                        error.response.status
+                    );
+                };
             });
     }
 
-    Enable(user, token) {
+    Enable(user, user_id, token) {
         // Enable a user.
         /**
          * Enables a previously disabled user when provided with token and valid ID.
@@ -546,19 +571,24 @@ class Users {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${user["id"]}/enable`,
+            url: new URL (`${this.usersEndpoint}/${user_id}/enable`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(user),
+            data: user,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.enable,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -586,19 +616,23 @@ class Users {
         const options = {
             method: "get",
             maxBodyLength: 2000,
-            url: `${this.users_url}/${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`,
+            url: new URL (`${this.usersEndpoint}/${member_id}/memberships?${new URLSearchParams(query_params).toString()}`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            params: query_params,
         };
         return axios.request(options)
             .then((response) => {
                 return response.data;
             })
             .catch((error) => {
-                return error.response.data;
+                if (error.response) {
+                    return this.userError.HandleError(
+                        this.userError.users.memberships,
+                        error.response.status
+                    );
+                };
             });
     }
 
@@ -616,10 +650,10 @@ class Users {
          */
 
         if (
-            typeof user_id !== 'string' || 
-            typeof group_id !== 'string' || 
-            typeof action !== 'string' || 
-            typeof entity_type !== 'string' || 
+            typeof user_id !== 'string' ||
+            typeof group_id !== 'string' ||
+            typeof action !== 'string' ||
+            typeof entity_type !== 'string' ||
             typeof token !== 'string') {
             throw new Error('Invalid parameter types. Expected strings for user_id, group_id, action, entity_type, and token.');
         };
@@ -633,12 +667,12 @@ class Users {
         const options = {
             method: "post",
             maxBodyLength: 2000,
-            url: `${this.users_url}/authorize`,
+            url: new URL(`authorize`, this.users_url),
             headers: {
                 "Content-Type": this.content_type,
                 Authorization: `Bearer ${token}`,
             },
-            data: JSON.stringify(access_request),
+            data: access_request,
         };
         return axios.request(options)
             .then((_response) => {
