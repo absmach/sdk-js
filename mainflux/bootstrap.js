@@ -16,27 +16,10 @@ class Bootstrap {
    *
    */
   constructor(bootstraps_url) {
-    this.bootstraps_url = bootstraps_url;
+    this.bootstraps_url = new URL(bootstraps_url);
     this.content_type = "application/json";
     this.bootstrapsEndpoint = "configs";
   }
-
-  Create(config, token) {
-    //Create a bootstrap configuration
-    /**
-     * @class Bootstrap
-     * Bootstrap is used to manage bootstrap configurations.
-     * It is used to create, update, view and remove bootstrap configurations.
-     * It is also used to bootstrap a thing.
-     * @param {string} bootstraps_url - The url of the bootstraps service.
-     * @returns {Bootstrap} - Returns a Bootstrap object.
-     * 
-     */
-    constructor(bootstraps_url){
-        this.bootstraps_url = new URL (bootstraps_url);
-        this.content_type = "application/json";
-        this.bootstrapsEndpoint = "configs";
-    }
 
     ValidateConfigAndToken(config, token){
     //Validate config

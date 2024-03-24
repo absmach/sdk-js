@@ -14,22 +14,7 @@ class Channels {
    * @returns {Object} -Channels object
    *
    */
-  constructor(channels_url) {
-    this.channels_url = channels_url;
-    this.content_type = "application/json";
-    this.channelsEndpoint = "channels";
-  }
 
-  Create(channel, token) {
-    //Creates a new channel
-    /**
-     * @class Channels - 
-     * Channels API is used for managing Channels. It is used for creating new 
-     * channels, retrieving them, updating them and disabling them 
-     * @param {string} channels_url - URL to the Channels service.
-     * @returns {Object} -Channels object
-     * 
-     */
     constructor(channels_url) {
         this.channels_url = new URL (channels_url);
         this.content_type = "application/json";

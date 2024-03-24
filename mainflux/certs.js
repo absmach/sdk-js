@@ -12,24 +12,11 @@ class Certs {
    * @returns {Certs} - Returns a Certs object.
    */
   constructor(certs_url) {
-    this.certs_url = certs_url;
+    this.certs_url = new URL(certs_url);
     this.content_type = "application/json";
     this.certsEndpoint = "certs";
   }
 
-  Issue(thing_id, valid, token) {
-    //Issue a certificate
-    /**
-     *@class Certs - Certs is used to manage certificates.
-     *It is used to issue, view and revoke certificates.
-     * @param {string} certs_url - The url of the certs service.
-     * @returns {Certs} - Returns a Certs object. 
-     */
-    constructor(certs_url) {
-        this.certs_url = new URL(certs_url);
-        this.content_type = "application/json";
-        this.certsEndpoint = "certs";
-    }
     ValidateThingIDAndToken(thing_id, token) {
         if (typeof thing_id !== "string" || thing_id === null) {
             throw new Error('Invalid thing_id parameter. Expected a string.');
