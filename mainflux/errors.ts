@@ -3,7 +3,7 @@ interface ErrorDict {
 }
 
 interface UserErrors {
-    get: ErrorDict;
+    user: ErrorDict;
     create: ErrorDict;
     login: ErrorDict;
     refreshtoken: ErrorDict;
@@ -11,12 +11,13 @@ interface UserErrors {
     updateusertags: ErrorDict;
     updateuserpassword: ErrorDict;
     updateuseridentity: ErrorDict;
-    updateuserowner: ErrorDict;
-    getall: ErrorDict;
+    updateuserrole: ErrorDict;
+    users: ErrorDict;
     disable: ErrorDict;
     enable: ErrorDict;
     memberships: ErrorDict;
-    authoriseuser: ErrorDict;
+    resetpassword: ErrorDict;
+    resetpasswordrequest: ErrorDict;
 }
 
 export class Errors {
@@ -41,7 +42,7 @@ export class Errors {
     }
 
     public users: UserErrors = {
-        get : {
+        user : {
             401: "Missing or invalid access token provided.",
             404: "A non-existent entity request.",
             400: "Failed due to malformed query parameters.",
@@ -75,12 +76,12 @@ export class Errors {
             401: "Missing or invalid access token provided.",
             400: "Failed due to malformed JSON.",
         },
-        updateuserowner:{
+        updateuserrole:{
             401: "Missing or invalid access token provided.",
             400: "Failed due to malformed JSON.",
             404: "A non-existent entity request.",
         },
-        getall: {
+        users: {
             400: "Failed due to malformed query parameters.",
             500: "Unexpected serverside error occurred.",
             401: "Missing or invalid access token provided.",
@@ -96,10 +97,14 @@ export class Errors {
             401: "Missing or invalid access token provided.",
             400: "Failed due to malformed query parameters.",
         },
-        authoriseuser: {
-            401: "Failed to perform authorisation.",
-            400: "Failed due to malformed JSON.",
+        resetpasswordrequest: {
+            500: "Unexpected serverside error occurred.",
+            400: "Failed due to malformed JSON."
         },
+        resetpassword: {
+            400: "Failed due to malfomed JSON.",
+            401: "Missing or invalid token provided.",
+        }
     }
 
 //     groups= {

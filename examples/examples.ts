@@ -265,45 +265,11 @@ const mySdk = new SDK({
 //     console.error(error.message);
 // }
 
-// //Users.js
+//Users.js
 
-// mySdk.users.Create(
-//     { "name": "gemma", "credentials": { "identity": "gemma@email.com", "secret": "12345678" } },
-//     ""
-// )
-// .then((response: any) => {
-//     console.log(response);
-// })
-// .catch((error: any) => {
-//     if (error.response) {
-//         console.error(error.response);
-//     } else {
-//         console.error(error.message);
-//     }
-// });
-
-// try {
-//     mySdk.users.Get(
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
-
-
-mySdk.users.Login(
-    {"credentials": {
-        "identity": "odin@example.com", 
-        "secret": "12345678"
-        }
-    }
+mySdk.users.Create(
+    { "name": "gemma", "credentials": { "identity": "gemma@email.com", "secret": "12345678" } },
+    ""
 )
 .then((response: any) => {
     console.log(response);
@@ -316,180 +282,261 @@ mySdk.users.Login(
     }
 });
 
-// try {
-//     mySdk.users.RefreshToken(
-//         {"id":"user_id"},
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.User(
+    "<user_id>",
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.Update(
-//         { "id": "<user_id>", "name": "<user_name>" },
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.UserProfile(
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.UpdateUserIdentity(
-//         {"identity": "<user_identity>"},
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.CreateToken(
+    {identity: "admin@example.com", secret: "12345678"}
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.UpdateUserTags(
-//         {"tags": ["foo", "bar"] },
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.RefreshToken(
+    {identity: "user_id"},
+    "<refresh_token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.UpdateUserOwner(
-//         { "owner": "<owner_id>" },
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.Update(
+    { "id": "<user_id>", "name": "<user_name>" },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.Disable(
-//         { "id": "<user_id>" },
-//         "user_id",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.UpdateUserIdentity(
+    {"credentials": {"identity": "<user_identity>"}},
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.Enable(
-//         { "id": "<user_id>" },
-//         "<user_id>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.UpdateUserTags(
+    {"tags": ["foo", "bar"] },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.GetAll(
-//         { "offset": 0, "limit": 10 },
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.UpdateUserRole(
+    {"role": "<user_role>"},
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.UpdateUserPassword(
-//         "<old_secret>", "<new_secret>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.Disable(
+    { "id": "<user_id>" },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.Memberships(
-//         "<member_id>",
-//         { "offset": 0, "limit": 10 },
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.Enable(
+    { "id": "<user_id>" },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
-// try {
-//     mySdk.users.AuthoriseUser(
-//         "<user_id>",
-//         "<group_id>",
-//         "<action>",
-//         "<entity_type>",
-//         "<token>"
-//     )
-//         .then(response => {
-//             console.log(response);
-//         })
-//         .catch(error => {
-//             console.error(error.response.data);
-//         });
-// } catch (error) {
-//     console.error(error.message);
-// }
+mySdk.users.Users(
+    { "offset": 0, "limit": 10 },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.UpdateUserPassword(
+    "<old_secret>", "<new_secret>",
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.ListUserChannels(
+    "<user_id>",
+    { "offset": 0, "limit": 10 },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.ListUserThings(
+    "<user_id>",
+    { "offset": 0, "limit": 10 },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.ListUserGroups(
+    "<user_id>",
+    { "offset": 0, "limit": 10 },
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.ResetPasswordRequest(
+    "<email>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
+
+mySdk.users.ResetPassword(
+    "<password>",
+    "<confPass>",
+    "<token>"
+)
+.then((response: any) => {
+    console.log(response);
+})
+.catch((error: any) => {
+    if (error.response) {
+        console.error(error.response);
+    } else {
+        console.error(error.message);
+    }
+});
 
 // //Groups.js
 
