@@ -18,18 +18,6 @@ class Users {
         this.usersEndpoint = "users";
     }
 
-  Create(user, token) {
-    // Creates a new user
-    /**
-     * @class Users -
-     * Users API is used for creating and managing users.
-     * It is used for creating new users, logging in, refreshing tokens,
-     * getting user information, updating user information, disabling 
-     * and enabling users.
-     * @param {String} users_url - URL to the Users service.
-     * @returns {Object} - Users object.
-     */
-
     // Validation function
     ValidateUserAndToken(user, token) {
         if (typeof user !== 'object' || user === null || Array.isArray(user)) {

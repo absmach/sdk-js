@@ -1058,7 +1058,7 @@ require = (function () {
            * @method Messages - Messages is used to manage messages.
            * It provides methods for sending and reading messages.
            * @param {string} readers_url - The url of the readers service.
-           * @param {string} httpadapter_url - The URL of the Mainflux Messages adapter.
+           * @param {string} httpadapter_url - The URL of the Magistrala Messages adapter.
            * @param {string} content_type - The content type of the request.
            * @returns {Messages} - Returns a Messages object.
            */

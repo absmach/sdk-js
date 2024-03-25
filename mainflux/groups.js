@@ -13,28 +13,10 @@ class Groups {
    * @returns {Groups} - Returns a Groups object.
    */
   constructor(groups_url) {
-    this.groups_url = groups_url;
+    this.groups_url = new URL(groups_url);
     this.content_type = "application/json";
     this.groupsEndpoint = "groups";
   }
-  // groupError = new Errors;
-
-  Create(group, token) {
-    // Create a new group.
-    /**
-     * @class Groups - 
-     * Groups API client is used for managing groups. It is used for
-     * creating, updating, deleting, and retrieving groups.
-     * @param {string} groups_url - The URL of the Groups service.
-     * @returns {Groups} - Returns a Groups object.
-     */
-    constructor(groups_url) {
-        this.groups_url = new URL (groups_url);
-        this.content_type = "application/json";
-        this.groupsEndpoint = "groups";
-    }
-    // groupError = new Errors;
-    //Validation function
 
     ValidateGroupAndToken(group, token) {
         if (typeof group !== 'object' || group === null || Array.isArray(group)) {
