@@ -284,6 +284,13 @@ class Errors {
             401 : "Missing or invalid external key provided.",
         },
     }
+
+    domains ={
+        createdomain : {
+            401 : "Missing or invalid access token provided.",
+            400 : "Failed due to malformed JSON.",
+        },
+    }
 }
 
 module.exports = Errors;

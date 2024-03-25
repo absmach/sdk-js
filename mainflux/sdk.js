@@ -5,6 +5,7 @@ const Channels = require("./channels");
 const Certs = require("./certs");
 const Bootstrap = require("./bootstrap");
 const Messages = require("./messages");
+const Domains = require("./domains");
 
 const defaultUrl = "http://localhost";
 
@@ -18,6 +19,7 @@ class SDK {
     bootstrapsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpadapterUrl = defaultUrl,
+    domainsUrl = defaultUrl,
   } = {}) {
     this.users = new Users(usersUrl);
     this.things = new Things(thingsUrl);
@@ -26,6 +28,7 @@ class SDK {
     this.certs = new Certs(certsUrl);
     this.bootstrap = new Bootstrap(bootstrapsUrl);
     this.messages = new Messages(readersUrl, httpadapterUrl);
+    this.domains = new Domains(domainsUrl);
   }
 }
 

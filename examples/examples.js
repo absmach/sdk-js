@@ -981,3 +981,20 @@ try {
 } catch (error) {
     console.error(error.message);
 }
+
+//Domains.js
+
+try {
+    mySdk.domains.CreateDomain(
+        { "name": "<domain_name>" },
+        "<token>"
+    )
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error.response.data);
+        });
+} catch (error) {
+    console.error(error.message);
+}
