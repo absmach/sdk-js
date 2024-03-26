@@ -4,18 +4,17 @@ import SDK from "../mainflux/sdk";
 const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-    usersUrl: defaultUrl + ":9002",
-//     groupsUrl: defaultUrl + ":9002",
-//     thingsUrl: defaultUrl + ":9000",
-//     channelsUrl: defaultUrl + ":9000",
-//     httpadapterUrl: defaultUrl,
-//     readersUrl: defaultUrl + ":9011",
-//     certsUrl: defaultUrl + ":9019",
-//     bootstrapsUrl: defaultUrl + ":9013",
+  usersUrl: defaultUrl + ":9002",
+  //     groupsUrl: defaultUrl + ":9002",
+  //     thingsUrl: defaultUrl + ":9000",
+  //     channelsUrl: defaultUrl + ":9000",
+  //     httpadapterUrl: defaultUrl,
+  //     readersUrl: defaultUrl + ":9011",
+  //     certsUrl: defaultUrl + ":9019",
+  //     bootstrapsUrl: defaultUrl + ":9013",
 });
 
 // //Things.js examples.
-
 
 // mySdk.things.Create(
 //     { "name": "<thing_name>" },
@@ -590,7 +589,6 @@ const mySdk = new SDK({
 //         }
 //     });
 
-
 // mySdk.groups.Children(
 //     "<group_id>",
 //     { "offset": 0, "limit": 2, "tree": true },
@@ -607,7 +605,6 @@ const mySdk = new SDK({
 //         }
 //     });
 
-
 // mySdk.groups.Parents(
 //     "<group_id>",
 //     { "offset": 0, "limit": 5 },
@@ -623,7 +620,6 @@ const mySdk = new SDK({
 //             console.error(error.message);
 //         }
 //     });
-
 
 // mySdk.groups.Assign(
 //     "<group_id>",
@@ -642,7 +638,6 @@ const mySdk = new SDK({
 //         }
 //     });
 
-
 // mySdk.groups.Unassign(
 //     "<member_id>",
 //     "<group_id>",
@@ -659,7 +654,6 @@ const mySdk = new SDK({
 //         }
 //     });
 
-
 // mySdk.groups.Disable(
 //     "<group_id>",
 //     "<token>"
@@ -674,7 +668,6 @@ const mySdk = new SDK({
 //             console.error(error.message);
 //         }
 //     });
-
 
 // mySdk.groups.Members(
 //     "<group_id>",
@@ -863,7 +856,6 @@ const mySdk = new SDK({
 //             console.error(error.message);
 //         }
 //     });
-
 
 // // Bootstrap.js
 

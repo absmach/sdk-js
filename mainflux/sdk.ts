@@ -17,7 +17,6 @@ interface SDKConfig {
   // bootstrapsUrl?: string;
   // readersUrl?: string;
   // httpadapterUrl?: string;
-
 }
 
 class SDK {
