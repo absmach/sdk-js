@@ -22,7 +22,7 @@ interface PageRes {
     limit: number
 }
 
-interface Users {
+interface UsersInterface {
     users: User[],
     page: PageRes
 }
@@ -519,7 +519,7 @@ class Users {
             });
     }
 
-    public Users(query_params: QueryParams, token: string): Promise<Users> {
+    public Users(query_params: QueryParams, token: string): Promise<UsersInterface> {
         // Gets all users with pagination.
         /**
          * Provides information about all users. The users are retrieved using

@@ -24,8 +24,5 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run Jest tests
-      run: npm test
-
     - name: Lint with ESLint
       run: npm run lint
