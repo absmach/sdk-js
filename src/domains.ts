@@ -1,332 +1,322 @@
-import axios, { AxiosResponse } from "axios";
-import { Errors } from "./errors";
+import Errors from './errors'
 
-interface Domain {
-    name?: string;
-    id?: string;
-    alias?: string;
-    email?: string;
+export interface Domain {
+  name?: string
+  id?: string
+  alias?: string
+  email?: string
 }
 
 interface QueryParams {
-    offset: number;
-    limit: number;
+  offset: number
+  limit: number
 }
 
 interface DomainsInterface {
-    domains: Domain[];
-    page: PageRes;
+  domains: Domain[]
+  page: PageRes
 }
 
 interface PageRes {
-    total: number;
-    offset: number;
-    limit: number;
+  total: number
+  offset: number
+  limit: number
 }
 
 interface UserRelationRequest {
-    user_ids: string[];
-    relation: string;
+  userIDs: string[]
+  relation: string
 }
 
-class Domains {
-// Domains API client
+export default class Domains {
+  // Domains API client
 
-    private domains_url: URL;
-    private content_type: string;
-    private domainsEndpoint: string;
-    private domainError: Errors;
+  private readonly domainsUrl: URL
+  private readonly contentType: string
+  private readonly domainsEndpoint: string
+  private readonly domainError: Errors
 
-    public constructor(domains_url: string) {
-        this.domains_url = new URL(domains_url);
-        this.content_type = "application/json";
-        this.domainsEndpoint = "domains";
-        this.domainError = new Errors();
+  public constructor (domainsUrl: string) {
+    this.domainsUrl = new URL(domainsUrl)
+    this.contentType = 'application/json'
+    this.domainsEndpoint = 'domains'
+    this.domainError = new Errors()
+  }
+
+  public async CreateDomain (domain: Domain, token: string): Promise<Domain> {
+    // CreateDomain creates a new domain.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(domain)
     }
 
-    public CreateDomain(domain: Domain, token: string): Promise<Domain> {
-        // CreateDomain creates a new domain.
-        const options = {
-            method: "post",
-            maxBodyLength: 2000,
-            url: new URL(this.domainsEndpoint, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-            data: domain,
-        };
+    try {
+      const response = await fetch(
+        new URL(this.domainsEndpoint, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.create,
-              error.response.status,
-            );
-          }
-        });
-
+  public async UpdateDomain (domain: Domain, token: string): Promise<Domain> {
+    // UpdateDomain updates an existing domain.
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(domain)
     }
 
-    public UpdateDomain(domain: Domain, token: string): Promise<Domain> {
-        // UpdateDomain updates an existing domain.
-        const options = {
-            method: "patch",
-            maxBodyLength: 2000,
-            url: new URL(`${this.domainsEndpoint}/${domain.id}`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-            data: domain,
-        };
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domain.id}`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.update,
-              error.response.status,
-            );
-          }
-        });
+  public async Domain (domainID: string, token: string): Promise<Domain> {
+    // Domain retrieves domain with provided ID.
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public Domain(domainID: string, token: string): Promise<Domain> {
-        // Domain retrieves domain with provided ID.
-        const options = {
-            method: "get",
-            url: new URL(`${this.domainsEndpoint}/${domainID}`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
-
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.domain,
-              error.response.status,
-            );
-          }
-        });
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    public DomainPermissions(domainID: string, token: string): Promise<Domain> {
-        // DomainPermissions retrieves domain permissions with provided ID.
-        /**
+  public async DomainPermissions (domainID: string, token: string): Promise<Domain> {
+    // DomainPermissions retrieves domain permissions with provided ID.
+    /**
          * @method DomainPermissions - retrieves domain permissions with provided ID.
          * @param {string} domainID - domain ID.
          * @param {string} token - user token.
-         * @returns {object} - returns an object domain permissions eg: 
+         * @returns {object} - returns an object domain permissions eg:
          *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
          * @example
          * const domainID = "domainID";
          */
-        const options = {
-            method: "get",
-            url: new URL(`${this.domainsEndpoint}/${domainID}/permissions`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
-
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.permissions,
-              error.response.status,
-            );
-          }
-        });
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public Domains(query_params: QueryParams, token: string): Promise<DomainsInterface> {
-        // Domains retrieves all domains.
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}/permissions`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        const stringParams: Record<string, string> = Object.fromEntries(
-            Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-          );
-        const options = {
-            method: "get",
-            url: new URL(`${this.domainsEndpoint}?${new URLSearchParams(stringParams).toString()}`,this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
+  public async Domains (query_params: QueryParams, token: string): Promise<DomainsInterface> {
+    // Domains retrieves all domains.
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.domains,
-              error.response.status,
-            );
-          }
-        });
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+    )
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public ListUserDomains(userID: string, query_params: QueryParams, token: string): Promise<DomainsInterface> {
-        // ListUserDomains retrieves all domains for a user.
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        const stringParams: Record<string, string> = Object.fromEntries(
-            Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-          );
-        const options = {
-            method: "get",
-            url: new URL(`/users/${userID}/domains?${new URLSearchParams(stringParams).toString()}`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
+  public async ListUserDomains (userID: string, query_params: QueryParams, token: string): Promise<DomainsInterface> {
+    // ListUserDomains retrieves all domains for a user.
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.listUserDomains,
-              error.response.status,
-            );
-          }
-        });
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+    )
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public EnableDomain(domainID: string, token: string): Promise<any> {
-        // EnableDomain enables domain with provided ID.
-        const options = {
-            method: "post",
-            url: new URL(`${this.domainsEndpoint}/${domainID}/enable`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
+    try {
+      const response = await fetch(
+        new URL(`/users/${userID}/domains?${new URLSearchParams(stringParams).toString()}`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      const domainData = await response.json()
+      return domainData
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return 'Domain enabled successfully.';
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.enable,
-              error.response.status,
-            );
-          }
-        });
+  public async EnableDomain (domainID: string, token: string): Promise<any> {
+    // EnableDomain enables domain with provided ID.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public DisableDomain(domainID: string, token: string): Promise<any> {
-        // DisableDomain disables domain with provided ID.
-        const options = {
-            method: "post",
-            url: new URL(`${this.domainsEndpoint}/${domainID}/disable`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}/enable`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      return 'Domain enabled successfully.'
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return 'Domain disabled successfully.';
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.disable,
-              error.response.status,
-            );
-          }
-        });
+  public async DisableDomain (domainID: string, token: string): Promise<any> {
+    // DisableDomain disables domain with provided ID.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
     }
 
-    public AddUsertoDomain(domainID: string, req: UserRelationRequest, token: string): Promise<any> {
-        // AddUsertoDomain adds user to domain.
-        const options = {
-            method: "post",
-            url: new URL(`${this.domainsEndpoint}/${domainID}/users/assign`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-        };
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}/disable`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      return 'Domain disabled successfully.'
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return "Policy created";
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.addUser,
-              error.response.status,
-            );
-          }
-        });
+  public async AddUsertoDomain (domainID: string, req: UserRelationRequest, token: string): Promise<any> {
+    // AddUsertoDomain adds user to domain.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(req)
     }
 
-    public RemoveUserfromDomain(domainID: string, req: UserRelationRequest, token: string): Promise<Domain> {
-        // RemoveUserfromDomain removes user from domain.
-        const options = {
-            method: "post",
-            url: new URL(`${this.domainsEndpoint}/${domainID}/users/unassign`, this.domains_url).toString(),
-            headers: {
-              "Content-Type": this.content_type,
-              Authorization: `Bearer ${token}`,
-            },
-            data: req,
-        };
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}/users/assign`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      return 'Policy created.'
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-        return axios
-        .request(options)
-        .then((response: AxiosResponse) => {
-          return response.data;
-        })
-        .catch((error) => {
-          if (error.response) {
-            return this.domainError.HandleError(
-              this.domainError.domains.removeUser,
-              error.response.status,
-            );
-          }
-        });
+  public async RemoveUserfromDomain (domainID: string, req: UserRelationRequest, token: string): Promise<any> {
+    // RemoveUserfromDomain removes user from domain.
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(req)
     }
 
+    try {
+      const response = await fetch(
+        new URL(`${this.domainsEndpoint}/${domainID}/users/unassign`, this.domainsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.domainError.HandleError(errorRes.error, response.status)
+      }
+      return 'Policy deleted.'
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
-
-export default Domains;
