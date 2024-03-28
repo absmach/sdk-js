@@ -23,6 +23,10 @@ interface PageRes {
   limit: number
 }
 
+interface Permissions {
+  permissions: string[]
+}
+
 export default class Domains {
   // Domains API client
 
@@ -38,7 +42,7 @@ export default class Domains {
     this.domainError = new Errors()
   }
 
-  public async CreateDomain (domain: Domain, token: string): Promise<Domain | undefined> {
+  public async CreateDomain (domain: Domain, token: string): Promise<Domain> {
     // CreateDomain creates a new domain.
     const options: RequestInit = {
       method: 'POST',
@@ -58,14 +62,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      const domainData = await response.json()
+      const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async UpdateDomain (domain: Domain, token: string): Promise<Domain | undefined> {
+  public async UpdateDomain (domain: Domain, token: string): Promise<Domain> {
     // UpdateDomain updates an existing domain.
     const options: RequestInit = {
       method: 'PATCH',
@@ -85,14 +89,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      const domainData = await response.json()
+      const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async Domain (domainID: string, token: string): Promise<Domain | undefined> {
+  public async Domain (domainID: string, token: string): Promise<Domain> {
     // Domain retrieves domain with provided ID.
     const options: RequestInit = {
       method: 'GET',
@@ -111,14 +115,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      const domainData = await response.json()
+      const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async DomainPermissions (domainID: string, token: string): Promise<Domain | undefined> {
+  public async DomainPermissions (domainID: string, token: string): Promise<Permissions> {
     // DomainPermissions retrieves domain permissions with provided ID.
     /**
          * @method DomainPermissions - retrieves domain permissions with provided ID.
@@ -146,14 +150,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      const domainData = await response.json()
+      const domainData: Permissions = await response.json()
       return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsInterface | undefined> {
+  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsInterface> {
     // Domains retrieves all domains.
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -183,7 +187,7 @@ export default class Domains {
     }
   }
 
-  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsInterface | undefined> {
+  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsInterface> {
     // ListUserDomains retrieves all domains for a user.
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -213,7 +217,7 @@ export default class Domains {
     }
   }
 
-  public async EnableDomain (domainID: string, token: string): Promise<any> {
+  public async EnableDomain (domainID: string, token: string): Promise<Domain> {
     // EnableDomain enables domain with provided ID.
     const options: RequestInit = {
       method: 'POST',
@@ -232,13 +236,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return 'Domain enabled successfully.'
+      const domainData: Domain = await response.json()
+      return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async DisableDomain (domainID: string, token: string): Promise<any> {
+  public async DisableDomain (domainID: string, token: string): Promise<Domain> {
     // DisableDomain disables domain with provided ID.
     const options: RequestInit = {
       method: 'POST',
@@ -257,13 +262,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return 'Domain disabled successfully.'
+      const domainData: Domain = await response.json()
+      return domainData
     } catch (error) {
       console.error(error)
     }
   }
 
-  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<string | undefined> {
+  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<string> {
     // AddUsertoDomain adds user to domain.
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
