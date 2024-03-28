@@ -21,7 +21,7 @@ mySdk.domains
 mySdk.domains.UpdateDomain(
   { name: '<domainName>', id: '<domainID>' },
   '<token>'
-  )
+)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -42,7 +42,7 @@ mySdk.domains.Domain(
 
 mySdk.domains.DomainPermissions(
   '<domainID>',
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -53,7 +53,7 @@ mySdk.domains.DomainPermissions(
 
 mySdk.domains.Domains(
   { offset: 0, limit: 10 },
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -65,7 +65,7 @@ mySdk.domains.Domains(
 mySdk.domains.ListUserDomains(
   '<userID>',
   { offset: 0, limit: 10 },
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -76,7 +76,7 @@ mySdk.domains.ListUserDomains(
 
 mySdk.domains.EnableDomain(
   '<domainID>',
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -87,7 +87,7 @@ mySdk.domains.EnableDomain(
 
 mySdk.domains.DisableDomain(
   '<domainID>',
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -98,8 +98,9 @@ mySdk.domains.DisableDomain(
 
 mySdk.domains.AddUsertoDomain(
   '<domainID>',
-  { userIDs: ['<userID>', '<userID>'], relation: '<role>' },
-  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJmMjQ4ZDA1Ny0yODNjLTQzZjQtOGJhMS0xM2ZmYzU1MTRjMDciLCJleHAiOjE3MTE0NzE4MDMsImlhdCI6MTcxMTQ2ODIwMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiNzA1YmMzYzYtN2Y5My00MWQ2LWJjNGMtMGE4N2Y4NWU0OTczIiwidHlwZSI6MCwidXNlciI6IjcwNWJjM2M2LTdmOTMtNDFkNi1iYzRjLTBhODdmODVlNDk3MyJ9.Gjhos0VCZiDoIYKsTF6iQAxUlU8CKUz2e6l007_ICI_X9_0t2LTG0G15qbQXsqZKzo4gAPgyuW8BYJKD7SlhuA'
+  ['<userID>', '<userID>'],
+  '<role>',
+  '<token>'
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -110,7 +111,8 @@ mySdk.domains.AddUsertoDomain(
 
 mySdk.domains.RemoveUserfromDomain(
   '<domainID>',
-  { userIDs: ['<userID>', '<userID>'], relation: '<role>' },
+  ['<userID>', '<userID>'],
+  '<role>',
   '<token>'
 )
   .then((response: any) => {

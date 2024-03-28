@@ -23,11 +23,6 @@ interface PageRes {
   limit: number
 }
 
-interface UserRelationRequest {
-  userIDs: string[]
-  relation: string
-}
-
 export default class Domains {
   // Domains API client
 
@@ -43,7 +38,7 @@ export default class Domains {
     this.domainError = new Errors()
   }
 
-  public async CreateDomain (domain: Domain, token: string): Promise<Domain> {
+  public async CreateDomain (domain: Domain, token: string): Promise<Domain | undefined> {
     // CreateDomain creates a new domain.
     const options: RequestInit = {
       method: 'POST',
@@ -70,7 +65,7 @@ export default class Domains {
     }
   }
 
-  public async UpdateDomain (domain: Domain, token: string): Promise<Domain> {
+  public async UpdateDomain (domain: Domain, token: string): Promise<Domain | undefined> {
     // UpdateDomain updates an existing domain.
     const options: RequestInit = {
       method: 'PATCH',
@@ -97,7 +92,7 @@ export default class Domains {
     }
   }
 
-  public async Domain (domainID: string, token: string): Promise<Domain> {
+  public async Domain (domainID: string, token: string): Promise<Domain | undefined> {
     // Domain retrieves domain with provided ID.
     const options: RequestInit = {
       method: 'GET',
@@ -123,7 +118,7 @@ export default class Domains {
     }
   }
 
-  public async DomainPermissions (domainID: string, token: string): Promise<Domain> {
+  public async DomainPermissions (domainID: string, token: string): Promise<Domain | undefined> {
     // DomainPermissions retrieves domain permissions with provided ID.
     /**
          * @method DomainPermissions - retrieves domain permissions with provided ID.
@@ -158,11 +153,11 @@ export default class Domains {
     }
   }
 
-  public async Domains (query_params: QueryParams, token: string): Promise<DomainsInterface> {
+  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsInterface | undefined> {
     // Domains retrieves all domains.
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options: RequestInit = {
       method: 'GET',
@@ -188,11 +183,11 @@ export default class Domains {
     }
   }
 
-  public async ListUserDomains (userID: string, query_params: QueryParams, token: string): Promise<DomainsInterface> {
+  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsInterface | undefined> {
     // ListUserDomains retrieves all domains for a user.
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options: RequestInit = {
       method: 'GET',
@@ -268,8 +263,9 @@ export default class Domains {
     }
   }
 
-  public async AddUsertoDomain (domainID: string, req: UserRelationRequest, token: string): Promise<any> {
+  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<string | undefined> {
     // AddUsertoDomain adds user to domain.
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -294,8 +290,9 @@ export default class Domains {
     }
   }
 
-  public async RemoveUserfromDomain (domainID: string, req: UserRelationRequest, token: string): Promise<any> {
+  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<any> {
     // RemoveUserfromDomain removes user from domain.
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
