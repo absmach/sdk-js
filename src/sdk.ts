@@ -1,5 +1,5 @@
 import Users from './users'
-// const Things = require("./things");
+import Things from './things'
 // const Groups = require("./groups");
 // const Channels = require("./channels");
 // const Certs = require("./certs");
@@ -10,7 +10,7 @@ const defaultUrl = 'http://localhost'
 
 interface SDKConfig {
   usersUrl?: string
-  // thingsUrl?: string;
+  thingsUrl?: string
   // groupsUrl?: string;
   // channelsUrl?: string;
   // certsUrl?: string;
@@ -21,7 +21,7 @@ interface SDKConfig {
 
 class SDK {
   users: Users
-  // things: Things;
+  things: Things
   // groups: Groups;
   // channels: Channels;
   // certs: Certs;
@@ -29,8 +29,8 @@ class SDK {
   // messages: Messages;
 
   constructor ({
-    usersUrl = defaultUrl
-    // thingsUrl = defaultUrl,
+    usersUrl = defaultUrl,
+    thingsUrl = defaultUrl
     // groupsUrl = defaultUrl,
     // channelsUrl = defaultUrl,
     // certsUrl = defaultUrl,
@@ -38,8 +38,8 @@ class SDK {
     // readersUrl = defaultUrl,
     // httpadapterUrl = defaultUrl,
   }: SDKConfig = {}) {
-    this.users = new Users(usersUrl)
-    // this.things = new Things(thingsUrl);
+    this.users = new Users(usersUrl, thingsUrl)
+    this.things = new Things(thingsUrl)
     // this.groups = new Groups(groupsUrl);
     // this.channels = new Channels(channelsUrl);
     // this.certs = new Certs(certsUrl);

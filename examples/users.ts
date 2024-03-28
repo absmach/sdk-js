@@ -1,9 +1,11 @@
+// Import the SDK class from the mainflux-sdk package
 import SDK from '../src/sdk'
 
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  usersUrl: defaultUrl + ':9002'
+  usersUrl: defaultUrl + ':9002',
+  thingsUrl: defaultUrl + ':9000'
 })
 
 mySdk.users

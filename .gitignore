@@ -5,6 +5,9 @@
 /out-tsc
 dist/
 
+# IDE - VSCode
+.vscode/
+
 # Runtime data
 pids
 *.pid

@@ -27,18 +27,41 @@ interface UsersInterface {
   page: PageRes
 }
 
+interface Group {
+  id?: string
+  name?: string
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
+}
 interface Groups {
-  groups: Groups[]
+  groups: Group[]
   page: PageRes
+}
+
+interface Thing {
+  id?: string
+  name?: string
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
 }
 
 interface Things {
-  things: Things[]
+  things: Thing[]
   page: PageRes
 }
 
+interface Channel {
+  id?: string
+  name?: string
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
+}
+
 interface Channels {
-  channel: Channels[]
+  channel: Channel[]
   page: PageRes
 }
 
@@ -74,12 +97,14 @@ export default class Users {
    * @returns {Object} - Users object.
    */
   private readonly usersUrl: URL
+  private readonly thingsUrl: URL
   private readonly contentType: string
   private readonly usersEndpoint: string
   private readonly userError: Errors
 
-  public constructor (usersUrl: string) {
+  public constructor (usersUrl: string, thingsUrl: string) {
     this.usersUrl = new URL(usersUrl)
+    this.thingsUrl = new URL(thingsUrl)
     this.contentType = 'application/json'
     this.usersEndpoint = 'users'
     this.userError = new Errors()
@@ -120,7 +145,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -162,7 +187,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const tokenData = await response.json()
+      const tokenData: Token = await response.json()
       return tokenData
     } catch (error) {
       throw error
@@ -205,7 +230,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const tokenData = await response.json()
+      const tokenData: Token = await response.json()
       return tokenData
     } catch (error) {
       throw error
@@ -249,7 +274,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -280,7 +305,7 @@ export default class Users {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify({ identity: user.credentials?.identity })
     }
     try {
       const response = await fetch(
@@ -294,7 +319,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -346,7 +371,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -392,7 +417,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -432,7 +457,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -473,7 +498,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -511,7 +536,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
+      const userData: User = await response.json()
       return userData
     } catch (error) {
       throw error
@@ -563,14 +588,14 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const usersData = await response.json()
+      const usersData: UsersInterface = await response.json()
       return usersData
     } catch (error) {
       throw error
     }
   }
 
-  public async Disable (user: User, token: string): Promise<string> {
+  public async Disable (user: User, token: string): Promise<User> {
     // Disable a user
     /**
      * Disables a user with provided ID and valid token.
@@ -606,13 +631,14 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      return 'User Disabled'
+      const userData: User = await response.json()
+      return userData
     } catch (error) {
       throw error
     }
   }
 
-  public async Enable (user: User, token: string): Promise<string> {
+  public async Enable (user: User, token: string): Promise<User> {
     // Enable a user.
     /**
      * Enables a previously disabled user when provided with token and valid ID.
@@ -648,7 +674,8 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      return 'User Enabled'
+      const userData: User = await response.json()
+      return userData
     } catch (error) {
       throw error
     }
@@ -692,7 +719,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const groupsData = await response.json()
+      const groupsData: Groups = await response.json()
       return groupsData
     } catch (error) {
       throw error
@@ -728,7 +755,7 @@ export default class Users {
       const response = await fetch(
         new URL(
           `${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
-          this.usersUrl
+          this.thingsUrl
         ).toString(),
         options
       )
@@ -736,7 +763,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json()
+      const thingsData: Things = await response.json()
       return thingsData
     } catch (error) {
       throw error
@@ -773,7 +800,7 @@ export default class Users {
       const response = await fetch(
         new URL(
           `${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
-          this.usersUrl
+          this.thingsUrl
         ).toString(),
         options
       )
@@ -781,7 +808,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const channelsData = await response.json()
+      const channelsData: Channels = await response.json()
       return channelsData
     } catch (error) {
       throw error
@@ -819,7 +846,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const status = await response.json()
+      const status: Status = await response.json()
       return status
     } catch (error) {
       throw error
@@ -865,7 +892,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const status = await response.json()
+      const status: Status = await response.json()
       return status
     } catch (error) {
       throw error
