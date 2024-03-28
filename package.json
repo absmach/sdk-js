@@ -2,22 +2,24 @@
   "name": "mainflux-sdk",
   "version": "0.14.38",
   "description": "Official Mainflux Javascript sdk",
-  "main": "index.js",
+  "main": "./dist/sdk.js",
+  "module": "./dist/sdk.mjs",
+  "types": "./dist/sdk.d.ts",
   "engines": {
     "node": ">=18.0.0"
   },
   "files": [
-    "index.js",
+    "dist",
+    "sdk.js",
     "mainflux",
     "LICENSE"
   ],
   "scripts": {
-    "test": "jest",
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "replace-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/const axios = require(\"axios\");/import axios from \"axios\";/g' {} +",
     "restore-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/import axios from \"axios\";/const axios = require(\"axios\");/g' {} +",
-    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import",
-    "format": "prettier . --write",
-    "lint": "eslint ."
+    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import"
   },
   "repository": {
     "type": "git",
@@ -46,15 +48,15 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.34.1",
     "esmify": "^2.1.1",
     "jest": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "jsdoc": "^4.0.2",
-    "prettier": "3.0.3",
     "rollup": "^4.0.2",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.3"
   }
 }

@@ -1,4 +1,4 @@
-import Users from "./users";
+import Users from './users'
 // const Things = require("./things");
 // const Groups = require("./groups");
 // const Channels = require("./channels");
@@ -6,10 +6,10 @@ import Users from "./users";
 // const Bootstrap = require("./bootstrap");
 // const Messages = require("./messages");
 
-const defaultUrl = "http://localhost";
+const defaultUrl = 'http://localhost'
 
 interface SDKConfig {
-  usersUrl?: string;
+  usersUrl?: string
   // thingsUrl?: string;
   // groupsUrl?: string;
   // channelsUrl?: string;
@@ -20,7 +20,7 @@ interface SDKConfig {
 }
 
 class SDK {
-  users: Users;
+  users: Users
   // things: Things;
   // groups: Groups;
   // channels: Channels;
@@ -28,8 +28,8 @@ class SDK {
   // bootstrap: Bootstrap;
   // messages: Messages;
 
-  constructor({
-    usersUrl = defaultUrl,
+  constructor ({
+    usersUrl = defaultUrl
     // thingsUrl = defaultUrl,
     // groupsUrl = defaultUrl,
     // channelsUrl = defaultUrl,
@@ -38,7 +38,7 @@ class SDK {
     // readersUrl = defaultUrl,
     // httpadapterUrl = defaultUrl,
   }: SDKConfig = {}) {
-    this.users = new Users(usersUrl);
+    this.users = new Users(usersUrl)
     // this.things = new Things(thingsUrl);
     // this.groups = new Groups(groupsUrl);
     // this.channels = new Channels(channelsUrl);
@@ -48,7 +48,7 @@ class SDK {
   }
 }
 
-export default SDK;
+export default SDK
 
 // module.exports = SDK;
 // Export the SDK class for use in a web browser

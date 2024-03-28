@@ -89,3 +89,10 @@ lerna-debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Ignore test-related files
+/coverage.data
+/coverage/
+
+# Build files
+/dist
