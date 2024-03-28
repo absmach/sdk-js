@@ -19,7 +19,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "replace-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/const axios = require(\"axios\");/import axios from \"axios\";/g' {} +",
     "restore-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/import axios from \"axios\";/const axios = require(\"axios\");/g' {} +",
-    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import"
+    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",

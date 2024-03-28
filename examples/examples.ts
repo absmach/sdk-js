@@ -1,10 +1,10 @@
 // Import the SDK class from the mainflux-sdk package
-// import SDK from '../src/sdk'
+import SDK from '../src/sdk'
 
-// const defaultUrl = 'http://localhost'
+const defaultUrl = 'http://localhost'
 
-// const mySdk = new SDK({
-//   usersUrl: defaultUrl + ':9002'
+const mySdk = new SDK({
+  usersUrl: defaultUrl + ':9002'
 //     groupsUrl: defaultUrl + ":9002",
 //     thingsUrl: defaultUrl + ":9000",
 //     channelsUrl: defaultUrl + ":9000",
@@ -12,7 +12,17 @@
 //     readersUrl: defaultUrl + ":9011",
 //     certsUrl: defaultUrl + ":9019",
 //     bootstrapsUrl: defaultUrl + ":9013",
-// })
+})
+
+mySdk.users.CreateToken(
+  { identity: 'admin@example.com', secret: '12345678' }
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 
 // //Things.js examples.
 
