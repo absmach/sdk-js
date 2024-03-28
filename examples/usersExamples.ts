@@ -75,7 +75,7 @@ mySdk.users.Update(
   })
 
 mySdk.users.UpdateUserIdentity(
-  { credentials: { identity: '<userIdentity>' } },
+  { id: '<userId>', credentials: { identity: '<userIdentity>' } },
   '<token>'
 )
   .then((response: any) => {
@@ -86,7 +86,7 @@ mySdk.users.UpdateUserIdentity(
   })
 
 mySdk.users.UpdateUserTags(
-  { tags: ['foo', 'bar'] },
+  { id: '<userId>', tags: ['foo', 'bar'] },
   '<token>'
 )
   .then((response: any) => {
@@ -97,7 +97,7 @@ mySdk.users.UpdateUserTags(
   })
 
 mySdk.users.UpdateUserRole(
-  { role: '<user_role>' },
+  { id: '<userId>', role: '<user_role>' },
   '<token>'
 )
   .then((response: any) => {

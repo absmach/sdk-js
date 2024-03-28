@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-throw-literal */
-/* eslint-disable no-useless-catch */
 import Errors from './errors'
 
 export interface User {
@@ -145,9 +142,8 @@ export default class Users {
      * }
      */
 
-    const options = {
-      method: 'post',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType
       },
@@ -187,9 +183,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'post',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${refreshToken}`
@@ -232,9 +227,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'patch',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -280,9 +274,8 @@ export default class Users {
      * }
      */
 
-    const options = {
-      method: 'patch',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -332,9 +325,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'patch',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -378,16 +370,16 @@ export default class Users {
      *
      */
 
-    const secret = { oldSecret, newSecret }
-    const options = {
-      method: 'patch',
-      maxBodyLength: 2000,
+    const secret = { old_secret: oldSecret, new_secret: newSecret }
+    const options: RequestInit = {
+      method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(secret)
     }
+    console.log('body', options.body)
 
     try {
       const response = await fetch(
@@ -420,13 +412,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'patch',
-      url: new URL(
-        `${this.usersEndpoint}/${user.id}/role`,
-        this.usersUrl
-      ).toString(),
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -467,9 +454,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -509,9 +495,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -559,9 +544,8 @@ export default class Users {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -587,7 +571,7 @@ export default class Users {
     }
   }
 
-  public async Disable (user: User, token: string): Promise<User> {
+  public async Disable (user: User, token: string): Promise<string> {
     // Disable a user
     /**
      * Disables a user with provided ID and valid token.
@@ -602,9 +586,8 @@ export default class Users {
      * }
      */
 
-    const options = {
-      method: 'post',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -624,14 +607,13 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
-      return userData
+      return 'User Disabled'
     } catch (error) {
       throw error
     }
   }
 
-  public async Enable (user: User, token: string): Promise<User> {
+  public async Enable (user: User, token: string): Promise<string> {
     // Enable a user.
     /**
      * Enables a previously disabled user when provided with token and valid ID.
@@ -647,9 +629,8 @@ export default class Users {
      *
      */
 
-    const options = {
-      method: 'post',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -668,8 +649,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json()
-      return userData
+      return 'User Enabled'
     } catch (error) {
       throw error
     }
@@ -694,9 +674,8 @@ export default class Users {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -739,9 +718,8 @@ export default class Users {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -785,9 +763,8 @@ export default class Users {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
 
-    const options = {
-      method: 'get',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -827,9 +804,8 @@ export default class Users {
      * }
      */
 
-    const options = {
-      method: 'post',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType
       },
@@ -874,13 +850,12 @@ export default class Users {
 
     const rpr = { password, confPass, token }
 
-    const options = {
-      method: 'put',
-      maxBodyLength: 2000,
+    const options: RequestInit = {
+      method: 'PUT',
       headers: {
         'Content-Type': this.contentType
       },
-      data: rpr
+      body: JSON.stringify(rpr)
     }
     try {
       const response = await fetch(
