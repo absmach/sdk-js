@@ -379,7 +379,6 @@ export default class Users {
       },
       body: JSON.stringify(secret)
     }
-    console.log('body', options.body)
 
     try {
       const response = await fetch(
