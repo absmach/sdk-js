@@ -9,5 +9,8 @@
         "sourceType": "module"
     },
     "rules": {
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "no-useless-catch": "off"
     }
 }
