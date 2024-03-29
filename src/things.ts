@@ -1,7 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { Errors } from "./errors";
-
-interface Thing {
+import Errors from "./errors";
+export interface Thing {
   name?: string;
   id?: string;
   credentials?: {
@@ -10,7 +8,10 @@ interface Thing {
   };
   owner?: string;
   tags?: [string, string];
-  role?: string;
+  status?: "enabled" | "disabled";
+  createdAt?: string;
+  updatedAt?: string;
+  updatedBy?: string;
   //domainID?: string;
 }
 interface PageRes {
@@ -75,7 +76,7 @@ interface Users {
   users: string[];
   page: PageRes;
 }
-class Things {
+export default class Things {
   // Things service client.
   /** 
      @class Things 
@@ -88,100 +89,54 @@ class Things {
    //@param {string} things_url - Things service URL.
    //@returns {Object} - Things service client.
    */
-  private things_url: URL;
-  private content_type: string;
-  private thingsEndpoint: string;
-  private thingError: Errors;
+  private readonly thingsUrl: URL;
+  private readonly contentType: string;
+  private readonly thingsEndpoint: string;
+  private readonly thingError: Errors;
+  private readonly thingsShareEndpoint: string;
+  private readonly thingsUnshareEndpoint: string;
+  private readonly thingsPermissionsEndpoint: string;
 
-  public constructor(things_url: string) {
-    this.things_url = new URL(things_url);
-    this.content_type = "application/json";
+  public constructor(thingsUrl: string) {
+    this.thingsUrl = new URL(thingsUrl);
+    this.contentType = "application/json";
     this.thingsEndpoint = "things";
     this.thingError = new Errors();
   }
 
-  private ValidateThingIdThingAndToken(
-    thing_id: string,
-    thing: Thing,
-    token: string,
-  ): void {
-    // Validate thing_id
-    if (typeof thing_id !== "string" || thing_id === null) {
-      throw new Error(
-        'Invalid parameter. Expected a string for the "thing_id" parameter.',
-      );
-    }
-
-    // Validate thing
-    if (typeof thing !== "object" || thing === null || Array.isArray(thing)) {
-      throw new Error(
-        'Invalid parameter. Expected an object for the "thing" parameter.',
-      );
-    }
-
-    // Validate token
-    if (typeof token !== "string" || token === null) {
-      throw new Error(
-        'Invalid parameter. Expected a string for the "token" parameter.',
-      );
-    }
-  }
-
-  public Create(thing: Thing, token: string): Promise<Thing> {
-    //Creates a new thing.
-    /**
-     * @method Create - Creates a new thing when provided with
-     * the things information and a valid token.
-     * @param {Object} thing - Thing object.
-     * @param {string} token - User token.
-     * @returns {Object} - Thing object.
-     * @example
-     * const thing = {
-     * "name": "string",
-     * "tags": [
-     * "tag1",
-     * "tag2"
-     * ],
-     * "credentials": {
-     * "identity": "thingidentity",
-     * "secret": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
-     * },
-     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "metadata": {
-     * "domain": "example.com"
-     * },
-     * "status": "enabled"
-     * }
-     */
-
-    this.ValidateThingIdThingAndToken("", thing, token);
-
-    const options = {
-      method: "post",
-      maxBodyLength: 2000,
-      url: new URL(this.thingsEndpoint, this.things_url).toString(),
+  public async Create(thing: Thing, token?: string): Promise<Thing> {
+    console.log("thing", thing);
+    console.log("token", token);
+    const options: RequestInit = {
+      method: "POST",
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: thing,
+      body: JSON.stringify(thing),
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.create,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
+        options,
+      );
+      console.log(JSON.stringify(response));
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public CreateThings(things: Thing[], token: string): Promise<Things> {
+  public async CreateThings(
+    name: [string],
+    token?: string,
+  ): Promise<BulkThings> {
     //Creates multiple things.
     /**
      * @method Create_bulk - Creates multiple things when provided with a valid
@@ -200,34 +155,33 @@ class Things {
      * ]
      */
 
-    this.ValidateThingIdThingAndToken("", {}, token);
-
-    const options = {
-      method: "post",
-      maxBodyLength: 2000,
-      url: new URL(`${this.thingsEndpoint}/bulk`, this.things_url).toString(),
+    const options: RequestInit = {
+      method: "POST",
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: things,
+      body: JSON.stringify(Things),
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.createbulk,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public GetAll(
+  public async GetAll(
     query_params: QueryParams,
     token: string,
   ): Promise<ThingsInterface> {
@@ -242,51 +196,46 @@ class Things {
      * const thing_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
      *
      */
-    if (
-      typeof query_params !== "object" ||
-      query_params === null ||
-      Array.isArray(query_params)
-    ) {
-      throw new Error("Invalid query parameters. Expected an object.");
-    }
+    // if (
+    //   typeof query_params !== "object" ||
+    //   query_params === null ||
+    //   Array.isArray(query_params)
+    // ) {
+    //   throw new Error("Invalid query parameters. Expected an object.");
+    // }
 
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(query_params).map(([key, value]) => [key, String(value)]),
     );
 
-    this.ValidateThingIdThingAndToken("", {}, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "get",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}?${new URLSearchParams(
-          stringParams,
-        ).toString()}`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.channels.getall,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingsData = await response.json();
+      return thingsData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public GetByChannel(
-    thing_id: string,
+  public async ThingsByChannel(
+    thing: Thing,
     query_params: QueryParams,
     token: string,
   ): Promise<Channels> {
@@ -299,52 +248,43 @@ class Things {
      * @returns {Object} - Channels list.
      */
 
-    if (
-      typeof query_params !== "object" ||
-      query_params === null ||
-      Array.isArray(query_params)
-    ) {
-      throw new Error("Invalid query parameters. Expected an object.");
-    }
-
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(query_params).map(([key, value]) => [key, String(value)]),
     );
 
-    const options = {
+    const options: RequestInit = {
       method: "get",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing_id}/channels?${new URLSearchParams(
-          stringParams,
-        )}`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.getbychannel,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}/channels?${new URLSearchParams(
+            stringParams,
+          ).toString()}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const channelsData = await response.json();
+      return channelsData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public ThingsGetAll(
+  public async ThingsGetAll(
     query_params: QueryParams,
     token: string,
-  ): Promise<Things> {
+  ): Promise<ThingsInterface> {
     //Retrieves list of things with pagination metadata.
     /**
      * @method GetAll - Retrieves list of things with pagination metadata when provided with a
@@ -354,48 +294,39 @@ class Things {
      * @returns {Object} - Things list.
      */
 
-    if (
-      typeof query_params !== "object" ||
-      query_params === null ||
-      Array.isArray(query_params)
-    ) {
-      throw new Error("Invalid query parameters. Expected an object.");
-    }
-
-    this.ValidateThingIdThingAndToken("", {}, token);
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(query_params).map(([key, value]) => [key, String(value)]),
     );
-    const options = {
+    const options: RequestInit = {
       method: "get",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}?${new URLSearchParams(
-          stringParams,
-        ).toString()}`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios
-      .request(options)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.getall,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}?${new URLSearchParams(
+            stringParams,
+          ).toString()}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingsData = await response.json();
+      return thingsData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public Disable(thing_id: string, token: string): Promise<Thing> {
+  public async Disable(thing: Thing, token: string): Promise<string> {
     //Disables thing.
     /**
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
@@ -404,36 +335,33 @@ class Things {
      * @returns {Object} - Thing object with statys disabled.
      */
 
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing_id}/disable`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(thing),
     };
-    return axios
-      .request(options)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.disable,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}/disable`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      return "Thing Disabled";
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public Update(thing: Thing, token: string): Promise<Thing> {
+  public async Update(thing: Thing, token: string): Promise<Thing> {
     //Updates thing.
     /**
      * @method Update - Updates thing when provided with a valid token,
@@ -457,37 +385,35 @@ class Things {
      * }
      */
 
-    this.ValidateThingIdThingAndToken("", {}, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "patch",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing.id}`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: thing,
+      body: JSON.stringify(thing),
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.update,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public UpdateThingSecret(thing: Thing, token: string): Promise<Thing> {
+  public async UpdateThingSecret(thing: Thing, token: string): Promise<Thing> {
     //Updates thing secret.
     /**
      * @method UpdateThingSecret - Updates thing secret when provided with a valid token,
@@ -511,42 +437,34 @@ class Things {
      * }
      */
 
-    this.ValidateThingIdThingAndToken("", thing, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "patch",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing.id}/secret`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: JSON.stringify({ secret: thing.credentials?.secret }),
+      body: JSON.stringify(thing),
     };
-    console.log("data", options.data);
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.updatethingsecret,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}/secret`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public UpdateThingTags(
-    thing_id: string,
-    thing: Thing,
-    token: string,
-  ): Promise<Thing> {
+  public async UpdateThingTags(thing: Thing, token: string): Promise<Thing> {
     //Updates thing tags.
     /**
      * @method UpdateThingTags - Updates thing tags when provided with a valid token,
@@ -571,88 +489,73 @@ class Things {
      * }
      */
 
-    this.ValidateThingIdThingAndToken("", thing, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "patch",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing.id}/tags`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: thing,
+      body: JSON.stringify(thing),
     };
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.updatethingtags,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}/tags`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public Disconnect(
-    thing_ids: Things,
-    channel_ids: Channels,
-    token: string,
-  ): Promise<any> {
-    //Disconnects thing from channel.
+  public async Thing(thingId: string, token: string): Promise<Thing> {
+    // Gets a user
     /**
-     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
-     * channel id and a thing id.
-     * @param {list} thing_ids - Thing ID.
-     * @param {list} channel_ids - Channel ID.
-     * @param {string} token - User token.
+     * Provides information about the user with provided ID. The user is
+     * retrieved using authorization user_token.
+     * @method User - Gets a user.
+     * @param {String} userId - User ID.
+     * @param {String} token - Access token.
+     * @returns {Object} - User object.
+     * @example
+     * const userId = "886b4266-77d1-4258-abae-2931fb4f16de"
      *
      */
 
-    if (!Array.isArray(channel_ids)) {
-      throw new Error("Invalid parameter. Expected an array for channel_id.");
-    }
-
-    if (!Array.isArray(thing_ids)) {
-      throw new Error("Invalid parameter. Expected an array for thing_id.");
-    }
-
-    this.ValidateThingIdThingAndToken("", {}, token);
-
-    const payload = { subjects: thing_ids, objects: channel_ids };
-    const options = {
-      method: "post",
-      maxBodyLength: 2000,
-      url: new URL(`disconnect`, this.things_url).toString(),
+    const options: RequestInit = {
+      method: "GET",
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: payload,
     };
-    return axios
-      .request(options)
-      .then((_response) => {
-        return "Policy deleted.";
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.disconnect,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(`${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  public IdentifyThing(thing_key: string): Promise<Thing> {
+  public async IdentifyThing(thingId: string): Promise<Thing> {
     //Validates thing's key and returns it's ID if key is valid
     /**
      * @method IdentifyThing - Validates thing's key and returns it's ID if key is valid. The method
@@ -662,95 +565,32 @@ class Things {
      *
      */
 
-    if (typeof thing_key !== "string" || thing_key === null) {
-      throw new Error("Invalid thing_key parameter. Expected a string.");
-    }
-
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(`identify`, this.things_url).toString(),
       headers: {
-        "Content-Type": this.content_type,
-        Authorization: `Thing ${thing_key}`,
+        "Content-Type": this.contentType,
+        Authorization: `Thing ${thingId}`,
       },
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.identifything,
-            error.response.status,
-          );
-        }
-      });
-  }
-
-  public AuthoriseThing(
-    thing_id: string,
-    channel_id: string,
-    action: string,
-    entity_type: string,
-    token: string,
-  ) {
-    //Authorises thing
-    /**
-     * @method AuthoriseThing - Authorises a thing to perform an action on a channel
-     * when provided with a valid token, thing ID, channel ID, action and entity type.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} channel_id - Channel ID.
-     * @param {string} action - Action for example: ["m_read", "m_write"].
-     * @param {string} entity_type - Type of the thing class for example: "group".
-     * @param {string} token - User token.
-     * @return {Object} - True if thing is authorised, false if not.
-     */
-
-    if (
-      typeof thing_id !== "string" ||
-      typeof channel_id !== "string" ||
-      typeof action !== "string" ||
-      typeof entity_type !== "string" ||
-      typeof token !== "string"
-    ) {
-      throw new Error(
-        "Invalid parameter types. Expected strings for thing_id, channel_id, action, entity_type, and token.",
+    try {
+      const response = await fetch(
+        new URL(`identify`, this.thingsUrl).toString(),
+        options,
       );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
     }
-    const access_request = {
-      subject: thing_id,
-      object: channel_id,
-      action: action,
-      entity_type: entity_type,
-    };
-    const options = {
-      method: "post",
-      maxBodyLength: 2000,
-      url: new URL(this.things_url + `channels/object/access`).toString(),
-      headers: {
-        "Content-Type": this.content_type,
-        Authorization: `Bearer ${token}`,
-      },
-      data: access_request,
-    };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((_response) => {
-        return true;
-      })
-      .catch((_error) => {
-        return false;
-      });
   }
-  public ThingsPermissions(
+
+  public async ThingsPermissions(
     thing_id: string,
     token: string,
-    thing: Thing,
   ): Promise<any> {
     //Retrieves thing permissions.
     /**
@@ -765,41 +605,32 @@ class Things {
      * const permissions = Things.Permissions(thing_id, token)
      * console.log(permissions)
      * */
-    if (thing_id === null || token === null) {
-      throw new Error(
-        "Invalid parameter types. Expected strings for thing_id and token.",
-      );
-    }
-    this.ValidateThingIdThingAndToken("", thing, token);
 
-    const options = {
+    const options: RequestInit = {
       method: "get",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing_id}/permissions`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((response: AxiosResponse) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.identifything,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsPermissionsEndpoint}/${thing_id}/permissions`,
+          this.thingsUrl,
+        ).toString(),
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
-  public Enable(thing_id: string, token: string): Promise<Thing> {
+  public async Enable(thing: Thing, token: string): Promise<string> {
     //Enables thing.
     /**
      * @method Enable - Deletes a thing when provided with a valid token and thing ID.
@@ -808,40 +639,88 @@ class Things {
      * @returns {Object} - Thing object with statys enabled.
      */
 
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
-
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing_id}/enable`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(thing),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thing.id}/enable`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      return "User Enabled";
+    } catch (error) {
+      throw error;
+    }
+  }
+  public async Things(
+    queryParams: QueryParams,
+    token: string,
+  ): Promise<ThingsInterface> {
+    // Gets all things with pagination.
+    /**
+     * Provides information about all users. The users are retrieved using
+     * authorization user_token.
+     *
+     * @method Things - Gets all things with pagination.
+     * @param {Object} queryParams - Query parameters.
+     * @param {String} token - Access token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const queryParams = {
+     * "offset": 0,
+     * "limit": 10
+     * }
+     *
+     */
+
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
+    );
+
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
     };
-    return axios
-      .request(options)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.enable,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingsData = await response.json();
+      return thingsData;
+    } catch (error) {
+      throw error;
+    }
   }
-  public ListThingUsers(
+
+  public async ListThingUsers(
     thingID: string,
     token: string,
     query_params: QueryParams,
-    things: ThingsInterface,
-    userID: string,
   ): Promise<Users> {
     //Retrieves list of users connected to specified thing with pagination metadata.
     /**
@@ -849,56 +728,38 @@ class Things {
      * with pagination metadata.
      * @param {string}
      *  */
-    if (!Array.isArray(thingID) || !Array.isArray(userID)) {
-      throw new Error(
-        "Invalid parameters. Expected arrays for actions, things_ids and users_ids.",
-      );
-    }
-
-    this.ValidateThingIdThingAndToken("", {}, token);
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(query_params).map(([key, value]) => [key, String(value)]),
     );
-    const payload = {
-      subjects: thingID,
-      objects: userID,
-    };
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(
-        `/things/${thingID}/users?${new URLSearchParams(
-          stringParams,
-        ).toString()}`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: payload,
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((_response) => {
-        return _response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.connects,
-            error.response.status,
-          );
-        }
-        return undefined;
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `/things/${thingID}/users?${new URLSearchParams(
+            stringParams,
+          ).toString()}`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const groupsData = await response.json();
+      return groupsData;
+    } catch (error) {
+      throw error;
+    }
   }
-  public ShareThing(
-    thing_id: string,
-    user_id: string,
-    token: string,
-  ): Promise<any> {
+
+  public async ShareThing(thingId: string, token: string): Promise<string> {
     // Shares a thing with a user.
     /**
      * @method ShareThing - Shares a thing with a user.
@@ -908,39 +769,34 @@ class Things {
      * @returns {Object} - Nothing
      *
      * */
-    if (thing_id === null || user_id === null || token === null) {
-      throw new Error(
-        "Invalid parameter types. Expected strings for thing_id and user_id.",
-      );
-    }
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(`connect`, this.things_url).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: { thing_id, user_id },
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((_response) => {
-        return _response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.connects,
-            error.response.status,
-          );
-        }
-      });
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsShareEndpoint}/${this.thingsEndpoint}/${thingId}/share`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
-  public UnshareThing(
-    thing_id: string,
+
+  public async UnShareThing(
+    thingId: string,
     user_id: string,
     token: string,
   ): Promise<any> {
@@ -953,75 +809,64 @@ class Things {
      * @returns {Object} - Nothing
      *
      * */
-    if (thing_id === null || user_id === null || token === null) {
-      throw new Error(
-        "Invalid parameter types. Expected strings for thing_id and user_id.",
-      );
-    }
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
     const options = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(`connect`, this.things_url).toString(),
+      url: new URL(`connect`, this.thingsUrl).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: { thing_id, user_id },
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((_response) => {
-        return _response.data;
-      })
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.connects,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsUnshareEndpoint}/${this.thingsEndpoint}/${thingId}/share`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
-  public DeleteThing(thing_id: string, token: string): Promise<any> {
+
+  public async DeleteThing(thingId: string, token: string): Promise<any> {
     // Deletes a thing.
     /**
      * @method DeleteThing - Deletes a thing.
      * @param {string}
      *  */
-    if (thing_id === null || token === null) {
-      throw new Error(
-        "Invalid parameter types. Expected strings for thing_id and user_id.",
-      );
-    }
-    this.ValidateThingIdThingAndToken(thing_id, {}, token);
-    const options = {
+    const options: RequestInit = {
       method: "post",
-      maxBodyLength: 2000,
-      url: new URL(
-        `${this.thingsEndpoint}/${thing_id}/permissions`,
-        this.things_url,
-      ).toString(),
       headers: {
-        "Content-Type": this.content_type,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      data: { thing_id },
     };
-    console.log(options.url.toString());
-    return axios
-      .request(options)
-      .then((_response: AxiosResponse) => "Thing Deleted.")
-      .catch((error) => {
-        if (error.response) {
-          return this.thingError.HandleError(
-            this.thingError.things.connect,
-            error.response.status,
-          );
-        }
-      });
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.thingsEndpoint}/${thingId}/permissions`,
+          this.thingsUrl,
+        ).toString(),
+        options,
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.thingError.HandleError(errorRes.error, response.status);
+      }
+      const thingData = await response.json();
+      return thingData;
+    } catch (error) {
+      throw error;
+    }
   }
 }
-
-export default Things;

@@ -1,24 +1,43 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from "../mainflux/sdk";
+import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  usersUrl: defaultUrl + ":9002",
-  domainsUrl: defaultUrl + ":8189",
   thingsUrl: defaultUrl + ":9000",
-  channelsUrl: defaultUrl + ":9000",
-  //     groupsUrl: defaultUrl + ":9002",
-  //     httpadapterUrl: defaultUrl,
-  //     readersUrl: defaultUrl + ":9011",
-  //     certsUrl: defaultUrl + ":9019",
-  //     bootstrapsUrl: defaultUrl + ":9013",
 });
+
+const token =
+  "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJCZWFkIiwiZXhwIjoxNzExNjk5OTQzLCJpYXQiOjE3MTE2OTYzNDMsImlzcyI6Im1hZ2lzdHJhbGEuYXV0aCIsInN1YiI6ImIyZmU2YWZlLThmMDUtNDQ4My1hYWNkLTdkMjBlYTI1ZDlhNSIsInR5cGUiOjAsInVzZXIiOiJiMmZlNmFmZS04ZjA1LTQ0ODMtYWFjZC03ZDIwZWEyNWQ5YTUifQ.R_sYh4pn4tRLmiDVAfNtbfChoAxQqWlDYGzszHBcU0qgK_zD9VGOcs607vLpx1oTzkzHLTSPAi9Asi5wKFvHMQ";
 
 // //Things.js examples.
 
 mySdk.things
-  .Create({ name: "<thing_name>" }, "<token>")
+  .Create(
+    {
+      name: "Keyholr",
+    },
+    token,
+  )
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+mySdk.things
+  .GetAll({ offset: 0, limit: 10 }, token)
+
+  .then((response: any) => {
+    console.log("response:", response);
+  })
+
+  .catch((error) => {
+    console.log(error);
+  });
+
+mySdk.things
+  .Enable({ id: "<thing_id>" }, token)
   .then((response: any) => {
     console.log(response);
   })
@@ -31,68 +50,12 @@ mySdk.things
   });
 
 mySdk.things
-  .CreateThings([{ name: "<thing_name>" }, { name: "<thing_name>" }], "<token>")
+  .Update({ id: "thing_id", name: "thing_name" }, token)
   .then((response: any) => {
-    console.log(response);
+    console.log("response:", response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
-  });
-
-mySdk.things
-  .GetAll({ offset: 0, limit: 10 }, "<token>")
-  .then((response: any) => {
-    console.log(response);
-  })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
-  });
-
-mySdk.things
-  .Disable("<thing_id>", "<token>")
-  .then((response: any) => {
-    console.log(response);
-  })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
-  });
-
-mySdk.things
-  .Enable("<thing_id>", "<token>")
-  .then((response: any) => {
-    console.log(response);
-  })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
-  });
-
-mySdk.things
-  .Update({ id: "<thing_id>", name: "<thing_name" }, "<token>")
-  .then((response: any) => {
-    console.log(response);
-  })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
 
 mySdk.things
@@ -101,73 +64,100 @@ mySdk.things
       id: "<thing_id>",
       credentials: { secret: "<thing_secret>" },
     },
-    "<token>",
+    token,
   )
   .then((response: any) => {
     console.log(response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
 
 mySdk.things
-  .UpdateThingTags("<thing_id>", { tags: ["<tag1>", "<tag2>"] }, "<token>")
+  .UpdateThingTags({ id: "<thing_id>", tags: ["<tag1>", "<tag2>"] }, "<token>")
   .then((response: any) => {
     console.log(response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
 
 mySdk.things
-  .GetByChannel("<thing_id>", { offset: 0, limit: 5 }, "<token>")
+  .ThingsByChannel({ id: "hsjdhshd" }, { offset: 0, limit: 5 }, token)
   .then((response: any) => {
     console.log(response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
 
 mySdk.things
-  .IdentifyThing("<thing_secret>")
+  .Things({ offset: 0, limit: 10 }, token)
   .then((response: any) => {
-    console.log(response);
+    console.log("response: ", response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
 
 mySdk.things
-  .AuthoriseThing(
-    "<thing_id>",
-    "<channel_id>",
-    "<action>",
-    "<enity_type>",
-    "<token>",
-  )
+  .Thing("huihnbvgvgcfxdx", token)
   .then((response: any) => {
-    console.log(response);
+    console.log("response: ", response);
   })
-  .catch((error: any) => {
-    if (error.response) {
-      console.error(error.response);
-    } else {
-      console.error(error.message);
-    }
+  .catch((error) => {
+    console.log(error);
   });
+
+mySdk.things
+  .ThingsPermissions("<thingId>", "<token>")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+mySdk.things
+  .IdentifyThing("<thingId>")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+mySdk.things
+  .ShareThing("<thingId>", "<token>")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+mySdk.things
+  .UnShareThing("<thingId>", "<userId>", "<token>")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+mySdk.things
+  .DeleteThing("<thing_id>", "<token>")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+// mySdk.things.CreateThings({name :" ['user1', 'user2']"}, "<token>")
+// .then((response: any) => {
+//     console.log("response: ", response);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
