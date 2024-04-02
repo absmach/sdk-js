@@ -1,31 +1,10 @@
 import Errors from './errors'
-
-export interface Domain {
-  name?: string
-  id?: string
-  alias?: string
-  email?: string
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-}
-
-interface DomainsInterface {
-  domains: Domain[]
-  page: PageRes
-}
-
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
-
-interface Permissions {
-  permissions: string[]
-}
+import {
+  type Domain,
+  type QueryParams,
+  type DomainsPage,
+  type Permissions
+} from './defs'
 
 export default class Domains {
   // Domains API client
@@ -65,7 +44,7 @@ export default class Domains {
       const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -92,7 +71,7 @@ export default class Domains {
       const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -118,7 +97,7 @@ export default class Domains {
       const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -153,11 +132,11 @@ export default class Domains {
       const domainData: Permissions = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
-  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsInterface> {
+  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsPage> {
     // Domains retrieves all domains.
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -183,11 +162,11 @@ export default class Domains {
       const domainData = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
-  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsInterface> {
+  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsPage> {
     // ListUserDomains retrieves all domains for a user.
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -213,7 +192,7 @@ export default class Domains {
       const domainData = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -239,7 +218,7 @@ export default class Domains {
       const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -265,11 +244,11 @@ export default class Domains {
       const domainData: Domain = await response.json()
       return domainData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
-  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<string> {
+  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<any> {
     // AddUsertoDomain adds user to domain.
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
@@ -290,9 +269,9 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return 'Policy created.'
+      return response.statusText
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -317,9 +296,9 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return 'Policy deleted.'
+      return response.statusText
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 }

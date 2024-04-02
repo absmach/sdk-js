@@ -112,3 +112,19 @@ export interface QueryParams {
   domain_id?: string
   relation?: string
 }
+
+export interface Domain {
+  name?: string
+  id?: string
+  alias?: string
+  email?: string
+}
+
+export interface DomainsPage {
+  domains: Domain[]
+  page: PageRes
+}
+
+export interface Permissions {
+  permissions: string[]
+}
