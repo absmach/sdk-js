@@ -1,47 +1,25 @@
 import Errors from './errors'
-
-export interface Group {
-  id?: string
-  name?: string
-  domainID?: string
-  parentID?: string
-  description?: string
-  level?: number
-  permissions?: string[]
-  createdAt?: string
-  updatedAt?: string
-  status?: 'enabled' | 'disabled'
-  metadata?: Record<string, string>
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-}
-
-interface GroupsPage {
-  groups: Group[]
-  page: PageRes
-}
-
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-  level: number
-}
+import {
+  type Group,
+  type GroupsPage,
+  type QueryParams,
+  type ChannelsPage,
+  type Permissions,
+  type Response,
+  type UsersPage
+} from './defs'
 
 export default class Groups {
   // Groups API client
 
-  private readonly groupsUrl: URL
+  private readonly usersUrl: URL
   private readonly thingsUrl: URL
   private readonly contentType: string
   private readonly groupsEndpoint: string
   private readonly groupError: Errors
 
-  public constructor (groupsUrl: string, thingsUrl: string) {
-    this.groupsUrl = new URL(groupsUrl)
+  public constructor (usersUrl: string, thingsUrl: string) {
+    this.usersUrl = new URL(usersUrl)
     this.thingsUrl = new URL(thingsUrl)
     this.contentType = 'application/json'
     this.groupsEndpoint = 'groups'
@@ -61,7 +39,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(this.groupsEndpoint, this.groupsUrl).toString(),
+        new URL(this.groupsEndpoint, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -86,7 +64,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -115,7 +93,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -144,7 +122,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -158,7 +136,7 @@ export default class Groups {
     }
   }
 
-  public async GroupPermissions (groupID: string, token: string): Promise<Group> {
+  public async GroupPermissions (groupID: string, token: string): Promise<Permissions> {
     // Gets a group permissions by ID
     const options: RequestInit = {
       method: 'GET',
@@ -170,14 +148,14 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/permissions`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/permissions`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
+      const groupData: Permissions = await response.json()
       return groupData
     } catch (error) {
       throw error
@@ -190,12 +168,13 @@ export default class Groups {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify(group)
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${group.id}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -220,7 +199,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/enable`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/enable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -245,7 +224,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/disable`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/disable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -259,7 +238,7 @@ export default class Groups {
     }
   }
 
-  public async DeleteGroup (groupID: string, token: string): Promise<any> {
+  public async DeleteGroup (groupID: string, token: string): Promise<Response> {
     const options: RequestInit = {
       method: 'DELETE',
       headers: {
@@ -270,70 +249,77 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      return 'Group deleted successfully.'
+      const deleteResponse: Response = { status: response.status, message: 'Group Deleted Successfully' }
+      return deleteResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async AddUserToGroup (groupID: string, token: string): Promise<any> {
+  public async AddUserToGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // Adds a user to a group thus creating a membership
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify(req)
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users/assign`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/users/assign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      return 'User added to group successfully.'
+      const addResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      return addResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async RemoveUserFromGroup (groupID: string, token: string): Promise<any> {
+  public async RemoveUserFromGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // Removes a user from a group thus deleting a membership
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify(req)
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users/unassign`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/users/unassign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      return 'User removed from group successfully.'
+      const removeResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      return removeResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async ListGroupUsers (groupID: string, queryParams: QueryParams, token: string): Promise<Group> {
+  public async ListGroupUsers (groupID: string, queryParams: QueryParams, token: string): Promise<UsersPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -347,21 +333,21 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users?${new URLSearchParams(stringParams).toString()}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const usersData: UsersPage = await response.json()
+      return usersData
     } catch (error) {
       throw error
     }
   }
 
-  public async ListGroupChannels (groupID: string, queryParams: QueryParams, token: string): Promise<Group> {
+  public async ListGroupChannels (groupID: string, queryParams: QueryParams, token: string): Promise<ChannelsPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -382,8 +368,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const channelsData: ChannelsPage = await response.json()
+      return channelsData
     } catch (error) {
       throw error
     }
@@ -403,7 +389,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/parents?${new URLSearchParams(stringParams).toString()}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -431,7 +417,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/children?${new URLSearchParams(stringParams).toString()}`, this.groupsUrl).toString(),
+        new URL(`${this.groupsEndpoint}/${groupID}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {

@@ -4,13 +4,13 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  groupsUrl: defaultUrl + ':9002',
+  usersUrl: defaultUrl + ':9002',
   thingsUrl: defaultUrl + ':9000'
 })
 
 mySdk.groups
   .CreateGroup({
-    name: '<name>'
+    name: '<groupName>'
   },
   '<token>'
   )
@@ -23,7 +23,7 @@ mySdk.groups
 
 mySdk.groups
   .Group(
-    '<groupId>',
+    '<groupID>',
     '<token>'
   )
   .then((response: any) => {
@@ -59,7 +59,7 @@ mySdk.groups
 
 mySdk.groups
   .GroupPermissions(
-    '<groupId>',
+    'groupID',
     '<token>'
   )
   .then((response: any) => {
@@ -72,8 +72,8 @@ mySdk.groups
 mySdk.groups
   .UpdateGroup(
     {
-      name: '<name>',
-      id: '<groupId>'
+      name: '<groupName>',
+      id: '<groupID>'
     },
     '<token>'
   )
@@ -86,7 +86,7 @@ mySdk.groups
 
 mySdk.groups
   .EnableGroup(
-    '<groupId>',
+    '<groupID>',
     '<token>'
   )
   .then((response: any) => {
@@ -98,7 +98,7 @@ mySdk.groups
 
 mySdk.groups
   .DisableGroup(
-    '<groupId>',
+    '<groupID>',
     '<token>'
   )
   .then((response: any) => {
@@ -110,7 +110,7 @@ mySdk.groups
 
 mySdk.groups
   .DeleteGroup(
-    '<groupId>',
+    'groupID',
     '<token>'
   )
   .then((response: any) => {
@@ -122,7 +122,9 @@ mySdk.groups
 
 mySdk.groups
   .AddUserToGroup(
-    '<groupId>',
+    '<groupID>',
+    ['<userID>', '<userID>'],
+    '<relation>',
     '<token>'
   )
   .then((response: any) => {
@@ -134,7 +136,61 @@ mySdk.groups
 
 mySdk.groups
   .RemoveUserFromGroup(
-    '<groupId>',
+    '<groupID>',
+    ['<userID>', '<userID>'],
+    '<relation>',
+    '<token>'
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.groups
+  .ListGroupUsers(
+    '<groupID>',
+    { offset: 0, limit: 10 },
+    '<token>'
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.groups
+  .ListGroupChannels(
+    '<groupID>',
+    { offset: 0, limit: 10 },
+    '<token>'
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.groups
+  .Children(
+    '<groupID>',
+    { offset: 0, limit: 10, level: 2 },
+    '<token>'
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.groups
+  .Parents(
+    '<groupID>',
+    { offset: 0, limit: 10, level: 2 },
     '<token>'
   )
   .then((response: any) => {

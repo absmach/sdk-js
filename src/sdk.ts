@@ -1,6 +1,7 @@
 import Users from './users'
 import Domains from './domains'
 import Things from './things'
+import Groups from './groups'
 import type {
   User,
   UsersPage,
@@ -34,6 +35,7 @@ class SDK {
   users: Users
   domains: Domains
   things: Things
+  groups: Groups
 
   constructor ({
     usersUrl = defaultUrl,
@@ -44,6 +46,7 @@ class SDK {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
     this.things = new Things(thingsUrl)
+    this.groups = new Groups(usersUrl, thingsUrl)
   }
 }
 
