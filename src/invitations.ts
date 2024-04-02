@@ -1,11 +1,12 @@
 import Errors from './errors'
-
+import { type Response } from './defs'
 export interface Invitation {
-  InvitedBy: string
-  UserID: string
-  DomainID: string
-  Token: string
-  Relation: string
+  invitedBy?: string
+  userID?: string
+  domainID?: string
+  token?: string
+  relation?: string
+  metadata?: Record<string, any>
 }
 
 interface InvitationsPage {
@@ -24,7 +25,7 @@ interface QueryParams {
   limit: number
 }
 
-export class Invitations {
+export default class Invitations {
   // Invitations API client
   private readonly invitationsUrl: URL
   private readonly contentType: string
@@ -38,7 +39,7 @@ export class Invitations {
     this.invitationError = new Errors()
   }
 
-  public async SendInvitation (invitation: Invitation, token: string): Promise<any> {
+  public async SendInvitation (invitation: Invitation, token: string): Promise<Response> {
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -57,7 +58,8 @@ export class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.error, response.status)
       }
-      return 'Invitation sent'
+      const inviteResponse: Response = { status: response.status, message: 'Invitation Sent Successfully' }
+      return inviteResponse
     } catch (error) {
       throw error
     }
@@ -75,7 +77,7 @@ export class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${invitation.UserID}/${invitation.DomainID}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${invitation.userID}/${invitation.domainID}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -121,14 +123,14 @@ export class Invitations {
     }
   }
 
-  public async AcceptInvitation (invitation: Invitation, token: string): Promise<any> {
+  public async AcceptInvitation (invitation: Invitation, token: string): Promise<Response> {
     const options: RequestInit = {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorisation: `Bearer ${token}`
       },
-      body: JSON.stringify({ DomainID: invitation.DomainID })
+      body: JSON.stringify({ DomainID: invitation.domainID })
     }
 
     try {
@@ -140,13 +142,14 @@ export class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.error, response.status)
       }
-      return 'Invitation accepted'
+      const inviteResponse: Response = { status: response.status, message: 'Invitation Accepeted Successfully' }
+      return inviteResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async DeleteInvitation (invitation: Invitation, token: string): Promise<any> {
+  public async DeleteInvitation (invitation: Invitation, token: string): Promise<Response> {
     const options: RequestInit = {
       method: 'DELETE',
       headers: {
@@ -158,14 +161,15 @@ export class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${invitation.UserID}/${invitation.DomainID}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${invitation.userID}/${invitation.domainID}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.error, response.status)
       }
-      return 'Invitation deleted'
+      const inviteResponse: Response = { status: response.status, message: 'Invitation Deleted Successfully' }
+      return inviteResponse
     } catch (error) {
       throw error
     }
