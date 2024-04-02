@@ -1,89 +1,16 @@
 import Errors from './errors'
+import {
+  type User,
+  type UsersPage,
+  type ThingsPage,
+  type GroupsPage,
+  type ChannelsPage,
+  type Login,
+  type QueryParams,
+  type Token,
+  type Status
 
-export interface User {
-  name?: string
-  id?: string
-  credentials?: {
-    identity: string
-    secret?: string
-  }
-  owner?: string
-  tags?: [string, string]
-  role?: string
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-  updatedBy?: string
-}
-
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
-
-interface UsersInterface {
-  users: User[]
-  page: PageRes
-}
-
-interface Group {
-  id?: string
-  name?: string
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-}
-interface Groups {
-  groups: Group[]
-  page: PageRes
-}
-
-interface Thing {
-  id?: string
-  name?: string
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-}
-
-interface Things {
-  things: Thing[]
-  page: PageRes
-}
-
-interface Channel {
-  id?: string
-  name?: string
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-}
-
-interface Channels {
-  channel: Channel[]
-  page: PageRes
-}
-
-interface Login {
-  identity?: string
-  secret?: string
-  domain_id?: string
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-}
-
-interface Token {
-  access_token: string
-  refreshToken: string
-}
-
-interface Status {
-  status: string
-}
+} from './defs'
 
 export default class Users {
   // Users API client
@@ -395,14 +322,13 @@ export default class Users {
      *
      */
 
-    const secret = { old_secret: oldSecret, new_secret: newSecret }
     const options: RequestInit = {
       method: 'PATCH',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(secret)
+      body: JSON.stringify({ old_secret: oldSecret, new_secret: newSecret })
     }
 
     try {
@@ -546,7 +472,7 @@ export default class Users {
   public async Users (
     queryParams: QueryParams,
     token: string
-  ): Promise<UsersInterface> {
+  ): Promise<UsersPage> {
     // Gets all users with pagination.
     /**
      * Provides information about all users. The users are retrieved using
@@ -588,7 +514,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const usersData: UsersInterface = await response.json()
+      const usersData: UsersPage = await response.json()
       return usersData
     } catch (error) {
       throw error
@@ -685,7 +611,7 @@ export default class Users {
     userId: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<Groups> {
+  ): Promise<GroupsPage> {
     // Get groups of a user.
     /**
      * Gets the various groups a user belongs to.
@@ -719,7 +645,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const groupsData: Groups = await response.json()
+      const groupsData: GroupsPage = await response.json()
       return groupsData
     } catch (error) {
       throw error
@@ -730,7 +656,7 @@ export default class Users {
     userId: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<Things> {
+  ): Promise<ThingsPage> {
     // Get things of a user.
     /**
      * Gets the various things a user owns.
@@ -763,7 +689,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const thingsData: Things = await response.json()
+      const thingsData: ThingsPage = await response.json()
       return thingsData
     } catch (error) {
       throw error
@@ -774,7 +700,7 @@ export default class Users {
     userId: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<Channels> {
+  ): Promise<ChannelsPage> {
     // Get channels of a user.
     /**
      * Gets the various channels a user owns.
@@ -808,7 +734,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const channelsData: Channels = await response.json()
+      const channelsData: ChannelsPage = await response.json()
       return channelsData
     } catch (error) {
       throw error
@@ -835,7 +761,7 @@ export default class Users {
       headers: {
         'Content-Type': this.contentType
       },
-      body: email
+      body: JSON.stringify({ email })
     }
     try {
       const response = await fetch(
@@ -874,14 +800,12 @@ export default class Users {
      * }
      */
 
-    const rpr = { password, confPass, token }
-
     const options: RequestInit = {
       method: 'PUT',
       headers: {
         'Content-Type': this.contentType
       },
-      body: JSON.stringify(rpr)
+      body: JSON.stringify({ password, confirm_password: confPass, token })
     }
     try {
       const response = await fetch(
