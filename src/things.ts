@@ -49,6 +49,10 @@ interface Channels {
   page: PageRes;
 }
 
+interface UsersRelationRequest {
+  Relation: string;
+  UserID: string[];
+}
 interface QueryParams {
   offset: number;
   limit: number;
@@ -93,9 +97,9 @@ export default class Things {
   private readonly contentType: string;
   private readonly thingsEndpoint: string;
   private readonly thingError: Errors;
-  private readonly thingsShareEndpoint: string;
-  private readonly thingsUnshareEndpoint: string;
-  private readonly thingsPermissionsEndpoint: string;
+  private readonly thingsShareEndpoint: string = "share";
+  private readonly thingsUnshareEndpoint: string = "unshare";
+  private readonly thingsPermissionsEndpoint: string = "permissions";
 
   public constructor(thingsUrl: string) {
     this.thingsUrl = new URL(thingsUrl);
@@ -105,8 +109,6 @@ export default class Things {
   }
 
   public async Create(thing: Thing, token?: string): Promise<Thing> {
-    console.log("thing", thing);
-    console.log("token", token);
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -121,7 +123,6 @@ export default class Things {
         new URL(this.thingsEndpoint, this.thingsUrl).toString(),
         options,
       );
-      console.log(JSON.stringify(response));
       if (!response.ok) {
         const errorRes = await response.json();
         throw this.thingError.HandleError(errorRes.error, response.status);
@@ -134,7 +135,7 @@ export default class Things {
   }
 
   public async CreateThings(
-    name: [string],
+    things: Thing[],
     token?: string,
   ): Promise<BulkThings> {
     //Creates multiple things.
@@ -161,13 +162,12 @@ export default class Things {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(Things),
+      body: JSON.stringify(things),
     };
-
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
+        new URL(`${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
         options,
       );
       if (!response.ok) {
@@ -326,7 +326,7 @@ export default class Things {
     }
   }
 
-  public async Disable(thing: Thing, token: string): Promise<string> {
+  public async Disable(thing: Thing, token: string): Promise<Thing> {
     //Disables thing.
     /**
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
@@ -355,7 +355,8 @@ export default class Things {
         const errorRes = await response.json();
         throw this.thingError.HandleError(errorRes.error, response.status);
       }
-      return "Thing Disabled";
+      const thingData = await response.json();
+      return thingData;
     } catch (error) {
       throw error;
     }
@@ -386,7 +387,7 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "patch",
+      method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -438,7 +439,7 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "patch",
+      method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -490,7 +491,7 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "patch",
+      method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -555,26 +556,19 @@ export default class Things {
     }
   }
 
-  public async IdentifyThing(thingId: string): Promise<Thing> {
-    //Validates thing's key and returns it's ID if key is valid
-    /**
-     * @method IdentifyThing - Validates thing's key and returns it's ID if key is valid. The method
-     * does not require a token.
-     * @param {string} thing_key - Thing secret.
-     * @returns {Object} - Thing object.
-     *
-     */
-
+  public async IdentifyThing(thing: Thing): Promise<Thing> {
     const options: RequestInit = {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Thing ${thingId}`,
+        Authorization: `Thing ${thing.id}`,
       },
+      body: JSON.stringify(thing),
     };
+
     try {
       const response = await fetch(
-        new URL(`identify`, this.thingsUrl).toString(),
+        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
         options,
       );
       if (!response.ok) {
@@ -589,9 +583,9 @@ export default class Things {
   }
 
   public async ThingsPermissions(
-    thing_id: string,
+    thingID: string,
     token: string,
-  ): Promise<any> {
+  ): Promise<Thing | undefined> {
     //Retrieves thing permissions.
     /**
      * @method Permissions - Retrieves thing permissions when provided with a valid token
@@ -616,7 +610,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsPermissionsEndpoint}/${thing_id}/permissions`,
+          `${this.thingsEndpoint}/${thingID}/permissions`,
           this.thingsUrl,
         ).toString(),
       );
@@ -630,7 +624,7 @@ export default class Things {
       throw error;
     }
   }
-  public async Enable(thing: Thing, token: string): Promise<string> {
+  public async Enable(thing: Thing, token: string): Promise<Thing> {
     //Enables thing.
     /**
      * @method Enable - Deletes a thing when provided with a valid token and thing ID.
@@ -660,7 +654,8 @@ export default class Things {
         const errorRes = await response.json();
         throw this.thingError.HandleError(errorRes.error, response.status);
       }
-      return "User Enabled";
+      const thingData = await response.json();
+      return thingData;
     } catch (error) {
       throw error;
     }
@@ -691,7 +686,7 @@ export default class Things {
     );
 
     const options: RequestInit = {
-      method: "GET",
+      method: "get",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -719,8 +714,8 @@ export default class Things {
 
   public async ListThingUsers(
     thingID: string,
-    token: string,
     query_params: QueryParams,
+    token: string,
   ): Promise<Users> {
     //Retrieves list of users connected to specified thing with pagination metadata.
     /**
@@ -732,7 +727,7 @@ export default class Things {
       Object.entries(query_params).map(([key, value]) => [key, String(value)]),
     );
     const options: RequestInit = {
-      method: "post",
+      method: "get",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -740,26 +735,25 @@ export default class Things {
     };
     try {
       const response = await fetch(
-        new URL(
-          `/things/${thingID}/users?${new URLSearchParams(
-            stringParams,
-          ).toString()}`,
-          this.thingsUrl,
-        ).toString(),
+        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
         options,
       );
       if (!response.ok) {
         const errorRes = await response.json();
         throw this.thingError.HandleError(errorRes.error, response.status);
       }
-      const groupsData = await response.json();
-      return groupsData;
+      const userData = await response.json();
+      return userData;
     } catch (error) {
       throw error;
     }
   }
 
-  public async ShareThing(thingId: string, token: string): Promise<string> {
+  public async ShareThing(
+    thingId: string,
+    req: UsersRelationRequest,
+    token: string,
+  ): Promise<Thing> {
     // Shares a thing with a user.
     /**
      * @method ShareThing - Shares a thing with a user.
@@ -775,11 +769,13 @@ export default class Things {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(req),
     };
+
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsShareEndpoint}/${this.thingsEndpoint}/${thingId}/share`,
+          `${this.thingsEndpoint}/${thingId}/share`,
           this.thingsUrl,
         ).toString(),
         options,
@@ -797,12 +793,12 @@ export default class Things {
 
   public async UnShareThing(
     thingId: string,
-    user_id: string,
+    req: UsersRelationRequest,
     token: string,
-  ): Promise<any> {
+  ): Promise<Thing> {
     // Shares a thing with a user.
     /**
-     * @method UnshareThinghare - UnShares a thing with a user.
+     * @method UnShareThing - UnShares a thing with a user.
      * @param {string} thing_id - Thing ID.
      * @param {string} user_id - User ID.
      * @param {string} token - User token.
@@ -811,17 +807,17 @@ export default class Things {
      * */
     const options = {
       method: "post",
-      url: new URL(`connect`, this.thingsUrl).toString(),
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(req),
     };
 
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsUnshareEndpoint}/${this.thingsEndpoint}/${thingId}/share`,
+          `${this.thingsEndpoint}/${thingId}/unshare`,
           this.thingsUrl,
         ).toString(),
         options,
@@ -837,24 +833,25 @@ export default class Things {
     }
   }
 
-  public async DeleteThing(thingId: string, token: string): Promise<any> {
+  public async DeleteThing(thing: Thing, token: string): Promise<string> {
     // Deletes a thing.
     /**
      * @method DeleteThing - Deletes a thing.
      * @param {string}
      *  */
     const options: RequestInit = {
-      method: "post",
+      method: "delete",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(thing),
     };
 
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thingId}/permissions`,
+          `${this.thingsEndpoint}/${thing.id}`,
           this.thingsUrl,
         ).toString(),
         options,
@@ -863,8 +860,7 @@ export default class Things {
         const errorRes = await response.json();
         throw this.thingError.HandleError(errorRes.error, response.status);
       }
-      const thingData = await response.json();
-      return thingData;
+      return "Thing Deleted";
     } catch (error) {
       throw error;
     }
