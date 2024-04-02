@@ -3,7 +3,8 @@ import {
   type Domain,
   type QueryParams,
   type DomainsPage,
-  type Permissions
+  type Permissions,
+  type Response
 } from './defs'
 
 export default class Domains {
@@ -248,7 +249,7 @@ export default class Domains {
     }
   }
 
-  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<any> {
+  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // AddUsertoDomain adds user to domain.
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
@@ -269,13 +270,14 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return response.statusText
+      const addResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      return addResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<any> {
+  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // RemoveUserfromDomain removes user from domain.
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
@@ -296,7 +298,8 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.error, response.status)
       }
-      return response.statusText
+      const removeResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      return removeResponse
     } catch (error) {
       throw error
     }
