@@ -39,11 +39,6 @@ interface Channels {
   page: PageRes
 }
 
-// interface updateThingSecretReq {
-//   secret: string
-//   // `json:"secret,omitempty"`
-// }
-
 interface QueryParams {
   offset: number
   limit: number
@@ -137,7 +132,6 @@ export default class Things {
     }
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(`${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
         options
       )
@@ -367,7 +361,6 @@ export default class Things {
     }
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.thingsEndpoint}/${thing.id}`,
           this.thingsUrl
@@ -417,7 +410,6 @@ export default class Things {
       },
       body: JSON.stringify(thing)
     }
-    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
@@ -431,7 +423,6 @@ export default class Things {
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
       const thingData = await response.json()
-      console.log('thingData', thingData)
       return thingData
     } catch (error) {
       throw error
@@ -715,13 +706,10 @@ export default class Things {
         ).toString(),
         options
       )
-      console.log('url', response.url)
       if (!response.ok) {
-        console.log('response', response)
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      console.log('response', response)
       const userData: Users = await response.json()
       return userData
     } catch (error) {
@@ -754,7 +742,6 @@ export default class Things {
       body: JSON.stringify(req)
 
     }
-    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
@@ -763,8 +750,6 @@ export default class Things {
         ).toString(),
         options
       )
-      console.log(response)
-      console.log('url', response.url)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
@@ -800,7 +785,6 @@ export default class Things {
       },
       body: JSON.stringify(req)
     }
-    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
@@ -809,7 +793,6 @@ export default class Things {
         ).toString(),
         options
       )
-      console.log('url', response.url)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
