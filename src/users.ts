@@ -34,6 +34,8 @@ export default class Users {
     this.usersUrl = new URL(usersUrl)
     if (thingsUrl !== undefined) {
       this.thingsUrl = new URL(thingsUrl)
+    } else {
+      this.thingsUrl = new URL('')
     }
     if (hostUrl !== undefined) {
       this.hostUrl = new URL(hostUrl)
@@ -754,7 +756,7 @@ export default class Users {
     /**
      * @method ResetPasswordRequest - Sends a request
      * @param {String} email - User email.
-     * @returns {Int} - Status.
+     * @returns {Obj} - Response - Status of the request and a message.
      * @example
      * const user = {
      * "credentials": {
@@ -781,7 +783,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link is sent' }
+      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link successfully' }
       return resetRequestResponse
     } catch (error) {
       throw error
@@ -799,7 +801,7 @@ export default class Users {
      * @param {String} password - User Password.
      * @param {String} confPass - User to confirm the Password.
      * @param {String} token - Access token.
-     * @returns {Int} - Status Created.
+     * @returns {Obj} - Response - Status of the request and a message.
      * @example
      * const user = {
      * "credentials": {
@@ -825,7 +827,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const resetResponse: Response = { status: response.status, message: 'Password reset succesfully' }
+      const resetResponse: Response = { status: response.status, message: 'Password reset successfully' }
       return resetResponse
     } catch (error) {
       throw error

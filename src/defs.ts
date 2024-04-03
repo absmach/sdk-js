@@ -78,10 +78,6 @@ export interface Token {
   refreshToken: string
 }
 
-export interface Status {
-  status: string
-}
-
 export interface Response {
   status: number
   message?: string
