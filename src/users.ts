@@ -8,7 +8,7 @@ import {
   type Login,
   type QueryParams,
   type Token,
-  type Status
+  type Response
 
 } from './defs'
 
@@ -24,14 +24,22 @@ export default class Users {
    * @returns {Object} - Users object.
    */
   private readonly usersUrl: URL
-  private readonly thingsUrl: URL
+  private readonly thingsUrl?: URL
+  private readonly hostUrl: URL
   private readonly contentType: string
   private readonly usersEndpoint: string
   private readonly userError: Errors
 
-  public constructor (usersUrl: string, thingsUrl: string) {
+  public constructor ({ usersUrl, thingsUrl, hostUrl }: { usersUrl: string, thingsUrl?: string, hostUrl?: string }) {
     this.usersUrl = new URL(usersUrl)
-    this.thingsUrl = new URL(thingsUrl)
+    if (thingsUrl !== undefined) {
+      this.thingsUrl = new URL(thingsUrl)
+    }
+    if (hostUrl !== undefined) {
+      this.hostUrl = new URL(hostUrl)
+    } else {
+      this.hostUrl = new URL('')
+    }
     this.contentType = 'application/json'
     this.usersEndpoint = 'users'
     this.userError = new Errors()
@@ -741,7 +749,7 @@ export default class Users {
     }
   }
 
-  public async ResetPasswordRequest (email: string): Promise<Status> {
+  public async ResetPasswordRequest (email: string): Promise<Response> {
     // Sends a request to reset a password
     /**
      * @method ResetPasswordRequest - Sends a request
@@ -759,7 +767,8 @@ export default class Users {
     const options: RequestInit = {
       method: 'POST',
       headers: {
-        'Content-Type': this.contentType
+        'Content-Type': this.contentType,
+        Referer: this.hostUrl.toString()
       },
       body: JSON.stringify({ email })
     }
@@ -772,8 +781,8 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const status: Status = await response.json()
-      return status
+      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link is sent' }
+      return resetRequestResponse
     } catch (error) {
       throw error
     }
@@ -783,7 +792,7 @@ export default class Users {
     password: string,
     confPass: string,
     token: string
-  ): Promise<Status> {
+  ): Promise<Response> {
     // Resets a user password
     /**
      * @method ResetPassword - Resets a password.
@@ -805,7 +814,7 @@ export default class Users {
       headers: {
         'Content-Type': this.contentType
       },
-      body: JSON.stringify({ password, confirm_password: confPass, token })
+      body: JSON.stringify({ token, password, confirm_password: confPass })
     }
     try {
       const response = await fetch(
@@ -816,8 +825,8 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const status: Status = await response.json()
-      return status
+      const resetResponse: Response = { status: response.status, message: 'Password reset succesfully' }
+      return resetResponse
     } catch (error) {
       throw error
     }

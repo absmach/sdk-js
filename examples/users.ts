@@ -12,8 +12,8 @@ mySdk.users
   .Create({
     name: '<name>',
     credentials: {
-      identity: 'James@email.com',
-      secret: '12345678'
+      identity: '<useremail>',
+      secret: '<password>'
     }
   })
   .then((response: any) => {
@@ -45,7 +45,7 @@ mySdk.users.UserProfile(
   })
 
 mySdk.users.CreateToken(
-  { identity: 'admin@example.com', secret: '12345678' }
+  { identity: '<identity>', secret: '<password>' }
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -55,7 +55,7 @@ mySdk.users.CreateToken(
   })
 
 mySdk.users.RefreshToken(
-  { identity: 'userId' },
+  { identity: '<userId>' },
   '<refreshToken>'
 )
   .then((response: any) => {
@@ -99,7 +99,7 @@ mySdk.users.UpdateUserTags(
   })
 
 mySdk.users.UpdateUserRole(
-  { id: '<userId>', role: '<user_role>' },
+  { id: '<userId>', role: '<userRole>' },
   '<token>'
 )
   .then((response: any) => {
