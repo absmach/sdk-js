@@ -1,89 +1,79 @@
-import Errors from "./errors";
+import Errors from './errors'
 export interface Thing {
-  name?: string;
-  id?: string;
+  name?: string
+  id?: string
   credentials?: {
-    identity?: string;
-    secret: string;
-  };
-  owner?: string;
-  tags?: [string, string];
-  status?: "enabled" | "disabled";
-  createdAt?: string;
-  updatedAt?: string;
-  updatedBy?: string;
-  //domainID?: string;
+    identity?: string
+    secret: string
+  }
+  owner?: string
+  tags?: [string, string]
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
+  updatedBy?: string
+  // domainID?: string;
 }
 interface PageRes {
-  total: number;
-  offset: number;
-  limit: number;
+  total: number
+  offset: number
+  limit: number
 }
 
 interface ThingsInterface {
-  things: Thing[];
-  page: PageRes;
+  things: Thing[]
+  page: PageRes
+}
+
+interface Response {
+  status: number
+  message?: string
 }
 
 interface BulkThings {
-  things: Thing[];
-}
-interface Channel {
-  name?: string;
-  description?: string;
-  parent_id?: string;
-  credentials?: {
-    identity?: string;
-    status?: string;
-    owner_id?: string;
-    id?: string;
-  };
-}
-interface ChannelsInterface {
-  channels: Channel[];
-  page: PageRes;
+  things: Thing[]
 }
 
 interface Channels {
-  channel: Channels[];
-  page: PageRes;
+  channel: Channels[]
+  page: PageRes
 }
 
-interface UsersRelationRequest {
-  Relation: string;
-  UserID: string[];
-}
+// interface updateThingSecretReq {
+//   secret: string
+//   // `json:"secret,omitempty"`
+// }
+
 interface QueryParams {
-  offset: number;
-  limit: number;
-  //[key: string]: number | string;
-}
-
-interface Token {
-  token: string;
-}
-
-interface Actions {
-  actions: string[];
-}
-
-interface ChannelsOrString {
-  //channels: ChannelsInterface;
-  message?: string;
-  channels: string;
-}
-interface Status {
-  status: string;
+  offset: number
+  limit: number
+  // [key: string]: number | string;
 }
 
 interface Users {
-  users: string[];
-  page: PageRes;
+  users: User[]
+  page: PageRes
+}
+
+interface User {
+  name?: string
+  id?: string
+  credentials?: {
+    identity: string
+    secret?: string
+  }
+  owner?: string
+  tags?: [string, string]
+  role?: string
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
+  updatedBy?: string
 }
 export default class Things {
   // Things service client.
-  /** 
-     @class Things 
+  /**
+     @class Things
     private things_url: URL;
     content_type: string;
     thingsEndpoint: string;
@@ -93,99 +83,80 @@ export default class Things {
    //@param {string} things_url - Things service URL.
    //@returns {Object} - Things service client.
    */
-  private readonly thingsUrl: URL;
-  private readonly contentType: string;
-  private readonly thingsEndpoint: string;
-  private readonly thingError: Errors;
-  private readonly thingsShareEndpoint: string = "share";
-  private readonly thingsUnshareEndpoint: string = "unshare";
-  private readonly thingsPermissionsEndpoint: string = "permissions";
+  private readonly thingsUrl: URL
+  private readonly usersUrl: URL
+  private readonly contentType: string
+  private readonly thingsEndpoint: string
+  private readonly thingError: Errors
 
-  public constructor(thingsUrl: string) {
-    this.thingsUrl = new URL(thingsUrl);
-    this.contentType = "application/json";
-    this.thingsEndpoint = "things";
-    this.thingError = new Errors();
+  public constructor (thingsUrl: string, usersUrl: string) {
+    this.thingsUrl = new URL(thingsUrl)
+    this.usersUrl = new URL(usersUrl)
+    this.contentType = 'application/json'
+    this.thingsEndpoint = 'things'
+    this.thingError = new Errors()
   }
 
-  public async Create(thing: Thing, token?: string): Promise<Thing> {
+  public async Create (thing: Thing, token?: string): Promise<Thing> {
     const options: RequestInit = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
 
     try {
       const response = await fetch(
         new URL(this.thingsEndpoint, this.thingsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async CreateThings(
+  public async CreateThings (
     things: Thing[],
-    token?: string,
+    token: string
   ): Promise<BulkThings> {
-    //Creates multiple things.
-    /**
-     * @method Create_bulk - Creates multiple things when provided with a valid
-     * token and an array of things information such as names.
-     * @param {list} things - An array of things information.
-     * @param {string} token - User token.
-     * @returns {list} - Things list.
-     * @example
-     * const things = [
-     * {
-     * "name": "thing1"
-     * },
-     * {
-     * "name": "thing2"
-     * }
-     * ]
-     */
-
     const options: RequestInit = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(things),
-    };
+      body: JSON.stringify(things)
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(`${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async GetAll(
-    query_params: QueryParams,
-    token: string,
+  public async GetAll (
+    queryParams: QueryParams,
+    token: string
   ): Promise<ThingsInterface> {
-    //Retrieves thing information.
+    // Retrieves thing information.
     /**
      * @method Get - Retrieves thing information when provided with a valid token
      * and thing ID.
@@ -197,137 +168,137 @@ export default class Things {
      *
      */
     // if (
-    //   typeof query_params !== "object" ||
-    //   query_params === null ||
-    //   Array.isArray(query_params)
+    //   typeof queryParams !== "object" ||
+    //   queryParams === null ||
+    //   Array.isArray(queryParams)
     // ) {
     //   throw new Error("Invalid query parameters. Expected an object.");
     // }
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
 
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json();
-      return thingsData;
+      const thingsData = await response.json()
+      return thingsData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ThingsByChannel(
+  public async ThingsByChannel (
     thing: Thing,
-    query_params: QueryParams,
-    token: string,
+    queryParams: QueryParams,
+    token: string
   ): Promise<Channels> {
-    //Retrieves list of channels connected to specified thing with pagination metadata.
+    // Retrieves list of channels connected to specified thing with pagination metadata.
     /**
      * @method GetByChannel - Retrieves list of channels connected to specified thing
      * with pagination metadata.
      * @param {string} thing_id - Thing ID.
-     * @param {Object} query_params - Query parameters such as offset and limit.
+     * @param {Object} queryParams - Query parameters such as offset and limit.
      * @returns {Object} - Channels list.
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
 
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}/channels?${new URLSearchParams(
-            stringParams,
+            stringParams
           ).toString()}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const channelsData = await response.json();
-      return channelsData;
+      const channelsData = await response.json()
+      return channelsData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ThingsGetAll(
-    query_params: QueryParams,
-    token: string,
+  public async ThingsGetAll (
+    queryParams: QueryParams,
+    token: string
   ): Promise<ThingsInterface> {
-    //Retrieves list of things with pagination metadata.
+    // Retrieves list of things with pagination metadata.
     /**
      * @method GetAll - Retrieves list of things with pagination metadata when provided with a
      * valid token and correct query parameters such as offset and limit.
-     * @param {Object} query_params - Query parameters.
+     * @param {Object} queryParams - Query parameters.
      * @param {string} token - User token.
      * @returns {Object} - Things list.
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}?${new URLSearchParams(
-            stringParams,
+            stringParams
           ).toString()}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json();
-      return thingsData;
+      const thingsData = await response.json()
+      return thingsData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Disable(thing: Thing, token: string): Promise<Thing> {
-    //Disables thing.
+  public async Disable (thing: Thing, token: string): Promise<Thing> {
+    // Disables thing.
     /**
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
@@ -336,34 +307,34 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}/disable`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Update(thing: Thing, token: string): Promise<Thing> {
-    //Updates thing.
+  public async Update (thing: Thing, token: string): Promise<Thing> {
+    // Updates thing.
     /**
      * @method Update - Updates thing when provided with a valid token,
      * thing ID and thing object.
@@ -387,35 +358,35 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.thingsEndpoint}/${thing.id}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async UpdateThingSecret(thing: Thing, token: string): Promise<Thing> {
-    //Updates thing secret.
+  public async UpdateThingSecret (thing: Thing, token: string): Promise<Thing> {
+    // Updates thing secret.
     /**
      * @method UpdateThingSecret - Updates thing secret when provided with a valid token,
      * thing ID and thing object.
@@ -439,34 +410,36 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
+    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}/secret`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      console.log('thingData', thingData)
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async UpdateThingTags(thing: Thing, token: string): Promise<Thing> {
-    //Updates thing tags.
+  public async UpdateThingTags (thing: Thing, token: string): Promise<Thing> {
+    // Updates thing tags.
     /**
      * @method UpdateThingTags - Updates thing tags when provided with a valid token,
      * thing ID and thing object.
@@ -491,34 +464,34 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}/tags`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Thing(thingId: string, token: string): Promise<Thing> {
+  public async Thing (thingId: string, token: string): Promise<Thing> {
     // Gets a user
     /**
      * Provides information about the user with provided ID. The user is
@@ -533,60 +506,59 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     try {
       const response = await fetch(
         new URL(`${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async IdentifyThing(thing: Thing): Promise<Thing> {
+  public async IdentifyThing (thingKey: string): Promise<Thing> {
     const options: RequestInit = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Thing ${thing.id}`,
-      },
-      body: JSON.stringify(thing),
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Thing ${thingKey}`
+      }
+    }
 
     try {
       const response = await fetch(
         new URL(this.thingsEndpoint, this.thingsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ThingsPermissions(
+  public async ThingsPermissions (
     thingID: string,
-    token: string,
-  ): Promise<Thing | undefined> {
-    //Retrieves thing permissions.
+    token: string
+  ): Promise<any> {
+    // Retrieves thing permissions.
     /**
      * @method Permissions - Retrieves thing permissions when provided with a valid token
      * and thing ID.
@@ -601,31 +573,32 @@ export default class Things {
      * */
 
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thingID}/permissions`,
-          this.thingsUrl,
-        ).toString(),
-      );
+          this.thingsUrl
+        ).toString(), options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData: Permissions = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async Enable(thing: Thing, token: string): Promise<Thing> {
-    //Enables thing.
+
+  public async Enable (thing: Thing, token: string): Promise<Thing> {
+    // Enables thing.
     /**
      * @method Enable - Deletes a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
@@ -634,35 +607,36 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}/enable`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const thingData = await response.json()
+      return thingData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async Things(
+
+  public async Things (
     queryParams: QueryParams,
-    token: string,
+    token: string
   ): Promise<ThingsInterface> {
     // Gets all things with pagination.
     /**
@@ -682,78 +656,85 @@ export default class Things {
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
 
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json();
-      return thingsData;
+      const thingsData = await response.json()
+      return thingsData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ListThingUsers(
-    thingID: string,
-    query_params: QueryParams,
-    token: string,
+  public async ListThingUsers (
+    thingId: string,
+    queryParams: QueryParams,
+    token: string
   ): Promise<Users> {
-    //Retrieves list of users connected to specified thing with pagination metadata.
+    // Retrieves list of users connected to specified thing with pagination metadata.
     /**
      * @method ListThingUsers - Retrieves list of users connected to specified thing
      * with pagination metadata.
      * @param {string}
      *  */
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
-        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
-        options,
-      );
+        new URL(
+          `${this.thingsEndpoint}/${thingId}/users?${new URLSearchParams(stringParams).toString()}`,
+          this.usersUrl
+        ).toString(),
+        options
+      )
+      console.log('url', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        console.log('response', response)
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const userData = await response.json();
-      return userData;
+      console.log('response', response)
+      const userData: Users = await response.json()
+      return userData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ShareThing(
+  public async ShareThing (
     thingId: string,
-    req: UsersRelationRequest,
-    token: string,
-  ): Promise<Thing> {
+    Relation: string,
+    userIDs: string[],
+    token: string
+  ): Promise<Response> {
     // Shares a thing with a user.
     /**
      * @method ShareThing - Shares a thing with a user.
@@ -763,39 +744,44 @@ export default class Things {
      * @returns {Object} - Nothing
      *
      * */
+    const req = { relation: Relation, user_ids: userIDs }
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(req),
-    };
+      body: JSON.stringify(req)
 
+    }
+    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thingId}/share`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
+      console.log(response)
+      console.log('url', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const shareResponse: Response = { status: response.status, message: 'Thing Shared Successfully' }
+      return shareResponse
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async UnShareThing(
+  public async UnShareThing (
     thingId: string,
-    req: UsersRelationRequest,
-    token: string,
-  ): Promise<Thing> {
+    Relation: string,
+    userIDs: string[],
+    token: string
+  ): Promise<Response> {
     // Shares a thing with a user.
     /**
      * @method UnShareThing - UnShares a thing with a user.
@@ -805,64 +791,66 @@ export default class Things {
      * @returns {Object} - Nothing
      *
      * */
-    const options = {
-      method: "post",
+    const req = { relation: Relation, user_ids: userIDs }
+    const options: RequestInit = {
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(req),
-    };
-
+      body: JSON.stringify(req)
+    }
+    console.log('body', options.body)
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thingId}/unshare`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
+      console.log('url', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json();
-      return thingData;
+      const unshareResponse: Response = { status: response.status, message: 'Thing UnShared Successfully' }
+      return unshareResponse
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async DeleteThing(thing: Thing, token: string): Promise<string> {
+  public async DeleteThing (thing: Thing, token: string): Promise<string> {
     // Deletes a thing.
     /**
      * @method DeleteThing - Deletes a thing.
      * @param {string}
      *  */
     const options: RequestInit = {
-      method: "delete",
+      method: 'delete',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing),
-    };
+      body: JSON.stringify(thing)
+    }
 
     try {
       const response = await fetch(
         new URL(
           `${this.thingsEndpoint}/${thing.id}`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.thingError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      return "Thing Deleted";
+      return 'Thing Deleted'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }

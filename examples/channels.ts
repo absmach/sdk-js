@@ -1,14 +1,14 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from "../src/sdk";
+import SDK from '../src/sdk'
 
-const defaultUrl = "http://localhost";
+const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  channelsUrl: defaultUrl + ":9000",
-});
+  channelsUrl: defaultUrl + ':9000'
+})
 
 const token =
-  "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiIzZTlkMTNiMy1lMTgxLTQwNjktODdjNS0yMGQ3MmJlY2M4M2YiLCJleHAiOjE3MTIwMzk5MzMsImlhdCI6MTcxMjAzNjMzMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiYjJmZTZhZmUtOGYwNS00NDgzLWFhY2QtN2QyMGVhMjVkOWE1IiwidHlwZSI6MCwidXNlciI6ImIyZmU2YWZlLThmMDUtNDQ4My1hYWNkLTdkMjBlYTI1ZDlhNSJ9.tA_2fGtYlT-zn316AwX_wtw0uXgE7DYFUA_ZvXKCvm1Pofl_WiAWMRt5YcqU_TbGDXmrgJxUd-Ifa9aSYMaFKA";
+  'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiIzZTlkMTNiMy1lMTgxLTQwNjktODdjNS0yMGQ3MmJlY2M4M2YiLCJleHAiOjE3MTIwMzk5MzMsImlhdCI6MTcxMjAzNjMzMywiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiYjJmZTZhZmUtOGYwNS00NDgzLWFhY2QtN2QyMGVhMjVkOWE1IiwidHlwZSI6MCwidXNlciI6ImIyZmU2YWZlLThmMDUtNDQ4My1hYWNkLTdkMjBlYTI1ZDlhNSJ9.tA_2fGtYlT-zn316AwX_wtw0uXgE7DYFUA_ZvXKCvm1Pofl_WiAWMRt5YcqU_TbGDXmrgJxUd-Ifa9aSYMaFKA'
 
 // mySdk.channels
 //   .CreateChannel({ name: "Bees" }, token)
@@ -132,17 +132,17 @@ const token =
 
 mySdk.channels
   .Disconnect(
-    ["thing1", "thing2"],
-    ["channel1", "channel2"],
-    ["m_read", "m_write"],
-    "token",
+    ['thing1', 'thing2'],
+    ['channel1', 'channel2'],
+    ['m_read', 'm_write'],
+    'token'
   )
   .then((response: any) => {
-    console.log("response: ", response);
+    console.log('response: ', response)
   })
   .catch((error) => {
-    console.log(error);
-  });
+    console.log(error)
+  })
 
 // mySdk.channels
 //   .ListChannelUsers(

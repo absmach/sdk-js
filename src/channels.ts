@@ -1,19 +1,19 @@
-import Errors from "./errors";
+import Errors from './errors'
 export interface Channel {
-  name?: string;
-  description?: string;
-  parent_id?: string;
+  name?: string
+  description?: string
+  parent_id?: string
   credentials?: {
-    identity?: string;
-  };
-  status?: string;
-  owner_id?: string;
-  id?: string;
+    identity?: string
+  }
+  status?: string
+  owner_id?: string
+  id?: string
 }
 interface PageRes {
-  total: number;
-  offset: number;
-  limit: number;
+  total: number
+  offset: number
+  limit: number
 }
 // interface GroupsPage{
 //   groups: Groups[];
@@ -21,37 +21,37 @@ interface PageRes {
 
 // }
 interface Actions {
-  actions: string[];
+  actions: string[]
 }
 
 interface ChannelsInterface {
-  channels: Channel[];
-  page: PageRes;
+  channels: Channel[]
+  page: PageRes
   // id: string;
 }
 
 interface Users {
-  users: Users[];
-  page: PageRes;
+  users: Users[]
+  page: PageRes
 }
 
 interface BulkChannels {
-  channels: Channel[];
+  channels: Channel[]
 }
 
 interface QueryParams {
-  offset: number;
-  limit: number;
-  [key: string]: number | string;
+  offset: number
+  limit: number
+  [key: string]: number | string
 }
 
 interface Permissions {
-  permissions: ["admin", "edit", "view", "membership"];
+  permissions: ['admin', 'edit', 'view', 'membership']
 }
 
 interface UserRelation {
-  user_id: [];
-  relation?: string;
+  user_id: []
+  relation?: string
 }
 export default class Channels {
   // Channels API client
@@ -66,25 +66,25 @@ export default class Channels {
    * @returns {Object} -Channels object
    *
    */
-  private readonly channelsUrl: URL;
-  private readonly contentType: string;
-  private readonly channelsEndpoint: string;
-  private readonly channelError: Errors;
-  private readonly thingsUrl: URL;
-  //private readonly thingsEndpoint: string;
-  private readonly channelUnshareEndpoint: string = "unshare";
-  private readonly channelPermissionsEndpoint: string = "permissions";
-  public constructor(channelsUrl: string, thingsUrl: string) {
-    this.channelsUrl = new URL(channelsUrl);
-    this.thingsUrl = new URL(thingsUrl);
-    this.contentType = "application/json";
-    this.channelsEndpoint = "channels";
-    this.channelError = new Errors();
+  private readonly channelsUrl: URL
+  private readonly contentType: string
+  private readonly channelsEndpoint: string
+  private readonly channelError: Errors
+  private readonly thingsUrl: URL
+  // private readonly thingsEndpoint: string;
+  private readonly channelUnshareEndpoint: string = 'unshare'
+  private readonly channelPermissionsEndpoint: string = 'permissions'
+  public constructor (channelsUrl: string, thingsUrl: string) {
+    this.channelsUrl = new URL(channelsUrl)
+    this.thingsUrl = new URL(thingsUrl)
+    this.contentType = 'application/json'
+    this.channelsEndpoint = 'channels'
+    this.channelError = new Errors()
   }
 
-  public async CreateChannel(
+  public async CreateChannel (
     channel: Channel,
-    token?: string,
+    token?: string
   ): Promise<Channel> {
     // Creates a new channel
     /**
@@ -107,68 +107,68 @@ export default class Channels {
      *
      */
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(channel),
-    };
+      body: JSON.stringify(channel)
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(this.channelsEndpoint, this.channelsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      console.log("channelData");
-      return channelData;
+      const channelData = await response.json()
+      console.log('channelData')
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async CreateChannels(
+  public async CreateChannels (
     channels: Channel[],
-    token?: string,
+    token?: string
   ): Promise<BulkChannels> {
-    //Creates multiple channels.
+    // Creates multiple channels.
 
     const options: RequestInit = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(channels),
-    };
-    console.log("body", options.body);
+      body: JSON.stringify(channels)
+    }
+    console.log('body', options.body)
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(this.channelsEndpoint, this.channelsUrl).toString(),
-        options,
-      );
-      console.log("url: ", response.url);
+        options
+      )
+      console.log('url: ', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      return channelData;
+      const channelData = await response.json()
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
   // new URL(`${this.channelsEndpoint}/bulk`, this.channelsUrl).toString(),
   // options,
 
-  public async Channel(channel_id: string, token: string): Promise<Channel> {
+  public async Channel (channel_id: string, token: string): Promise<Channel> {
     // Retrieves channel with specified id.
     /**
      * @method Get - Retrieves channel with specified id and a valid token.
@@ -177,32 +177,33 @@ export default class Channels {
      * @returns {Object} - Channel object.
      */
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(this.channelsEndpoint, this.channelsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      return channelData;
+      const channelData = await response.json()
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async ChannelsByThing(
+
+  public async ChannelsByThing (
     thingID: string,
     query_params: QueryParams,
-    token: string,
+    token: string
   ): Promise<ChannelsInterface> {
     // Retrieves list of things connected to specified channel with pagination metadata.
     /**
@@ -213,41 +214,41 @@ export default class Channels {
      * @returns {List} - Things list.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+    )
     const options = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.channelsEndpoint}/${thingID}/things?${new URLSearchParams(
-            stringParams,
+            stringParams
           ).toString()}`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      console.log(channelData);
-      return channelData;
+      const channelData = await response.json()
+      console.log(channelData)
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Channels(
+  public async Channels (
     query_params: QueryParams,
-    token: string,
+    token: string
   ): Promise<ChannelsInterface> {
     // Provides a list of all channels with pagination metadata.
     /**
@@ -257,40 +258,40 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(query_params).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(query_params).map(([key, value]) => [key, String(value)])
+    )
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.channelsEndpoint}?${new URLSearchParams(
-            stringParams,
+            stringParams
           ).toString()}`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelsData = await response.json();
-      return channelsData;
+      const channelsData = await response.json()
+      return channelsData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async UpdateChannel(
+  public async UpdateChannel (
     channel: Channel,
-    token: string,
+    token: string
   ): Promise<Channel> {
     // Updates channel with specified id.
     /**
@@ -301,34 +302,35 @@ export default class Channels {
      */
 
     const options: RequestInit = {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(channel),
-    };
+      body: JSON.stringify(channel)
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.channelsEndpoint}/${channel.id}`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      console.log(channelData);
-      return channelData;
+      const channelData = await response.json()
+      console.log(channelData)
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async Disable(channel: Channel, token: string): Promise<Channel> {
+
+  public async Disable (channel: Channel, token: string): Promise<Channel> {
     // Disables channel with specified id.
     /**
      * @method Disable - Disables channel with specified id.
@@ -337,32 +339,32 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channel.id}/disable`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      return channelData;
+      const channelData = await response.json()
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Enable(channel: Channel, token: string): Promise<Channel> {
+  public async Enable (channel: Channel, token: string): Promise<Channel> {
     // Disables channel with specified id.
     /**
      * @method Enable - Enables channel with specified id.
@@ -371,36 +373,36 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channel.id}/enable`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      return channelData;
+      const channelData = await response.json()
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ChannelPermissions(
+  public async ChannelPermissions (
     channelID: Channel,
-    token: string,
+    token: string
   ): Promise<any> {
-    //Disables channel with specified id.
+    // Disables channel with specified id.
     /**
      * @method ChannelPermission - Enables channel with specified id.
      * @param {Object}
@@ -412,97 +414,99 @@ export default class Channels {
      * const domainID = "domainID";
      */
     const options: RequestInit = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channelID}/permissions`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Permissions = await response.json();
-      return channelData;
+      const channelData: Permissions = await response.json()
+      return channelData
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
-  public async AddUserToChannel(
+  public async AddUserToChannel (
     channelID: string,
     userIDs: string[],
     relation: string,
-    token: string,
+    token: string
   ): Promise<string> {
-    const req = { user_ids: userIDs, relation };
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(req),
-    };
+      body: JSON.stringify(req)
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channelID}/users/assign`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Policy created.";
+      return 'Policy created.'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async RemoveUserFromChannel(
+
+  public async RemoveUserFromChannel (
     channelID: string,
     userIDs: string[],
     relation: string,
-    token: string,
+    token: string
   ): Promise<any> {
-    const req = { user_ids: userIDs, relation };
+    const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(req),
-    };
+      body: JSON.stringify(req)
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channelID}/users/unassign`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Policy removed.";
+      return 'Policy removed.'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async Delete(channel: Channel, token: string): Promise<string> {
-    //Deletes channel with specified id.
+
+  public async Delete (channel: Channel, token: string): Promise<string> {
+    // Deletes channel with specified id.
     /**
      * @method Disable - Deletes channel with specified id.
      * @param {Object} channel - Channel object with new information.
@@ -510,76 +514,76 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(channel),
-    };
+      body: JSON.stringify(channel)
+    }
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsUrl}/${this.channelsEndpoint}/${channel.id}/delete`,
+          `${this.channelsUrl}/${this.channelsEndpoint}/${channel.id}/delete`
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Channel Deleted";
+      return 'Channel Deleted'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ListChannelUsersGroups(
+  public async ListChannelUsersGroups (
     channel_id: string,
     queryParams: QueryParams,
-    token: string,
+    token: string
   ): Promise<Users> {
-    //Lists users in a channel.
+    // Lists users in a channel.
     /**
      * @method ListChannelUsers - Lists users in a channel.
      * @param {string}
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
     const options: RequestInit = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/${channel_id}/things?${new URLSearchParams(stringParams).toString()}`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData = await response.json();
-      return usersData;
+      const usersData = await response.json()
+      return usersData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ConnectThing(
+  public async ConnectThing (
     thingId: string,
     channelId: string,
     actions: Actions | string[],
-    token: string,
+    token: string
   ): Promise<any> {
-    //Connects thing to channel.
+    // Connects thing to channel.
     /**
      * @method Connect - Connects thing to channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
@@ -590,42 +594,42 @@ export default class Channels {
      * @param {string} token - User token.
      *
      */
-    const payload = { subject: thingId, object: channelId, actions: actions };
+    const payload = { subject: thingId, object: channelId, actions }
     const options = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload),
-    };
-    console.log("body", options.body);
+      body: JSON.stringify(payload)
+    }
+    console.log('body', options.body)
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(`${this.channelsEndpoint}/connect`, this.thingsUrl).toString(),
-        options,
-      );
-      console.log("url: ", response.url);
+        options
+      )
+      console.log('url: ', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json();
-      console.log(channelData.response);
-      return channelData;
+      const channelData = await response.json()
+      console.log(channelData.response)
+      return channelData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async Connect(
+  public async Connect (
     thingsIDs: string[],
     channelsIDs: string[],
     actions: Actions | string[],
-    token: string,
+    token: string
   ): Promise<string> {
-    //Connects multiple things to multiple channels.
+    // Connects multiple things to multiple channels.
     /**
      * @method Connects - Connects multiple things to multiple channels when provided with a valid token,
      * arrays of channel ids, thing ids and actions.
@@ -639,44 +643,45 @@ export default class Channels {
     const Connection = {
       thing_ids: thingsIDs,
       channel_ids: channelsIDs,
-      actions: actions,
-    };
+      actions
+    }
     const payload = {
       subjects: thingsIDs,
       objects: channelsIDs,
-      actions: actions,
-    };
+      actions
+    }
     const options = {
-      method: "connects",
+      method: 'connects',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(Connection),
-    };
+      body: JSON.stringify(Connection)
+    }
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(`${this.channelsEndpoint}/connect`, this.thingsUrl).toString(),
-        options,
-      );
-      console.log("url: ", response.url);
+        options
+      )
+      console.log('url: ', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Policy created";
+      return 'Policy created'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async Disconnect(
+
+  public async Disconnect (
     thingsIDs: string[],
     channelsIDs: string[],
     actions: Actions | string[],
-    token: string,
+    token: string
   ): Promise<string> {
-    //Connects thing to channel.
+    // Connects thing to channel.
     /**
      * @method Disconnect - Connects thing to channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
@@ -690,39 +695,40 @@ export default class Channels {
     const connIDs = {
       thing_ids: thingsIDs,
       channel_ids: channelsIDs,
-      actions: actions,
-    };
+      actions
+    }
     const options: RequestInit = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(connIDs),
-    };
+      body: JSON.stringify(connIDs)
+    }
     try {
       const response = await fetch(
         new URL(
           `${this.channelsEndpoint}/disconnect`,
-          this.thingsUrl,
+          this.thingsUrl
         ).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Policy deleted.";
+      return 'Policy deleted.'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
-  public async DisconnectThing(
+
+  public async DisconnectThing (
     thingId: string,
     channelId: string,
-    token: string,
+    token: string
   ): Promise<any> {
-    //Connects multiple things to multiple channels.
+    // Connects multiple things to multiple channels.
     /**
      * @method Connects - Connects multiple things to multiple channels when provided with a valid token,
      * arrays of channel ids, thing ids and actions.
@@ -735,68 +741,68 @@ export default class Channels {
      */
     const payload = {
       subjects: thingId,
-      objects: channelId,
-    };
+      objects: channelId
+    }
     const options = {
-      method: "post",
+      method: 'post',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload),
-    };
+      body: JSON.stringify(payload)
+    }
     try {
       const response = await fetch(
         new URL(this.channelsEndpoint, this.channelsUrl).toString(),
-        options,
-      );
+        options
+      )
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return "Policy Created";
+      return 'Policy Created'
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  public async ListChannelUsers(
+  public async ListChannelUsers (
     channelId: string,
     queryParams: QueryParams,
-    token: string,
+    token: string
   ): Promise<Users> {
-    //Lists users in a channel.
+    // Lists users in a channel.
     /**
      * @method ListChannelUsers - Lists users in a channel.
      * @param {string}
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
-    );
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
     const options: RequestInit = {
-      method: "get",
+      method: 'get',
       headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
     try {
       const response = await fetch(
         new URL(
           `/channels/${channelId}/users?${new URLSearchParams(stringParams).toString()}`,
-          this.channelsUrl,
+          this.channelsUrl
         ).toString(),
-        options,
-      );
-      console.log("url:", response.url);
+        options
+      )
+      console.log('url:', response.url)
       if (!response.ok) {
-        const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.error, response.status);
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData = await response.json();
-      return usersData;
+      const usersData = await response.json()
+      return usersData
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 }
