@@ -1,29 +1,10 @@
 import Errors from './errors'
-import { type Response } from './defs'
-export interface Invitation {
-  invitedBy?: string
-  userID?: string
-  domainID?: string
-  token?: string
-  relation?: string
-  metadata?: Record<string, any>
-}
-
-interface InvitationsPage {
-  invitations: Invitation[]
-  page: PageRes
-}
-
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-}
+import {
+  type Response,
+  type Invitation,
+  type InvitationsPage,
+  type QueryParams
+} from './defs'
 
 export default class Invitations {
   // Invitations API client
@@ -44,9 +25,9 @@ export default class Invitations {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
-        Authorisation: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(invitation)
+      body: JSON.stringify({ user_id: invitation.userID, domain_id: invitation.domainID, relation: invitation.relation })
     }
 
     try {
@@ -70,9 +51,8 @@ export default class Invitations {
       method: 'GET',
       headers: {
         'Content-Type': this.contentType,
-        Authorisation: `Bearer ${token}`
-      },
-      body: JSON.stringify(invitation)
+        Authorization: `Bearer ${token}`
+      }
     }
 
     try {
@@ -100,7 +80,7 @@ export default class Invitations {
       method: 'GET',
       headers: {
         'Content-Type': this.contentType,
-        Authorisation: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
     }
 
@@ -128,9 +108,9 @@ export default class Invitations {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
-        Authorisation: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ DomainID: invitation.domainID })
+      body: JSON.stringify({ domain_id: invitation.domainID })
     }
 
     try {
@@ -154,9 +134,9 @@ export default class Invitations {
       method: 'DELETE',
       headers: {
         'Content-Type': this.contentType,
-        Authorisation: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(invitation)
+      body: JSON.stringify({ user_id: invitation.userID, domain_id: invitation.domainID })
     }
 
     try {
