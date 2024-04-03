@@ -46,7 +46,7 @@ mySdk.users.UserProfile(
   })
 
 mySdk.users.CreateToken(
-  { identity: '<identity>', secret: '<password>', domain_id: '<domainID>' }
+  { identity: '<userEmail>', secret: '<password>', domain_id: '<domainId>' }
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -190,15 +190,15 @@ mySdk.users.ListUserGroups(
     console.log(error)
   })
 
-// mySdk.users.ResetPasswordRequest(
-//   '<email>'
-// )
-//   .then((response: any) => {
-//     console.log('response: ', response)
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//   })
+mySdk.users.ResetPasswordRequest(
+  '<email>'
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 
 mySdk.users.ResetPassword(
   '<password>',
