@@ -757,13 +757,6 @@ export default class Users {
      * @method ResetPasswordRequest - Sends a request
      * @param {String} email - User email.
      * @returns {Obj} - Response - Status of the request and a message.
-     * @example
-     * const user = {
-     * "credentials": {
-     *    "identity": "admin@example.com",
-     *   "password": "12345678"
-     * }
-     * }
      */
 
     const options: RequestInit = {
@@ -802,13 +795,7 @@ export default class Users {
      * @param {String} confPass - User to confirm the Password.
      * @param {String} token - Access token.
      * @returns {Obj} - Response - Status of the request and a message.
-     * @example
-     * const user = {
-     * "credentials": {
-     *    "identity": "admin@example.com",
-     *   "password": "12345678"
-     * }
-     * }
+     *
      */
 
     const options: RequestInit = {
