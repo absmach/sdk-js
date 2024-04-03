@@ -190,15 +190,15 @@ mySdk.users.ListUserGroups(
     console.log(error)
   })
 
-mySdk.users.ResetPasswordRequest(
-  '<email>'
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+// mySdk.users.ResetPasswordRequest(
+//   '<email>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
 mySdk.users.ResetPassword(
   '<password>',
