@@ -157,7 +157,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .ChannelPermissions({ id: '<channelId>' }, '<token>')
+  .ChannelPermissions('<channelId>', '<token>')
   .then((response: any) => {
     console.log('response: ', response)
   })

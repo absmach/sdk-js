@@ -1,58 +1,14 @@
 import Errors from './errors'
-export interface Channel {
-  name?: string
-  description?: string
-  parent_id?: string
-  credentials?: {
-    identity?: string
-  }
-  status?: string
-  owner_id?: string
-  id?: string
-}
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
-interface GroupsPage {
-  groups: Group[]
-  page: PageRes
-}
 
-interface Group {
-  id?: string
-  name?: string
-  description?: string
-  parent_id?: string
-  owner_id?: string
-}
-interface ChannelsInterface {
-  channels: Channel[]
-  page: PageRes
-  // id: string;
-}
-
-interface Users {
-  users: Users[]
-  page: PageRes
-}
-
-interface Response {
-  status: number
-  message?: string
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-  [key: string]: number | string
-}
-
-interface Permissions {
-  permissions: ['admin', 'edit', 'view', 'membership']
-}
-
+import {
+  type Channel,
+  type GroupsPage,
+  type QueryParams,
+  type Permissions,
+  type Response,
+  type ChannelsPage,
+  type UsersPage
+} from './defs'
 export default class Channels {
   // Channels API client
   /**
@@ -71,7 +27,6 @@ export default class Channels {
   private readonly channelsEndpoint: string
   private readonly channelError: Errors
   private readonly thingsUrl: URL
-  // private readonly thingsEndpoint: string;
   private readonly channelUnshareEndpoint: string = 'unshare'
   private readonly channelPermissionsEndpoint: string = 'permissions'
   public constructor (usersUrl: string, thingsUrl: string) {
@@ -84,7 +39,7 @@ export default class Channels {
 
   public async CreateChannel (
     channel: Channel,
-    token?: string
+    token: string
   ): Promise<Channel> {
     // Creates a new channel
     /**
@@ -123,7 +78,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: Channel = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -147,14 +102,14 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(this.channelsEndpoint, this.thingsUrl).toString(),
+        new URL(`${this.channelsEndpoint}/${channelId}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: Channel = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -165,7 +120,7 @@ export default class Channels {
     thingID: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<ChannelsInterface> {
+  ): Promise<ChannelsPage> {
     // Retrieves list of things connected to specified channel with pagination metadata.
     /**
      * @method GetByThing - Retrieves list of things connected to specified channel with pagination metadata.
@@ -198,7 +153,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: ChannelsPage = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -208,7 +163,7 @@ export default class Channels {
   public async Channels (
     queryParams: QueryParams,
     token: string
-  ): Promise<ChannelsInterface> {
+  ): Promise<ChannelsPage> {
     // Provides a list of all channels with pagination metadata.
     /**
      * @method GetAll - Provides a list of all channels with pagination metadata.
@@ -240,7 +195,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelsData = await response.json()
+      const channelsData: ChannelsPage = await response.json()
       return channelsData
     } catch (error) {
       throw error
@@ -279,7 +234,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: Channel = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -313,7 +268,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: Channel = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -321,7 +276,7 @@ export default class Channels {
   }
 
   public async Enable (channel: Channel, token: string): Promise<Channel> {
-    // Disables channel with specified id.
+    // Enables channel with specified id.
     /**
      * @method Enable - Enables channel with specified id.
      * @param {Object} channel - Channel object with new information.
@@ -347,7 +302,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData = await response.json()
+      const channelData: Channel = await response.json()
       return channelData
     } catch (error) {
       throw error
@@ -355,22 +310,19 @@ export default class Channels {
   }
 
   public async ChannelPermissions (
-    channel: Channel,
+    channelId: string,
     token: string
-  ): Promise<any> {
-    // Disables channel with specified id.
+  ): Promise<Permissions> {
+    // Retrieves channel permissions.
     /**
-     * @method ChannelPermission - Enables channel with specified id.
+     * @method ChannelPermission - Retrieves channel permissions with specified id..
      * @param {Object}
-     *  * @param {string} domainID - domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
-     * @example
-     * const domainID = "domainID";
      */
     const options: RequestInit = {
-      method: 'GET',
+      method: 'get',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -379,7 +331,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channel.id}/permissions`,
+          `${this.channelsEndpoint}/${channelId}/permissions`,
           this.thingsUrl
         ).toString(),
         options
@@ -391,7 +343,7 @@ export default class Channels {
       const channelData: Permissions = await response.json()
       return channelData
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 
@@ -472,7 +424,7 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options: RequestInit = {
-      method: 'post',
+      method: 'delete',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -501,11 +453,6 @@ export default class Channels {
     queryParams: QueryParams,
     token: string
   ): Promise<GroupsPage> {
-    // Lists users in a channel.
-    /**
-     * @method ListChannelUsers - Lists users in a channel.
-     * @param {string}
-     * */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -528,7 +475,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData = await response.json()
+      const usersData: GroupsPage = await response.json()
       return usersData
     } catch (error) {
       throw error
@@ -577,37 +524,30 @@ export default class Channels {
   }
 
   public async Connect (
-    thingsID: string,
-    channelsID: string,
+    thingId: string,
+    channelId: string,
     token: string
   ): Promise<Response> {
-    // Connects multiple things to multiple channels.
+    // Connects thing to channel.
     /**
-     * @method Connects - Connects multiple things to multiple channels when provided with a valid token,
-     * arrays of channel ids, thing ids and actions.
-     * @param {list} thing_ids - Array of thing IDs.
-     * @param {list} channel_ids - Array of channel IDs.
-     * @param {list} actions - Array of actions for example: ["m_read", "m_write"].
+     * @method Connects - Connect thing to channel when provided with a valid token,
+     * channel id and thing id.
+     * @param thing_ids - thing ID.
+     * @param channel_ids - channel Is.
      * @param {string} token - User token.
-     * @returns {Object} - Policy object.
-     *
+     * @returns Response - 'Thing Connected Successfully'.
      */
-    const Connection = {
-      thing_id: thingsID,
-      channel_id: channelsID
+    const payload = {
+      subjects: thingId,
+      objects: channelId
     }
-    // const payload = {
-    //   subjects: thingsIDs,
-    //   objects: channelsIDs,
-    //   actions
-    // }
     const options = {
       method: 'post',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(Connection)
+      body: JSON.stringify(payload)
     }
     try {
       const response = await fetch(
@@ -630,20 +570,19 @@ export default class Channels {
     channelID: string,
     token: string
   ): Promise<Response> {
-    // Connects thing to channel.
+    // Disconnects thing to channel.
     /**
-     * @method Disconnect - Connects thing to channel when provided with a valid token,
+     * @method Disconnect - Disconnects thing to channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {list} actions - Action for example: ["m_read", "m_write"].
      * @param {string} token - User token.
      *
      */
-    const connIDs = {
-      thing_id: thingID,
-      channel_id: channelID
+    const payload = {
+      subject: thingID,
+      Object: channelID
     }
     const options: RequestInit = {
       method: 'post',
@@ -651,7 +590,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(connIDs)
+      body: JSON.stringify(payload)
     }
     try {
       const response = await fetch(
@@ -676,15 +615,14 @@ export default class Channels {
     channelId: string,
     token: string
   ): Promise<Response> {
-    // Connects multiple things to multiple channels.
+    // Disconnects thing to channel.
     /**
-     * @method Connects - Connects multiple things to multiple channels when provided with a valid token,
-     * arrays of channel ids, thing ids and actions.
-     * @param {list} thing_ids - Array of thing IDs.
-     * @param {list} channel_ids - Array of channel IDs.
-     * @param {list} actions - Array of actions for example: ["m_read", "m_write"].
+     * @method Disconnect - Disconnects thing to channel when provided with a valid token,
+     * channel id and a thing id. The thing must have an action that it can perform over
+     * the channel.
+     * @param {string} thing_id - Thing ID.
+     * @param {string} channel_id - Channel ID.
      * @param {string} token - User token.
-     * @returns {Object} - Policy object.
      *
      */
     const payload = {
@@ -720,7 +658,7 @@ export default class Channels {
     channelId: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<Users> {
+  ): Promise<UsersPage> {
     // Lists users in a channel.
     /**
      * @method ListChannelUsers - Lists users in a channel.
@@ -748,7 +686,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData = await response.json()
+      const usersData: UsersPage = await response.json()
       return usersData
     } catch (error) {
       throw error

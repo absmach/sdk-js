@@ -9,21 +9,22 @@ const mySdk = new SDK({
 })
 const token = '<token>'
 
-mySdk.users
-  .Create({
-    name: '<name>',
-    credentials: {
-      identity: '<useremail>',
-      secret: '<password>'
-    }
-  })
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+// mySdk.users
+//   .Create({
+//     name: '<name>',
+//     credentials: {
+//       identity: '<useremail>',
+//       secret: '<password>'
+//     }
+//   })
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
+<<<<<<< HEAD
 mySdk.users.User(
   '<userId>',
   token
@@ -44,9 +45,31 @@ mySdk.users.UserProfile(
   .catch((error) => {
     console.log(error)
   })
+=======
+// mySdk.users.User(
+//   '<userId>',
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.UserProfile(
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+>>>>>>> c880932 (resolving comments)
 
 mySdk.users.CreateToken(
-  { identity: '<identity>', secret: '<password>', domain_id: '<domainID>' }
+  { identity: 'admin@example.com', secret: '12345678', domain_id: '3e9d13b3-e181-4069-87c5-20d72becc83f' }
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -55,17 +78,18 @@ mySdk.users.CreateToken(
     console.log(error)
   })
 
-mySdk.users.RefreshToken(
-  { identity: '<userId>' },
-  '<refreshToken>'
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+// mySdk.users.RefreshToken(
+//   { identity: '<userId>' },
+//   '<refreshToken>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
+<<<<<<< HEAD
 mySdk.users.Update(
   { id: '<userId>', name: '<userName>' },
   token
@@ -189,17 +213,143 @@ mySdk.users.ListUserGroups(
   .catch((error) => {
     console.log(error)
   })
+=======
+// mySdk.users.Update(
+//   { id: '<userId>', name: '<userName>' },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
-mySdk.users.ResetPasswordRequest(
-  '<email>'
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+// mySdk.users.UpdateUserIdentity(
+//   { id: '<userId>', credentials: { identity: '<userIdentity>' } },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
+// mySdk.users.UpdateUserTags(
+//   { id: '<userId>', tags: ['foo', 'bar'] },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.UpdateUserRole(
+//   { id: '<userId>', role: '<userRole>' },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.Disable(
+//   { id: '<userId>' },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.Enable(
+//   { id: '<userId>' },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.Users(
+//   { offset: 0, limit: 10 },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.UpdateUserPassword(
+//   '<oldSecret>', '<newSecret>',
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.ListUserChannels(
+//   '<userId>',
+//   { offset: 0, limit: 10 },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.ListUserThings(
+//   '<userId>',
+//   { offset: 0, limit: 10 },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.users.ListUserGroups(
+//   '<userId>',
+//   { offset: 0, limit: 10 },
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+>>>>>>> c880932 (resolving comments)
+
+// mySdk.users.ResetPasswordRequest(
+//   '<email>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+<<<<<<< HEAD
 mySdk.users.ResetPassword(
   '<password>',
   '<confPass>',
@@ -211,3 +361,16 @@ mySdk.users.ResetPassword(
   .catch((error) => {
     console.log(error)
   })
+=======
+// mySdk.users.ResetPassword(
+//   '<password>',
+//   '<confPass>',
+//   '<token>'
+// )
+//   .then((response: any) => {
+//     console.log('response: ', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+>>>>>>> c880932 (resolving comments)

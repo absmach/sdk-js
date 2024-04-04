@@ -7,7 +7,7 @@ const mySdk = new SDK({
   thingsUrl: defaultUrl + ':9000'
 })
 
-// // //Things.js examples.
+// Things.js examples.
 
 mySdk.things
   .Create(
@@ -130,7 +130,7 @@ mySdk.things
   .ShareThing(
     '<thingId>',
 
-    'administrator',
+    '<relation>',
     [
       '<userId1>', '<userId2>'
     ], '<token>')
@@ -144,7 +144,7 @@ mySdk.things
 mySdk.things
   .UnShareThing(
     '<thingId>',
-    'administrator',
+    '<relation>',
 
     [
       '<userId1>', '<userId2>'

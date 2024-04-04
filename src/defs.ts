@@ -15,6 +15,7 @@ export interface UsersPage {
   page: PageRes
 }
 
+<<<<<<< HEAD
 interface credentials {
   identity: string
   secret?: string
@@ -26,17 +27,30 @@ export interface PageRes {
   limit: number
 }
 
+=======
+>>>>>>> f98ebdf (resolving comments)
 export interface Thing {
   id?: string
   name?: string
+<<<<<<< HEAD
   credentials?: credentials
+=======
+  id?: string
+>>>>>>> f98ebdf (resolving comments)
   tags?: string[]
   domain_id?: string
   metadata?: Record<string, any>
+<<<<<<< HEAD
   status?: status
   created_at?: Date
   updated_at?: Date
   permissions?: string[]
+=======
+  status?: string
+  createdAt?: string
+  updatedAt?: string
+  updatedBy?: string
+>>>>>>> f98ebdf (resolving comments)
 }
 
 export interface ThingsPage {
@@ -68,6 +82,7 @@ export interface GroupsPage {
 export interface Channel {
   id?: string
   name?: string
+<<<<<<< HEAD
   domain_id?: string
   description?: string
   metadata?: Record<string, any>
@@ -77,6 +92,16 @@ export interface Channel {
   created_at?: Date
   updated_at?: Date
   permissions?: string[]
+=======
+  parent_id?: string
+  credentials?: {
+    identity?: string
+  }
+  status?: 'enabled' | 'disabled'
+  createdAt?: string
+  updatedAt?: string
+  description?: string
+>>>>>>> f98ebdf (resolving comments)
 }
 
 export interface ChannelsPage {
@@ -176,3 +201,40 @@ export interface QueryParams {
   domain_id?: string
   relation?: string
 }
+<<<<<<< HEAD
+=======
+
+export interface Domain {
+  name?: string
+  id?: string
+  alias?: string
+  metadata?: Record<string, any>
+  tags?: string[]
+  status?: 'enabled' | 'disabled'
+  permission?: string
+  permissions?: string[]
+  created_by?: string
+  updated_by?: string
+  created_at?: Date
+  updated_at?: Date
+}
+
+export interface DomainsPage {
+  domains: Domain[]
+  page: PageRes
+}
+
+export interface Permissions {
+  permissions: string[]
+}
+
+export interface PageRes {
+  total: number
+  offset: number
+  limit: number
+}
+
+export interface BulkThings {
+  things: Thing[]
+}
+>>>>>>> f98ebdf (resolving comments)

@@ -1,70 +1,15 @@
 import Errors from './errors'
-export interface Thing {
-  name?: string
-  id?: string
-  credentials?: {
-    identity?: string
-    secret: string
-  }
-  owner?: string
-  tags?: [string, string]
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-  updatedBy?: string
-  // domainID?: string;
-}
-interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
 
-interface ThingsInterface {
-  things: Thing[]
-  page: PageRes
-}
-
-interface Response {
-  status: number
-  message?: string
-}
-
-interface BulkThings {
-  things: Thing[]
-}
-
-interface Channels {
-  channel: Channels[]
-  page: PageRes
-}
-
-interface QueryParams {
-  offset: number
-  limit: number
-  // [key: string]: number | string;
-}
-
-interface Users {
-  users: User[]
-  page: PageRes
-}
-
-interface User {
-  name?: string
-  id?: string
-  credentials?: {
-    identity: string
-    secret?: string
-  }
-  owner?: string
-  tags?: [string, string]
-  role?: string
-  status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
-  updatedBy?: string
-}
+import {
+  type Thing,
+  type ThingsPage,
+  type Response,
+  type BulkThings,
+  type ChannelsPage,
+  type QueryParams,
+  type UsersPage,
+  type Permissions
+} from './defs'
 export default class Things {
   // Things service client.
   /**
@@ -92,7 +37,7 @@ export default class Things {
     this.thingError = new Errors()
   }
 
-  public async Create (thing: Thing, token?: string): Promise<Thing> {
+  public async Create (thing: Thing, token: string): Promise<Thing> {
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -111,7 +56,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -139,7 +84,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: BulkThings = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -149,7 +94,7 @@ export default class Things {
   public async GetAll (
     queryParams: QueryParams,
     token: string
-  ): Promise<ThingsInterface> {
+  ): Promise<ThingsPage> {
     // Retrieves thing information.
     /**
      * @method Get - Retrieves thing information when provided with a valid token
@@ -192,7 +137,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json()
+      const thingsData: ThingsPage = await response.json()
       return thingsData
     } catch (error) {
       throw error
@@ -203,7 +148,7 @@ export default class Things {
     thing: Thing,
     queryParams: QueryParams,
     token: string
-  ): Promise<Channels> {
+  ): Promise<ChannelsPage> {
     // Retrieves list of channels connected to specified thing with pagination metadata.
     /**
      * @method GetByChannel - Retrieves list of channels connected to specified thing
@@ -239,53 +184,8 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const channelsData = await response.json()
+      const channelsData: ChannelsPage = await response.json()
       return channelsData
-    } catch (error) {
-      throw error
-    }
-  }
-
-  public async ThingsGetAll (
-    queryParams: QueryParams,
-    token: string
-  ): Promise<ThingsInterface> {
-    // Retrieves list of things with pagination metadata.
-    /**
-     * @method GetAll - Retrieves list of things with pagination metadata when provided with a
-     * valid token and correct query parameters such as offset and limit.
-     * @param {Object} queryParams - Query parameters.
-     * @param {string} token - User token.
-     * @returns {Object} - Things list.
-     */
-
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
-    const options: RequestInit = {
-      method: 'get',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${this.thingsEndpoint}?${new URLSearchParams(
-            stringParams
-          ).toString()}`,
-          this.thingsUrl
-        ).toString(),
-        options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
-      }
-      const thingsData = await response.json()
-      return thingsData
     } catch (error) {
       throw error
     }
@@ -320,7 +220,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -371,7 +271,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -422,7 +322,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -475,7 +375,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -513,7 +413,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -538,7 +438,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -548,7 +448,7 @@ export default class Things {
   public async ThingsPermissions (
     thingID: string,
     token: string
-  ): Promise<any> {
+  ): Promise<Permissions> {
     // Retrieves thing permissions.
     /**
      * @method Permissions - Retrieves thing permissions when provided with a valid token
@@ -591,10 +491,10 @@ export default class Things {
   public async Enable (thing: Thing, token: string): Promise<Thing> {
     // Enables thing.
     /**
-     * @method Enable - Deletes a thing when provided with a valid token and thing ID.
+     * @method Enable - Enables a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Thing object with statys enabled.
+     * @returns {Object} - Thing object with stays enabled.
      */
 
     const options: RequestInit = {
@@ -618,7 +518,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData = await response.json()
+      const thingData: Thing = await response.json()
       return thingData
     } catch (error) {
       throw error
@@ -628,7 +528,7 @@ export default class Things {
   public async Things (
     queryParams: QueryParams,
     token: string
-  ): Promise<ThingsInterface> {
+  ): Promise<BulkThings> {
     // Gets all things with pagination.
     /**
      * Provides information about all users. The users are retrieved using
@@ -670,7 +570,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData = await response.json()
+      const thingsData: BulkThings = await response.json()
       return thingsData
     } catch (error) {
       throw error
@@ -681,13 +581,7 @@ export default class Things {
     thingId: string,
     queryParams: QueryParams,
     token: string
-  ): Promise<Users> {
-    // Retrieves list of users connected to specified thing with pagination metadata.
-    /**
-     * @method ListThingUsers - Retrieves list of users connected to specified thing
-     * with pagination metadata.
-     * @param {string}
-     *  */
+  ): Promise<UsersPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -710,7 +604,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const userData: Users = await response.json()
+      const userData: UsersPage = await response.json()
       return userData
     } catch (error) {
       throw error
