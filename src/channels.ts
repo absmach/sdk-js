@@ -43,7 +43,7 @@ export default class Channels {
     channel: Channel,
     token: string
   ): Promise<Channel> {
-    // Creates a new channel
+    // Creates a new a channel
     /**
      * @method Create - Creates new channels when provided with a channel object
      * with viable fresh information and a valid token.
