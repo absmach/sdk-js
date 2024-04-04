@@ -7,7 +7,7 @@ const mySdk = new SDK({
 })
 
 mySdk.certs
-  .Issue(
+  .IssueCert(
     '<thingID>',
     '<valid>',
     '<token>'
@@ -20,7 +20,7 @@ mySdk.certs
   })
 
 mySdk.certs
-  .ViewByThing(
+  .ViewCertByThing(
     '<thingID>',
     '<token>'
   )
@@ -32,7 +32,7 @@ mySdk.certs
   })
 
 mySdk.certs
-  .ViewBySerial(
+  .ViewCert(
     '<certID>',
     '<token>'
   )
@@ -44,7 +44,7 @@ mySdk.certs
   })
 
 mySdk.certs
-  .Revoke(
+  .RevokeCert(
     '<thingID>',
     '<token>'
   )
