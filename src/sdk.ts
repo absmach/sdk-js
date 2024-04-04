@@ -46,7 +46,7 @@ class SDK {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
     this.things = new Things(thingsUrl)
-    this.groups = new Groups(usersUrl, thingsUrl)
+    this.groups = new Groups({ usersUrl, thingsUrl })
   }
 }
 

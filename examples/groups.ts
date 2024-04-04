@@ -46,20 +46,8 @@ mySdk.groups
   })
 
 mySdk.groups
-  .GetGroups(
-    { offset: 0, limit: 10 },
-    '<token>'
-  )
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.groups
   .GroupPermissions(
-    'groupID',
+    '<groupID>',
     '<token>'
   )
   .then((response: any) => {
@@ -110,7 +98,7 @@ mySdk.groups
 
 mySdk.groups
   .DeleteGroup(
-    'groupID',
+    '<groupID>',
     '<token>'
   )
   .then((response: any) => {

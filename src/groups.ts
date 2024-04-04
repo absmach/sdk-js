@@ -11,16 +11,29 @@ import {
 
 export default class Groups {
   // Groups API client
-
+  /**
+   * @class Groups -
+   * Groups API client is used for managing groups. It is used for
+   * creating, updating, deleting, and retrieving groups.
+   * @param {string} groupsUrl - The URL of the Groups service.
+   * @param {string} thingsUrl- Things service URL.
+   * @param {string} contentType - The content type of the request.
+   * @param {string} groupsEndpoint - The endpoint of the Groups service.
+   * @returns {Groups} - Returns a Groups object.
+   */
   private readonly usersUrl: URL
-  private readonly thingsUrl: URL
+  private readonly thingsUrl?: URL
   private readonly contentType: string
   private readonly groupsEndpoint: string
   private readonly groupError: Errors
 
-  public constructor (usersUrl: string, thingsUrl: string) {
+  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
     this.usersUrl = new URL(usersUrl)
-    this.thingsUrl = new URL(thingsUrl)
+    if (thingsUrl !== undefined) {
+      this.thingsUrl = new URL(thingsUrl)
+    } else {
+      this.thingsUrl = new URL('')
+    }
     this.contentType = 'application/json'
     this.groupsEndpoint = 'groups'
     this.groupError = new Errors()
@@ -28,6 +41,24 @@ export default class Groups {
 
   public async CreateGroup (group: Group, token: string): Promise<Group> {
     // Creates a new group
+    /**
+     * @method Create - Creates a new group once the user is authenticated.
+     * and a valid token is provided. The group's parent or child status in the
+     * heirarchy can also be established.
+     * @param {object} group - The group object to be created.
+     * @param {string} token - The user's token.
+     * @example
+     * const group = {
+     * "name": "groupName",
+     * "description": "long group description",
+     * "parent_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "metadata": {
+     *   "domain": "example.com"
+     * },
+     * "status": "enabled",
+     * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+     * }
+     */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -54,6 +85,15 @@ export default class Groups {
   }
 
   public async Group (groupID: string, token: string): Promise<Group> {
+    // Gets information about a group by ID
+    /**
+     * @method Get - Provide a group's information once given the group ID and a valid token.
+     * @param {string} groupID - The group's ID.
+     * @param {string} token - The user's access token.
+     * @returns {object} - Returns a group object.
+     * @example
+     * const group_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
+     */
     const options: RequestInit = {
       method: 'GET',
       headers: {
@@ -79,35 +119,18 @@ export default class Groups {
   }
 
   public async Groups (queryParams: QueryParams, token: string): Promise<GroupsPage> {
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
-
-    const options: RequestInit = {
-      method: 'GET',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
-
-    try {
-      const response = await fetch(
-        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
-        options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
-      }
-      const groupsData: GroupsPage = await response.json()
-      return groupsData
-    } catch (error) {
-      throw error
-    }
-  }
-
-  public async GetGroups (queryParams: QueryParams, token: string): Promise<GroupsPage> {
+    // Get a list of enabled groups
+    /**
+     * @method Groups - Provides a list of all the groups in the database once given a valid token.
+     * @param {string} token - The user's access token.
+     * @param {Object} queryParams - Query parameters.
+     * @returns {object} - Returns a list of all the groups in the database.
+     * @example
+     * const queryParams = {
+     * "offset": 0,
+     * "limit": 10
+     * }
+     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -138,6 +161,12 @@ export default class Groups {
 
   public async GroupPermissions (groupID: string, token: string): Promise<Permissions> {
     // Gets a group permissions by ID
+    /**
+     * @method GroupPermissions - Provides a group's permissions once given the group ID and a valid token.
+     * @param {string} groupID - The group's ID.
+     * @param {string} token - The user's access token.
+     * @returns {object} - Returns a group's permissions in a string array.
+     */
     const options: RequestInit = {
       method: 'GET',
       headers: {
@@ -163,6 +192,19 @@ export default class Groups {
   }
 
   public async UpdateGroup (group: Group, token: string): Promise<Group> {
+    // Updates a group's information such a name and metadata.
+    /**
+     * @method UpdateGroup - Updates a group's information such a name and metadata when given a
+     * valid token and group ID.
+     * @param {object} group - The group object to be updated.
+     * @param {string} token - The user's access token.
+     * @returns {object} - Returns the updated group object.
+     * @example
+     * const group = {
+     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
+     * "name": "groupName"
+     * }
+     */
     const options: RequestInit = {
       method: 'PUT',
       headers: {
@@ -188,7 +230,14 @@ export default class Groups {
     }
   }
 
-  public async EnableGroup (groupID: string, token: string): Promise<Group> {
+  public async EnableGroup (groupID: string, token: string): Promise<Response> {
+    // Enable a group.
+    /**
+     * @method EnableGroup - Enables a group when given a valid token and group ID.
+     * @param {string} group_id - The group's ID.
+     * @param {string} token - The user's access token.
+     * @returns {object} - Returns a group object with the status reading 'Disabled'.
+     */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -206,14 +255,21 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const enableResponse: Response = { status: response.status, message: 'Group Enabled successfully' }
+      return enableResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async DisableGroup (groupID: string, token: string): Promise<Group> {
+  public async DisableGroup (groupID: string, token: string): Promise<Response> {
+    // Disable a group.
+    /**
+     * @method DisableGroup - Disables a group when given a valid token and group ID.
+     * @param {string} group_id - The group's ID.
+     * @param {string} token - The user's access token.
+     * @returns {object} - Returns a group object with the status reading 'Disabled'.
+     */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -231,8 +287,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const disableResponse: Response = { status: response.status, message: 'Group Disabled successfully' }
+      return disableResponse
     } catch (error) {
       throw error
     }
@@ -265,6 +321,16 @@ export default class Groups {
 
   public async AddUserToGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // Adds a user to a group thus creating a membership
+    /**
+     * @method AddUserToGroup -Assigns a user to a group when given a valid token, group ID,
+     * user IDs, and relation. This allows the user to perform
+     * some action on the group.
+     * @param {string} groupId - The group's ID.
+     * @param {Array} userIDs - The members IDs.
+     * @param {String} relation - The member's role.
+     * @param {string} token - The user's access token.
+     * @returns {Object} - Returns a response object that has a status code and a message.
+     */
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
@@ -293,6 +359,16 @@ export default class Groups {
 
   public async RemoveUserFromGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
     // Removes a user from a group thus deleting a membership
+    /**
+     * @method RemoveUserToGroup - Unassigns a user from a group when given a valid token, group ID,
+     * user IDs, and relation. This removes the user's ability to perform
+     * some action on the group.
+     * @param {string} groupId - The group's ID.
+     * @param {Array} userIDs - The members IDs.
+     * @param {String} relation - The member's role.
+     * @param {string} token - The user's access token.
+     * @returns {Object} - Returns a response object that has a status code and a message.
+     */
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
@@ -320,6 +396,15 @@ export default class Groups {
   }
 
   public async ListGroupUsers (groupID: string, queryParams: QueryParams, token: string): Promise<UsersPage> {
+    // Get a group's users.
+    /**
+     * @method ListGroupUsers - Provides a list of a groups' users when provided with
+     * a valid token and group ID.
+     * @param {string} groupID - The group's ID.
+     * @param {string} token - The user's access token.
+     * @param {object} queryParams - The query parameters such as offset and limit.
+     * @returns {object} - Returns a list of a group's users.
+     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -348,6 +433,15 @@ export default class Groups {
   }
 
   public async ListGroupChannels (groupID: string, queryParams: QueryParams, token: string): Promise<ChannelsPage> {
+    // Get a group's channels.
+    /**
+     * @method ListGroupChannels - Provides a list of a groups' channels when provided with
+     * a valid token and group ID.
+     * @param {string} groupID - The group's ID.
+     * @param {string} token - The user's access token.
+     * @param {object} queryParams - The query parameters such as offset and limit.
+     * @returns {object} - Returns a list of a group's channels.
+     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -376,6 +470,15 @@ export default class Groups {
   }
 
   public async Parents (groupID: string, queryParams: QueryParams, token: string): Promise<GroupsPage> {
+    // Get a group's parents.
+    /**
+     * @method Parents - Provides a list of a groups' parents when provided with
+     * a valid token and group ID.
+     * @param {string} groupID - The group's ID.
+     * @param {string} token - The user's access token.
+     * @param {object} queryParams - The query parameters such as offset and limit.
+     * @returns {object} - Returns a list of a group's parents.
+     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -404,6 +507,14 @@ export default class Groups {
   }
 
   public async Children (groupID: string, queryParams: QueryParams, token: string): Promise<GroupsPage> {
+    // Get a group's children.
+    /**
+     * @method Children - Provides a list of a groups' children.
+     * @param {string} groupId- The group's ID.
+     * @param {string} token - The user's access token.
+     * @param {object} queryParams - The query parameters such as offset and limit.
+     * @returns {object} - Returns a list of a group's children.
+     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
