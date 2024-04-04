@@ -5,7 +5,8 @@ import {
   type DomainsPage,
   type Permissions,
   type Response,
-  type UsersPage
+  type UsersPage,
+  type Relation
 } from './defs'
 
 export default class Domains {
@@ -342,7 +343,7 @@ export default class Domains {
     }
   }
 
-  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
+  public async AddUsertoDomain (domainID: string, userIDs: string[], relation: Relation, token: string): Promise<Response> {
     // AddUsertoDomain adds user to domain.
     /**
      * @method AddUsertoDomain - Adds user to domain.
@@ -376,7 +377,7 @@ export default class Domains {
     }
   }
 
-  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
+  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: Relation, token: string): Promise<Response> {
     // RemoveUserfromDomain removes user from domain.
     /**
      * @method RemoveUserfromDomain - Removes user from domain.

@@ -82,6 +82,9 @@ export interface Response {
   status: number
   message?: string
 }
+
+export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
+
 export interface QueryParams {
   total?: number
   offset?: number
@@ -106,7 +109,7 @@ export interface QueryParams {
   topic?: string
   contact?: string
   state?: string
-  list_perms?: string
+  list_perms?: boolean
   invited_by?: string
   user_id?: string
   domain_id?: string
