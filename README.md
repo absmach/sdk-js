@@ -19,7 +19,7 @@ Thank you for your interest in Magistrala and the desire to contribute!
 3. Make your changes compatible to our workflow.
 
 ## Getting Started
-The node module can be used from `index.js` and examples are located in `examples` directory. To use on the browser use `bundle.js` and examples are in `example/client`. 
+The node module can be used from `sdk.ts` and examples are located in `examples` directory. To use on the browser use `bundle.js` and examples are in `example/client`. 
 
 ## Community
 
