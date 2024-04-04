@@ -240,7 +240,7 @@ mySdk.users.ListUserGroups(
 
 mySdk.users.RefreshToken(
   { identity: '<identity>' },
-  '<token>'
+  '<refreshtoken>'
 )
   .then((response: any) => {
     console.log('response: ', response)
