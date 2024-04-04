@@ -114,7 +114,10 @@ export default class Users {
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        new URL(`${this.usersEndpoint}/tokens/issue`, this.usersUrl).toString(),
+        new URL(
+          `${this.usersEndpoint}/tokens/issue`,
+          this.usersUrl
+        ).toString(),
         options
       )
       if (!response.ok) {
@@ -160,7 +163,6 @@ export default class Users {
         ).toString(),
         options
       )
-      console.log(response)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
@@ -199,7 +201,10 @@ export default class Users {
     try {
       const response = await fetch(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        new URL(`${this.usersEndpoint}/${user.id}`, this.usersUrl).toString(),
+        new URL(
+          `${this.usersEndpoint}/${user.id}`,
+          this.usersUrl
+        ).toString(),
         options
       )
       if (!response.ok) {
@@ -338,7 +343,10 @@ export default class Users {
 
     try {
       const response = await fetch(
-        new URL(`${this.usersEndpoint}/secret`, this.usersUrl).toString(),
+        new URL(
+          `${this.usersEndpoint}/secret`,
+          this.usersUrl
+        ).toString(),
         options
       )
       if (!response.ok) {
@@ -416,7 +424,10 @@ export default class Users {
 
     try {
       const response = await fetch(
-        new URL(`${this.usersEndpoint}/${userId}`, this.usersUrl).toString(),
+        new URL(
+          `${this.usersEndpoint}/${userId}`,
+          this.usersUrl
+        ).toString(),
         options
       )
       if (!response.ok) {

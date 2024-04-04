@@ -4,7 +4,8 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  thingsUrl: defaultUrl + ':9000'
+  thingsUrl: defaultUrl + ':9000',
+  usersUrl: defaultUrl + ':9002'
 })
 
 // Things.js examples.
@@ -60,7 +61,7 @@ mySdk.things
   })
 
 mySdk.things
-  .UpdateThingSecret({ id: '<thingId>', credentials: { secret: 'new_secret' } }, '<token>'
+  .UpdateThingSecret({ id: '<thingId>', credentials: { secret: 'newSecret' } }, '<token>'
   )
   .then((response: any) => {
     console.log(response)

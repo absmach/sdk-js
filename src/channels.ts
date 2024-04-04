@@ -27,11 +27,13 @@ export default class Channels {
   private readonly channelsEndpoint: string
   private readonly channelError: Errors
   private readonly thingsUrl: URL
-  private readonly channelUnshareEndpoint: string = 'unshare'
-  private readonly channelPermissionsEndpoint: string = 'permissions'
-  public constructor (usersUrl: string, thingsUrl: string) {
-    this.usersUrl = new URL(usersUrl)
+  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl: string }) {
     this.thingsUrl = new URL(thingsUrl)
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl)
+    } else {
+      this.usersUrl = new URL('')
+    }
     this.contentType = 'application/json'
     this.channelsEndpoint = 'channels'
     this.channelError = new Errors()
@@ -62,7 +64,7 @@ export default class Channels {
      *
      */
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -94,7 +96,7 @@ export default class Channels {
      * @returns {Object} - Channel object.
      */
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -133,7 +135,7 @@ export default class Channels {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -175,7 +177,7 @@ export default class Channels {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -250,7 +252,7 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -284,7 +286,7 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -322,7 +324,7 @@ export default class Channels {
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
      */
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -355,7 +357,7 @@ export default class Channels {
   ): Promise<Response> {
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -389,7 +391,7 @@ export default class Channels {
   ): Promise<Response> {
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -424,7 +426,7 @@ export default class Channels {
      * @returns {Object} - Channel Object.
      */
     const options: RequestInit = {
-      method: 'delete',
+      method: 'DELETE',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -498,14 +500,13 @@ export default class Channels {
      * @param {string} token - User token.
      *
      */
-    const payload = { subject: thingId, object: channelId }
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ subject: thingId, object: channelId })
     }
     try {
       const response = await fetch(
@@ -537,17 +538,13 @@ export default class Channels {
      * @param {string} token - User token.
      * @returns Response - 'Thing Connected Successfully'.
      */
-    const payload = {
-      subjects: thingId,
-      objects: channelId
-    }
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ subject: thingId, object: channelId })
     }
     try {
       const response = await fetch(
@@ -566,8 +563,8 @@ export default class Channels {
   }
 
   public async Disconnect (
-    thingID: string,
-    channelID: string,
+    thingId: string,
+    channelId: string,
     token: string
   ): Promise<Response> {
     // Disconnects thing to channel.
@@ -580,17 +577,13 @@ export default class Channels {
      * @param {string} token - User token.
      *
      */
-    const payload = {
-      subject: thingID,
-      Object: channelID
-    }
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ subject: thingId, object: channelId })
     }
     try {
       const response = await fetch(
@@ -625,17 +618,13 @@ export default class Channels {
      * @param {string} token - User token.
      *
      */
-    const payload = {
-      subjects: thingId,
-      objects: channelId
-    }
     const options = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ subject: thingId, object: channelId })
 
     }
     try {
@@ -668,7 +657,7 @@ export default class Channels {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`

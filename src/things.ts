@@ -29,9 +29,13 @@ export default class Things {
   private readonly thingsEndpoint: string
   private readonly thingError: Errors
 
-  public constructor (thingsUrl: string, usersUrl: string) {
+  public constructor ({ thingsUrl, usersUrl }: { thingsUrl: string, usersUrl: string }) {
     this.thingsUrl = new URL(thingsUrl)
-    this.usersUrl = new URL(usersUrl)
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl)
+    } else {
+      this.usersUrl = new URL('')
+    }
     this.contentType = 'application/json'
     this.thingsEndpoint = 'things'
     this.thingError = new Errors()
@@ -119,7 +123,7 @@ export default class Things {
     )
 
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -163,7 +167,7 @@ export default class Things {
     )
 
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -201,7 +205,7 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -464,7 +468,7 @@ export default class Things {
      * */
 
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -498,7 +502,7 @@ export default class Things {
      */
 
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -551,7 +555,7 @@ export default class Things {
     )
 
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -586,7 +590,7 @@ export default class Things {
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
     const options: RequestInit = {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -628,7 +632,7 @@ export default class Things {
      * */
     const req = { relation: Relation, user_ids: userIDs }
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -672,7 +676,7 @@ export default class Things {
      * */
     const req = { relation: Relation, user_ids: userIDs }
     const options: RequestInit = {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -705,7 +709,7 @@ export default class Things {
      * @param {string}
      *  */
     const options: RequestInit = {
-      method: 'delete',
+      method: 'DELETE',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`

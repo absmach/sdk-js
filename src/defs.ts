@@ -47,8 +47,8 @@ export interface Thing {
   permissions?: string[]
 =======
   status?: string
-  createdAt?: string
-  updatedAt?: string
+  created_at?: string
+  updated_at?: string
   updatedBy?: string
 >>>>>>> f98ebdf (resolving comments)
 }
@@ -63,6 +63,7 @@ export interface Group {
   domain_id?: string
   parent_id?: string
   name?: string
+<<<<<<< HEAD
   description?: string
   metadata?: Record<string, any>
   level?: number
@@ -72,6 +73,11 @@ export interface Group {
   created_at?: Date
   updated_at?: Date
   permissions?: string[]
+=======
+  status?: 'enabled' | 'disabled'
+  created_at?: string
+  updated_at?: string
+>>>>>>> 4e65430 (Fixing Cl failing issues)
 }
 
 export interface GroupsPage {
@@ -82,6 +88,7 @@ export interface GroupsPage {
 export interface Channel {
   id?: string
   name?: string
+<<<<<<< HEAD
 <<<<<<< HEAD
   domain_id?: string
   description?: string
@@ -94,14 +101,24 @@ export interface Channel {
   permissions?: string[]
 =======
   parent_id?: string
+=======
+  domain_id?: string
+>>>>>>> 4e65430 (Fixing Cl failing issues)
   credentials?: {
     identity?: string
   }
   status?: 'enabled' | 'disabled'
-  createdAt?: string
-  updatedAt?: string
+  created_at?: string
+  updated_at?: string
   description?: string
+<<<<<<< HEAD
 >>>>>>> f98ebdf (resolving comments)
+=======
+  metadata?: Record<string, any>
+  path?: string
+  children?: Channel[]
+  level?: number
+>>>>>>> 4e65430 (Fixing Cl failing issues)
 }
 
 export interface ChannelsPage {
