@@ -1,7 +1,7 @@
 {
-  "name": "mainflux-sdk",
-  "version": "0.14.38",
-  "description": "Official Mainflux Javascript sdk",
+  "name": "@absmach/magistrala-sdk",
+  "version": "0.1.0",
+  "description": "Official Magistrala sdk",
   "main": "./dist/sdk.js",
   "module": "./dist/sdk.mjs",
   "types": "./dist/sdk.d.ts",
@@ -11,35 +11,28 @@
   "files": [
     "dist",
     "sdk.js",
-    "src",
     "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "replace-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/const axios = require(\"axios\");/import axios from \"axios\";/g' {} +",
-    "restore-axios-import": "find mainflux -type f -name \"*.js\" -exec sed -i 's/import axios from \"axios\";/const axios = require(\"axios\");/g' {} +",
-    "bundle": "npm run replace-axios-import && browserify -r ./mainflux/sdk.js:mfsdk -o bundle.js -p esmify && npm run restore-axios-import",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mainflux/sdk-js.git"
+    "url": "git+https://github.com/magistrala/sdk-js.git"
   },
   "keywords": [
-    "Mainflux",
-    "mainflux",
-    "Main-Flux"
+    "magistrala",
+    "magistrala"
   ],
-  "author": "Nataly Musilah",
+  "author": "Abstract Machines",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/mainflux/sdk-js/issues"
+    "url": "https://github.com/magistrala/sdk-js/issues"
   },
-  "homepage": "https://github.com/mainflux/sdk-js#readme",
+  "homepage": "https://github.com/magistrala/sdk-js#readme",
   "dependencies": {
-    "axios": "^1.5.0",
-    "mainflux-sdk": "^0.14.38",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
