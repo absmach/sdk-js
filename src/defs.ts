@@ -10,7 +10,7 @@ export interface User {
   role?: string
   status?: 'enabled' | 'disabled'
   metadata?: Record<string, any>
-  updatedBy?: string
+  updated_by?: string
 }
 
 export interface UsersPage {
@@ -82,6 +82,9 @@ export interface Response {
   status: number
   message?: string
 }
+
+export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
+
 export interface QueryParams {
   total?: number
   offset?: number
@@ -106,9 +109,33 @@ export interface QueryParams {
   topic?: string
   contact?: string
   state?: string
-  list_perms?: string
+  list_perms?: boolean
   invited_by?: string
   user_id?: string
   domain_id?: string
   relation?: string
+}
+
+export interface Domain {
+  name?: string
+  id?: string
+  alias?: string
+  metadata?: Record<string, any>
+  tags?: string[]
+  status?: 'enabled' | 'disabled'
+  permission?: string
+  permissions?: string[]
+  created_by?: string
+  updated_by?: string
+  created_at?: Date
+  updated_at?: Date
+}
+
+export interface DomainsPage {
+  domains: Domain[]
+  page: PageRes
+}
+
+export interface Permissions {
+  permissions: string[]
 }

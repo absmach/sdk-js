@@ -45,7 +45,7 @@ mySdk.users.UserProfile(
   })
 
 mySdk.users.CreateToken(
-  { identity: '<identity>', secret: '<password>' }
+  { identity: '<identity>', secret: '<password>', domain_id: '<domainID>' }
 )
   .then((response: any) => {
     console.log('response: ', response)
