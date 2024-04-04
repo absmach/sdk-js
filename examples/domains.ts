@@ -3,12 +3,13 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  domainsUrl: defaultUrl + ':8189'
+  domainsUrl: defaultUrl + ':8189',
+  usersUrl: defaultUrl + ':9002'
 })
 
 mySdk.domains
   .CreateDomain(
-    { name: '<domainName>', email: '<domainEmail>' },
+    { name: '<domainName>' },
     '<token>'
   )
   .then((response: any) => {
@@ -64,6 +65,18 @@ mySdk.domains.Domains(
 
 mySdk.domains.ListUserDomains(
   '<userID>',
+  { offset: 0, limit: 10 },
+  '<token>'
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.domains.ListDomainUsers(
+  '<domainID>',
   { offset: 0, limit: 10 },
   '<token>'
 )

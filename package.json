@@ -11,7 +11,7 @@
   "files": [
     "dist",
     "sdk.js",
-    "mainflux",
+    "src",
     "LICENSE"
   ],
   "scripts": {

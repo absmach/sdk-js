@@ -10,7 +10,7 @@ export interface User {
   role?: string
   status?: 'enabled' | 'disabled'
   metadata?: Record<string, any>
-  updatedBy?: string
+  updated_by?: string
 }
 
 export interface UsersPage {
@@ -117,7 +117,15 @@ export interface Domain {
   name?: string
   id?: string
   alias?: string
-  email?: string
+  metadata?: Record<string, any>
+  tags?: string[]
+  status?: 'enabled' | 'disabled'
+  permission?: string
+  permissions?: string[]
+  created_by?: string
+  updated_by?: string
+  created_at?: Date
+  updated_at?: Date
 }
 
 export interface DomainsPage {
