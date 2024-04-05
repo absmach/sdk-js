@@ -1,6 +1,25 @@
 import Users from './users'
 import Domains from './domains'
 import Things from './things'
+import type {
+  User,
+  UsersPage,
+  Thing,
+  ThingsPage,
+  Group,
+  GroupsPage,
+  Channel,
+  ChannelsPage,
+  Domain,
+  DomainsPage,
+  Invitation,
+  InvitationsPage,
+  Login,
+  QueryParams,
+  Token,
+  Response
+
+} from './defs'
 
 const defaultUrl = 'http://localhost'
 
@@ -29,3 +48,21 @@ class SDK {
 }
 
 export default SDK
+export type {
+  User,
+  UsersPage,
+  Thing,
+  ThingsPage,
+  Group,
+  GroupsPage,
+  Channel,
+  ChannelsPage,
+  Login,
+  QueryParams,
+  Token,
+  Response,
+  Domain,
+  DomainsPage,
+  Invitation,
+  InvitationsPage
+}
