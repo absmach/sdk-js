@@ -7,27 +7,15 @@ const mySdk = new SDK({
   usersUrl: defaultUrl + ':9002',
   thingsUrl: defaultUrl + ':9000'
 })
+
 const token = '<token>'
 
-mySdk.users
-  .Create({
-    name: '<name>',
-    credentials: {
-      identity: '<useremail>',
-      secret: '<password>'
-    }
-  })
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.users.User(
-  '<userId>',
+mySdk.groups
+  .CreateGroup({
+    name: '<groupName>'
+  },
   token
-)
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -35,9 +23,11 @@ mySdk.users.User(
     console.log(error)
   })
 
-mySdk.users.UserProfile(
-  token
-)
+mySdk.groups
+  .Group(
+    '<groupID>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -45,9 +35,11 @@ mySdk.users.UserProfile(
     console.log(error)
   })
 
-mySdk.users.CreateToken(
-  { identity: '<identity>', secret: '<password>', domain_id: '<domainID>' }
-)
+mySdk.groups
+  .Groups(
+    { offset: 0, limit: 10 },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -55,10 +47,11 @@ mySdk.users.CreateToken(
     console.log(error)
   })
 
-mySdk.users.RefreshToken(
-  { identity: '<userId>' },
-  '<refreshToken>'
-)
+mySdk.groups
+  .GroupPermissions(
+    '<groupID>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -66,10 +59,14 @@ mySdk.users.RefreshToken(
     console.log(error)
   })
 
-mySdk.users.Update(
-  { id: '<userId>', name: '<userName>' },
-  token
-)
+mySdk.groups
+  .UpdateGroup(
+    {
+      name: '<groupName>',
+      id: '<groupID>'
+    },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -77,10 +74,11 @@ mySdk.users.Update(
     console.log(error)
   })
 
-mySdk.users.UpdateUserIdentity(
-  { id: '<userId>', credentials: { identity: '<userIdentity>' } },
-  token
-)
+mySdk.groups
+  .EnableGroup(
+    '<groupID>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -88,10 +86,11 @@ mySdk.users.UpdateUserIdentity(
     console.log(error)
   })
 
-mySdk.users.UpdateUserTags(
-  { id: '<userId>', tags: ['foo', 'bar'] },
-  token
-)
+mySdk.groups
+  .DisableGroup(
+    '<groupID>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -99,10 +98,11 @@ mySdk.users.UpdateUserTags(
     console.log(error)
   })
 
-mySdk.users.UpdateUserRole(
-  { id: '<userId>', role: '<userRole>' },
-  token
-)
+mySdk.groups
+  .DeleteGroup(
+    '<groupID>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -110,10 +110,13 @@ mySdk.users.UpdateUserRole(
     console.log(error)
   })
 
-mySdk.users.Disable(
-  { id: '<userId>' },
-  token
-)
+mySdk.groups
+  .AddUserToGroup(
+    '<groupID>',
+    ['<userID>', '<userID>'],
+    '<relation>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -121,10 +124,13 @@ mySdk.users.Disable(
     console.log(error)
   })
 
-mySdk.users.Enable(
-  { id: '<userId>' },
-  token
-)
+mySdk.groups
+  .RemoveUserFromGroup(
+    '<groupID>',
+    ['<userID>', '<userID>'],
+    '<relation>',
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -132,10 +138,12 @@ mySdk.users.Enable(
     console.log(error)
   })
 
-mySdk.users.Users(
-  { offset: 0, limit: 10 },
-  token
-)
+mySdk.groups
+  .ListGroupUsers(
+    '<groupID>',
+    { offset: 0, limit: 10 },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -143,10 +151,12 @@ mySdk.users.Users(
     console.log(error)
   })
 
-mySdk.users.UpdateUserPassword(
-  '<oldSecret>', '<newSecret>',
-  token
-)
+mySdk.groups
+  .ListGroupChannels(
+    '<groupID>',
+    { offset: 0, limit: 10 },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -154,11 +164,12 @@ mySdk.users.UpdateUserPassword(
     console.log(error)
   })
 
-mySdk.users.ListUserChannels(
-  '<userId>',
-  { offset: 0, limit: 10 },
-  token
-)
+mySdk.groups
+  .Children(
+    '<groupID>',
+    { offset: 0, limit: 10, level: 2 },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -166,45 +177,12 @@ mySdk.users.ListUserChannels(
     console.log(error)
   })
 
-mySdk.users.ListUserThings(
-  '<userId>',
-  { offset: 0, limit: 10 },
-  token
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.users.ListUserGroups(
-  '<userId>',
-  { offset: 0, limit: 10 },
-  token
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.users.ResetPasswordRequest(
-  '<email>'
-)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.users.ResetPassword(
-  '<password>',
-  '<confPass>',
-  token
-)
+mySdk.groups
+  .Parents(
+    '<groupID>',
+    { offset: 0, limit: 10, level: 2 },
+    token
+  )
   .then((response: any) => {
     console.log('response: ', response)
   })
