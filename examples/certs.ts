@@ -6,11 +6,13 @@ const mySdk = new SDK({
   certsUrl: defaultUrl + ':9019'
 })
 
+const token = '<token>'
+
 mySdk.certs
   .IssueCert(
     '<thingID>',
     '<valid>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -22,7 +24,7 @@ mySdk.certs
 mySdk.certs
   .ViewCertByThing(
     '<thingID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -34,7 +36,7 @@ mySdk.certs
 mySdk.certs
   .ViewCert(
     '<certID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -46,7 +48,7 @@ mySdk.certs
 mySdk.certs
   .RevokeCert(
     '<thingID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)

@@ -62,8 +62,8 @@ export default class Certs {
         const errorRes = await response.json()
         throw this.certsError.HandleError(errorRes.error, response.status)
       }
-      const certsData: Cert = await response.json()
-      return certsData
+      const cert: Cert = await response.json()
+      return cert
     } catch (error) {
       throw error
     }
@@ -95,8 +95,8 @@ export default class Certs {
         const errorRes = await response.json()
         throw this.certsError.HandleError(errorRes.error, response.status)
       }
-      const certsData: CertSerials = await response.json()
-      return certsData
+      const certsPage: CertSerials = await response.json()
+      return certsPage
     } catch (error) {
       throw error
     }
@@ -129,8 +129,8 @@ export default class Certs {
         const errorRes = await response.json()
         throw this.certsError.HandleError(errorRes.error, response.status)
       }
-      const certsData: Cert = await response.json()
-      return certsData
+      const cert: Cert = await response.json()
+      return cert
     } catch (error) {
       throw error
     }
