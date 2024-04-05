@@ -2,6 +2,8 @@ import Users from './users'
 import Domains from './domains'
 import Things from './things'
 import Groups from './groups'
+import Channels from './channels'
+
 export type {
   User,
   UsersPage,
@@ -35,6 +37,7 @@ class SDK {
   domains: Domains
   things: Things
   groups: Groups
+  channels: Channels
 
   constructor ({
     usersUrl = defaultUrl,
@@ -44,8 +47,9 @@ class SDK {
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
-    this.things = new Things(thingsUrl)
+    this.things = new Things({ thingsUrl, usersUrl })
     this.groups = new Groups({ usersUrl, thingsUrl })
+    this.channels = new Channels({ thingsUrl, usersUrl })
   }
 }
 
