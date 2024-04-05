@@ -13,7 +13,8 @@ const mySdk = new SDK({
 const token = '<token>'
 
 mySdk.channels
-  .CreateChannel({ name: '<channelId>' }, token)
+  .CreateChannel(
+    { name: '<channelName>' }, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -173,9 +174,9 @@ mySdk.channels
   .AddUserToChannel(
     '<channelId>',
     [
-      '<thingId>', '<thingId>'
+      '<userId1>', '<userId2>'
     ],
-    'editor',
+    'administrator',
     token
   )
   .then((response: any) => {
@@ -189,9 +190,9 @@ mySdk.channels
   .RemoveUserFromChannel(
     '<channelId>',
     [
-      '<thingId>', '<thingId>'
+      '<userId1>', '<userId2>'
     ],
-    'editor',
+    'administrator',
     token
   )
   .then((response: any) => {

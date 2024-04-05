@@ -7,7 +7,8 @@ import {
   type Permissions,
   type Response,
   type ChannelsPage,
-  type UsersPage
+  type UsersPage,
+  type Relation
 } from './defs'
 export default class Channels {
   // Channels API client
@@ -80,8 +81,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Channel = await response.json()
-      return channelData
+      const newChannel: Channel = await response.json()
+      return newChannel
     } catch (error) {
       throw error
     }
@@ -111,8 +112,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Channel = await response.json()
-      return channelData
+      const channel: Channel = await response.json()
+      return channel
     } catch (error) {
       throw error
     }
@@ -129,7 +130,7 @@ export default class Channels {
      * @param {String} channel_id - Channel id.
      * @param {Object} queryParams - Query parameters for the request.
      * @param {String} token - An access token that is valid.
-     * @returns {List} - Things list.
+     * @returns {List} - Channels Page.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
@@ -155,8 +156,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: ChannelsPage = await response.json()
-      return channelData
+      const channels: ChannelsPage = await response.json()
+      return channels
     } catch (error) {
       throw error
     }
@@ -171,7 +172,7 @@ export default class Channels {
      * @method GetAll - Provides a list of all channels with pagination metadata.
      * @param {Object} queryParams - Query parameters for the request.
      * @param {String} token - An access token that is valid.
-     * @returns {Object} - Channel Object.
+     * @returns {Object} - returns Channels Page
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
@@ -197,8 +198,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelsData: ChannelsPage = await response.json()
-      return channelsData
+      const channels: ChannelsPage = await response.json()
+      return channels
     } catch (error) {
       throw error
     }
@@ -213,7 +214,7 @@ export default class Channels {
      * @method Update - Updates channel with specified id.
      * @param {Object} channel - Channel object with new information.
      * @param {String} token - An access token that is valid.
-     * @returns {Object} - Channel Object.
+     * @returns {Object} - returns updated Channel.
      */
 
     const options: RequestInit = {
@@ -236,8 +237,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Channel = await response.json()
-      return channelData
+      const updatedChannel: Channel = await response.json()
+      return updatedChannel
     } catch (error) {
       throw error
     }
@@ -249,7 +250,7 @@ export default class Channels {
      * @method Disable - Disables channel with specified id.
      * @param {Object} channel - Channel object with new information.
      * @param {String} token - An access token that is valid.
-     * @returns {Object} - Channel Object.
+     * @returns {Object} - Creturns Disabled channel.
      */
     const options = {
       method: 'POST',
@@ -270,8 +271,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Channel = await response.json()
-      return channelData
+      const disabledChannel: Channel = await response.json()
+      return disabledChannel
     } catch (error) {
       throw error
     }
@@ -283,7 +284,7 @@ export default class Channels {
      * @method Enable - Enables channel with specified id.
      * @param {Object} channel - Channel object with new information.
      * @param {String} token - An access token that is valid.
-     * @returns {Object} - Channel Object.
+     * @returns {Object} - Returns Enabled Channel.
      */
     const options = {
       method: 'POST',
@@ -304,8 +305,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Channel = await response.json()
-      return channelData
+      const enabledChannel: Channel = await response.json()
+      return enabledChannel
     } catch (error) {
       throw error
     }
@@ -320,7 +321,7 @@ export default class Channels {
      * @method ChannelPermission - Retrieves channel permissions with specified id..
      * @param {Object}
      * @param {string} token - user token.
-     * @returns {object} - returns an object domain permissions eg:
+     * @returns {object} - returns channel domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
      */
     const options: RequestInit = {
@@ -342,8 +343,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channelData: Permissions = await response.json()
-      return channelData
+      const permissions: Permissions = await response.json()
+      return permissions
     } catch (error) {
       throw error
     }
@@ -352,9 +353,18 @@ export default class Channels {
   public async AddUserToChannel (
     channelID: string,
     userIDs: string[],
-    relation: string,
+    relation: Relation,
     token: string
   ): Promise<Response> {
+    // Adds user to channel.
+    /**
+     * @method AddUser - Adds user to channel when provided with a valid token,
+     * channel id and a user id.
+     * @param {string} user_id - User ID.
+     * @param {string} channel_id - Channel ID.
+     * @param {string} token - User token.
+     * @returns Response - 'User Added Successfully'.
+     *  */
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
@@ -376,8 +386,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'User Added Successfully' }
-      return shareResponse
+      const addUserResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      return addUserResponse
     } catch (error) {
       throw error
     }
@@ -386,9 +396,19 @@ export default class Channels {
   public async RemoveUserFromChannel (
     channelID: string,
     userIDs: string[],
-    relation: string,
+    relation: Relation,
     token: string
   ): Promise<Response> {
+    // Removes user from channel.
+    /**
+     * @method RemoveUser - Removes user from channel when provided with a valid token,
+     * channel id and a user id.
+     * @param {string}
+     * @param {string} user_id - User ID.
+     * @param {string} channel_id - Channel ID.
+     * @param {string} token - User token.
+     * @returns Response - 'User Removed Successfully'.
+     * */
     const req = { user_ids: userIDs, relation }
     const options: RequestInit = {
       method: 'POST',
@@ -410,20 +430,20 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'User Removed Successfully' }
-      return shareResponse
+      const removeUserResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      return removeUserResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async Delete (channel: Channel, token: string): Promise<string> {
+  public async Delete (channel: Channel, token: string): Promise<Response> {
     // Deletes channel with specified id.
     /**
      * @method Disable - Deletes channel with specified id.
      * @param {Object} channel - Channel object with new information.
      * @param {String} token - An access token that is valid.
-     * @returns {Object} - Channel Object.
+     * @returns {Object} - Returns response message.
      */
     const options: RequestInit = {
       method: 'DELETE',
@@ -444,7 +464,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      return 'Channel Deleted'
+      const deleteResponse: Response = { status: response.status, message: 'Channel Deleted' }
+      return deleteResponse
     } catch (error) {
       throw error
     }
@@ -455,6 +476,12 @@ export default class Channels {
     queryParams: QueryParams,
     token: string
   ): Promise<GroupsPage> {
+    // Lists groups in a channel.
+    /**
+     * @method ListChannelUsersGroups - Lists groups in a channel.
+     * @param {string}
+     * @returns {Object} - Groups Page.
+     * */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     )
@@ -477,8 +504,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData: GroupsPage = await response.json()
-      return usersData
+      const groupsPage: GroupsPage = await response.json()
+      return groupsPage
     } catch (error) {
       throw error
     }
@@ -496,7 +523,6 @@ export default class Channels {
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {list} actions - Action for example: ["m_read", "m_write"].
      * @param {string} token - User token.
      *
      */
@@ -506,7 +532,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ subject: thingId, object: channelId })
+      body: JSON.stringify({ thing_id: thingId, channel_id: channelId })
     }
     try {
       const response = await fetch(
@@ -517,8 +543,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
-      return shareResponse
+      const connectThingResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
+      return connectThingResponse
     } catch (error) {
       throw error
     }
@@ -544,7 +570,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ subject: thingId, object: channelId })
+      body: JSON.stringify({ thing_id: thingId, channel_id: channelId })
     }
     try {
       const response = await fetch(
@@ -555,8 +581,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
-      return shareResponse
+      const connectResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
+      return connectResponse
     } catch (error) {
       throw error
     }
@@ -567,9 +593,9 @@ export default class Channels {
     channelId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects thing to channel.
+    // Disconnects thing from channel.
     /**
-     * @method Disconnect - Disconnects thing to channel when provided with a valid token,
+     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
      * @param {string} thing_id - Thing ID.
@@ -583,7 +609,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ subject: thingId, object: channelId })
+      body: JSON.stringify({ thing_id: thingId, channel_id: channelId })
     }
     try {
       const response = await fetch(
@@ -596,8 +622,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
-      return shareResponse
+      const disconnectResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
+      return disconnectResponse
     } catch (error) {
       throw error
     }
@@ -608,9 +634,9 @@ export default class Channels {
     channelId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects thing to channel.
+    // Disconnects thing from channel.
     /**
-     * @method Disconnect - Disconnects thing to channel when provided with a valid token,
+     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
      * @param {string} thing_id - Thing ID.
@@ -624,7 +650,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ subject: thingId, object: channelId })
+      body: JSON.stringify({ thing_id: thingId, channel_id: channelId })
 
     }
     try {
@@ -636,8 +662,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
-      return shareResponse
+      const disconnectThingResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
+      return disconnectThingResponse
     } catch (error) {
       throw error
     }
@@ -652,6 +678,7 @@ export default class Channels {
     /**
      * @method ListChannelUsers - Lists users in a channel.
      * @param {string}
+     * @returns {Object} - Users Page.
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
@@ -675,8 +702,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const usersData: UsersPage = await response.json()
-      return usersData
+      const usersPage: UsersPage = await response.json()
+      return usersPage
     } catch (error) {
       throw error
     }
