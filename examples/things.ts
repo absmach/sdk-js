@@ -122,7 +122,7 @@ mySdk.things
   .ShareThing(
     '<thingId>',
 
-    { relation: 'administrator' },
+    'administrator',
     [
       '<userId1>', '<userId2>'
     ], token)
