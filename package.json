@@ -20,18 +20,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/magistrala/sdk-js.git"
+    "url": "git+https://github.com/absmach/sdk-js.git"
   },
   "keywords": [
     "magistrala",
-    "magistrala"
+    "magistrala-sdk",
+    "npm"
   ],
   "author": "Abstract Machines",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/magistrala/sdk-js/issues"
+    "url": "https://github.com/absmach/sdk-js/issues"
   },
-  "homepage": "https://github.com/magistrala/sdk-js#readme",
+  "homepage": "https://github.com/absmach/sdk-js#readme",
   "dependencies": {
     "node-fetch": "^3.3.2"
   },
