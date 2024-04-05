@@ -7,10 +7,12 @@ const mySdk = new SDK({
   usersUrl: defaultUrl + ':9002'
 })
 
+const token = '<token>'
+
 mySdk.domains
   .CreateDomain(
     { name: '<domainName>' },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -21,7 +23,7 @@ mySdk.domains
 
 mySdk.domains.UpdateDomain(
   { name: '<domainName>', id: '<domainID>' },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -32,7 +34,7 @@ mySdk.domains.UpdateDomain(
 
 mySdk.domains.Domain(
   '<domainID>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -43,7 +45,7 @@ mySdk.domains.Domain(
 
 mySdk.domains.DomainPermissions(
   '<domainID>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -54,7 +56,7 @@ mySdk.domains.DomainPermissions(
 
 mySdk.domains.Domains(
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -66,7 +68,7 @@ mySdk.domains.Domains(
 mySdk.domains.ListUserDomains(
   '<userID>',
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -78,7 +80,7 @@ mySdk.domains.ListUserDomains(
 mySdk.domains.ListDomainUsers(
   '<domainID>',
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -89,7 +91,7 @@ mySdk.domains.ListDomainUsers(
 
 mySdk.domains.EnableDomain(
   '<domainID>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -100,7 +102,7 @@ mySdk.domains.EnableDomain(
 
 mySdk.domains.DisableDomain(
   '<domainID>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -113,7 +115,7 @@ mySdk.domains.AddUsertoDomain(
   '<domainID>',
   ['<userID>', '<userID>'],
   'administrator',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -126,7 +128,7 @@ mySdk.domains.RemoveUserfromDomain(
   '<domainID>',
   ['<userID>', '<userID>'],
   'administrator',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
