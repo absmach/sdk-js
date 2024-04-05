@@ -13,7 +13,7 @@ const mySdk = new SDK({
 const token = '<token>'
 
 mySdk.channels
-  .CreateChannel({ name: '<channelId>' }, '<token>')
+  .CreateChannel({ name: '<channelId>' }, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -22,7 +22,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Channel('<channelID>', '<token>')
+  .Channel('<channelID>', token)
   .then((response: any) => {
     console.log(response)
   })
@@ -31,7 +31,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Channels({ offset: 0, limit: 10 }, '<token>')
+  .Channels({ offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -42,7 +42,7 @@ mySdk.channels
 mySdk.channels
   .UpdateChannel(
     { id: '<channelId>', name: '<channelName>' },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response:', response)
@@ -52,7 +52,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Disable({ id: '<channelId>' }, '<token>')
+  .Disable({ id: '<channelId>' }, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -61,7 +61,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Enable({ id: '<channelId>' }, '<token>')
+  .Enable({ id: '<channelId>' }, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -73,7 +73,7 @@ mySdk.channels
   .ChannelsByThing(
     '<thingId>',
     { offset: 0, limit: 5 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response:', response)
@@ -86,7 +86,7 @@ mySdk.channels
   .ConnectThing(
     '<thingId>',
     '<channelId>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -99,7 +99,7 @@ mySdk.channels
   .DisconnectThing(
     '<thingId>',
     '<channelId>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -112,7 +112,7 @@ mySdk.channels
   .Connect(
     '<thingId>',
     '<channelId>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response:', response)
@@ -125,7 +125,7 @@ mySdk.channels
   .Disconnect(
     '<thingId>',
     '<channelId>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -138,7 +138,7 @@ mySdk.channels
   .ListChannelUsers(
     '<channelId>',
     { offset: 0, limit: 5 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -151,7 +151,7 @@ mySdk.channels
   .ListChannelUsersGroups(
     '<channelId>',
     { offset: 0, limit: 5 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -161,7 +161,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .ChannelPermissions('<channelId>', '<token>')
+  .ChannelPermissions('<channelId>', token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -176,7 +176,7 @@ mySdk.channels
       '<thingId>', '<thingId>'
     ],
     'editor',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -192,7 +192,7 @@ mySdk.channels
       '<thingId>', '<thingId>'
     ],
     'editor',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)

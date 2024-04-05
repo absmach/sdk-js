@@ -156,13 +156,13 @@ export default class Things {
     }
   }
 
-  public async Disable (thing: Thing, token: string): Promise<Response> {
+  public async Disable (thing: Thing, token: string): Promise<Thing> {
     // Disables thing.
     /**
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Response Object with the status code and a message.
+     * @returns {Object} - Returns disabled thing
      */
 
     const options: RequestInit = {
@@ -185,14 +185,14 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const disableResponse: Response = { status: response.status, message: 'Thing Disabled Successfully' }
-      return disableResponse
+      const disabledThing: Thing = await response.json()
+      return disabledThing
     } catch (error) {
       throw error
     }
   }
 
-  public async Update (thing: Thing, token: string): Promise<Thing> {
+  public async UpdateThing (thing: Thing, token: string): Promise<Thing> {
     // Updates thing.
     /**
      * @method Update - Updates thing when provided with a valid token,
@@ -453,13 +453,13 @@ export default class Things {
     }
   }
 
-  public async Enable (thing: Thing, token: string): Promise<Response> {
+  public async Enable (thing: Thing, token: string): Promise<Thing> {
     // Enables a thing.
     /**
      * @method Enable - Enables a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Response object with the status code and a message.
+     * @returns {Object} - Returns updated thing.
      */
 
     const options: RequestInit = {
@@ -483,8 +483,8 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const enableResponse: Response = { status: response.status, message: 'Thing Enabled Successfully' }
-      return enableResponse
+      const enabledThing : Thing = await response.json()
+      return enabledThing
     } catch (error) {
       throw error
     }

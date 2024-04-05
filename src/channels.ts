@@ -22,12 +22,12 @@ export default class Channels {
    * @returns {Object} -Channels object
    *
    */
-  private readonly usersUrl: URL
+  private readonly usersUrl?: URL
   private readonly contentType: string
   private readonly channelsEndpoint: string
   private readonly channelError: Errors
   private readonly thingsUrl: URL
-  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl: string }) {
+  public constructor ({ usersUrl, thingsUrl }: { usersUrl?: string, thingsUrl: string }) {
     this.thingsUrl = new URL(thingsUrl)
     if (usersUrl !== undefined) {
       this.usersUrl = new URL(usersUrl)
