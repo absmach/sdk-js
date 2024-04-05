@@ -144,6 +144,8 @@ export interface Response {
 
 export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
 
+export type groupRelation = 'administrator' | 'editor' | 'viewer' 
+
 type status = 'enabled' | 'disabled'
 
 export interface QueryParams {
