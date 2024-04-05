@@ -8,6 +8,10 @@ const mySdk = new SDK({
   usersUrl: defaultUrl + ':9002'
 })
 
+// Channels.ts examples.
+
+const token = '<token>'
+
 mySdk.channels
   .CreateChannel({ name: '<channelId>' }, '<token>')
   .then((response: any) => {

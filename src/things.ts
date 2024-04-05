@@ -4,12 +4,12 @@ import {
   type Thing,
   type ThingsPage,
   type Response,
-  type BulkThings,
-  type ChannelsPage,
   type QueryParams,
   type UsersPage,
-  type Permissions
+  type Permissions,
+  type Relation
 } from './defs'
+
 export default class Things {
   // Things service client.
   /**
@@ -24,12 +24,12 @@ export default class Things {
    //@returns {Object} - Things service client.
    */
   private readonly thingsUrl: URL
-  private readonly usersUrl: URL
+  private readonly usersUrl?: URL
   private readonly contentType: string
   private readonly thingsEndpoint: string
   private readonly thingError: Errors
 
-  public constructor ({ thingsUrl, usersUrl }: { thingsUrl: string, usersUrl: string }) {
+  public constructor ({ thingsUrl, usersUrl }: { thingsUrl: string, usersUrl?: string }) {
     this.thingsUrl = new URL(thingsUrl)
     if (usersUrl !== undefined) {
       this.usersUrl = new URL(usersUrl)
@@ -70,7 +70,21 @@ export default class Things {
   public async CreateThings (
     things: Thing[],
     token: string
-  ): Promise<BulkThings> {
+  ): Promise<ThingsPage> {
+    // Creates multiple things.
+    /**
+     * @method CreateThings - Creates multiple things.
+     * @param {Object} things - Array of things.
+     * @param {string} token - User token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const things = [
+     * {
+     * "name": "thing3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -88,71 +102,18 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData: BulkThings = await response.json()
+      const thingData: ThingsPage = await response.json()
       return thingData
     } catch (error) {
       throw error
     }
   }
 
-  public async GetAll (
+  public async ThingsByChannel (
+    channelID: string,
     queryParams: QueryParams,
     token: string
   ): Promise<ThingsPage> {
-    // Retrieves thing information.
-    /**
-     * @method Get - Retrieves thing information when provided with a valid token
-     * and thing ID.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Thing object.
-     * @example
-     * const thing_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
-     *
-     */
-    // if (
-    //   typeof queryParams !== "object" ||
-    //   queryParams === null ||
-    //   Array.isArray(queryParams)
-    // ) {
-    //   throw new Error("Invalid query parameters. Expected an object.");
-    // }
-
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
-
-    const options: RequestInit = {
-      method: 'GET',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
-    try {
-      const response = await fetch(
-        new URL(
-          `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
-          this.thingsUrl
-        ).toString(),
-        options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
-      }
-      const thingsData: ThingsPage = await response.json()
-      return thingsData
-    } catch (error) {
-      throw error
-    }
-  }
-
-  public async ThingsByChannel (
-    thing: Thing,
-    queryParams: QueryParams,
-    token: string
-  ): Promise<ChannelsPage> {
     // Retrieves list of channels connected to specified thing with pagination metadata.
     /**
      * @method GetByChannel - Retrieves list of channels connected to specified thing
@@ -177,7 +138,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}/channels?${new URLSearchParams(
+          `channels/${channelID}/${this.thingsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -188,20 +149,20 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const channelsData: ChannelsPage = await response.json()
-      return channelsData
+      const ThingsData: ThingsPage = await response.json()
+      return ThingsData
     } catch (error) {
       throw error
     }
   }
 
-  public async Disable (thing: Thing, token: string): Promise<Thing> {
+  public async Disable (thing: Thing, token: string): Promise<Response> {
     // Disables thing.
     /**
      * @method Disable - Deletes a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Thing object with statys disabled.
+     * @returns {Object} - Response Object with the status code and a message.
      */
 
     const options: RequestInit = {
@@ -224,8 +185,8 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData: Thing = await response.json()
-      return thingData
+      const disableResponse: Response = { status: response.status, message: 'Thing Disabled Successfully' }
+      return disableResponse
     } catch (error) {
       throw error
     }
@@ -312,7 +273,7 @@ export default class Things {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(thing)
+      body: JSON.stringify({ secret: thing.credentials?.secret })
     }
     try {
       const response = await fetch(
@@ -492,13 +453,13 @@ export default class Things {
     }
   }
 
-  public async Enable (thing: Thing, token: string): Promise<Thing> {
+  public async Enable (thing: Thing, token: string): Promise<Response> {
     // Enables a thing.
     /**
      * @method Enable - Enables a thing when provided with a valid token and thing ID.
      * @param {string} thing_id - Thing ID.
      * @param {string} token - User token.
-     * @returns {Object} - Thing object with stays enabled.
+     * @returns {Object} - Response object with the status code and a message.
      */
 
     const options: RequestInit = {
@@ -522,8 +483,8 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingData: Thing = await response.json()
-      return thingData
+      const enableResponse: Response = { status: response.status, message: 'Thing Enabled Successfully' }
+      return enableResponse
     } catch (error) {
       throw error
     }
@@ -532,7 +493,7 @@ export default class Things {
   public async Things (
     queryParams: QueryParams,
     token: string
-  ): Promise<BulkThings> {
+  ): Promise<ThingsPage> {
     // Gets all things with pagination.
     /**
      * Provides information about all users. The users are retrieved using
@@ -574,7 +535,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const thingsData: BulkThings = await response.json()
+      const thingsData: ThingsPage = await response.json()
       return thingsData
     } catch (error) {
       throw error
@@ -617,15 +578,15 @@ export default class Things {
 
   public async ShareThing (
     thingId: string,
-    Relation: string,
+    Relation: Relation,
     userIDs: string[],
     token: string
   ): Promise<Response> {
     // Shares a thing with a user.
     /**
      * @method ShareThing - Shares a thing with a user.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} user_id - User ID.
+     * @param {string} thingId - Thing ID.
+     * @param {string} userId - User ID.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *
@@ -702,7 +663,7 @@ export default class Things {
     }
   }
 
-  public async DeleteThing (thing: Thing, token: string): Promise<string> {
+  public async DeleteThing (thing: Thing, token: string): Promise<Response> {
     // Deletes a thing.
     /**
      * @method DeleteThing - Deletes a thing.
@@ -729,7 +690,8 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      return 'Thing Deleted'
+      const deleteResponse: Response = { status: response.status, message: 'Thing Deleted Successfully' }
+      return deleteResponse
     } catch (error) {
       throw error
     }

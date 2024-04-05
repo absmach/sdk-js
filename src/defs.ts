@@ -251,7 +251,7 @@ export interface PageRes {
   limit: number
 }
 
-export interface BulkThings {
-  things: Thing[]
+export interface Relation {
+  relation: 'administrator' | 'editor' | 'viewer' | 'member'
 }
 >>>>>>> f98ebdf (resolving comments)
