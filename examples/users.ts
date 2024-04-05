@@ -7,6 +7,7 @@ const mySdk = new SDK({
   usersUrl: defaultUrl + ':9002',
   thingsUrl: defaultUrl + ':9000'
 })
+const token = '<token>'
 
 mySdk.users
   .Create({
@@ -25,7 +26,7 @@ mySdk.users
 
 mySdk.users.User(
   '<userId>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -35,7 +36,7 @@ mySdk.users.User(
   })
 
 mySdk.users.UserProfile(
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -67,7 +68,7 @@ mySdk.users.RefreshToken(
 
 mySdk.users.Update(
   { id: '<userId>', name: '<userName>' },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -78,7 +79,7 @@ mySdk.users.Update(
 
 mySdk.users.UpdateUserIdentity(
   { id: '<userId>', credentials: { identity: '<userIdentity>' } },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -89,7 +90,7 @@ mySdk.users.UpdateUserIdentity(
 
 mySdk.users.UpdateUserTags(
   { id: '<userId>', tags: ['foo', 'bar'] },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -100,7 +101,7 @@ mySdk.users.UpdateUserTags(
 
 mySdk.users.UpdateUserRole(
   { id: '<userId>', role: '<userRole>' },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -111,7 +112,7 @@ mySdk.users.UpdateUserRole(
 
 mySdk.users.Disable(
   { id: '<userId>' },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -122,7 +123,7 @@ mySdk.users.Disable(
 
 mySdk.users.Enable(
   { id: '<userId>' },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -133,7 +134,7 @@ mySdk.users.Enable(
 
 mySdk.users.Users(
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -144,7 +145,7 @@ mySdk.users.Users(
 
 mySdk.users.UpdateUserPassword(
   '<oldSecret>', '<newSecret>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -156,7 +157,7 @@ mySdk.users.UpdateUserPassword(
 mySdk.users.ListUserChannels(
   '<userId>',
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -168,7 +169,7 @@ mySdk.users.ListUserChannels(
 mySdk.users.ListUserThings(
   '<userId>',
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -180,7 +181,7 @@ mySdk.users.ListUserThings(
 mySdk.users.ListUserGroups(
   '<userId>',
   { offset: 0, limit: 10 },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -202,7 +203,7 @@ mySdk.users.ResetPasswordRequest(
 mySdk.users.ResetPassword(
   '<password>',
   '<confPass>',
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)

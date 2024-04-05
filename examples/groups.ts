@@ -8,11 +8,13 @@ const mySdk = new SDK({
   thingsUrl: defaultUrl + ':9000'
 })
 
+const token = '<token>'
+
 mySdk.groups
   .CreateGroup({
     name: '<groupName>'
   },
-  '<token>'
+  token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -24,7 +26,7 @@ mySdk.groups
 mySdk.groups
   .Group(
     '<groupID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -36,7 +38,7 @@ mySdk.groups
 mySdk.groups
   .Groups(
     { offset: 0, limit: 10 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -48,7 +50,7 @@ mySdk.groups
 mySdk.groups
   .GroupPermissions(
     '<groupID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -63,7 +65,7 @@ mySdk.groups
       name: '<groupName>',
       id: '<groupID>'
     },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -75,7 +77,7 @@ mySdk.groups
 mySdk.groups
   .EnableGroup(
     '<groupID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -87,7 +89,7 @@ mySdk.groups
 mySdk.groups
   .DisableGroup(
     '<groupID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -99,7 +101,7 @@ mySdk.groups
 mySdk.groups
   .DeleteGroup(
     '<groupID>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -113,7 +115,7 @@ mySdk.groups
     '<groupID>',
     ['<userID>', '<userID>'],
     '<relation>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -127,7 +129,7 @@ mySdk.groups
     '<groupID>',
     ['<userID>', '<userID>'],
     '<relation>',
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -140,7 +142,7 @@ mySdk.groups
   .ListGroupUsers(
     '<groupID>',
     { offset: 0, limit: 10 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -153,7 +155,7 @@ mySdk.groups
   .ListGroupChannels(
     '<groupID>',
     { offset: 0, limit: 10 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -166,7 +168,7 @@ mySdk.groups
   .Children(
     '<groupID>',
     { offset: 0, limit: 10, level: 2 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -179,7 +181,7 @@ mySdk.groups
   .Parents(
     '<groupID>',
     { offset: 0, limit: 10, level: 2 },
-    '<token>'
+    token
   )
   .then((response: any) => {
     console.log('response: ', response)

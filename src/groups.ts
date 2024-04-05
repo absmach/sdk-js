@@ -77,8 +77,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const group: Group = await response.json()
+      return group
     } catch (error) {
       throw error
     }
@@ -111,8 +111,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const group: Group = await response.json()
+      return group
     } catch (error) {
       throw error
     }
@@ -184,8 +184,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Permissions = await response.json()
-      return groupData
+      const permission: Permissions = await response.json()
+      return permission
     } catch (error) {
       throw error
     }
@@ -230,7 +230,7 @@ export default class Groups {
     }
   }
 
-  public async EnableGroup (groupID: string, token: string): Promise<Response> {
+  public async EnableGroup (groupID: string, token: string): Promise<Group> {
     // Enable a group.
     /**
      * @method EnableGroup - Enables a group when given a valid token and group ID.
@@ -255,14 +255,14 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const enableResponse: Response = { status: response.status, message: 'Group Enabled successfully' }
-      return enableResponse
+      const group: Group = await response.json()
+      return group
     } catch (error) {
       throw error
     }
   }
 
-  public async DisableGroup (groupID: string, token: string): Promise<Response> {
+  public async DisableGroup (groupID: string, token: string): Promise<Group> {
     // Disable a group.
     /**
      * @method DisableGroup - Disables a group when given a valid token and group ID.
@@ -287,8 +287,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const disableResponse: Response = { status: response.status, message: 'Group Disabled successfully' }
-      return disableResponse
+      const group: Group = await response.json()
+      return group
     } catch (error) {
       throw error
     }
@@ -425,8 +425,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const usersData: UsersPage = await response.json()
-      return usersData
+      const usersPage: UsersPage = await response.json()
+      return usersPage
     } catch (error) {
       throw error
     }
@@ -462,8 +462,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const channelsData: ChannelsPage = await response.json()
-      return channelsData
+      const channelsPage: ChannelsPage = await response.json()
+      return channelsPage
     } catch (error) {
       throw error
     }
@@ -499,8 +499,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: GroupsPage = await response.json()
-      return groupData
+      const groupsPage: GroupsPage = await response.json()
+      return groupsPage
     } catch (error) {
       throw error
     }
@@ -535,8 +535,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: GroupsPage = await response.json()
-      return groupData
+      const groupsPage: GroupsPage = await response.json()
+      return groupsPage
     } catch (error) {
       throw error
     }
