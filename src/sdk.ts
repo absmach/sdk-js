@@ -47,7 +47,7 @@ class SDK {
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
-    this.things = new Things(thingsUrl)
+    this.things = new Things({thingsUrl, usersUrl})
     this.groups = new Groups({ usersUrl, thingsUrl })
     this.channels = new Channels({ thingsUrl, usersUrl })
   }
