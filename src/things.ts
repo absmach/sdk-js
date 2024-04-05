@@ -483,7 +483,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.error, response.status)
       }
-      const enabledThing : Thing = await response.json()
+      const enabledThing: Thing = await response.json()
       return enabledThing
     } catch (error) {
       throw error
