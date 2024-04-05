@@ -223,8 +223,8 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const groupData: Group = await response.json()
-      return groupData
+      const updatedGroup: Group = await response.json()
+      return updatedGroup
     } catch (error) {
       throw error
     }
