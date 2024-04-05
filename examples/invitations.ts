@@ -12,8 +12,8 @@ const token = '<token>'
 
 mySdk.invitations.SendInvitation(
   {
-    user_id: '<user_id>',
-    domain_id: '<domain_id>',
+    user_id: '<userID>',
+    domain_id: '<domainID>',
     relation: 'administrator'
   },
   token
@@ -52,9 +52,7 @@ mySdk.invitations.Invitations(
   })
 
 mySdk.invitations.AcceptInvitation(
-  {
-    domain_id: '<domain_id>'
-  },
+  '<domainID>',
   token
 )
   .then((response: any) => {
@@ -65,10 +63,8 @@ mySdk.invitations.AcceptInvitation(
   })
 
 mySdk.invitations.DeleteInvitation(
-  {
-    domain_id: '<domain_id>',
-    user_id: '<user_id>'
-  },
+  '<domainID>',
+  '<userID>',
   token
 )
   .then((response: any) => {

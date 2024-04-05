@@ -136,11 +136,11 @@ export default class Invitations {
     }
   }
 
-  public async AcceptInvitation (invitation: Invitation, token: string): Promise<Response> {
+  public async AcceptInvitation (domainID: string, token: string): Promise<Response> {
     // AcceptInvitation accepts an invitation by adding the user to the domain that they were invited to.
     /**
      * @method AcceptInvitation - accepts an invitation by adding the user to the domain that they were invited to.
-     * @param {Object} invitation - The invitation object.
+     * @param {String} domainID - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The response object which has a status and a message.
      */
@@ -150,7 +150,7 @@ export default class Invitations {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ domain_id: invitation.domain_id })
+      body: JSON.stringify({ domain_id: domainID })
     }
 
     try {
@@ -169,11 +169,12 @@ export default class Invitations {
     }
   }
 
-  public async DeleteInvitation (invitation: Invitation, token: string): Promise<Response> {
+  public async DeleteInvitation (userID: string, domainID: string, token: string): Promise<Response> {
     // DeleteInvitation deletes an invitation.
     /**
      * @method DeleteInvitation - deletes an invitation.
-     * @param {Object} invitation - The invitation object.
+     * @param {string} userID - The Users ID.
+     * @param {string} domainID - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The response object which has a status and a message.
      */
@@ -183,12 +184,12 @@ export default class Invitations {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ user_id: invitation.user_id, domain_id: invitation.domain_id })
+      body: JSON.stringify({ user_id: userID, domain_id: domainID })
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${invitation.user_id}/${invitation.domain_id}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${userID}/${domainID}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
