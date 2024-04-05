@@ -8,13 +8,15 @@ const mySdk = new SDK({
   invitationsUrl: defaultUrl + ':9020'
 })
 
+const token = '<token>'
+
 mySdk.invitations.SendInvitation(
   {
-    userID: '<userID>',
-    domainID: '<domainID>',
-    relation: '<role>'
+    user_id: '<user_id>',
+    domain_id: '<domain_id>',
+    relation: 'administrator'
   },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -24,11 +26,9 @@ mySdk.invitations.SendInvitation(
   })
 
 mySdk.invitations.Invitation(
-  {
-    userID: '<userID>',
-    domainID: '<domainID>'
-  },
-  '<token>'
+  '<userID>',
+  '<domainID>',
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -42,7 +42,7 @@ mySdk.invitations.Invitations(
     limit: 10,
     offset: 0
   },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -53,9 +53,9 @@ mySdk.invitations.Invitations(
 
 mySdk.invitations.AcceptInvitation(
   {
-    domainID: '<domainID>'
+    domain_id: '<domain_id>'
   },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -66,10 +66,10 @@ mySdk.invitations.AcceptInvitation(
 
 mySdk.invitations.DeleteInvitation(
   {
-    domainID: '<domainID>',
-    userID: '<userID>'
+    domain_id: '<domain_id>',
+    user_id: '<user_id>'
   },
-  '<token>'
+  token
 )
   .then((response: any) => {
     console.log('response: ', response)

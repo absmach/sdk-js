@@ -37,7 +37,7 @@ export default class Invitations {
      * const invitation = {
      *  userID: '<userID>',
      *  domainID: '<domainID>',
-     * relation: '<role>' // available options: 'admin', 'owner', 'viewer', 'editor'
+     * relation: '<role>' // available options: 'administrator', 'editor','viewer','member'
      * }
      */
     const options: RequestInit = {
@@ -46,7 +46,7 @@ export default class Invitations {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ user_id: invitation.userID, domain_id: invitation.domainID, relation: invitation.relation })
+      body: JSON.stringify(invitation)
     }
 
     try {
@@ -65,7 +65,7 @@ export default class Invitations {
     }
   }
 
-  public async Invitation (invitation: Invitation, token: string): Promise<Invitation> {
+  public async Invitation (userID: string, domainID: string, token: string): Promise<Invitation> {
     // Invitation returns the invitation for the given user and domain.
     /**
      * @method Invitation - returns the invitation for the given user and domain.
@@ -83,7 +83,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${invitation.userID}/${invitation.domainID}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${userID}/${domainID}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -150,7 +150,7 @@ export default class Invitations {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ domain_id: invitation.domainID })
+      body: JSON.stringify({ domain_id: invitation.domain_id })
     }
 
     try {
@@ -183,12 +183,12 @@ export default class Invitations {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ user_id: invitation.userID, domain_id: invitation.domainID })
+      body: JSON.stringify({ user_id: invitation.user_id, domain_id: invitation.domain_id })
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${invitation.userID}/${invitation.domainID}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${invitation.user_id}/${invitation.domain_id}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
