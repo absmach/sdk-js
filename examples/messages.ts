@@ -12,9 +12,9 @@ const token = '<token>'
 
 mySdk.messages
   .Send(
-    'channelId',
-    'message',
-    'thingKey'
+    '<channelId>',
+    '<message>',
+    '<thingKey>'
   )
   .then((response: any) => {
     console.log('response: ', response)

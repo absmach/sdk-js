@@ -60,12 +60,12 @@ export default class Messages {
         'Content-Type': this.contentType,
         Authorization: `Thing ${thingKey}`
       },
-      body: JSON.stringify(new TextEncoder().encode(msg))
+      body: msg
     }
     try {
       const response = await fetch(
         new URL(
-          `channels/${chanId}/messages/${subtopic}`,
+          `channels/${chanId}/messages${subtopic}`,
           this.httpadapterUrl
         ).toString(),
         options
