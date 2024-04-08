@@ -257,3 +257,24 @@ export interface CertSerials {
   offset: number
   limit: number
 }
+
+export interface Bootstrap {
+  channel?: Channel[]
+  external_id?: string
+  external_key?: string
+  thing_id?: string
+  thing_key?: string
+  name?: string
+  client_cert?: string
+  client_key?: string
+  ca_cert?: string
+  content?: string
+  state?: number
+}
+
+export interface BootstrapPage {
+  bootstraps: Bootstrap[]
+  total: number
+  offset: number
+  limit: number
+}
