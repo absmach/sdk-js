@@ -1,32 +1,50 @@
-## JavaScript SDK
+# Magistrala JavaScript SDK
 
-This is the Magistrala Javascript SDK, a javascript driver for [Magistrala HTTP API](https://docs.mainflux.io/api/) API reference in the Swagger UI can be found [here](https://api.mainflux.io/).
+[![NPM package](https://img.shields.io/npm/v/@absmach/magistrala-sdk.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)][npm]
+[![license][license]](LICENSE)
+[![chat][gitter-badge]][gitter]
 
-Does both system administration (provisioning) and messaging.
+Magistrala javascript sdk is a javascript driver for [Magistrala HTTP API][docs] API reference in the Swagger UI can be found [here][api].
+It does both system administration (provisioning) and messaging.
 
-## Professional Support
+## Install
 
-There are many companies offering professional support for the Magistrala system.
+Using npm:
 
-If you need this kind of support, best is to reach out to [@drasko](https://github.com/drasko) directly, and he will point you out to the best-matching support team.
+```bash
+npm install @absmach/magistrala-sdk
+```
+
+Once the package is installed you can import the library using 'import':
+
+```js
+import SDK from "@absmach/magistrala-sdk";
+```
 
 ## Contributing
 
-Thank you for your interest in Magistrala and the desire to contribute!
+Thank you for your interest in Magistrala-sdk and the desire to contribute!
 
 1. Take a look at our [open issues](https://github.com/absmach/sdk-js/issues). The [good-first-issue](https://github.com/absmach/sdk-js/labels/good-first-issue) label is specifically for issues that are great for getting started.
-2. Checkout the [contribution guide](CONTRIBUTING.md) to learn more about our style and conventions.
+2. Checkout the [contribution guide][contributing] to learn more about our style and conventions.
 3. Make your changes compatible to our workflow.
-
-## Getting Started
-The node module can be used from `sdk.ts` and examples are located in `examples` directory. To use on the browser use `bundle.js` and examples are in `example/client`. 
 
 ## Community
 
-- [Google group](https://groups.google.com/forum/#!forum/mainflux)
-- [Gitter](https://gitter.im/absmach/magistrala?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-- [Twitter](https://twitter.com/mainflux)
+- [Google group][forum]
+- [Gitter][gitter]
+- [Twitter][twitter]
 
 ## License
 
 [Apache-2.0](LICENSE)
+
+[docs]: https://docs.magistrala.abstractmachines.fr
+[license]: https://img.shields.io/badge/license-Apache%20v2.0-blue.svg
+[npm]: https://www.npmjs.com/package/@absmach/magistrala-sdk
+[contributing]: CONTRIBUTING.md
+[api]: https://docs.api.magistrala.abstractmachines.fr/
+[twitter]: https://twitter.com/absmach
+[gitter]: https://gitter.im/absmach/magistrala?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
+[forum]: https://groups.google.com/forum/#!forum/mainflux
