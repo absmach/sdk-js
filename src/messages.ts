@@ -9,7 +9,7 @@ import {
 export default class Messages {
   // Messages API Client
   /**
-   * @method Messages - Messages is used to manage messages.
+   * @method Messages - Messages is used for sending and reading messages.
    * It provides methods for sending and reading messages.
    * @param {string} readersUrl - The url of the readers service.
    * @param {string} httpadapterUrl - The URL of the Magistrala Messages adapter.
@@ -36,15 +36,14 @@ export default class Messages {
   ): Promise<Response> {
     // Send a message
     /**
-     * @method Send- Sends message to a given channel via HTTP protocol. Message is sent
-     * through a writer add-on such as timescale. Message is sent to a
-     * http port specific to the writer add-on. The thing and channel must be
-     * created before sending the message and connected.
-     * @param {string} channel_id - The channel_id of the channel to send the message to.
-     * @param {string} msg -message to send to the channel that should be in encoded into
+     * @method Send- Sends message to a given Channel via HTTP adapter. Message is sent
+     * through a writer add-on such as Timescale. Message is sent to the
+     * HTTP adapter. The Thing and Channel must exist and the Thing connected to the Channel.
+     * @param {string} channel_id - The ID of the Channel to send the message to.
+     * @param {string} msg -message to send to the Channel that should be in encoded into
      *       bytes format for example:
      *       [{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]
-     * @param {string} thing_key - The secret of the thing sending the message.
+     * @param {string} thing_key - The secret of the Thing sending the message.
      */
 
     const chanNameParts = channelId.split('.', 2)
@@ -87,9 +86,9 @@ export default class Messages {
     /**
      *
      * @method Read - Read messages from a given channel. Messages are read from a reader
-     * add-on such as timescale. Messages are read from a http port specific to the reader
-     * @param {string} channel_id - The channel_id of the channel to read the message from.
-     * @param {string} token - The token to be used for authentication.
+     * add-on such as Timescale. Messages are read from the http adapter.
+     * @param {string} channel_id - The ID of the channel to read the message from.
+     * @param {string} token - Authentication token.
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -111,7 +110,6 @@ export default class Messages {
     }
     try {
       const response = await fetch(
-
         new URL(
         `channels/${chanId}/messages${subtopicPart}?${new URLSearchParams(stringParams).toString()}`,
         this.readersUrl
