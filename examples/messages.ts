@@ -4,7 +4,7 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  httpadapterUrl: defaultUrl,
+  httpadapterUrl: defaultUrl + ':8008',
   readersUrl: defaultUrl + ':9011'
 })
 
@@ -12,9 +12,9 @@ const token = '<token>'
 
 mySdk.messages
   .Send(
-    '<channelId>',
+    'channelId',
     'message',
-    '<thingKey>'
+    'thingKey'
   )
   .then((response: any) => {
     console.log('response: ', response)
@@ -24,7 +24,7 @@ mySdk.messages
   })
 
 mySdk.messages
-  .Read('<channelId>', token)
+  .Read({ offset: 0, limit: 10 }, 'channelId', token)
   .then((response: any) => {
     console.log('response: ', response)
   })

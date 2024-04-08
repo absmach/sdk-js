@@ -178,3 +178,24 @@ export interface QueryParams {
   domain_id?: string
   relation?: string
 }
+
+export interface MessagesPage {
+  messages: SenMLMessage[]
+  page: PageRes
+}
+
+export interface SenMLMessage {
+  channel?: string
+  subtopic?: string
+  publisher?: string
+  protocol?: string
+  name?: string
+  unit?: string
+  time?: number
+  update_time?: number
+  value?: number | null
+  string_value?: string | null
+  data_value?: string | null
+  bool_value?: boolean | null
+  sum?: number | null
+}

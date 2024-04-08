@@ -1,15 +1,19 @@
 import Errors from './errors'
 
-import { type Response } from './defs'
+import {
+  type Response,
+  type MessagesPage,
+  type QueryParams
+} from './defs'
 
 export default class Messages {
   // Messages API Client
   /**
    * @method Messages - Messages is used to manage messages.
    * It provides methods for sending and reading messages.
-   * @param {string} readers_url - The url of the readers service.
-   * @param {string} httpadapter_url - The URL of the Magistrala Messages adapter.
-   * @param {string} content_type - The content type of the request.
+   * @param {string} readersUrl - The url of the readers service.
+   * @param {string} httpadapterUrl - The URL of the Magistrala Messages adapter.
+   * @param {string} contentType - The content type of the request.
    * @returns {Messages} - Returns a Messages object.
    */
 
@@ -59,29 +63,26 @@ export default class Messages {
       },
       body: JSON.stringify(new TextEncoder().encode(msg))
     }
-    console.log('response:', options.body)
-
     try {
       const response = await fetch(
         new URL(
-          `${chanId}/channels/${subtopic}/messages`,
+          `channels/${chanId}/messages/${subtopic}`,
           this.httpadapterUrl
         ).toString(),
         options
       )
-      console.log('url', response.url)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.messageError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Message sent' }
-      return shareResponse
+      const sendResponse: Response = { status: response.status, message: 'Message sent' }
+      return sendResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async Read (channelId: string, token: string): Promise<Response> {
+  public async Read (queryParams: QueryParams, channelId: string, token: string): Promise<MessagesPage> {
     // Read messages
     /**
      *
@@ -91,12 +92,14 @@ export default class Messages {
      * @param {string} token - The token to be used for authentication.
      */
 
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
     const chanNameParts = channelId.split('.', 2)
     const chanId = chanNameParts[0]
-    let subtopic = ''
-
+    let subtopicPart = ''
     if (chanNameParts.length === 2) {
-      subtopic = chanNameParts[1].replace('.', '/')
+      subtopicPart = chanNameParts[1].replace('.', '/')
     }
 
     const options: RequestInit = {
@@ -108,9 +111,10 @@ export default class Messages {
     }
     try {
       const response = await fetch(
+
         new URL(
-        `channels/${chanId}/messages/${subtopic}`,
-        this.httpadapterUrl
+        `channels/${chanId}/messages${subtopicPart}?${new URLSearchParams(stringParams).toString()}`,
+        this.readersUrl
         ).toString(),
         options
       )
@@ -118,8 +122,8 @@ export default class Messages {
         const errorRes = await response.json()
         throw this.messageError.HandleError(errorRes.error, response.status)
       }
-      const readResponse: Response = { status: response.status, message: 'Thing Shared Successfully' }
-      return readResponse
+      const messageData: MessagesPage = await response.json()
+      return messageData
     } catch (error) {
       throw error
     }
