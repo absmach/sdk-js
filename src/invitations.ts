@@ -1,9 +1,9 @@
 import Errors from './errors'
-import {
-  type Response,
-  type Invitation,
-  type InvitationsPage,
-  type QueryParams
+import type {
+  Response,
+  Invitation,
+  InvitationsPage,
+  QueryParams
 } from './defs'
 
 export default class Invitations {

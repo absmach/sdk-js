@@ -1,14 +1,14 @@
 import Errors from './errors'
 
-import {
-  type Channel,
-  type GroupsPage,
-  type QueryParams,
-  type Permissions,
-  type Response,
-  type ChannelsPage,
-  type UsersPage,
-  type GroupRelation
+import type {
+  Channel,
+  GroupsPage,
+  QueryParams,
+  Permissions,
+  Response,
+  ChannelsPage,
+  UsersPage,
+  GroupRelation
 } from './defs'
 export default class Channels {
   // Channels API client

@@ -1,12 +1,12 @@
 import Errors from './errors'
-import {
-  type Domain,
-  type QueryParams,
-  type DomainsPage,
-  type Permissions,
-  type Response,
-  type UsersPage,
-  type Relation
+import type {
+  Domain,
+  QueryParams,
+  DomainsPage,
+  Permissions,
+  Response,
+  UsersPage,
+  Relation
 } from './defs'
 
 export default class Domains {

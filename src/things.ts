@@ -1,13 +1,13 @@
 import Errors from './errors'
 
-import {
-  type Thing,
-  type ThingsPage,
-  type Response,
-  type QueryParams,
-  type UsersPage,
-  type Permissions,
-  type Relation
+import type {
+  Thing,
+  ThingsPage,
+  Response,
+  QueryParams,
+  UsersPage,
+  Permissions,
+  Relation
 } from './defs'
 
 export default class Things {
