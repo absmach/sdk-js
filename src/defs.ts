@@ -1,18 +1,24 @@
-export interface User {
+export interface UserBasicInfo {
   id?: string
   name?: string
   credentials?: credentials
+  status?: Status
+}
+
+export interface User extends UserBasicInfo {
   role?: string
-  status?: status
   tags?: string[]
   metadata?: Record<string, any>
   created_at?: Date
   updated_at?: Date
+  updated_by?: string | UserBasicInfo
 }
 
 export interface UsersPage {
   users: User[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 interface credentials {
@@ -20,28 +26,25 @@ interface credentials {
   secret?: string
 }
 
-export interface PageRes {
-  total: number
-  offset: number
-  limit: number
-}
-
 export interface Thing {
   id?: string
   name?: string
   credentials?: credentials
   tags?: string[]
-  domain_id?: string
+  domain_id?: string | DomainBasicInfo
   metadata?: Record<string, any>
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
+  updated_by?: string | UserBasicInfo
   permissions?: string[]
 }
 
 export interface ThingsPage {
   things: Thing[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface Group {
@@ -54,15 +57,18 @@ export interface Group {
   level?: number
   path?: string
   children?: Group[]
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
+  updated_by?: string | UserBasicInfo
   permissions?: string[]
 }
 
 export interface GroupsPage {
   groups: Group[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface Channel {
@@ -73,15 +79,18 @@ export interface Channel {
   metadata?: Record<string, any>
   level?: number
   path?: string
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
+  updated_by?: string
   permissions?: string[]
 }
 
 export interface ChannelsPage {
-  channel: Channel[]
-  page: PageRes
+  channels: Channel[]
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface Login {
@@ -96,24 +105,29 @@ export interface Token {
   access_type?: string
 }
 
-export interface Domain {
+export interface DomainBasicInfo {
   id?: string
   name?: string
   alias?: string
-  status?: status
+  status?: Status
+}
+
+export interface Domain extends DomainBasicInfo {
   tags?: string[]
   metadata?: Record<string, any>
   permission?: string
   permissions?: string[]
-  created_by?: string
-  updated_by?: string
+  created_by?: string | UserBasicInfo
+  updated_by?: string | UserBasicInfo
   created_at?: Date
   updated_at?: Date
 }
 
 export interface DomainsPage {
   domains: Domain[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface Permissions {
@@ -121,9 +135,9 @@ export interface Permissions {
 }
 
 export interface Invitation {
-  invited_by?: string
-  user_id?: string
-  domain_id?: string
+  invited_by?: string | UserBasicInfo
+  user_id?: string | UserBasicInfo
+  domain_id?: string | DomainBasicInfo
   relation?: Relation
   token?: string
   created_at?: Date
@@ -134,7 +148,9 @@ export interface Invitation {
 
 export interface InvitationsPage {
   invitations: Invitation[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface Response {
@@ -144,9 +160,9 @@ export interface Response {
 
 export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
 
-export type groupRelation = 'administrator' | 'editor' | 'viewer'
+export type GroupRelation = 'administrator' | 'editor' | 'viewer'
 
-type status = 'enabled' | 'disabled'
+export type Status = 'enabled' | 'disabled'
 
 export interface QueryParams {
   total?: number

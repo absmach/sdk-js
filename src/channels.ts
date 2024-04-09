@@ -1,14 +1,14 @@
 import Errors from './errors'
 
-import {
-  type Channel,
-  type GroupsPage,
-  type QueryParams,
-  type Permissions,
-  type Response,
-  type ChannelsPage,
-  type UsersPage,
-  type groupRelation
+import type {
+  Channel,
+  GroupsPage,
+  QueryParams,
+  Permissions,
+  Response,
+  ChannelsPage,
+  UsersPage,
+  GroupRelation
 } from './defs'
 export default class Channels {
   // Channels API client
@@ -198,8 +198,14 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channels: ChannelsPage = await response.json()
-      return channels
+      const channels = await response.json()
+      const channelsPage: ChannelsPage = {
+        channels: channels.groups,
+        total: channels.total,
+        limit: channels.limit,
+        offset: channels.offset
+      }
+      return channelsPage
     } catch (error) {
       throw error
     }
@@ -353,7 +359,7 @@ export default class Channels {
   public async AddUserToChannel (
     channelID: string,
     userIDs: string[],
-    relation: groupRelation,
+    relation: GroupRelation,
     token: string
   ): Promise<Response> {
     // Adds user to channel.
@@ -396,7 +402,7 @@ export default class Channels {
   public async RemoveUserFromChannel (
     channelID: string,
     userIDs: string[],
-    relation: groupRelation,
+    relation: GroupRelation,
     token: string
   ): Promise<Response> {
     // Removes user from channel.

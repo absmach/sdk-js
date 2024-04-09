@@ -1,12 +1,13 @@
 import Errors from './errors'
-import {
-  type Group,
-  type GroupsPage,
-  type QueryParams,
-  type ChannelsPage,
-  type Permissions,
-  type Response,
-  type UsersPage
+import type {
+  Group,
+  GroupsPage,
+  QueryParams,
+  ChannelsPage,
+  Permissions,
+  Response,
+  UsersPage,
+  GroupRelation
 } from './defs'
 
 export default class Groups {
@@ -319,7 +320,7 @@ export default class Groups {
     }
   }
 
-  public async AddUserToGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
+  public async AddUserToGroup (groupID: string, userIDs: string[], relation: GroupRelation, token: string): Promise<Response> {
     // Adds a user to a group thus creating a membership
     /**
      * @method AddUserToGroup -Assigns a user to a group when given a valid token, group ID,
@@ -357,7 +358,7 @@ export default class Groups {
     }
   }
 
-  public async RemoveUserFromGroup (groupID: string, userIDs: string[], relation: string, token: string): Promise<Response> {
+  public async RemoveUserFromGroup (groupID: string, userIDs: string[], relation: GroupRelation, token: string): Promise<Response> {
     // Removes a user from a group thus deleting a membership
     /**
      * @method RemoveUserToGroup - Unassigns a user from a group when given a valid token, group ID,

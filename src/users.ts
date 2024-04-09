@@ -1,14 +1,14 @@
 import Errors from './errors'
-import {
-  type User,
-  type UsersPage,
-  type ThingsPage,
-  type GroupsPage,
-  type ChannelsPage,
-  type Login,
-  type QueryParams,
-  type Token,
-  type Response
+import type {
+  User,
+  UsersPage,
+  ThingsPage,
+  GroupsPage,
+  ChannelsPage,
+  Login,
+  QueryParams,
+  Token,
+  Response
 
 } from './defs'
 
