@@ -26,7 +26,7 @@ export type {
 
 const defaultUrl = 'http://localhost'
 
-interface SDKConfig {
+export interface SDKConfig {
   usersUrl?: string
   domainsUrl?: string
   thingsUrl?: string
