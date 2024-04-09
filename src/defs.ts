@@ -160,9 +160,9 @@ export interface Response {
 
 export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
 
-export type groupRelation = 'administrator' | 'editor' | 'viewer'
+export type GroupRelation = 'administrator' | 'editor' | 'viewer'
 
-export type status = 'enabled' | 'disabled'
+export type Status = 'enabled' | 'disabled'
 
 export interface QueryParams {
   total?: number
