@@ -8,7 +8,7 @@ import {
   type Response,
   type ChannelsPage,
   type UsersPage,
-  type groupRelation
+  type GroupRelation
 } from './defs'
 export default class Channels {
   // Channels API client
@@ -353,7 +353,7 @@ export default class Channels {
   public async AddUserToChannel (
     channelID: string,
     userIDs: string[],
-    relation: groupRelation,
+    relation: GroupRelation,
     token: string
   ): Promise<Response> {
     // Adds user to channel.
@@ -396,7 +396,7 @@ export default class Channels {
   public async RemoveUserFromChannel (
     channelID: string,
     userIDs: string[],
-    relation: groupRelation,
+    relation: GroupRelation,
     token: string
   ): Promise<Response> {
     // Removes user from channel.

@@ -2,7 +2,7 @@ export interface UserBasicInfo {
   id?: string
   name?: string
   credentials?: credentials
-  status?: status
+  status?: Status
 }
 
 export interface User extends UserBasicInfo {
@@ -33,7 +33,7 @@ export interface Thing {
   tags?: string[]
   domain_id?: string | DomainBasicInfo
   metadata?: Record<string, any>
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string | UserBasicInfo
@@ -57,7 +57,7 @@ export interface Group {
   level?: number
   path?: string
   children?: Group[]
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string | UserBasicInfo
@@ -79,7 +79,7 @@ export interface Channel {
   metadata?: Record<string, any>
   level?: number
   path?: string
-  status?: status
+  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string
@@ -109,7 +109,7 @@ export interface DomainBasicInfo {
   id?: string
   name?: string
   alias?: string
-  status?: status
+  status?: Status
 }
 
 export interface Domain extends DomainBasicInfo {
