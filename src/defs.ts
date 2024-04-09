@@ -87,7 +87,7 @@ export interface Channel {
 }
 
 export interface ChannelsPage {
-  channel: Channel[]
+  channels: Channel[]
   total: number
   offset: number
   limit: number
