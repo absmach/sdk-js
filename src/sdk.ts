@@ -22,6 +22,8 @@ export type {
   Response,
   Domain,
   DomainsPage,
+  Cert,
+  CertSerials,
   Invitation,
   InvitationsPage,
   Relation,

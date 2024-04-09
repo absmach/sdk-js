@@ -232,3 +232,18 @@ export interface SenMLMessage {
   bool_value?: boolean | null
   sum?: number | null
 }
+
+export interface Cert {
+  thing_id?: string
+  cert_serial?: string
+  client_key?: string
+  client_cert?: string
+  expiration?: string
+}
+
+export interface CertSerials {
+  certs: Cert[]
+  total: number
+  offset: number
+  limit: number
+}
