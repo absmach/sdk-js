@@ -156,14 +156,8 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const channels = await response.json()
-      const channelsPage: ChannelsPage = {
-        channels: channels.groups,
-        total: channels.total,
-        limit: channels.limit,
-        offset: channels.offset
-      }
-      return channelsPage
+      const channels: ChannelsPage = await response.json()
+      return channels
     } catch (error) {
       throw error
     }
