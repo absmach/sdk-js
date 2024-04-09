@@ -122,8 +122,28 @@ mySdk.bootstrap.Bootstraps(
 
 mySdk.bootstrap.UpdateBootstrapConnection(
   '<thing_id>',
-  ['<channelID>', '<channelID>'],
+  [{ id: '<channelID>' }, { id: '<channelID>' }],
   token)
+  .then((response: any) => {
+    console.log('response:', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.bootstrap.BootstrapEncrypt(
+  Buffer.from('<external_id>', 'utf8'),
+  '<external_key>')
+  .then((response: any) => {
+    console.log('response:', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.bootstrap.BootstrapDecrypt(
+  '<encrypted_data>',
+  '<crypto_key>')
   .then((response: any) => {
     console.log('response:', response)
   })

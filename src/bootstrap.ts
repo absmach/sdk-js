@@ -13,9 +13,7 @@ export default class Bootstraps {
   // Bootstraps API Client
   /**
    * @class Bootstrap
-   * Bootstrap is used to manage bootstrap configurations.
-   * It is used to create, update, view and remove bootstrap configurations.
-   * It is also used to bootstrap a thing.
+   * Bootstrap is used to create, update, view and remove bootstrap configurations.
    * @param {string} bootstraps_url - The url of the bootstraps service.
    * @param {string} content_type - The content type of the request.
    * @param {string} bootstrapsEndpoint - The endpoint of the bootstraps service which is
@@ -33,38 +31,22 @@ export default class Bootstraps {
     this.bootstrapsUrl = new URL(bootstrapsUrl)
     this.contentType = 'application/json'
     this.bootstrapsEndpoint = 'configs'
+    this.bootstrapError = new Errors()
   }
-  // ValidateConfigAndToken(config, token){
-  // Validate config
-  //     if (typeof config !== "object" || config === null) {
-  //         throw new Error('Invalid config parameter. Expected an object.');
-  //     }
-
-  //      // Validate token
-  //     if (typeof token !== "string" || token === null) {
-  //         throw new Error('Invalid token parameter. Expected a string.');
-  //     }
-  // }
 
   public async Create (Bootstrap: Bootstrap, token: string): Promise<Response> {
     // Create a bootstrap configuration
     /**
          * @method Create - Create a new bootstrap configuration.
-         * Some of the key data needed include the external_key and external_id which must be
-         * specific to the thing provided with the thing_id. Mind that every configuration
-         * must have a specific thing_id.
          * @param {object} config - The configuration object.
-         * @param {string} token - The token to be used for authentication.
+         * @param {string} token - Authentication Token.
          * @example
          * const config = {
          *      "external_id": "345",
          *      "external_key": "012",
          *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
-         *      "name": "thing_name"
          *   }
          */
-
-    //     this.ValidateConfigAndToken(config, token);
 
     const options: RequestInit = {
       method: 'POST',
@@ -77,14 +59,13 @@ export default class Bootstraps {
     try {
       const response = await fetch(
         new URL('things/configs', this.bootstrapsUrl).toString(), options
-        // new URL (`things/${this.bootstrapsEndpoint}`, this.bootstraps_url),
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Bootstrap created' }
-      return shareResponse
+      const createResponse: Response = { status: response.status, message: 'Bootstrap created' }
+      return createResponse
     } catch (error) {
       throw error
     }
@@ -96,7 +77,7 @@ export default class Bootstraps {
     * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
     * This changes the status of the config to whitelisted.
     * @param {object} config - The configuration object.
-    * @param {string} token - The token to be used for authentication.
+    * @param {string} token - Authentication Token.
     * @example
     * const config = {
     *      "external_id": "345",
@@ -105,11 +86,6 @@ export default class Bootstraps {
     *      "name": "thing_name"
     * }
     */
-    // if (typeof thing_id !== "string" || thing_id === null)
-    //     throw new Error('Invalid thing_id parameter. Expected a string.');
-    // }
-    // this.ValidateConfigAndToken(config, token);
-
     const options: RequestInit = {
       method: 'PUT',
       headers: {
@@ -120,7 +96,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/state/${Bootstrap.thing-id}`, this.bootstrapsUrl).toString(), options
+        new URL(`things/state/${Bootstrap.thing_id}`, this.bootstrapsUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -148,13 +124,6 @@ export default class Bootstraps {
     *      "name": "thing_name"
     * }
     */
-
-    //         if (typeof thing_id !== "string" || thing_id === null) {
-    //             throw new Error('Invalid thing_id parameter. Expected a string.');
-    //         }
-
-    //         this.ValidateConfigAndToken(config, token);
-
     const options = {
       method: 'PUT',
       headers: {
@@ -165,7 +134,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/${Bootstrap.thingId}`, this.bootstrapsUrl).toString(), options
+        new URL(`things/configs/${Bootstrap.thing_id}`, this.bootstrapsUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -182,9 +151,9 @@ export default class Bootstraps {
     // View a bootstrap configuration
     /**
     * @method View - Allows a logged in user to view a bootstrap configuration.
-    * Once provided with the thing_id and a valid token, it returns the configuration object.
-    * @param {string} thing_id - The thing_id of the configuration to be viewed.
-    * @param {string} token - The token to be used for authentication.
+    * Once provided with the thingId and a valid token, it returns the configuration object.
+    * @param {string} thing_id - The thingId of the configuration to be viewed.
+    * @param {string} token - Authentication Token.
     */
 
     //         if (typeof thing_id !== "string" || thing_id === null) {
@@ -195,7 +164,6 @@ export default class Bootstraps {
 
     const options = {
       method: 'GET',
-      maxBodyLength: 2000,
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
@@ -225,18 +193,9 @@ export default class Bootstraps {
     * @param {string} client_cert - The client certificate to be used.
     * @param {string} client_key - The client key to be used.
     * @param {string} ca - The certificate authority to be used.
-    * @param {string} token - The token to be used for authentication.
+    * @param {string} token - Authentication Token.
     *
     */
-
-    //  if (typeof config_id !== "string" ||
-    //      typeof client_cert !== "string" ||
-    //      typeof client_key !== "string" ||
-    //      typeof ca !== "string" ||
-    //      typeof token !== "string" ) {
-    //      throw new Error('Invalid parameter types. Expected strings for config_id, client_cert, client_key, ca and token.');
-    //  };
-
     const options: RequestInit = {
       method: 'PATCH',
       headers: {
@@ -266,15 +225,8 @@ export default class Bootstraps {
     * @method Remove - Allows a logged in user to delete a bootstrap configuration.
     * @param {string} config_id - The config_id of the configuration to be deleted.
     * This can also mean the thing_id.
-    * @param {string} token - The token to be used for authentication.
+    * @param {string} token - Authentication Token.
     */
-
-    //  if (typeof config_id !== "string" || config_id === null) {
-    //      throw new Error('Invalid config_id parameter. Expected a string.');
-    //  }
-
-    //  this.ValidateConfigAndToken({}, token);
-
     const options: RequestInit = {
       method: 'DELETE',
       headers: {
@@ -298,12 +250,12 @@ export default class Bootstraps {
   }
 
   public async BootstrapSecure (externalId: string, externalKey: string, cryptoKey: string): Promise<Bootstrap> {
-    // Retrive a bootstrap configuration
+    // Secures a Bootstrap configuration
     /**
-    * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
-    * @param {string} external_id - The external ID of the configuration to be retrieved.
+    * @method Bootstrap - Retrieves a configuration with given external ID and external key.
+    * @param {string} external_id - The external Id of the configuration to be retrieved.
     * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
-    * @return {object} - Returns a config object.
+    * @return {object} - Returns a secured Bootstrap.
     */
 
     const options: RequestInit = {
@@ -334,7 +286,7 @@ export default class Bootstraps {
      * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
      * @param {string} external_id - The external ID of the configuration to be retrieved.
      * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
-     * @return {object} - Returns a config object.
+     * @return {object} - Returns a Bootstrap Configuration.
      */
     const options: RequestInit = {
       method: 'GET',
@@ -363,8 +315,8 @@ export default class Bootstraps {
     /**
      * @method Bootstraps - Gets all bootstraps with pagination.
      * @param {Object} queryParams - Query parameters.
-     * @param {String} token - Access token.
-     *  @returns {Object} - Bootstrap object.
+     * @param {String} token - Authentication token.
+     *  @returns {Object} - Bootstrap Page.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
@@ -379,7 +331,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/config/?${new URLSearchParams(stringParams).toString()}`, this.bootstrapsUrl).toString(), options
+        new URL(`things/config?${new URLSearchParams(stringParams).toString()}`, this.bootstrapsUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -406,7 +358,7 @@ export default class Bootstraps {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(channels)
+      body: JSON.stringify({ channels })
     }
     try {
       const response = await fetch(
@@ -418,6 +370,29 @@ export default class Bootstraps {
       }
       const connResponse: Response = { status: response.status, message: 'Bootstrap Connection Successful' }
       return connResponse
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async BootstrapEncrypt (inputBytes: Buffer, cryptoKey: string): Promise<string> {
+    // Encrypts a bootstrap configuration
+    try {
+      const block = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+      const encryptedBuffer = Buffer.concat([block.update(inputBytes), block.final()])
+      return encryptedBuffer.toString('hex')
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async BootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<Buffer> {
+    // Decrypts a bootstrap configuration
+    try {
+      const encryptedBytes = Buffer.from(encryptedData, 'hex')
+      const block = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), encryptedBytes.slice(0, 16))
+      const decryptedBuffer = Buffer.concat([block.update(encryptedBytes.slice(16)), block.final()])
+      return decryptedBuffer
     } catch (error) {
       throw error
     }
