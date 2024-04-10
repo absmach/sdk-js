@@ -782,7 +782,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.message, response.status)
       }
-      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link successfully' }
+      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link sent successfully' }
       return resetRequestResponse
     } catch (error) {
       throw error
