@@ -258,8 +258,8 @@ export interface CertSerials {
   limit: number
 }
 
-export interface Bootstrap {
-  channel?: Channel[]
+export interface BootstrapConfig {
+  channel?: string[]
   external_id?: string
   external_key?: string
   thing_id?: string
@@ -270,10 +270,14 @@ export interface Bootstrap {
   ca_cert?: string
   content?: string
   state?: number
+  encryptedBootstrap?: string
+  decrypted_key?: string
+  encrypted_buffer?: string
+  decrypted?: string
 }
 
 export interface BootstrapPage {
-  bootstraps: Bootstrap[]
+  configs: BootstrapConfig[]
   total: number
   offset: number
   limit: number

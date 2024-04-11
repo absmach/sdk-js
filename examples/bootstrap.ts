@@ -3,17 +3,17 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  thingsUrl: defaultUrl + ':9000'
+  bootstrapUrl: defaultUrl + ':9013'
 })
 
-const token = '<token>'
+const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJlYzhmNTkzMy0yZTI5LTRhNGYtOTc3Yi01MjBmNjYzZGY1ZjUiLCJleHAiOjE3MTI4NDgyODksImlhdCI6MTcxMjg0NDY4OSwiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiZWM4ZjU5MzMtMmUyOS00YTRmLTk3N2ItNTIwZjY2M2RmNWY1XzEzMGE1NDAxLTMyMjYtNDEzMS1hNTllLTE0Y2UwZDU0YWE0NCIsInR5cGUiOjAsInVzZXIiOiIxMzBhNTQwMS0zMjI2LTQxMzEtYTU5ZS0xNGNlMGQ1NGFhNDQifQ.ZO5YUcc6yvxbpj4D8u8vx64LIjOBEFecSYzNj4wi1Rd59UVLb823YaLA8URHIWSeyLKZbi_A92ViD0f8qbzoVw'
 
-mySdk.bootstrap.Create(
+mySdk.bootstrap.AddBootstrap(
   {
     external_id: '<externalId>',
     external_key: '<externalKey>',
     thing_id: '<thingId>',
-    name: '<name>'
+    name: '<bootstrapName>'
   },
   token
 )
@@ -26,10 +26,10 @@ mySdk.bootstrap.Create(
 
 mySdk.bootstrap.Whitelist(
   {
-    external_id: '<external_id>',
-    external_key: '<external_key>',
-    thing_id: '<thing_id>',
-    name: '<name>'
+    external_id: '<externalId>',
+    external_key: '<externalKey>',
+    thing_id: '<thingId>',
+    name: '<bootstrapName>'
   },
   token)
   .then((response: any) => {
@@ -41,8 +41,8 @@ mySdk.bootstrap.Whitelist(
 
 mySdk.bootstrap.UpdateBootstrap(
   {
-    name: '<config_name>',
-    thing_id: '<thing_id>'
+    name: 'Bootstrap1',
+    thing_id: '<thingId>'
   },
   token)
   .then((response: any) => {
@@ -53,7 +53,7 @@ mySdk.bootstrap.UpdateBootstrap(
   })
 
 mySdk.bootstrap.ViewBootstrap(
-  '<thing_id>',
+  '<thingId>',
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -63,10 +63,12 @@ mySdk.bootstrap.ViewBootstrap(
   })
 
 mySdk.bootstrap.UpdateBootstrapCerts(
-  '<thing_id>',
-  '<client_cert>',
-  '<client_key>',
-  '<caCert>',
+  {
+    thing_id: '<thingId>',
+    client_cert: '<clientCert>',
+    client_key: '<clientKey>',
+    ca_cert: '<caCert>'
+  },
   token
 )
   .then((response: any) => {
@@ -77,7 +79,7 @@ mySdk.bootstrap.UpdateBootstrapCerts(
   })
 
 mySdk.bootstrap.RemoveBootstrap(
-  '<thing_id>',
+  '<thingId>',
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -86,21 +88,9 @@ mySdk.bootstrap.RemoveBootstrap(
     console.log(error)
   })
 
-mySdk.bootstrap.BootstrapSecure(
-  '<external_id>',
-  '<external_key>',
-  '<crypto_key>'
-)
-  .then((response: any) => {
-    console.log('response:', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
 mySdk.bootstrap.Bootstrap(
-  '<external_id>',
-  '<external_key>'
+  'externalId',
+  'externalKey'
 )
   .then((response: any) => {
     console.log('response:', response)
@@ -121,8 +111,8 @@ mySdk.bootstrap.Bootstraps(
   })
 
 mySdk.bootstrap.UpdateBootstrapConnection(
-  '<thing_id>',
-  [{ id: '<channelID>' }, { id: '<channelID>' }],
+  '<thingId>',
+  ['<channelId>', '<channelId2>'],
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -131,9 +121,10 @@ mySdk.bootstrap.UpdateBootstrapConnection(
     console.log(error)
   })
 
-mySdk.bootstrap.BootstrapEncrypt(
-  Buffer.from('<external_id>', 'utf8'),
-  '<external_key>')
+mySdk.bootstrap.bootstrapEncrypt(
+  '<externalId>',
+  '<externalKey>',
+  '<cryptoKey>')
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -141,9 +132,9 @@ mySdk.bootstrap.BootstrapEncrypt(
     console.log(error)
   })
 
-mySdk.bootstrap.BootstrapDecrypt(
+mySdk.bootstrap.bootstrapDecrypt(
   '<encrypted_data>',
-  '<crypto_key>')
+  'cryptoKey')
   .then((response: any) => {
     console.log('response:', response)
   })

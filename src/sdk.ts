@@ -53,7 +53,7 @@ export interface SDKConfig {
   readersUrl?: string
   httpadapterUrl?: string
   invitationsUrl?: string
-  bootstrapsUrl?: string
+  bootstrapUrl?: string
 }
 
 class SDK {
@@ -75,7 +75,7 @@ class SDK {
     readersUrl = defaultUrl,
     httpadapterUrl = defaultUrl,
     invitationsUrl = defaultUrl,
-    bootstrapsUrl = defaultUrl
+    bootstrapUrl = defaultUrl
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
@@ -85,7 +85,7 @@ class SDK {
     this.channels = new Channels({ thingsUrl, usersUrl })
     this.messages = new Messages({ readersUrl, httpadapterUrl })
     this.invitations = new Invitations(invitationsUrl)
-    this.bootstrap = new Bootstrap(bootstrapsUrl)
+    this.bootstrap = new Bootstrap(bootstrapUrl)
   }
 }
 

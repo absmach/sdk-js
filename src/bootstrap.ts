@@ -3,38 +3,47 @@ import * as crypto from 'crypto'
 
 import {
   type QueryParams,
-  type Bootstrap,
+  type BootstrapConfig,
   type BootstrapPage,
-  type Response,
-  type Channel
+  type Response
 } from './defs'
 
-export default class Bootstraps {
+export default class Bootstrap {
   // Bootstraps API Client
   /**
    * @class Bootstrap
    * Bootstrap is used to create, update, view and remove bootstrap configurations.
    * @param {string} bootstraps_url - The url of the bootstraps service.
    * @param {string} content_type - The content type of the request.
-   * @param {string} bootstrapsEndpoint - The endpoint of the bootstraps service which is
+   * @param {string} bootstrapEndpoint - The endpoint of the bootstraps service which is
    * configs.
    * @returns {Bootstrap} - Returns a Bootstrap object.
    *
    */
 
-  private readonly bootstrapsUrl: URL
+  private readonly bootstrapUrl: URL
   private readonly contentType: string
-  private readonly bootstrapsEndpoint: string
+  private readonly bootstrapEndpoint: string
   private readonly bootstrapError: Errors
+  private readonly configsEndpoint: string
+  private readonly whitelistEndpoint: string
+  private readonly bootstrapCertsEndpoint: string
+  private readonly bootstrapConnEndpoint: string
+  private readonly secureEndpoint: string
 
-  public constructor (bootstrapsUrl: string) {
-    this.bootstrapsUrl = new URL(bootstrapsUrl)
+  public constructor (bootstrapUrl: string) {
+    this.bootstrapUrl = new URL(bootstrapUrl)
     this.contentType = 'application/json'
-    this.bootstrapsEndpoint = 'configs'
+    this.bootstrapEndpoint = 'things/bootstrap'
+    this.configsEndpoint = 'things/configs'
+    this.whitelistEndpoint = 'things/state'
+    this.bootstrapCertsEndpoint = 'things/configs/certs'
+    this.bootstrapConnEndpoint = 'things/configs/connections'
+    this.secureEndpoint = 'secure'
     this.bootstrapError = new Errors()
   }
 
-  public async Create (Bootstrap: Bootstrap, token: string): Promise<Response> {
+  public async AddBootstrap (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
     // Create a bootstrap configuration
     /**
          * @method Create - Create a new bootstrap configuration.
@@ -58,7 +67,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL('things/configs', this.bootstrapsUrl).toString(), options
+        new URL(this.configsEndpoint, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -71,7 +80,7 @@ export default class Bootstraps {
     }
   }
 
-  public async Whitelist (Bootstrap: Bootstrap, token: string): Promise<Response> {
+  public async Whitelist (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
     // Update a bootstrap configuration
     /**
     * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
@@ -92,24 +101,24 @@ export default class Bootstraps {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(Bootstrap.state)
+      body: JSON.stringify({ state: Bootstrap.state })
     }
     try {
       const response = await fetch(
-        new URL(`things/state/${Bootstrap.thing_id}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.whitelistEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const whitelistResponse: Response = { status: response.status, message: 'Bootstrap Whitelisted Successfully' }
+      const whitelistResponse: Response = { status: response.status, message: 'Bootstrap State Updated Successfully' }
       return whitelistResponse
     } catch (error) {
       throw error
     }
   }
 
-  public async UpdateBootstrap (Bootstrap: Bootstrap, token: string): Promise<Response> {
+  public async UpdateBootstrap (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
     // Update a bootstrap configuration
     /**
     * @method Update - Allows a logged in user to update a bootstrap configuration.
@@ -134,7 +143,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/${Bootstrap.thing_id}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.configsEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -147,7 +156,7 @@ export default class Bootstraps {
     }
   }
 
-  public async ViewBootstrap (thingId: string, token: string): Promise<Bootstrap> {
+  public async ViewBootstrap (thingId: string, token: string): Promise<BootstrapConfig> {
     // View a bootstrap configuration
     /**
     * @method View - Allows a logged in user to view a bootstrap configuration.
@@ -155,12 +164,6 @@ export default class Bootstraps {
     * @param {string} thing_id - The thingId of the configuration to be viewed.
     * @param {string} token - Authentication Token.
     */
-
-    //         if (typeof thing_id !== "string" || thing_id === null) {
-    //             throw new Error('Invalid thing_id parameter. Expected a string.');
-    //         }
-
-    //         this.ValidateConfigAndToken({}, token);
 
     const options = {
       method: 'GET',
@@ -171,20 +174,20 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/${thingId}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const Bootstrap: Bootstrap = await response.json()
+      const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
     } catch (error) {
       throw error
     }
   }
 
-  public async UpdateBootstrapCerts (thingId: string, clientCert: string, clientKey: string, caCert: string, token: string): Promise<Bootstrap> {
+  public async UpdateBootstrapCerts (configs: BootstrapConfig, token: string): Promise<BootstrapConfig> {
     // Update certs of a bootstrap configuration
     /**
     * @method UpdateCerts - Allows a logged in user to update the certs of a bootstrap configuration.
@@ -202,17 +205,17 @@ export default class Bootstraps {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ client_cert: clientCert, client_key: clientKey, ca_cert: caCert })
+      body: JSON.stringify(configs)
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/certs/${thingId}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.bootstrapCertsEndpoint}/${configs.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const updatedBootstrap: Bootstrap = await response.json()
+      const updatedBootstrap: BootstrapConfig = await response.json()
       return updatedBootstrap
     } catch (error) {
       throw error
@@ -236,7 +239,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/${thingId}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -249,38 +252,7 @@ export default class Bootstraps {
     }
   }
 
-  public async BootstrapSecure (externalId: string, externalKey: string, cryptoKey: string): Promise<Bootstrap> {
-    // Secures a Bootstrap configuration
-    /**
-    * @method Bootstrap - Retrieves a configuration with given external ID and external key.
-    * @param {string} external_id - The external Id of the configuration to be retrieved.
-    * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
-    * @return {object} - Returns a secured Bootstrap.
-    */
-
-    const options: RequestInit = {
-      method: 'GET',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Thing ${externalKey}`
-      }
-    }
-    try {
-      const response = await fetch(
-        new URL(`things/bootstrap/secure/${externalId}`, this.bootstrapsUrl).toString(), options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
-      }
-      const securedBootstrap: Bootstrap = await response.json()
-      return securedBootstrap
-    } catch (error) {
-      throw error
-    }
-  }
-
-  public async Bootstrap (externalId: string, externalKey: string): Promise<Bootstrap> {
+  public async Bootstrap (externalId: string, externalKey: string): Promise<BootstrapConfig> {
     // Retrive a bootstrap configuration
     /**
      * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
@@ -297,13 +269,13 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/bootstrap/${externalId}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.bootstrapEndpoint}/${externalId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const Bootstrap: Bootstrap = await response.json()
+      const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
     } catch (error) {
       throw error
@@ -331,7 +303,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/config?${new URLSearchParams(stringParams).toString()}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.configsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -344,7 +316,7 @@ export default class Bootstraps {
     }
   }
 
-  public async UpdateBootstrapConnection (thingId: string, channels: Channel[], token: string): Promise<Response> {
+  public async UpdateBootstrapConnection (thingId: string, channels: string[], token: string): Promise<Response> {
     // Update a bootstrap connection
     /**
     * @method UpdateConnection - Allows a logged in user to update the connection of a bootstrap configuration.
@@ -362,7 +334,7 @@ export default class Bootstraps {
     }
     try {
       const response = await fetch(
-        new URL(`things/configs/connections/${thingId}`, this.bootstrapsUrl).toString(), options
+        new URL(`${this.bootstrapConnEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -375,24 +347,56 @@ export default class Bootstraps {
     }
   }
 
-  public async BootstrapEncrypt (inputBytes: Buffer, cryptoKey: string): Promise<string> {
-    // Encrypts a bootstrap configuration
+  async bootstrapEncrypt (externalId: string, externalKey: string, cryptoKey: string): Promise<BootstrapConfig> {
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Thing ${externalKey}`
+      }
+    }
     try {
-      const block = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
-      const encryptedBuffer = Buffer.concat([block.update(inputBytes), block.final()])
-      return encryptedBuffer.toString('hex')
+      const response = await fetch(
+        new URL(`${this.bootstrapEndpoint}/${this.secureEndpoint}/${externalId}`, this.bootstrapUrl).toString(), options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+      }
+      const cipher = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+      let encrypted = cipher.update(externalId, 'utf8', 'hex')
+      encrypted += cipher.final('hex')
+      const securedBootstrap: BootstrapConfig = await response.json()
+      securedBootstrap.encrypted_buffer = encrypted
+      return securedBootstrap
     } catch (error) {
       throw error
     }
   }
 
-  public async BootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<Buffer> {
-    // Decrypts a bootstrap configuration
+  async bootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<BootstrapConfig> {
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Thing ${cryptoKey}`
+      },
+      body: encryptedData
+    }
     try {
-      const encryptedBytes = Buffer.from(encryptedData, 'hex')
-      const block = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), encryptedBytes.slice(0, 16))
-      const decryptedBuffer = Buffer.concat([block.update(encryptedBytes.slice(16)), block.final()])
-      return decryptedBuffer
+      const response = await fetch(
+        new URL(`${this.bootstrapEndpoint}/${this.secureEndpoint}`, this.bootstrapUrl).toString(), options
+      )
+      const decipher = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+      let decrypted = decipher.update(encryptedData, 'hex', 'utf8')
+      decrypted += decipher.final('utf8')
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+      }
+      const decryptedBootstrap: BootstrapConfig = await response.json()
+      decryptedBootstrap.decrypted = decrypted
+      return decryptedBootstrap
     } catch (error) {
       throw error
     }
