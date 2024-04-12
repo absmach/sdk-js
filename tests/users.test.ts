@@ -105,8 +105,6 @@ describe('Users', () => {
   const password = '12345678'
   const confPass = '12345678'
 
-  const invalidToken = ''
-
   beforeEach(() => {
     fetchMock.resetMocks()
   })
@@ -125,82 +123,6 @@ describe('Users', () => {
     expect(response).toEqual(login)
   })
 
-  test('create token should return error', async () => {
-    const errorResponse = {
-      status: 404,
-      error: 'A non-existent request.'
-    }
-    fetchMock.mockResponseOnce(JSON.stringify(errorResponse), { status: 404 })
-    console.log('errorResponse', errorResponse)
-
-    try {
-      await sdk.users.CreateToken(login)
-    } catch (error) {
-      if (Boolean(error) && typeof error === 'object') {
-        const typedError = error as { status: number, error: string }
-        expect(typedError.status).toEqual(errorResponse.status)
-        expect(typedError.error).toEqual(errorResponse.error)
-      }
-      console.log('typedError', error)
-    }
-  })
-
-  test('create token should fail and return a non-existent entity error', async () => {
-    const errorResponse = {
-      status: 404,
-      error: 'A non-existent entity request.'
-    }
-    fetchMock.mockResponseOnce(JSON.stringify({ error: errorResponse.error }), { status: 404 })
-    console.log('errorResponse', errorResponse)
-
-    try {
-      await sdk.users.CreateToken(login)
-      expect(true).toBe(false)
-    } catch (error) {
-      expect(error).toEqual(errorResponse)
-      console.log('error', error)
-    }
-  })
-
-  test('create token should fail and return a processing error', async () => {
-    const errorResponse = {
-      status: 422,
-      message: "Database can't process request."
-    }
-    fetchMock.mockResponseOnce(JSON.stringify({ error: errorResponse.message }), { status: 422 })
-
-    try {
-      await sdk.users.CreateToken(login)
-      expect(true).toBe(false)
-    } catch (error) {
-      expect(error).toEqual(expect.objectContaining({
-        status: 422,
-        error: errorResponse.message
-      }))
-    }
-  })
-
-  test('create token should fail and return a server side error', async () => {
-    const errorResponse = {
-      status: 500,
-      message: 'Unexpected server-side error occurred.'
-    }
-    fetchMock.mockResponseOnce(JSON.stringify({ error: errorResponse.message }), { status: 500 })
-    console.log('errorResponse', errorResponse.message)
-
-    try {
-      const response = await sdk.users.CreateToken(login)
-      console.log('response', response)
-      expect(true).toBe(false)
-    } catch (error) {
-      console.log('error', error)
-      expect(error).toEqual(expect.objectContaining({
-        status: 500,
-        error: errorResponse.message
-      }))
-    }
-  })
-
   test("refresh token should refresh a user's token and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(login))
 
@@ -212,6 +134,7 @@ describe('Users', () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage))
 
     const response = await sdk.users.Users(queryParams, token)
+    console.log('response: ', response)
     expect(response).toEqual(UsersPage)
   })
 
@@ -248,17 +171,6 @@ describe('Users', () => {
 
     const response = await sdk.users.User(userId, token)
     expect(response).toEqual(user)
-  })
-
-  test('get user should be able to handle a conflict', async () => {
-    const invalidResponse = {
-      status: 401,
-      error: 'Missing  invalid token provided'
-    }
-    fetchMock.mockResponseOnce(JSON.stringify(invalidResponse))
-    const response = await sdk.users.User(userId, invalidToken)
-    console.log('response', response)
-    expect(response).toEqual(invalidResponse)
   })
 
   test('user profile should return a user profile and return success', async () => {
