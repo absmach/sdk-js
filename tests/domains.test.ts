@@ -38,11 +38,9 @@ describe('Domains', () => {
 
   const domainsPage: DomainsPage = {
     domains: [domain],
-    page: {
-      total: 1,
-      offset: 0,
-      limit: 10
-    }
+    total: 1,
+    offset: 0,
+    limit: 10
   }
 
   const queryParams = {
@@ -63,11 +61,9 @@ describe('Domains', () => {
 
   const usersPage: UsersPage = {
     users: [user],
-    page: {
-      total: 1,
-      offset: 0,
-      limit: 10
-    }
+    total: 1,
+    offset: 0,
+    limit: 10
   }
 
   beforeEach(() => {
