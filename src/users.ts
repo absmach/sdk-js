@@ -74,7 +74,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(this.usersEndpoint, this.usersUrl).toString(),
         options
       )
@@ -113,7 +112,6 @@ export default class Users {
     }
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/tokens/issue`,
           this.usersUrl
@@ -156,7 +154,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/tokens/refresh`,
           this.usersUrl
@@ -200,7 +197,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/${user.id}`,
           this.usersUrl

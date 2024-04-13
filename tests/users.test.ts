@@ -109,7 +109,7 @@ describe('Users', () => {
     fetchMock.resetMocks()
   })
 
-  test(' create a user and return success', async () => {
+  test('create should create a user and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user))
 
     const response = await sdk.users.Create(user)
@@ -130,7 +130,7 @@ describe('Users', () => {
     expect(response).toEqual(login)
   })
 
-  test('user should return alist of users and return success', async () => {
+  test('users should return a list of users and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage))
 
     const response = await sdk.users.Users(queryParams, token)
