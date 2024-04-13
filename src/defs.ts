@@ -129,8 +129,8 @@ export interface Domain extends DomainBasicInfo {
   permissions?: string[]
   created_by?: string | UserBasicInfo
   updated_by?: string | UserBasicInfo
-  created_at?: Date
-  updated_at?: Date
+  created_at?: string
+  updated_at?: string
 }
 
 export interface DomainsPage {
