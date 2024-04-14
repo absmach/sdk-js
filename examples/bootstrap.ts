@@ -6,7 +6,7 @@ const mySdk = new SDK({
   bootstrapUrl: defaultUrl + ':9013'
 })
 
-const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiIzZTlkMTNiMy1lMTgxLTQwNjktODdjNS0yMGQ3MmJlY2M4M2YiLCJleHAiOjE3MTMxMTI5NzAsImlhdCI6MTcxMzEwOTM3MCwiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiM2U4YWE5NDAtN2UwOC00MTExLTgzZjgtZmM1MmFiZTQ3OGY1IiwidHlwZSI6MCwidXNlciI6IjNlOGFhOTQwLTdlMDgtNDExMS04M2Y4LWZjNTJhYmU0NzhmNSJ9.PKf1NXtWKiTq6hL6awcg3-Ngr3tdHtg5Xx0Ig2r9BPedhc-D2fvLEOM9hGtSWaERDWq1xhRwYrlGZ5wSD_Thxg'
+const token = '<token>'
 
 mySdk.bootstrap.AddBootstrap(
   {
