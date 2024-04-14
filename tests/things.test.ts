@@ -14,7 +14,6 @@ const usersUrl = 'http://localhost'
 const sdk = new SDK({ thingsUrl, usersUrl })
 
 describe('Things', () => {
-  // const thingsUrl = 'http://localhost:9000'
   const thing: Thing = {
     name: 'thingName',
     tags: [
