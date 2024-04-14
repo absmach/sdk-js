@@ -347,7 +347,7 @@ export default class Bootstrap {
     }
   }
 
-  async bootstrapEncrypt (externalId: string, externalKey: string, cryptoKey: string): Promise<BootstrapConfig> {
+  public async SecureBootstrap (externalId: string, externalKey: string, cryptoKey: string): Promise<BootstrapConfig> {
     const options: RequestInit = {
       method: 'GET',
       headers: {
@@ -359,46 +359,38 @@ export default class Bootstrap {
       const response = await fetch(
         new URL(`${this.bootstrapEndpoint}/${this.secureEndpoint}/${externalId}`, this.bootstrapUrl).toString(), options
       )
+      console.log('url', response.url)
+      const encryptedData = await this.bootstrapEncrypt(externalKey, cryptoKey)
+      console.log(encryptedData)
+      const decryptedData = await this.bootstrapDecrypt(encryptedData, cryptoKey)
+      console.log(decryptedData)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.error, response.status)
       }
-      const cipher = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
-      let encrypted = cipher.update(externalId, 'utf8', 'hex')
-      encrypted += cipher.final('hex')
-      const securedBootstrap: BootstrapConfig = await response.json()
-      securedBootstrap.encrypted_buffer = encrypted
-      return securedBootstrap
+      const secureBootstrap: BootstrapConfig = await response.json()
+      return secureBootstrap
     } catch (error) {
       throw error
     }
   }
 
-  async bootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<BootstrapConfig> {
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Thing ${cryptoKey}`
-      },
-      body: encryptedData
-    }
-    try {
-      const response = await fetch(
-        new URL(`${this.bootstrapEndpoint}/${this.secureEndpoint}`, this.bootstrapUrl).toString(), options
-      )
-      const decipher = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
-      let decrypted = decipher.update(encryptedData, 'hex', 'utf8')
-      decrypted += decipher.final('utf8')
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
-      }
-      const decryptedBootstrap: BootstrapConfig = await response.json()
-      decryptedBootstrap.decrypted = decrypted
-      return decryptedBootstrap
-    } catch (error) {
-      throw error
-    }
+  async bootstrapEncrypt (text: string, cryptoKey: string): Promise<string> {
+    const bufferText = Buffer.from(text, 'utf8')
+    const cipher = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+    let encrypted = cipher.update(bufferText)
+    encrypted = Buffer.concat([encrypted, cipher.final()])
+    console.log('Encryped data:', encrypted)
+    return encrypted.toString('hex')
+  }
+
+  async bootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<string> {
+    const encryptedBuffer = Buffer.from(encryptedData, 'hex')
+    console.log(encryptedData)
+    const decipher = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+    let decrypted = decipher.update(encryptedBuffer)
+    decrypted = Buffer.concat([decrypted, decipher.final()])
+    console.log('Decryped data:', decrypted.toString('utf8'))
+    return decrypted.toString('utf8')
   }
 }

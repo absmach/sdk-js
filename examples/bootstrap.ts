@@ -6,12 +6,12 @@ const mySdk = new SDK({
   bootstrapUrl: defaultUrl + ':9013'
 })
 
-const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJlYzhmNTkzMy0yZTI5LTRhNGYtOTc3Yi01MjBmNjYzZGY1ZjUiLCJleHAiOjE3MTI4NDgyODksImlhdCI6MTcxMjg0NDY4OSwiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiZWM4ZjU5MzMtMmUyOS00YTRmLTk3N2ItNTIwZjY2M2RmNWY1XzEzMGE1NDAxLTMyMjYtNDEzMS1hNTllLTE0Y2UwZDU0YWE0NCIsInR5cGUiOjAsInVzZXIiOiIxMzBhNTQwMS0zMjI2LTQxMzEtYTU5ZS0xNGNlMGQ1NGFhNDQifQ.ZO5YUcc6yvxbpj4D8u8vx64LIjOBEFecSYzNj4wi1Rd59UVLb823YaLA8URHIWSeyLKZbi_A92ViD0f8qbzoVw'
+const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiIzZTlkMTNiMy1lMTgxLTQwNjktODdjNS0yMGQ3MmJlY2M4M2YiLCJleHAiOjE3MTMxMTI5NzAsImlhdCI6MTcxMzEwOTM3MCwiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiM2U4YWE5NDAtN2UwOC00MTExLTgzZjgtZmM1MmFiZTQ3OGY1IiwidHlwZSI6MCwidXNlciI6IjNlOGFhOTQwLTdlMDgtNDExMS04M2Y4LWZjNTJhYmU0NzhmNSJ9.PKf1NXtWKiTq6hL6awcg3-Ngr3tdHtg5Xx0Ig2r9BPedhc-D2fvLEOM9hGtSWaERDWq1xhRwYrlGZ5wSD_Thxg'
 
 mySdk.bootstrap.AddBootstrap(
   {
     external_id: '<externalId>',
-    external_key: '<externalKey>',
+    external_key: 'externalKey',
     thing_id: '<thingId>',
     name: '<bootstrapName>'
   },
@@ -121,20 +121,10 @@ mySdk.bootstrap.UpdateBootstrapConnection(
     console.log(error)
   })
 
-mySdk.bootstrap.bootstrapEncrypt(
+mySdk.bootstrap.SecureBootstrap(
   '<externalId>',
   '<externalKey>',
-  '<cryptoKey>')
-  .then((response: any) => {
-    console.log('response:', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.bootstrap.bootstrapDecrypt(
-  '<encrypted_data>',
-  'cryptoKey')
+  '<cryptoKay>')
   .then((response: any) => {
     console.log('response:', response)
   })
