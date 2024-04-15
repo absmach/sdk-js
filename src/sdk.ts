@@ -16,7 +16,7 @@ export type {
   Channel,
   ChannelsPage,
   Login,
-  QueryParams,
+  PageMetadata,
   Token,
   Response,
   Domain,
@@ -31,7 +31,8 @@ export type {
   Permissions,
   Status,
   MessagesPage,
-  SenMLMessage
+  SenMLMessage,
+  MessagesPageMetadata
 } from './defs'
 
 const defaultUrl = 'http://localhost'

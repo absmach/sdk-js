@@ -3,7 +3,7 @@ import Errors from './errors'
 import {
   type Response,
   type MessagesPage,
-  type QueryParams
+  type MessagesPageMetadata
 } from './defs'
 
 export default class Messages {
@@ -81,7 +81,7 @@ export default class Messages {
     }
   }
 
-  public async Read (queryParams: QueryParams, channelId: string, token: string): Promise<MessagesPage> {
+  public async Read (pm: MessagesPageMetadata, channelId: string, token: string): Promise<MessagesPage> {
     // Read messages
     /**
      *
@@ -92,7 +92,7 @@ export default class Messages {
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+      Object.entries(pm).map(([key, value]) => [key, String(value)])
     )
     const chanNameParts = channelId.split('.', 2)
     const chanId = chanNameParts[0]

@@ -3,7 +3,7 @@ import type {
   Response,
   Invitation,
   InvitationsPage,
-  QueryParams
+  PageMetadata
 } from './defs'
 
 export default class Invitations {
@@ -97,7 +97,7 @@ export default class Invitations {
     }
   }
 
-  public async Invitations (queryParams: QueryParams, token: string): Promise<InvitationsPage> {
+  public async Invitations (queryParams: PageMetadata, token: string): Promise<InvitationsPage> {
     // Invitations returns a list of invitations.
     /**
      * @method Invitations - returns a list of invitations.

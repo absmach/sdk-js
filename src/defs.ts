@@ -164,7 +164,7 @@ export type GroupRelation = 'administrator' | 'editor' | 'viewer'
 
 export type Status = 'enabled' | 'disabled'
 
-export interface QueryParams {
+export interface PageMetadata {
   total?: number
   offset?: number
   limit?: number
@@ -200,6 +200,21 @@ export interface MessagesPage {
   total: number
   offset: number
   limit: number
+}
+
+export interface MessagesPageMetadata extends PageMetadata {
+  subtopic?: string
+  publisher?: string
+  protocol?: string
+  comparator?: string
+  vb?: boolean
+  vs?: string
+  vd?: string
+  from?: number
+  to?: number
+  aggregation?: string
+  interval?: string
+  value?: number
 }
 
 export interface SenMLMessage {

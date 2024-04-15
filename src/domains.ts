@@ -1,7 +1,7 @@
 import Errors from './errors'
 import type {
   Domain,
-  QueryParams,
+  PageMetadata,
   DomainsPage,
   Permissions,
   Response,
@@ -172,7 +172,7 @@ export default class Domains {
     }
   }
 
-  public async Domains (queryParams: QueryParams, token: string): Promise<DomainsPage> {
+  public async Domains (queryParams: PageMetadata, token: string): Promise<DomainsPage> {
     // Domains retrieves all domains.
     /**
      * @method Domains - retrieves all domains with provided query parameters.
@@ -207,7 +207,7 @@ export default class Domains {
     }
   }
 
-  public async ListUserDomains (userID: string, queryParams: QueryParams, token: string): Promise<DomainsPage> {
+  public async ListUserDomains (userID: string, queryParams: PageMetadata, token: string): Promise<DomainsPage> {
     // ListUserDomains retrieves all domains for a user.
     /**
      * @method ListUserDomains - retrieves all domains for a user with provided query parameters.
@@ -243,7 +243,7 @@ export default class Domains {
     }
   }
 
-  public async ListDomainUsers (domainID: string, queryParams: QueryParams, token: string): Promise<UsersPage> {
+  public async ListDomainUsers (domainID: string, queryParams: PageMetadata, token: string): Promise<UsersPage> {
     // ListDomainUsers returns list of users for the given domain ID and filters.
     /**
      * @method ListDomainUsers - retrieves all users for a domain with provided query parameters.

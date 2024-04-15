@@ -6,7 +6,7 @@ import type {
   GroupsPage,
   ChannelsPage,
   Login,
-  QueryParams,
+  PageMetadata,
   Token,
   Response
 
@@ -480,7 +480,7 @@ export default class Users {
   }
 
   public async Users (
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<UsersPage> {
     // Gets all users with pagination.
@@ -619,7 +619,7 @@ export default class Users {
 
   public async ListUserGroups (
     userId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<GroupsPage> {
     // Get groups of a user.
@@ -664,7 +664,7 @@ export default class Users {
 
   public async ListUserThings (
     userId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ThingsPage> {
     // Get things of a user.
@@ -708,7 +708,7 @@ export default class Users {
 
   public async ListUserChannels (
     userId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ChannelsPage> {
     // Get channels of a user.

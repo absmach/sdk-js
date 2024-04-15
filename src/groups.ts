@@ -2,7 +2,7 @@ import Errors from './errors'
 import type {
   Group,
   GroupsPage,
-  QueryParams,
+  PageMetadata,
   ChannelsPage,
   Permissions,
   Response,
@@ -119,7 +119,7 @@ export default class Groups {
     }
   }
 
-  public async Groups (queryParams: QueryParams, token: string): Promise<GroupsPage> {
+  public async Groups (queryParams: PageMetadata, token: string): Promise<GroupsPage> {
     // Get a list of enabled groups
     /**
      * @method Groups - Provides a list of all the groups in the database once given a valid token.
@@ -396,7 +396,7 @@ export default class Groups {
     }
   }
 
-  public async ListGroupUsers (groupID: string, queryParams: QueryParams, token: string): Promise<UsersPage> {
+  public async ListGroupUsers (groupID: string, queryParams: PageMetadata, token: string): Promise<UsersPage> {
     // Get a group's users.
     /**
      * @method ListGroupUsers - Provides a list of a groups' users when provided with
@@ -433,7 +433,7 @@ export default class Groups {
     }
   }
 
-  public async ListGroupChannels (groupID: string, queryParams: QueryParams, token: string): Promise<ChannelsPage> {
+  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<ChannelsPage> {
     // Get a group's channels.
     /**
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
@@ -476,7 +476,7 @@ export default class Groups {
     }
   }
 
-  public async Parents (groupID: string, queryParams: QueryParams, token: string): Promise<GroupsPage> {
+  public async Parents (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
     // Get a group's parents.
     /**
      * @method Parents - Provides a list of a groups' parents when provided with
@@ -513,7 +513,7 @@ export default class Groups {
     }
   }
 
-  public async Children (groupID: string, queryParams: QueryParams, token: string): Promise<GroupsPage> {
+  public async Children (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
     // Get a group's children.
     /**
      * @method Children - Provides a list of a groups' children.
