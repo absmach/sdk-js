@@ -71,6 +71,7 @@ describe('Channels', () => {
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6'
   const userIds = ['b9921574-f562-4048-a6bf-295c0036fc2a', 'ce42d80e-9773-49b2-a8c2-6aa748597a92']
+  const userGroupIds = ['b9921574-f562-4048-a6bf-295c0036fc2a', 'ce42d80e-9773-49b2-a8c2-6aa748597a92']
   const permissions = 'admin'
   const relation = 'administrator'
 
@@ -223,5 +224,27 @@ describe('Channels', () => {
 
     const response = await sdk.channels.ListChannelUsersGroups(channelId, queryParams, token)
     expect(response).toEqual(groupsPage)
+  })
+
+  test('AddUserGroupToChannel should add a user group to a channel and return success', async () => {
+    const addUserGroupResponse = {
+      status: 200,
+      message: 'User Group Added Successfully'
+    }
+    fetchMock.mockResponseOnce(JSON.stringify(addUserGroupResponse))
+
+    const response = await sdk.channels.AddUserGroupToChannel(channelId, userGroupIds, token)
+    expect(response).toEqual(addUserGroupResponse)
+  })
+
+  test('RemoveUserGroupFromChannel should remove a user group from a channel and return success', async () => {
+    const removeUserGroupResponse = {
+      status: 200,
+      message: 'User Group Removed Successfully'
+    }
+    fetchMock.mockResponseOnce(JSON.stringify(removeUserGroupResponse))
+
+    const response = await sdk.channels.RemoveUserGroupFromChannel(channelId, userGroupIds, token)
+    expect(response).toEqual(removeUserGroupResponse)
   })
 })

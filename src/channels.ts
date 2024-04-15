@@ -467,7 +467,8 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channel.id}`, this.thingsUrl
+        new URL(
+          `${this.channelsEndpoint}/${channel.id}`, this.thingsUrl
         ).toString(),
         options
       )
@@ -730,9 +731,9 @@ export default class Channels {
     /**
      * @method AddUserGroup - Adds user group to channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string []} userGroupIds - User Group IDs
+     * @param {string}
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - Authentication token.
+     * @param {string} token - User token.
      * */
     const options = {
       method: 'POST',
@@ -751,7 +752,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const addUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Added Successfully' }
+      const addUserGroupResponse: Response = { status: response.status, message: 'User Group Added Successfully' }
       return addUserGroupResponse
     } catch (error) {
       throw error
@@ -767,9 +768,9 @@ export default class Channels {
     /**
      * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string []} userGroupIds - User Group IDs
-     * @param {string} channel_id - Channel ID.
-     * @param {string} token - Authentication token.
+     * @param {string}
+     * @param {string}
+     * @param {string} token - User token.
      * */
     const options = {
       method: 'POST',
@@ -789,7 +790,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Removed Successfully' }
+      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group Removed Successfully' }
       return removeUserGroupResponse
     } catch (error) {
       throw error
