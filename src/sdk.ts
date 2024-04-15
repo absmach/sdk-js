@@ -16,7 +16,7 @@ export type {
   Channel,
   ChannelsPage,
   Login,
-  QueryParams,
+  PageMetadata,
   Token,
   Response,
   Domain,

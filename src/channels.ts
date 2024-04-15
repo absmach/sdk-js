@@ -3,7 +3,7 @@ import Errors from './errors'
 import type {
   Channel,
   GroupsPage,
-  QueryParams,
+  PageMetadata,
   Permissions,
   Response,
   ChannelsPage,
@@ -121,7 +121,7 @@ export default class Channels {
 
   public async ChannelsByThing (
     thingID: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ChannelsPage> {
     // Retrieves list of things connected to specified channel with pagination metadata.
@@ -170,7 +170,7 @@ export default class Channels {
   }
 
   public async Channels (
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ChannelsPage> {
     // Provides a list of all channels with pagination metadata.
@@ -485,7 +485,7 @@ export default class Channels {
 
   public async ListChannelUsersGroups (
     channelId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<GroupsPage> {
     // Lists groups in a channel.
@@ -683,7 +683,7 @@ export default class Channels {
 
   public async ListChannelUsers (
     channelId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<UsersPage> {
     // Lists users in a channel.

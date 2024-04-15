@@ -164,7 +164,7 @@ export type GroupRelation = 'administrator' | 'editor' | 'viewer'
 
 export type Status = 'enabled' | 'disabled'
 
-export interface QueryParams {
+export interface PageMetadata {
   total?: number
   offset?: number
   limit?: number
@@ -202,35 +202,7 @@ export interface MessagesPage {
   limit: number
 }
 
-export interface MessagesPageMetadata {
-  total: number
-  offset: number
-  limit: number
-  order?: string
-  direction?: string
-  level?: number
-  identity?: string
-  name?: string
-  type?: string
-  metadata?: Record<string, any>
-  status?: string
-  action?: string
-  subject?: string
-  object?: string
-  permission?: string
-  tag?: string
-  owner?: string
-  shared_by?: string
-  visibility?: string
-  owner_id?: string
-  topic?: string
-  contact?: string
-  state?: string
-  list_perms?: boolean
-  invited_by?: string
-  user_id?: string
-  domain_id?: string
-  relation?: string
+export interface MessagesPageMetadata extends PageMetadata {
   subtopic?: string
   publisher?: string
   protocol?: string

@@ -4,7 +4,7 @@ import type {
   Thing,
   ThingsPage,
   Response,
-  QueryParams,
+  PageMetadata,
   UsersPage,
   Permissions,
   Relation
@@ -111,7 +111,7 @@ export default class Things {
 
   public async ThingsByChannel (
     channelID: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ThingsPage> {
     // Retrieves list of channels connected to specified thing with pagination metadata.
@@ -491,7 +491,7 @@ export default class Things {
   }
 
   public async Things (
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<ThingsPage> {
     // Gets all things with pagination.
@@ -544,7 +544,7 @@ export default class Things {
 
   public async ListThingUsers (
     thingId: string,
-    queryParams: QueryParams,
+    queryParams: PageMetadata,
     token: string
   ): Promise<UsersPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
