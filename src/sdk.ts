@@ -31,7 +31,8 @@ export type {
   Permissions,
   Status,
   MessagesPage,
-  SenMLMessage
+  SenMLMessage,
+  MessagesPageMetadata
 } from './defs'
 
 const defaultUrl = 'http://localhost'
