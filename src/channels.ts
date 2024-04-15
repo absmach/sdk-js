@@ -750,7 +750,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const addUserGroupResponse: Response = { status: response.status, message: 'User Group Added Successfully' }
+      const addUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Added Successfully' }
       return addUserGroupResponse
     } catch (error) {
       throw error
@@ -788,7 +788,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.error, response.status)
       }
-      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group Removed Successfully' }
+      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Removed Successfully' }
       return removeUserGroupResponse
     } catch (error) {
       throw error
