@@ -449,7 +449,7 @@ export default class Channels {
     }
   }
 
-  public async Delete (channel: Channel, token: string): Promise<Response> {
+  public async DeleteChannel (channel: Channel, token: string): Promise<Response> {
     // Deletes channel with specified id.
     /**
      * @method Disable - Deletes channel with specified id.
@@ -483,7 +483,7 @@ export default class Channels {
     }
   }
 
-  public async ListChannelUsersGroups (
+  public async ListChannelUserGroups (
     channelId: string,
     queryParams: PageMetadata,
     token: string
@@ -716,6 +716,81 @@ export default class Channels {
       }
       const usersPage: UsersPage = await response.json()
       return usersPage
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async AddUserGroupToChannel (
+    channelId: string,
+    userGroupIds: string[],
+    token: string
+  ): Promise<Response> {
+    // Adds user group to channel.
+    /**
+     * @method AddUserGroup - Adds user group to channel when provided with a valid token,
+     * channel id and a user group id.
+     * @param {string}
+     * @param {string} channel_id - Channel ID.
+     * @param {string} token - User token.
+     * */
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(userGroupIds)
+    }
+    try {
+      const response = await fetch(
+        new URL(`${this.channelsEndpoint}/${channelId}/things/assign`, this.thingsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
+      }
+      const addUserGroupResponse: Response = { status: response.status, message: 'User Group Added Successfully' }
+      return addUserGroupResponse
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async RemoveUSerGroupFromChannel (
+    channelId: string,
+    userGroupIds: string[],
+    token: string
+  ): Promise<Response> {
+    // Removes user group from channel.
+    /**
+     * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
+     * channel id and a user group id.
+     * @param {string}
+     * @param {string}
+     * @param {string} token - User token.
+     * */
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(userGroupIds)
+
+    }
+    try {
+      const response = await fetch(
+        new URL(`${this.channelsEndpoint}/${channelId}/groups/unassign`, this.thingsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.channelError.HandleError(errorRes.error, response.status)
+      }
+      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group Removed Successfully' }
+      return removeUserGroupResponse
     } catch (error) {
       throw error
     }
