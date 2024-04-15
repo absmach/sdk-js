@@ -467,8 +467,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(
-          `/${this.channelsEndpoint}/${channel.id}/delete`, this.thingsUrl
+        new URL(`${this.channelsEndpoint}/${channel.id}`, this.thingsUrl
         ).toString(),
         options
       )
@@ -740,11 +739,11 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(userGroupIds)
+      body: JSON.stringify({ group_ids: userGroupIds })
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}/things/assign`, this.thingsUrl).toString(),
+        new URL(`${this.channelsEndpoint}/${channelId}/groups/assign`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -758,7 +757,7 @@ export default class Channels {
     }
   }
 
-  public async RemoveUSerGroupFromChannel (
+  public async RemoveUserGroupFromChannel (
     channelId: string,
     userGroupIds: string[],
     token: string
@@ -777,7 +776,7 @@ export default class Channels {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(userGroupIds)
+      body: JSON.stringify({ group_ids: userGroupIds })
 
     }
     try {

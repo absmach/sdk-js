@@ -10,7 +10,7 @@ const mySdk = new SDK({
 
 // Channels.ts examples.
 
-const token = '<token>'
+const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkb21haW4iOiJhZDVhMjdjNy1lNjc3LTRjZjQtODU0ZC00ZWY4MDZhOWE1NjIiLCJleHAiOjE3MTMxOTI5MzUsImlhdCI6MTcxMzE4OTMzNSwiaXNzIjoibWFnaXN0cmFsYS5hdXRoIiwic3ViIjoiMTVmMTc0MDQtYWVkOS00YjhhLTljYTEtNDc3MTVlOTMyZDZiIiwidHlwZSI6MCwidXNlciI6IjE1ZjE3NDA0LWFlZDktNGI4YS05Y2ExLTQ3NzE1ZTkzMmQ2YiJ9.MOgaXSzG-EcMfc4ZeTwD7UctMkmYy2fNQnLokVX86Yf-7Hi7iP60i_0EA9_CdX1qB-S9NKZBFeJSSJH5UgDCEQ'
 
 mySdk.channels
   .CreateChannel(
@@ -218,7 +218,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .RemoveUSerGroupFromChannel(
+  .RemoveUserGroupFromChannel(
     '<channelId>',
     [
       '<UserGroupId1>', '<UserGroupId2>'

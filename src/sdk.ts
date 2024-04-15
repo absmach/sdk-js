@@ -5,7 +5,6 @@ import Groups from './groups'
 import Invitations from './invitations'
 import Channels from './channels'
 import Messages from './messages'
-import Bootstrap from './bootstrap'
 
 export type {
   User,
@@ -57,7 +56,6 @@ class SDK {
   channels: Channels
   messages: Messages
   invitations: Invitations
-  bootstrap: Bootstrap
   constructor ({
     usersUrl = defaultUrl,
     domainsUrl = defaultUrl,
@@ -65,8 +63,7 @@ class SDK {
     hostUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpadapterUrl = defaultUrl,
-    invitationsUrl = defaultUrl,
-    bootstrapUrl = defaultUrl
+    invitationsUrl = defaultUrl
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
@@ -75,7 +72,6 @@ class SDK {
     this.channels = new Channels({ thingsUrl, usersUrl })
     this.messages = new Messages({ readersUrl, httpadapterUrl })
     this.invitations = new Invitations(invitationsUrl)
-    this.bootstrap = new Bootstrap(bootstrapUrl)
   }
 }
 
