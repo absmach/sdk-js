@@ -45,7 +45,6 @@ export interface SDKConfig {
   readersUrl?: string
   httpadapterUrl?: string
   invitationsUrl?: string
-  bootstrapUrl?: string
 }
 
 class SDK {
