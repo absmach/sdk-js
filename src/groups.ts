@@ -463,7 +463,13 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.error, response.status)
       }
-      const channelsPage: ChannelsPage = await response.json()
+      const channels = await response.json()
+      const channelsPage: ChannelsPage = {
+        channels: channels.groups,
+        total: channels.total,
+        limit: channels.limit,
+        offset: channels.offset
+      }
       return channelsPage
     } catch (error) {
       throw error

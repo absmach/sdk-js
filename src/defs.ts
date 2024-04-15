@@ -21,7 +21,7 @@ export interface UsersPage {
   limit: number
 }
 
-interface credentials {
+export interface credentials {
   identity?: string
   secret?: string
 }
@@ -197,7 +197,9 @@ export interface QueryParams {
 
 export interface MessagesPage {
   messages: SenMLMessage[]
-  page: PageRes
+  total: number
+  offset: number
+  limit: number
 }
 
 export interface SenMLMessage {

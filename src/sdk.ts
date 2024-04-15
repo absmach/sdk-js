@@ -22,7 +22,16 @@ export type {
   Domain,
   DomainsPage,
   Invitation,
-  InvitationsPage
+  InvitationsPage,
+  Relation,
+  GroupRelation,
+  credentials,
+  UserBasicInfo,
+  DomainBasicInfo,
+  Permissions,
+  Status,
+  MessagesPage,
+  SenMLMessage
 } from './defs'
 
 const defaultUrl = 'http://localhost'
