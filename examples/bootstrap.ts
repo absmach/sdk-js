@@ -124,7 +124,7 @@ mySdk.bootstrap.UpdateBootstrapConnection(
 mySdk.bootstrap.SecureBootstrap(
   '<externalId>',
   '<externalKey>',
-  '<cryptoKay>')
+  '<cryptoKey>')
   .then((response: any) => {
     console.log('response:', response)
   })
