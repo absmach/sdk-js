@@ -49,7 +49,7 @@ export default class Channels {
      * @method Create - Creates new channels when provided with a channel object
      * with viable fresh information and a valid token.
      * @param {Object} channel - Channel Object with a name and id.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      * @example
      * const channel = {
@@ -93,7 +93,7 @@ export default class Channels {
     /**
      * @method Get - Retrieves channel with specified id and a valid token.
      * @param {String} channel_id - Channel id.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      */
     const options: RequestInit = {
@@ -129,7 +129,7 @@ export default class Channels {
      * @method GetByThing - Retrieves list of things connected to specified channel with pagination metadata.
      * @param {String} channel_id - Channel id.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {List} - Channels Page.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -177,7 +177,7 @@ export default class Channels {
     /**
      * @method GetAll - Provides a list of all channels with pagination metadata.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - returns Channels Page
      */
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -225,7 +225,7 @@ export default class Channels {
     /**
      * @method Update - Updates channel with specified id.
      * @param {Object} channel - Channel object with new information.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - returns updated Channel.
      */
 
@@ -261,7 +261,7 @@ export default class Channels {
     /**
      * @method Disable - Disables channel with specified id.
      * @param {Object} channel - Channel object with new information.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - Creturns Disabled channel.
      */
     const options = {
@@ -295,7 +295,7 @@ export default class Channels {
     /**
      * @method Enable - Enables channel with specified id.
      * @param {Object} channel - Channel object with new information.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - Returns Enabled Channel.
      */
     const options = {
@@ -332,7 +332,7 @@ export default class Channels {
     /**
      * @method ChannelPermission - Retrieves channel permissions with specified id..
      * @param {Object}
-     * @param {string} token - user token.
+     * @param {string} token - Authentication token.
      * @returns {object} - returns channel domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
      */
@@ -374,7 +374,7 @@ export default class Channels {
      * channel id and a user id.
      * @param {string} user_id - User ID.
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      * @returns Response - 'User Added Successfully'.
      *  */
     const req = { user_ids: userIDs, relation }
@@ -418,7 +418,7 @@ export default class Channels {
      * @param {string}
      * @param {string} user_id - User ID.
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token -  Authentication token.
      * @returns Response - 'User Removed Successfully'.
      * */
     const req = { user_ids: userIDs, relation }
@@ -454,7 +454,7 @@ export default class Channels {
     /**
      * @method Disable - Deletes channel with specified id.
      * @param {Object} channel - Channel object with new information.
-     * @param {String} token - An access token that is valid.
+     * @param {String} token - Authentication token.
      * @returns {Object} - Returns response message.
      */
     const options: RequestInit = {
@@ -490,7 +490,7 @@ export default class Channels {
     // Lists groups in a channel.
     /**
      * @method ListChannelUsersGroups - Lists groups in a channel.
-     * @param {string}
+     * @param {string} token - Authentication token
      * @returns {Object} - Groups Page.
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -534,7 +534,7 @@ export default class Channels {
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      *
      */
     const options = {
@@ -572,7 +572,7 @@ export default class Channels {
      * channel id and thing id.
      * @param thing_ids - thing ID.
      * @param channel_ids - channel Is.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      * @returns Response - 'Thing Connected Successfully'.
      */
     const options = {
@@ -611,7 +611,7 @@ export default class Channels {
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      *
      */
     const options: RequestInit = {
@@ -652,7 +652,7 @@ export default class Channels {
      * the channel.
      * @param {string} thing_id - Thing ID.
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      *
      */
     const options = {
@@ -689,6 +689,7 @@ export default class Channels {
     /**
      * @method ListChannelUsers - Lists users in a channel.
      * @param {string}
+     * @param {string} token - Authentication token
      * @returns {Object} - Users Page.
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -729,9 +730,9 @@ export default class Channels {
     /**
      * @method AddUserGroup - Adds user group to channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string}
+     * @param {string []} userGroupIds - User Group IDs
      * @param {string} channel_id - Channel ID.
-     * @param {string} token - User token.
+     * @param {string} token - Authentication token.
      * */
     const options = {
       method: 'POST',
@@ -766,9 +767,9 @@ export default class Channels {
     /**
      * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string}
-     * @param {string}
-     * @param {string} token - User token.
+     * @param {string []} userGroupIds - User Group IDs
+     * @param {string} channel_id - Channel ID.
+     * @param {string} token - Authentication token.
      * */
     const options = {
       method: 'POST',
