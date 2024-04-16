@@ -149,7 +149,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .ListChannelUsersGroups(
+  .ListChannelUserGroups(
     '<channelId>',
     { offset: 0, limit: 5 },
     token
@@ -193,6 +193,48 @@ mySdk.channels
       '<userId1>', '<userId2>'
     ],
     'administrator',
+    token
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.channels
+  .AddUserGroupToChannel(
+    '<channelId>',
+    [
+      '<UserGroupId1>', '<UserGroupId2>'
+    ],
+    token
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.channels
+  .RemoveUserGroupFromChannel(
+    '<channelId>',
+    [
+      '<UserGroupId1>', '<UserGroupId2>'
+    ],
+    token
+  )
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.channels
+  .DeleteChannel(
+    { id: '<channelId>' },
     token
   )
   .then((response: any) => {

@@ -114,7 +114,7 @@ mySdk.groups
   .AddUserToGroup(
     '<groupID>',
     ['<userID>', '<userID>'],
-    '<relation>',
+    'administrator',
     token
   )
   .then((response: any) => {
@@ -128,7 +128,7 @@ mySdk.groups
   .RemoveUserFromGroup(
     '<groupID>',
     ['<userID>', '<userID>'],
-    '<relation>',
+    'administrator',
     token
   )
   .then((response: any) => {
