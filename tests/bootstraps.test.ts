@@ -36,7 +36,6 @@ describe('Bootstraps', () => {
   const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9'
   const externalKey = 'key'
   const externalId = '345'
-  // const cryptoKey = '123'
 
   beforeEach(() => {
     fetchMock.resetMocks()
