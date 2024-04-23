@@ -8,9 +8,7 @@ import type {
   Group,
   GroupsPage,
   Thing,
-  ThingsPage,
-  Channel,
-  ChannelsPage
+  ThingsPage
 } from '../src/sdk'
 enableFetchMocks()
 
@@ -87,17 +85,23 @@ describe('Users', () => {
     limit: 10
   }
 
-  const channel: Channel = {
+  const channel = {
     id: '886b4266-77d1-4258-abae-2931fb4f16de',
     name: 'fkatwigs',
     domain_id: '886b4266-77d1-4258-abae-2931fb4f16de'
   }
 
-  const ChannelsPage: ChannelsPage = {
-    channels: [channel],
-    total: 1,
+  const channels = {
     offset: 0,
-    limit: 10
+    total: 1,
+    groups: [channel]
+  }
+
+  const channelsPage = {
+    channels: channels.groups,
+    total: channels.total,
+    offset: channels.offset
+
   }
 
   const email = 'admin@gmail.com'
@@ -209,10 +213,10 @@ describe('Users', () => {
   })
 
   test('list user channels should return a list of channels associated with a user and return success', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(ChannelsPage))
+    fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.users.ListUserChannels(userId, queryParams, token)
-    expect(response).toEqual(ChannelsPage)
+    expect(response).toEqual(channelsPage)
   })
 
   test('reset user password request should send a password reset request and return success', async () => {

@@ -4,7 +4,6 @@ import type {
   UsersPage,
   ThingsPage,
   GroupsPage,
-  ChannelsPage,
   Login,
   PageMetadata,
   Token,
@@ -706,7 +705,7 @@ export default class Users {
     userId: string,
     queryParams: PageMetadata,
     token: string
-  ): Promise<ChannelsPage> {
+  ): Promise<any> {
     // Get channels of a user.
     /**
      * Gets the various channels a user owns.
@@ -741,7 +740,7 @@ export default class Users {
         throw this.userError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
-      const channelsPage: ChannelsPage = {
+      const channelsPage = {
         channels: channels.groups,
         total: channels.total,
         limit: channels.limit,

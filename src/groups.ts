@@ -3,7 +3,6 @@ import type {
   Group,
   GroupsPage,
   PageMetadata,
-  ChannelsPage,
   Permissions,
   Response,
   UsersPage,
@@ -433,7 +432,7 @@ export default class Groups {
     }
   }
 
-  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<ChannelsPage> {
+  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
     // Get a group's channels.
     /**
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
