@@ -744,8 +744,14 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.error, response.status)
       }
-      const channelsData: ChannelsPage = await response.json()
-      return channelsData
+      const channels = await response.json()
+      const channelsPage: ChannelsPage = {
+        channels: channels.groups,
+        total: channels.total,
+        limit: channels.limit,
+        offset: channels.offset
+      }
+      return channelsPage
     } catch (error) {
       throw error
     }
