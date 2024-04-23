@@ -30,11 +30,9 @@ describe('Invitations', () => {
 
   const invitationsPage: InvitationsPage = {
     invitations: [invitation],
-    page: {
-      total: 1,
-      offset: 0,
-      limit: 10
-    }
+    total: 1,
+    offset: 0,
+    limit: 10
   }
 
   beforeEach(() => {
