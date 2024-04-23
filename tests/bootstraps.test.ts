@@ -12,7 +12,6 @@ const bootstrapUrl = 'http://localhost'
 const sdk = new SDK({ bootstrapUrl })
 
 describe('Bootstraps', () => {
-  // const bootstraps_url = "http://localhost:9019";
   const bootstrap: BootstrapConfig = {
     external_id: '012',
     external_key: 'aabbcc',
