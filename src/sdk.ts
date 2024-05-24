@@ -9,10 +9,13 @@ import Messages from './messages'
 export type {
   User,
   UsersPage,
+  ThingBasicInfo,
   Thing,
   ThingsPage,
+  GroupBasicInfo,
   Group,
   GroupsPage,
+  ChannelBasicInfo,
   Channel,
   ChannelsPage,
   Login,

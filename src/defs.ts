@@ -26,14 +26,17 @@ export interface credentials {
   secret?: string
 }
 
-export interface Thing {
+export interface ThingBasicInfo {
   id?: string
   name?: string
   credentials?: credentials
+  status?: Status
+}
+
+export interface Thing extends ThingBasicInfo {
   tags?: string[]
   domain_id?: string | DomainBasicInfo
   metadata?: Record<string, any>
-  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string | UserBasicInfo
@@ -47,17 +50,21 @@ export interface ThingsPage {
   limit: number
 }
 
-export interface Group {
+export interface GroupBasicInfo {
   id?: string
-  domain_id?: string
-  parent_id?: string
   name?: string
+  status?: Status
   description?: string
+}
+
+export interface Group extends GroupBasicInfo {
+  domain_id?: string | DomainBasicInfo
+  parent_id?: string | GroupBasicInfo
+  name?: string
   metadata?: Record<string, any>
   level?: number
   path?: string
   children?: Group[]
-  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string | UserBasicInfo
@@ -71,15 +78,18 @@ export interface GroupsPage {
   limit: number
 }
 
-export interface Channel {
+export interface ChannelBasicInfo {
   id?: string
   name?: string
-  domain_id?: string
+  status?: Status
   description?: string
+}
+
+export interface Channel extends ChannelBasicInfo {
+  domain_id?: string | DomainBasicInfo
   metadata?: Record<string, any>
   level?: number
   path?: string
-  status?: Status
   created_at?: Date
   updated_at?: Date
   updated_by?: string
@@ -204,7 +214,7 @@ export interface MessagesPage {
 
 export interface MessagesPageMetadata extends PageMetadata {
   subtopic?: string
-  publisher?: string
+  publisher?: string | ThingBasicInfo
   protocol?: string
   comparator?: string
   vb?: boolean
@@ -218,9 +228,9 @@ export interface MessagesPageMetadata extends PageMetadata {
 }
 
 export interface SenMLMessage {
-  channel?: string
+  channel?: string | ChannelBasicInfo
   subtopic?: string
-  publisher?: string
+  publisher?: string | ThingBasicInfo
   protocol?: string
   name?: string
   unit?: string
