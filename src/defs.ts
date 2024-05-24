@@ -85,7 +85,7 @@ export interface ChannelBasicInfo {
   description?: string
 }
 
-export interface Channel {
+export interface Channel extends ChannelBasicInfo {
   domain_id?: string | DomainBasicInfo
   metadata?: Record<string, any>
   level?: number
