@@ -2,7 +2,7 @@ import Errors from './errors'
 import * as crypto from 'crypto'
 
 import {
-  type QueryParams,
+  type PageMetadata,
   type BootstrapConfig,
   type BootstrapPage,
   type Response
@@ -282,7 +282,7 @@ export default class Bootstrap {
     }
   }
 
-  public async Bootstraps (queryParams: QueryParams, token: string): Promise<BootstrapPage> {
+  public async Bootstraps (queryParams: PageMetadata, token: string): Promise<BootstrapPage> {
     // Retrive all bootstraps with pagination
     /**
      * @method Bootstraps - Gets all bootstraps with pagination.
