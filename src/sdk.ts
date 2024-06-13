@@ -1,6 +1,7 @@
 import Users from './users'
 import Domains from './domains'
 import Things from './things'
+import Certs from './certs'
 import Groups from './groups'
 import Invitations from './invitations'
 import Channels from './channels'
@@ -24,6 +25,8 @@ export type {
   Response,
   Domain,
   DomainsPage,
+  Cert,
+  CertSerials,
   Invitation,
   InvitationsPage,
   Relation,
@@ -45,6 +48,7 @@ export interface SDKConfig {
   domainsUrl?: string
   thingsUrl?: string
   hostUrl?: string
+  certsUrl?: string
   readersUrl?: string
   httpadapterUrl?: string
   invitationsUrl?: string
@@ -54,6 +58,7 @@ class SDK {
   users: Users
   domains: Domains
   things: Things
+  certs: Certs
   groups: Groups
   channels: Channels
   messages: Messages
@@ -63,6 +68,7 @@ class SDK {
     domainsUrl = defaultUrl,
     thingsUrl = defaultUrl,
     hostUrl = defaultUrl,
+    certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpadapterUrl = defaultUrl,
     invitationsUrl = defaultUrl
@@ -70,6 +76,7 @@ class SDK {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
     this.things = new Things({ thingsUrl, usersUrl })
+    this.certs = new Certs(certsUrl)
     this.groups = new Groups({ usersUrl, thingsUrl })
     this.channels = new Channels({ thingsUrl, usersUrl })
     this.messages = new Messages({ readersUrl, httpadapterUrl })
