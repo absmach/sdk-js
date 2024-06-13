@@ -168,9 +168,9 @@ export interface Response {
   message?: string
 }
 
-export type Relation = 'administrator' | 'editor' | 'viewer' | 'member'
+export type Relation = 'administrator' | 'editor' | 'contributor' | 'member' | 'guest'
 
-export type GroupRelation = 'administrator' | 'editor' | 'viewer'
+export type GroupRelation = 'administrator' | 'editor' | 'contributor' | 'guest'
 
 export type Status = 'enabled' | 'disabled'
 
