@@ -72,7 +72,7 @@ export default class Messages {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.messageError.HandleError(errorRes.error, response.status)
+        throw this.messageError.HandleError(errorRes.message, response.status)
       }
       const sendResponse: Response = { status: response.status, message: 'Message sent' }
       return sendResponse
@@ -118,7 +118,7 @@ export default class Messages {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.messageError.HandleError(errorRes.error, response.status)
+        throw this.messageError.HandleError(errorRes.message, response.status)
       }
       const messageData: MessagesPage = await response.json()
       return messageData

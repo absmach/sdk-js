@@ -76,7 +76,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const group: Group = await response.json()
       return group
@@ -110,7 +110,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const group: Group = await response.json()
       return group
@@ -151,7 +151,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const groupsData: GroupsPage = await response.json()
       return groupsData
@@ -183,7 +183,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const permission: Permissions = await response.json()
       return permission
@@ -222,7 +222,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const updatedGroup: Group = await response.json()
       return updatedGroup
@@ -254,7 +254,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const group: Group = await response.json()
       return group
@@ -286,7 +286,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const group: Group = await response.json()
       return group
@@ -311,7 +311,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const deleteResponse: Response = { status: response.status, message: 'Group Deleted Successfully' }
       return deleteResponse
@@ -349,7 +349,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const addResponse: Response = { status: response.status, message: 'User Added Successfully' }
       return addResponse
@@ -387,7 +387,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const removeResponse: Response = { status: response.status, message: 'User Removed Successfully' }
       return removeResponse
@@ -424,7 +424,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const usersPage: UsersPage = await response.json()
       return usersPage
@@ -461,7 +461,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
       const channelsPage: ChannelsPage = {
@@ -504,7 +504,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const groupsPage: GroupsPage = await response.json()
       return groupsPage
@@ -540,7 +540,7 @@ export default class Groups {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.error, response.status)
+        throw this.groupError.HandleError(errorRes.message, response.status)
       }
       const groupsPage: GroupsPage = await response.json()
       return groupsPage

@@ -80,7 +80,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -122,7 +122,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const tokenData: Token = await response.json()
       return tokenData
@@ -165,7 +165,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const tokenData: Token = await response.json()
       return tokenData
@@ -209,7 +209,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -254,7 +254,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -306,7 +306,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -351,7 +351,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -391,7 +391,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -432,7 +432,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -470,7 +470,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -522,7 +522,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const usersData: UsersPage = await response.json()
       return usersData
@@ -565,7 +565,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -608,7 +608,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const userData: User = await response.json()
       return userData
@@ -653,7 +653,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const groupsData: GroupsPage = await response.json()
       return groupsData
@@ -697,7 +697,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const thingsData: ThingsPage = await response.json()
       return thingsData
@@ -742,7 +742,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
       const channelsPage: ChannelsPage = {
@@ -780,7 +780,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link successfully' }
       return resetRequestResponse
@@ -818,7 +818,7 @@ export default class Users {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.error, response.status)
+        throw this.userError.HandleError(errorRes.message, response.status)
       }
       const resetResponse: Response = { status: response.status, message: 'Password reset successfully' }
       return resetResponse
