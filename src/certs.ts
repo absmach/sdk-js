@@ -60,7 +60,7 @@ export default class Certs {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.error, response.status)
+        throw this.certsError.HandleError(errorRes.message, response.status)
       }
       const cert: Cert = await response.json()
       return cert
@@ -93,7 +93,7 @@ export default class Certs {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.error, response.status)
+        throw this.certsError.HandleError(errorRes.message, response.status)
       }
       const certsPage: CertSerials = await response.json()
       return certsPage
@@ -127,7 +127,7 @@ export default class Certs {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.error, response.status)
+        throw this.certsError.HandleError(errorRes.message, response.status)
       }
       const cert: Cert = await response.json()
       return cert
@@ -160,7 +160,7 @@ export default class Certs {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.error, response.status)
+        throw this.certsError.HandleError(errorRes.message, response.status)
       }
       const revokeResponse: Response = { status: response.status, message: 'Cert Revoked Successfully' }
       return revokeResponse

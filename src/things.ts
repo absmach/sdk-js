@@ -58,7 +58,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -100,7 +100,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: ThingsPage = await response.json()
       return thingData
@@ -147,7 +147,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const ThingsData: ThingsPage = await response.json()
       return ThingsData
@@ -183,7 +183,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const disabledThing: Thing = await response.json()
       return disabledThing
@@ -234,7 +234,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -285,7 +285,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -338,7 +338,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -376,7 +376,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -401,7 +401,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Thing = await response.json()
       return thingData
@@ -444,7 +444,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingData: Permissions = await response.json()
       return thingData
@@ -481,7 +481,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const enabledThing: Thing = await response.json()
       return enabledThing
@@ -533,7 +533,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const thingsData: ThingsPage = await response.json()
       return thingsData
@@ -567,7 +567,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const userData: UsersPage = await response.json()
       return userData
@@ -611,7 +611,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const shareResponse: Response = { status: response.status, message: 'Thing Shared Successfully' }
       return shareResponse
@@ -654,7 +654,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const unshareResponse: Response = { status: response.status, message: 'Thing UnShared Successfully' }
       return unshareResponse
@@ -688,7 +688,7 @@ export default class Things {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.error, response.status)
+        throw this.thingError.HandleError(errorRes.message, response.status)
       }
       const deleteResponse: Response = { status: response.status, message: 'Thing Deleted Successfully' }
       return deleteResponse

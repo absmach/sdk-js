@@ -37,7 +37,7 @@ export default class Invitations {
      * const invitation = {
      *  userID: '<userID>',
      *  domainID: '<domainID>',
-     * relation: '<role>' // available options: 'administrator', 'editor','viewer','member'
+     * relation: '<role>' // available options: 'administrator', 'editor','contributor','member'
      * }
      */
     const options: RequestInit = {
@@ -56,7 +56,7 @@ export default class Invitations {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.error, response.status)
+        throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const inviteResponse: Response = { status: response.status, message: 'Invitation Sent Successfully' }
       return inviteResponse
@@ -88,7 +88,7 @@ export default class Invitations {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.error, response.status)
+        throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const invitationData: Invitation = await response.json()
       return invitationData
@@ -127,7 +127,7 @@ export default class Invitations {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.error, response.status)
+        throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const invitationData: InvitationsPage = await response.json()
       return invitationData
@@ -160,7 +160,7 @@ export default class Invitations {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.error, response.status)
+        throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const inviteResponse: Response = { status: response.status, message: 'Invitation Accepeted Successfully' }
       return inviteResponse
@@ -194,7 +194,7 @@ export default class Invitations {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.error, response.status)
+        throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const inviteResponse: Response = { status: response.status, message: 'Invitation Deleted Successfully' }
       return inviteResponse

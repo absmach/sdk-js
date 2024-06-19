@@ -79,7 +79,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const newChannel: Channel = await response.json()
       return newChannel
@@ -110,7 +110,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const channel: Channel = await response.json()
       return channel
@@ -154,7 +154,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const channels: ChannelsPage = await response.json()
       return channels
@@ -196,7 +196,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
       const channelsPage: ChannelsPage = {
@@ -241,7 +241,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const updatedChannel: Channel = await response.json()
       return updatedChannel
@@ -275,7 +275,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const disabledChannel: Channel = await response.json()
       return disabledChannel
@@ -309,7 +309,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const enabledChannel: Channel = await response.json()
       return enabledChannel
@@ -347,7 +347,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const permissions: Permissions = await response.json()
       return permissions
@@ -390,7 +390,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const addUserResponse: Response = { status: response.status, message: 'User Added Successfully' }
       return addUserResponse
@@ -434,7 +434,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const removeUserResponse: Response = { status: response.status, message: 'User Removed Successfully' }
       return removeUserResponse
@@ -467,7 +467,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const deleteResponse: Response = { status: response.status, message: 'Channel Deleted' }
       return deleteResponse
@@ -507,7 +507,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const groupsPage: GroupsPage = await response.json()
       return groupsPage
@@ -546,7 +546,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const connectThingResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
       return connectThingResponse
@@ -584,7 +584,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const connectResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
       return connectResponse
@@ -625,7 +625,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const disconnectResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
       return disconnectResponse
@@ -665,7 +665,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const disconnectThingResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
       return disconnectThingResponse
@@ -706,7 +706,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const usersPage: UsersPage = await response.json()
       return usersPage
@@ -743,7 +743,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const addUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Added Successfully' }
       return addUserGroupResponse
@@ -781,7 +781,7 @@ export default class Channels {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.error, response.status)
+        throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const removeUserGroupResponse: Response = { status: response.status, message: 'User Group(s) Removed Successfully' }
       return removeUserGroupResponse

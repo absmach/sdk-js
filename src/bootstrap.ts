@@ -71,7 +71,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const createResponse: Response = { status: response.status, message: 'Bootstrap created' }
       return createResponse
@@ -109,7 +109,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const whitelistResponse: Response = { status: response.status, message: 'Bootstrap State Updated Successfully' }
       return whitelistResponse
@@ -147,7 +147,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const updateResponse: Response = { status: response.status, message: 'Bootstrap Updated Successfully' }
       return updateResponse
@@ -178,7 +178,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
@@ -213,7 +213,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const updatedBootstrap: BootstrapConfig = await response.json()
       return updatedBootstrap
@@ -243,7 +243,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const removeResponse: Response = { status: response.status, message: 'Configuration Removed' }
       return removeResponse
@@ -273,7 +273,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
@@ -307,7 +307,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstraps: BootstrapPage = await response.json()
       return Bootstraps
@@ -338,7 +338,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const connResponse: Response = { status: response.status, message: 'Bootstrap Connection Successful' }
       return connResponse
@@ -362,7 +362,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const decryptedData = await this.bootstrapDecrypt(JSON.stringify(options.body), cryptoKey)
       const secureBootstrap: BootstrapConfig = decryptedData
