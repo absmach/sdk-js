@@ -75,7 +75,7 @@ Locally merge (or rebase) the upstream development branch into your topic branch
 git pull --rebase upstream main
 ```
 
-### Add a changeset. 
+### Add a changeset 
 These are used for version management and automated publishing. For an in-depth explanation on adding a changeset check [here](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#i-am-in-a-single-package-repository). For more information on changesets check [here](https://github.com/changesets/changesets/blob/main/docs/detailed-explanation.md#a-detailed-explanation-of-changesets)
 
 1. Run the command below
