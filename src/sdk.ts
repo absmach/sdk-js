@@ -39,7 +39,9 @@ export type {
   Status,
   MessagesPage,
   SenMLMessage,
-  MessagesPageMetadata
+  MessagesPageMetadata,
+  BootstrapConfig,
+  BootstrapPage
 } from './defs'
 
 const defaultUrl = 'http://localhost'
