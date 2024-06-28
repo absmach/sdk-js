@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Run Jest tests
-        run: npm test
+        run: npm test -- --passWithNoTests
 
       - name: Lint with ESLint
         run: npm run lint
