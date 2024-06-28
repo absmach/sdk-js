@@ -6,7 +6,6 @@ import type {
   GroupsPage,
   UsersPage,
   User,
-  ChannelsPage,
   Group
 } from '../src/sdk'
 enableFetchMocks()
@@ -60,11 +59,11 @@ describe('Channels', () => {
     offset: 0,
     limit: 10
   }
-  const channelsPage: ChannelsPage = {
-    channels: [channel],
-    total: 2,
-    offset: 10,
-    limit: 0
+  const channelsPage = {
+    groups: [channel],
+    total: 1,
+    offset: 0,
+    limit: 10
   }
   const channelId = '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9'
   const thingId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
@@ -121,7 +120,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
 
-    const response = await sdk.channels.Delete(channel, token)
+    const response = await sdk.channels.DeleteChannel(channel, token)
     expect(response).toEqual(deleteResponse)
   })
 
@@ -198,18 +197,28 @@ describe('Channels', () => {
     expect(response).toEqual(removeUserResponse)
   })
 
-  test('Channels should return alist of channels and return success', async () => {
+  test('Channels should return a list of channels and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
-    const response = await sdk.users.Users(queryParams, token)
-    expect(response).toEqual(channelsPage)
+    const response = await sdk.channels.Channels(queryParams, token)
+    expect(response).toEqual({
+      offset: 0,
+      total: 1,
+      limit: 10,
+      channels: [channel]
+    })
   })
 
   test('ChannelsByThing should retrieve things a channel is connected to and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.channels.ChannelsByThing(channelId, queryParams, token)
-    expect(response).toEqual(channelsPage)
+    expect(response).toEqual({
+      offset: 0,
+      total: 1,
+      limit: 10,
+      channels: [channel]
+    })
   })
 
   test('ChannelPermissions should retrieve channel permissions and return success', async () => {
@@ -222,7 +231,7 @@ describe('Channels', () => {
   test('ListChannelUsersGroups list user groups in a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(groupsPage))
 
-    const response = await sdk.channels.ListChannelUsersGroups(channelId, queryParams, token)
+    const response = await sdk.channels.ListChannelUserGroups(channelId, queryParams, token)
     expect(response).toEqual(groupsPage)
   })
 
