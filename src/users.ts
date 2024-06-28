@@ -7,8 +7,8 @@ import type {
   Login,
   PageMetadata,
   Token,
-  Response
-
+  Response,
+  ChannelsPage
 } from './defs'
 
 export default class Users {
@@ -128,7 +128,7 @@ export default class Users {
     }
   }
 
-  async RefreshToken (login: Login, refreshToken: string): Promise<Token> {
+  public async RefreshToken (login: Login, refreshToken: string): Promise<Token> {
     // provides a new access token and refresh token.
     /**
      * @method Refresh_token - Provides a new access token and refresh token.
@@ -705,7 +705,7 @@ export default class Users {
     userId: string,
     queryParams: PageMetadata,
     token: string
-  ): Promise<any> {
+  ): Promise<ChannelsPage> {
     // Get channels of a user.
     /**
      * Gets the various channels a user owns.
@@ -740,7 +740,7 @@ export default class Users {
         throw this.userError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
-      const channelsPage = {
+      const channelsPage: ChannelsPage = {
         channels: channels.groups,
         total: channels.total,
         limit: channels.limit,

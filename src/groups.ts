@@ -6,7 +6,8 @@ import type {
   Permissions,
   Response,
   UsersPage,
-  GroupRelation
+  GroupRelation,
+  ChannelsPage
 } from './defs'
 
 export default class Groups {
@@ -432,7 +433,7 @@ export default class Groups {
     }
   }
 
-  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
+  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<ChannelsPage> {
     // Get a group's channels.
     /**
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
@@ -462,8 +463,14 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.message, response.status)
       }
-      const groupsPage: GroupsPage = await response.json()
-      return groupsPage
+      const channels = await response.json()
+      const channelsPage: ChannelsPage = {
+        channels: channels.groups,
+        total: channels.total,
+        limit: channels.limit,
+        offset: channels.offset
+      }
+      return channelsPage
     } catch (error) {
       throw error
     }

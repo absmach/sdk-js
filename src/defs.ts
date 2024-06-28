@@ -9,8 +9,8 @@ export interface User extends UserBasicInfo {
   role?: string
   tags?: string[]
   metadata?: Record<string, any>
-  created_at?: string
-  updated_at?: string
+  created_at?: Date
+  updated_at?: Date
   updated_by?: string | UserBasicInfo
 }
 

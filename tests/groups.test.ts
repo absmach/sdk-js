@@ -7,8 +7,7 @@ import type {
   Relation,
   User,
   UsersPage,
-  Channel,
-  ChannelsPage
+  Channel
 } from '../src/sdk'
 enableFetchMocks()
 
@@ -24,9 +23,7 @@ describe('Groups', () => {
     description: 'holy terrain',
     level: 1,
     path: 'holy terrain',
-    status: 'enabled',
-    created_at: '2023-09-07T13:17:27.880558Z',
-    updated_at: '2023-09-12T13:38:23.86436Z'
+    status: 'enabled'
   }
 
   const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9'
@@ -60,8 +57,6 @@ describe('Groups', () => {
       secret: '12345678'
     },
     role: 'administrator',
-    created_at: '2023-09-07T13:17:27.880558Z',
-    updated_at: '2023-09-12T13:38:23.86436Z',
     status: 'enabled'
   }
 
@@ -78,8 +73,8 @@ describe('Groups', () => {
     domain_id: '886b4266-77d1-4258-abae-2931fb4f16de'
   }
 
-  const channelsPage: ChannelsPage = {
-    channels: [channel],
+  const channelsPage = {
+    groups: [channel],
     total: 1,
     offset: 0,
     limit: 10
@@ -182,7 +177,12 @@ describe('Groups', () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.groups.ListGroupChannels(groupId, queryParams, token)
-    expect(response).toEqual(channelsPage)
+    expect(response).toEqual({
+      channels: [channel],
+      total: 1,
+      offset: 0,
+      limit: 10
+    })
   })
 
   test('parents should get all of a groups parents and return success', async () => {

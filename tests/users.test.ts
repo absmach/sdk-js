@@ -8,7 +8,8 @@ import type {
   Group,
   GroupsPage,
   Thing,
-  ThingsPage
+  ThingsPage,
+  Channel
 } from '../src/sdk'
 enableFetchMocks()
 
@@ -25,8 +26,6 @@ describe('Users', () => {
       secret: '12345678'
     },
     role: 'administrator',
-    created_at: '2023-09-07T13:17:27.880558Z',
-    updated_at: '2023-09-12T13:38:23.86436Z',
     status: 'enabled'
   }
 
@@ -60,9 +59,7 @@ describe('Users', () => {
     description: 'holy terrain',
     level: 1,
     path: 'holy terrain',
-    status: 'enabled',
-    created_at: '2023-09-07T13:17:27.880558Z',
-    updated_at: '2023-09-12T13:38:23.86436Z'
+    status: 'enabled'
   }
 
   const GroupsPage: GroupsPage = {
@@ -85,29 +82,25 @@ describe('Users', () => {
     limit: 10
   }
 
-  const channel = {
+  const channel: Channel = {
     id: '886b4266-77d1-4258-abae-2931fb4f16de',
     name: 'fkatwigs',
     domain_id: '886b4266-77d1-4258-abae-2931fb4f16de'
   }
 
-  const channels = {
-    offset: 0,
-    total: 1,
-    groups: [channel]
-  }
-
   const channelsPage = {
-    channels: channels.groups,
-    total: channels.total,
-    offset: channels.offset
-
+    groups: [channel],
+    total: 1,
+    limit: 10,
+    offset: 0
   }
 
   const email = 'admin@gmail.com'
 
   const password = '12345678'
   const confPass = '12345678'
+  const oldSecret = '12345678'
+  const newSecret = '87654321'
 
   beforeEach(() => {
     fetchMock.resetMocks()
@@ -138,7 +131,6 @@ describe('Users', () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage))
 
     const response = await sdk.users.Users(queryParams, token)
-    console.log('response: ', response)
     expect(response).toEqual(UsersPage)
   })
 
@@ -153,6 +145,13 @@ describe('Users', () => {
     fetchMock.mockResponseOnce(JSON.stringify(user))
 
     const response = await sdk.users.UpdateUserIdentity(user, token)
+    expect(response).toEqual(user)
+  })
+
+  test('update user password should update a user password and return success', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(user))
+
+    const response = await sdk.users.UpdateUserPassword(oldSecret, newSecret, token)
     expect(response).toEqual(user)
   })
 
@@ -216,7 +215,12 @@ describe('Users', () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.users.ListUserChannels(userId, queryParams, token)
-    expect(response).toEqual(channelsPage)
+    expect(response).toEqual({
+      channels: [channel],
+      total: 1,
+      limit: 10,
+      offset: 0
+    })
   })
 
   test('reset user password request should send a password reset request and return success', async () => {
