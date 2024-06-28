@@ -16,7 +16,8 @@
   "scripts": {
     "build": "tsup",
     "test": "jest",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "release": "npm run build && changeset publish"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
   },
   "homepage": "https://github.com/absmach/sdk-js#readme",
   "dependencies": {
+    "@changesets/cli": "^2.27.6",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
