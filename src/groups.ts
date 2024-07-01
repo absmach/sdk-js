@@ -3,11 +3,11 @@ import type {
   Group,
   GroupsPage,
   PageMetadata,
-  ChannelsPage,
   Permissions,
   Response,
   UsersPage,
-  GroupRelation
+  GroupRelation,
+  ChannelsPage
 } from './defs'
 
 export default class Groups {

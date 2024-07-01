@@ -4,12 +4,11 @@ import type {
   UsersPage,
   ThingsPage,
   GroupsPage,
-  ChannelsPage,
   Login,
   PageMetadata,
   Token,
-  Response
-
+  Response,
+  ChannelsPage
 } from './defs'
 
 export default class Users {
@@ -74,7 +73,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(this.usersEndpoint, this.usersUrl).toString(),
         options
       )
@@ -113,7 +111,6 @@ export default class Users {
     }
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/tokens/issue`,
           this.usersUrl
@@ -131,7 +128,7 @@ export default class Users {
     }
   }
 
-  async RefreshToken (login: Login, refreshToken: string): Promise<Token> {
+  public async RefreshToken (login: Login, refreshToken: string): Promise<Token> {
     // provides a new access token and refresh token.
     /**
      * @method Refresh_token - Provides a new access token and refresh token.
@@ -156,7 +153,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/tokens/refresh`,
           this.usersUrl
@@ -200,7 +196,6 @@ export default class Users {
 
     try {
       const response = await fetch(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         new URL(
           `${this.usersEndpoint}/${user.id}`,
           this.usersUrl
@@ -782,7 +777,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.message, response.status)
       }
-      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link successfully' }
+      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link sent successfully' }
       return resetRequestResponse
     } catch (error) {
       throw error
