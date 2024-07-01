@@ -374,6 +374,7 @@ export default class Channels {
      * channel id and a user id.
      * @param {string} user_id - User ID.
      * @param {string} channel_id - Channel ID.
+     * @param {string} relation - The member's role.
      * @param {string} token - Authentication token.
      * @returns Response - 'User Added Successfully'.
      *  */
@@ -415,7 +416,7 @@ export default class Channels {
     /**
      * @method RemoveUser - Removes user from channel when provided with a valid token,
      * channel id and a user id.
-     * @param {string}
+     * @param {String} relation - The member's role.
      * @param {string} user_id - User ID.
      * @param {string} channel_id - Channel ID.
      * @param {string} token -  Authentication token.
@@ -491,6 +492,8 @@ export default class Channels {
     // Lists groups in a channel.
     /**
      * @method ListChannelUsersGroups - Lists groups in a channel.
+     * @param {string} channel_id - Channel ID.
+     * @param {Object} queryParams - Query parameters for the request.
      * @param {string} token - Authentication token
      * @returns {Object} - Groups Page.
      * */
@@ -689,8 +692,9 @@ export default class Channels {
     // Lists users in a channel.
     /**
      * @method ListChannelUsers - Lists users in a channel.
-     * @param {string}
-     * @param {string} token - Authentication token
+     * @param {string} channel_id - Channel ID.
+     * @param {Object} queryParams - Query parameters for the request.
+     * @param {string} token - Authentication token.
      * @returns {Object} - Users Page.
      * */
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -731,7 +735,7 @@ export default class Channels {
     /**
      * @method AddUserGroup - Adds user group to channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string}
+     * @param {string []} userGroupIds - User Group IDs.
      * @param {string} channel_id - Channel ID.
      * @param {string} token - User token.
      * */
@@ -768,8 +772,8 @@ export default class Channels {
     /**
      * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
      * channel id and a user group id.
-     * @param {string}
-     * @param {string}
+     * @param {string []} userGroupIds - User Group IDs.
+     * @param {string} channel_id - Channel ID.
      * @param {string} token - User token.
      * */
     const options = {
