@@ -6,7 +6,7 @@ import Groups from './groups'
 import Invitations from './invitations'
 import Channels from './channels'
 import Messages from './messages'
-import Bootstrap from './bootstraps'
+import Bootstrap from './bootstrap'
 
 export type {
   User,
