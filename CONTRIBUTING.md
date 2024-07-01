@@ -75,6 +75,19 @@ Locally merge (or rebase) the upstream development branch into your topic branch
 git pull --rebase upstream main
 ```
 
+### Add a changeset 
+These are used for version management and automated publishing. For an in-depth explanation on adding a changeset check [here](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md#i-am-in-a-single-package-repository). For more information on changesets check [here](https://github.com/changesets/changesets/blob/main/docs/detailed-explanation.md#a-detailed-explanation-of-changesets)
+
+1. Run the command below
+
+```
+npx changeset
+```
+2. Select the appropriate bump type for the changes made
+
+3. provide a message to go alongside the changeset. This will be written into the changelog when the next release occurs.
+
+
 Push your topic branch up to your fork:
 
 ```
