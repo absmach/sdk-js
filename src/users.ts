@@ -827,12 +827,11 @@ export default class Users {
     userId: string,
     token: string
   ): Promise<Response> {
-    // Resets a user password
+    // Deletes a user
     /**
-     * @method ResetPassword - Resets a password.
-     * @param {String} password - User Password.
-     * @param {String} confPass - User to confirm the Password.
-     * @param {String} token - Access token.
+     * @method DeleteUser - Deletes a user.
+     * @param {String} userId - User ID.
+     * @param {String} token - Authentication token.
      * @returns {Obj} - Response - Status of the request and a message.
      *
      */
