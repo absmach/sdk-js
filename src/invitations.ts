@@ -162,7 +162,7 @@ export default class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.message, response.status)
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation Accepeted Successfully' }
+      const inviteResponse: Response = { status: response.status, message: 'Invitation Accepted Successfully' }
       return inviteResponse
     } catch (error) {
       throw error
