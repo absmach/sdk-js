@@ -211,3 +211,14 @@ mySdk.users.ResetPassword(
   .catch((error) => {
     console.log(error)
   })
+
+mySdk.users.DeleteUser(
+  '<userId>',
+  token
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })

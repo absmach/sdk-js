@@ -244,4 +244,15 @@ describe('Users', () => {
     const response = await sdk.users.ResetPassword(password, confPass, token)
     expect(response).toEqual(resetPasswordResponse)
   })
+
+  test('delete user should delete a user and return success', async () => {
+    const deleteResponse = {
+      status: 200,
+      message: 'User Deleted successfully'
+    }
+    fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
+
+    const response = await sdk.users.DeleteUser(userId, token)
+    expect(response).toEqual(deleteResponse)
+  })
 })
