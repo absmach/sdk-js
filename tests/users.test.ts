@@ -245,7 +245,7 @@ describe('Users', () => {
     expect(response).toEqual(resetPasswordResponse)
   })
 
-  test('Delete user should delete a user and return success', async () => {
+  test('delete user should delete a user and return success', async () => {
     const deleteResponse = {
       status: 200,
       message: 'User Deleted successfully'
