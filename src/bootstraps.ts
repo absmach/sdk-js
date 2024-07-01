@@ -2,7 +2,7 @@ import Errors from './errors'
 import * as crypto from 'crypto'
 
 import {
-  type QueryParams,
+  type PageMetadata,
   type BootstrapConfig,
   type BootstrapPage,
   type Response
@@ -71,7 +71,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const createResponse: Response = { status: response.status, message: 'Bootstrap created' }
       return createResponse
@@ -109,7 +109,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const whitelistResponse: Response = { status: response.status, message: 'Bootstrap State Updated Successfully' }
       return whitelistResponse
@@ -147,7 +147,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const updateResponse: Response = { status: response.status, message: 'Bootstrap Updated Successfully' }
       return updateResponse
@@ -178,7 +178,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
@@ -213,7 +213,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const updatedBootstrap: BootstrapConfig = await response.json()
       return updatedBootstrap
@@ -243,7 +243,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const removeResponse: Response = { status: response.status, message: 'Configuration Removed' }
       return removeResponse
@@ -273,7 +273,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstrap: BootstrapConfig = await response.json()
       return Bootstrap
@@ -282,7 +282,7 @@ export default class Bootstrap {
     }
   }
 
-  public async Bootstraps (queryParams: QueryParams, token: string): Promise<BootstrapPage> {
+  public async Bootstraps (queryParams: PageMetadata, token: string): Promise<BootstrapPage> {
     // Retrive all bootstraps with pagination
     /**
      * @method Bootstraps - Gets all bootstraps with pagination.
@@ -307,7 +307,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const Bootstraps: BootstrapPage = await response.json()
       return Bootstraps
@@ -338,7 +338,7 @@ export default class Bootstrap {
       )
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
       const connResponse: Response = { status: response.status, message: 'Bootstrap Connection Successful' }
       return connResponse
@@ -348,27 +348,24 @@ export default class Bootstrap {
   }
 
   public async SecureBootstrap (externalId: string, externalKey: string, cryptoKey: string): Promise<BootstrapConfig> {
+    const encryptedKey = await this.bootstrapEncrypt(externalKey, cryptoKey)
     const options: RequestInit = {
       method: 'GET',
       headers: {
         'Content-Type': this.contentType,
-        Authorization: `Thing ${externalKey}`
+        Authorization: `Thing ${encryptedKey}`
       }
     }
     try {
       const response = await fetch(
         new URL(`${this.bootstrapEndpoint}/${this.secureEndpoint}/${externalId}`, this.bootstrapUrl).toString(), options
       )
-      console.log('url', response.url)
-      const encryptedData = await this.bootstrapEncrypt(externalKey, cryptoKey)
-      console.log(encryptedData)
-      const decryptedData = await this.bootstrapDecrypt(encryptedData, cryptoKey)
-      console.log(decryptedData)
       if (!response.ok) {
         const errorRes = await response.json()
-        throw this.bootstrapError.HandleError(errorRes.error, response.status)
+        throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const secureBootstrap: BootstrapConfig = await response.json()
+      const decryptedData = await this.bootstrapDecrypt(JSON.stringify(options.body), cryptoKey)
+      const secureBootstrap: BootstrapConfig = decryptedData
       return secureBootstrap
     } catch (error) {
       throw error
@@ -377,20 +374,20 @@ export default class Bootstrap {
 
   async bootstrapEncrypt (text: string, cryptoKey: string): Promise<string> {
     const bufferText = Buffer.from(text, 'utf8')
-    const cipher = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
-    let encrypted = cipher.update(bufferText)
-    encrypted = Buffer.concat([encrypted, cipher.final()])
-    console.log('Encryped data:', encrypted)
-    return encrypted.toString('hex')
+    const iv = crypto.randomBytes(16)
+    const cipher = crypto.createCipheriv('aes-256-cfb', Buffer.from(cryptoKey), iv)
+    const encrypted = cipher.update(bufferText)
+    const encryptedData = Buffer.concat([iv, encrypted])
+    return encryptedData.toString('hex')
   }
 
-  async bootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<string> {
+  async bootstrapDecrypt (encryptedData: string, cryptoKey: string): Promise<BootstrapConfig> {
     const encryptedBuffer = Buffer.from(encryptedData, 'hex')
-    console.log(encryptedData)
-    const decipher = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), crypto.randomBytes(16))
+    const iv = crypto.randomBytes(16)
+    const decipher = crypto.createDecipheriv('aes-256-cfb', Buffer.from(cryptoKey), iv)
     let decrypted = decipher.update(encryptedBuffer)
     decrypted = Buffer.concat([decrypted, decipher.final()])
-    console.log('Decryped data:', decrypted.toString('utf8'))
-    return decrypted.toString('utf8')
+    const decryptedText = decrypted.toString('utf8')
+    return JSON.parse(decryptedText)
   }
 }
