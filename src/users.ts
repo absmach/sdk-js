@@ -821,4 +821,47 @@ export default class Users {
       throw error
     }
   }
+
+  public async DeleteUser
+  (
+    userId: string,
+    token: string
+  ): Promise<Response> {
+    // Resets a user password
+    /**
+     * @method ResetPassword - Resets a password.
+     * @param {String} password - User Password.
+     * @param {String} confPass - User to confirm the Password.
+     * @param {String} token - Access token.
+     * @returns {Obj} - Response - Status of the request and a message.
+     *
+     */
+
+    const options: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.usersEndpoint}/${userId}`,
+          this.usersUrl
+        ).toString(),
+        options
+      )
+      console.log('url', response.url)
+      if (!response.ok) {
+        const errorRes = await response.json()
+        console.log('error', errorRes)
+        throw this.userError.HandleError(errorRes.message, response.status)
+      }
+      const deleteResponse: Response = { status: response.status, message: 'User Deleted successfully' }
+      return deleteResponse
+    } catch (error) {
+      throw error
+    }
+  }
 }
