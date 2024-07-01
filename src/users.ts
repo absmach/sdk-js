@@ -851,10 +851,8 @@ export default class Users {
         ).toString(),
         options
       )
-      console.log('url', response.url)
       if (!response.ok) {
         const errorRes = await response.json()
-        console.log('error', errorRes)
         throw this.userError.HandleError(errorRes.message, response.status)
       }
       const deleteResponse: Response = { status: response.status, message: 'User Deleted successfully' }
