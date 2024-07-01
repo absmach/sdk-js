@@ -19,8 +19,6 @@ describe('Domains', () => {
     name: 'fkatwigs',
     alias: 'music',
     permission: 'admin',
-    created_at: '2023-09-07T13:17:27.880558Z',
-    updated_at: '2023-09-12T13:38:23.86436Z',
     status: 'enabled'
   }
 
