@@ -156,13 +156,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const channels = await response.json()
-      const channelsPage: ChannelsPage = {
-        channels: channels.groups,
-        total: channels.total,
-        limit: channels.limit,
-        offset: channels.offset
-      }
+      const channelsPage: ChannelsPage = await response.json()
       return channelsPage
     } catch (error) {
       throw error
@@ -204,13 +198,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const channels = await response.json()
-      const channelsPage: ChannelsPage = {
-        channels: channels.groups,
-        total: channels.total,
-        limit: channels.limit,
-        offset: channels.offset
-      }
+      const channelsPage: ChannelsPage = await response.json()
       return channelsPage
     } catch (error) {
       throw error

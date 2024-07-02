@@ -60,10 +60,9 @@ describe('Channels', () => {
     limit: 10
   }
   const channelsPage = {
-    groups: [channel],
+    channels: [channel],
     total: 1,
-    offset: 0,
-    limit: 10
+    offset: 0
   }
   const channelId = '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9'
   const thingId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
@@ -201,24 +200,14 @@ describe('Channels', () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.channels.Channels(queryParams, token)
-    expect(response).toEqual({
-      offset: 0,
-      total: 1,
-      limit: 10,
-      channels: [channel]
-    })
+    expect(response).toEqual(channelsPage)
   })
 
   test('ChannelsByThing should retrieve things a channel is connected to and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.channels.ChannelsByThing(channelId, queryParams, token)
-    expect(response).toEqual({
-      offset: 0,
-      total: 1,
-      limit: 10,
-      channels: [channel]
-    })
+    expect(response).toEqual(channelsPage)
   })
 
   test('ChannelPermissions should retrieve channel permissions and return success', async () => {

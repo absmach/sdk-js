@@ -100,7 +100,6 @@ export interface ChannelsPage {
   channels: Channel[]
   total: number
   offset: number
-  limit: number
 }
 
 export interface Login {
