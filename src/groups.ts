@@ -465,9 +465,8 @@ export default class Groups {
       }
       const channels = await response.json()
       const channelsPage: ChannelsPage = {
-        channels: channels.groups,
+        channels: channels.channels,
         total: channels.total,
-        limit: channels.limit,
         offset: channels.offset
       }
       return channelsPage

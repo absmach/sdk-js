@@ -74,10 +74,9 @@ describe('Groups', () => {
   }
 
   const channelsPage = {
-    groups: [channel],
+    channels: [channel],
     total: 1,
-    offset: 0,
-    limit: 10
+    offset: 0
   }
 
   beforeEach(() => {
@@ -180,8 +179,7 @@ describe('Groups', () => {
     expect(response).toEqual({
       channels: [channel],
       total: 1,
-      offset: 0,
-      limit: 10
+      offset: 0
     })
   })
 

@@ -89,9 +89,8 @@ describe('Users', () => {
   }
 
   const channelsPage = {
-    groups: [channel],
+    channels: [channel],
     total: 1,
-    limit: 10,
     offset: 0
   }
 
@@ -218,7 +217,6 @@ describe('Users', () => {
     expect(response).toEqual({
       channels: [channel],
       total: 1,
-      limit: 10,
       offset: 0
     })
   })

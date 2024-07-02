@@ -158,9 +158,8 @@ export default class Channels {
       }
       const channels = await response.json()
       const channelsPage: ChannelsPage = {
-        channels: channels.groups,
+        channels: channels.channels,
         total: channels.total,
-        limit: channels.limit,
         offset: channels.offset
       }
       return channelsPage
@@ -205,10 +204,10 @@ export default class Channels {
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
+      console.log('channels', channels)
       const channelsPage: ChannelsPage = {
-        channels: channels.groups,
+        channels: channels.channels,
         total: channels.total,
-        limit: channels.limit,
         offset: channels.offset
       }
       return channelsPage

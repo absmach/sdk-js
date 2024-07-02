@@ -60,10 +60,9 @@ describe('Channels', () => {
     limit: 10
   }
   const channelsPage = {
-    groups: [channel],
+    channels: [channel],
     total: 1,
-    offset: 0,
-    limit: 10
+    offset: 0
   }
   const channelId = '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9'
   const thingId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
@@ -204,7 +203,6 @@ describe('Channels', () => {
     expect(response).toEqual({
       offset: 0,
       total: 1,
-      limit: 10,
       channels: [channel]
     })
   })
@@ -216,7 +214,6 @@ describe('Channels', () => {
     expect(response).toEqual({
       offset: 0,
       total: 1,
-      limit: 10,
       channels: [channel]
     })
   })
