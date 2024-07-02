@@ -204,7 +204,6 @@ export default class Channels {
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
       const channels = await response.json()
-      console.log('channels', channels)
       const channelsPage: ChannelsPage = {
         channels: channels.channels,
         total: channels.total,
