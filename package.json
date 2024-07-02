@@ -1,6 +1,6 @@
 {
   "name": "@absmach/magistrala-sdk",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "Official Magistrala sdk",
   "main": "./dist/sdk.js",
   "module": "./dist/sdk.mjs",
@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/absmach/sdk-js.git"
   },
-  "publishConfig":{
+  "publishConfig": {
     "access": "public"
   },
   "keywords": [

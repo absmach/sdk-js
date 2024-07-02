@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.3.14
+
+### Patch Changes
+
+- 32e8466: update publish to public
+
 ## 0.3.12
 
 ### Patch Changes
