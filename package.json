@@ -23,6 +23,9 @@
     "type": "git",
     "url": "git+https://github.com/absmach/sdk-js.git"
   },
+  "publishConfig":{
+    "access": "public"
+  },
   "keywords": [
     "magistrala",
     "magistrala-sdk",
