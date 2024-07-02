@@ -176,11 +176,7 @@ describe('Groups', () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.groups.ListGroupChannels(groupId, queryParams, token)
-    expect(response).toEqual({
-      channels: [channel],
-      total: 1,
-      offset: 0
-    })
+    expect(response).toEqual(channelsPage)
   })
 
   test('parents should get all of a groups parents and return success', async () => {

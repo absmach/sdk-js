@@ -214,11 +214,7 @@ describe('Users', () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
     const response = await sdk.users.ListUserChannels(userId, queryParams, token)
-    expect(response).toEqual({
-      channels: [channel],
-      total: 1,
-      offset: 0
-    })
+    expect(response).toEqual(channelsPage)
   })
 
   test('reset user password request should send a password reset request and return success', async () => {
