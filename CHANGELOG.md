@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.4.1
+
+### Patch Changes
+
+- 4551043: return limit to channelsPage
+
 ## 0.4.0
 
 ### Minor Changes
