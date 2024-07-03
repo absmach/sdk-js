@@ -7,6 +7,7 @@ import Invitations from './invitations'
 import Channels from './channels'
 import Messages from './messages'
 import Bootstrap from './bootstrap'
+import Journal from './journal'
 
 export type {
   User,
@@ -41,7 +42,10 @@ export type {
   SenMLMessage,
   MessagesPageMetadata,
   BootstrapConfig,
-  BootstrapPage
+  BootstrapPage,
+  Journal,
+  JournalsPage,
+  JournalsPageMetadata
 } from './defs'
 
 const defaultUrl = 'http://localhost'
@@ -56,6 +60,7 @@ export interface SDKConfig {
   httpadapterUrl?: string
   invitationsUrl?: string
   bootstrapUrl?: string
+  journalUrl?: string
 }
 
 class SDK {
@@ -68,6 +73,7 @@ class SDK {
   messages: Messages
   invitations: Invitations
   bootstrap: Bootstrap
+  Journal: Journal
   constructor ({
     usersUrl = defaultUrl,
     domainsUrl = defaultUrl,
@@ -77,7 +83,8 @@ class SDK {
     readersUrl = defaultUrl,
     httpadapterUrl = defaultUrl,
     invitationsUrl = defaultUrl,
-    bootstrapUrl = defaultUrl
+    bootstrapUrl = defaultUrl,
+    journalUrl = defaultUrl
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, thingsUrl, hostUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
@@ -88,6 +95,7 @@ class SDK {
     this.messages = new Messages({ readersUrl, httpadapterUrl })
     this.invitations = new Invitations(invitationsUrl)
     this.bootstrap = new Bootstrap(bootstrapUrl)
+    this.Journal = new Journal(journalUrl)
   }
 }
 

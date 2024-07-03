@@ -202,6 +202,8 @@ export interface PageMetadata {
   user_id?: string
   domain_id?: string
   relation?: string
+  from?: number
+  to?: number
 }
 
 export interface MessagesPage {
@@ -219,8 +221,6 @@ export interface MessagesPageMetadata extends PageMetadata {
   vb?: boolean
   vs?: string
   vd?: string
-  from?: number
-  to?: number
   aggregation?: string
   interval?: string
   value?: number
@@ -277,6 +277,27 @@ export interface BootstrapConfig {
 
 export interface BootstrapPage {
   configs: BootstrapConfig[]
+  total: number
+  offset: number
+  limit: number
+}
+
+export interface JournalsPageMetadata extends PageMetadata {
+  operation?: string
+  with_metadata?: boolean
+  with_attributes?: boolean
+  id?: string
+}
+
+export interface Journal {
+  id?: string
+  operation?: string
+  occurred_at?: string
+  payload?: Record<string, any>
+}
+
+export interface JournalsPage {
+  journals: Journal[]
   total: number
   offset: number
   limit: number
