@@ -6,7 +6,8 @@ import type {
   GroupsPage,
   UsersPage,
   User,
-  Group
+  Group,
+  ChannelsPage
 } from '../src/sdk'
 enableFetchMocks()
 
@@ -59,10 +60,11 @@ describe('Channels', () => {
     offset: 0,
     limit: 10
   }
-  const channelsPage = {
+  const channelsPage: ChannelsPage = {
     channels: [channel],
     total: 1,
-    offset: 0
+    offset: 0,
+    limit: 10
   }
   const channelId = '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9'
   const thingId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
