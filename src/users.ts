@@ -849,7 +849,7 @@ export default class Users {
         const errorRes = await response.json()
         throw this.userError.HandleError(errorRes.message, response.status)
       }
-      const deleteResponse: Response = { status: response.status, message: 'User Deleted successfully' }
+      const deleteResponse: Response = { status: response.status, message: 'User deleted successfully' }
       return deleteResponse
     } catch (error) {
       throw error

@@ -313,7 +313,7 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.message, response.status)
       }
-      const deleteResponse: Response = { status: response.status, message: 'Group Deleted Successfully' }
+      const deleteResponse: Response = { status: response.status, message: 'Group deleted successfully' }
       return deleteResponse
     } catch (error) {
       throw error
@@ -351,7 +351,7 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.message, response.status)
       }
-      const addResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      const addResponse: Response = { status: response.status, message: 'User added successfully' }
       return addResponse
     } catch (error) {
       throw error
@@ -389,7 +389,7 @@ export default class Groups {
         const errorRes = await response.json()
         throw this.groupError.HandleError(errorRes.message, response.status)
       }
-      const removeResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      const removeResponse: Response = { status: response.status, message: 'User removed successfully' }
       return removeResponse
     } catch (error) {
       throw error

@@ -259,7 +259,7 @@ export interface CertSerials {
 }
 
 export interface BootstrapConfig {
-  channel?: string[]
+  channels?: string[]
   external_id?: string
   external_key?: string
   thing_id?: string

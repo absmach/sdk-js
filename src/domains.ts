@@ -304,7 +304,7 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.message, response.status)
       }
-      const enableResponse: Response = { status: response.status, message: 'Domain Enabled Successfully' }
+      const enableResponse: Response = { status: response.status, message: 'Domain enabled successfully' }
       return enableResponse
     } catch (error) {
       throw error
@@ -336,7 +336,7 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.message, response.status)
       }
-      const disableResponse: Response = { status: response.status, message: 'Domain Disabled Successfully' }
+      const disableResponse: Response = { status: response.status, message: 'Domain disabled successfully' }
       return disableResponse
     } catch (error) {
       throw error
@@ -370,7 +370,7 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.message, response.status)
       }
-      const addResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      const addResponse: Response = { status: response.status, message: 'User added successfully' }
       return addResponse
     } catch (error) {
       throw error
@@ -405,7 +405,7 @@ export default class Domains {
         const errorRes = await response.json()
         throw this.domainError.HandleError(errorRes.message, response.status)
       }
-      const removeResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      const removeResponse: Response = { status: response.status, message: 'User removed successfully' }
       return removeResponse
     } catch (error) {
       throw error
