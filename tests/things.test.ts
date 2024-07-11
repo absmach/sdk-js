@@ -166,7 +166,7 @@ describe('Things', () => {
   test('ShareThing should share a thing and return success', async () => {
     const shareResponse = {
       status: 200,
-      message: 'Thing Shared Successfully'
+      message: 'Thing shared successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(shareResponse))
 
@@ -177,7 +177,7 @@ describe('Things', () => {
   test('UnShareThing should unshare a thing and return success', async () => {
     const unshareResponse = {
       status: 200,
-      message: 'Thing UnShared Successfully'
+      message: 'Thing unShared successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(unshareResponse))
 
@@ -188,7 +188,7 @@ describe('Things', () => {
   test('DeleteThing should delete a thing and return success', async () => {
     const deleteResponse = {
       status: 200,
-      message: 'Thing Deleted Successfully'
+      message: 'Thing deleted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
 

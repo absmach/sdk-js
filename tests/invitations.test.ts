@@ -42,7 +42,7 @@ describe('Invitations', () => {
   test('send invitation should send an invitation and return success', async () => {
     const SendInvitationResponse = {
       status: 200,
-      message: 'Invitation Sent Successfully'
+      message: 'Invitation sent successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(SendInvitationResponse))
 
@@ -67,7 +67,7 @@ describe('Invitations', () => {
   test('accept invitation should accept an invitation and return success', async () => {
     const AcceptInvitationResponse = {
       status: 200,
-      message: 'Invitation Accepted Successfully'
+      message: 'Invitation accepted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(AcceptInvitationResponse))
 
@@ -78,7 +78,7 @@ describe('Invitations', () => {
   test('delete invitation should delete an invitation and return success', async () => {
     const DeleteInvitationResponse = {
       status: 200,
-      message: 'Invitation Deleted Successfully'
+      message: 'Invitation deleted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(DeleteInvitationResponse))
 

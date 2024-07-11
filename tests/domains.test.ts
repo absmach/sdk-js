@@ -120,7 +120,7 @@ describe('Domains', () => {
   test('enable domain should enable a domain and return success', async () => {
     const enableDomainResponse = {
       status: 200,
-      message: 'Domain Enabled Successfully'
+      message: 'Domain enabled successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(enableDomainResponse))
 
@@ -131,7 +131,7 @@ describe('Domains', () => {
   test('disable domain should disable a domain and return success', async () => {
     const disableDomainResponse = {
       status: 200,
-      message: 'Domain Disabled Successfully'
+      message: 'Domain disabled successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(disableDomainResponse))
 
@@ -142,7 +142,7 @@ describe('Domains', () => {
   test('add user to domain should add a user to a domain and return success', async () => {
     const addUsertoDomainResponse = {
       status: 200,
-      message: 'User Added Successfully'
+      message: 'User added successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUsertoDomainResponse))
 
@@ -153,7 +153,7 @@ describe('Domains', () => {
   test('remove user from domain should remove a user from a domain and return success', async () => {
     const removeUserfromDomainResponse = {
       status: 200,
-      message: 'User Removed Successfully'
+      message: 'User removed successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserfromDomainResponse))
 

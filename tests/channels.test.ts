@@ -117,7 +117,7 @@ describe('Channels', () => {
   test('Delete should delete a channel and return success', async () => {
     const deleteResponse = {
       status: 200,
-      message: 'Channel Deleted'
+      message: 'Channel deleted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
 
@@ -128,7 +128,7 @@ describe('Channels', () => {
   test('ConnectThing should connect a thing to a channel and return success', async () => {
     const connectThingResponse = {
       status: 200,
-      message: 'Thing Connected Successfully'
+      message: 'Thing connected successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(connectThingResponse))
 
@@ -139,7 +139,7 @@ describe('Channels', () => {
   test('DisconnectThing should Disconnect a thing from a channel and return success', async () => {
     const DisconnectThingResponse = {
       status: 200,
-      message: 'Thing Disconnected Successfully'
+      message: 'Thing disconnected successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectThingResponse))
 
@@ -150,7 +150,7 @@ describe('Channels', () => {
   test('Connect should connect a thing to a channel and return success', async () => {
     const connectResponse = {
       status: 200,
-      message: 'Thing Connected Successfully'
+      message: 'Thing connected successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(connectResponse))
 
@@ -161,7 +161,7 @@ describe('Channels', () => {
   test('Disconnect should Disconnect a thing to a channel and return success', async () => {
     const DisconnectResponse = {
       status: 200,
-      message: 'Thing Disconnected Successfully'
+      message: 'Thing disconnected successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectResponse))
 
@@ -179,7 +179,7 @@ describe('Channels', () => {
   test('AddUserToChannel should add users to a channel and return success', async () => {
     const addUserResponse = {
       status: 200,
-      message: 'User Added Successfully'
+      message: 'User added successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserResponse))
 
@@ -190,7 +190,7 @@ describe('Channels', () => {
   test('RemoveUserFromChannel should remove a user from a channel and return success', async () => {
     const removeUserResponse = {
       status: 200,
-      message: 'User Removed Successfully'
+      message: 'User removed successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserResponse))
 
@@ -229,7 +229,7 @@ describe('Channels', () => {
   test('AddUserGroupToChannel should add a user group to a channel and return success', async () => {
     const addUserGroupResponse = {
       status: 200,
-      message: 'User Group Added Successfully'
+      message: 'Group added successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserGroupResponse))
 
@@ -240,7 +240,7 @@ describe('Channels', () => {
   test('RemoveUserGroupFromChannel should remove a user group from a channel and return success', async () => {
     const removeUserGroupResponse = {
       status: 200,
-      message: 'User Group Removed Successfully'
+      message: 'Group removed successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserGroupResponse))
 

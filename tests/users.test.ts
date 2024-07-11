@@ -242,7 +242,7 @@ describe('Users', () => {
   test('delete user should delete a user and return success', async () => {
     const deleteResponse = {
       status: 200,
-      message: 'User Deleted successfully'
+      message: 'User deleted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
 
