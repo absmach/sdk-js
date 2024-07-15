@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.4.2
+
+### Patch Changes
+
+- 143a2be: this changeupdates the return messages, updates the channels in the bootstrapconfig to a string[]
+
 ## 0.4.1
 
 ### Patch Changes
