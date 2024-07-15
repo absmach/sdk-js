@@ -613,7 +613,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.message, response.status)
       }
-      const shareResponse: Response = { status: response.status, message: 'Thing Shared Successfully' }
+      const shareResponse: Response = { status: response.status, message: 'Thing shared successfully' }
       return shareResponse
     } catch (error) {
       throw error
@@ -656,7 +656,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.message, response.status)
       }
-      const unshareResponse: Response = { status: response.status, message: 'Thing UnShared Successfully' }
+      const unshareResponse: Response = { status: response.status, message: 'Thing unShared successfully' }
       return unshareResponse
     } catch (error) {
       throw error
@@ -690,7 +690,7 @@ export default class Things {
         const errorRes = await response.json()
         throw this.thingError.HandleError(errorRes.message, response.status)
       }
-      const deleteResponse: Response = { status: response.status, message: 'Thing Deleted Successfully' }
+      const deleteResponse: Response = { status: response.status, message: 'Thing deleted successfully' }
       return deleteResponse
     } catch (error) {
       throw error

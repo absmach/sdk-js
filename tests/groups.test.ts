@@ -135,7 +135,7 @@ describe('Groups', () => {
   test('delete group should delete a group and return success', async () => {
     const deleteGroupResponse = {
       status: 200,
-      message: 'Group Deleted Successfully'
+      message: 'Group deleted successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteGroupResponse))
 
@@ -146,7 +146,7 @@ describe('Groups', () => {
   test('add user to group should add a user to a group and return success', async () => {
     const addUserResponse = {
       status: 200,
-      message: 'User Added Successfully'
+      message: 'User added successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserResponse))
 
@@ -157,7 +157,7 @@ describe('Groups', () => {
   test('remove user from group should remove a user from a group and return success', async () => {
     const removeUserResponse = {
       status: 200,
-      message: 'User Removed Successfully'
+      message: 'User removed successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserResponse))
 

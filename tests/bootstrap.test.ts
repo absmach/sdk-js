@@ -43,7 +43,7 @@ describe('Bootstraps', () => {
   test('AddBootstrap should create a Bootstrap Configuration and return success', async () => {
     const createResponse = {
       status: 200,
-      message: 'Bootstrap created'
+      message: 'Bootstrap configuration created'
     }
     fetchMock.mockResponseOnce(JSON.stringify(createResponse))
 
@@ -54,7 +54,7 @@ describe('Bootstraps', () => {
   test('Whitelist should allow a user to update a Bootstrap Configuration and return success', async () => {
     const whitelistResponse = {
       status: 200,
-      message: 'Bootstrap State Updated Successfully'
+      message: 'Bootstrap configuration state updated successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(whitelistResponse))
 
@@ -65,7 +65,7 @@ describe('Bootstraps', () => {
   test('UpdateBootstrap should allow a user to update a Bootstrap Configuration and return success', async () => {
     const updateResponse = {
       status: 200,
-      message: 'Bootstrap Updated Successfully'
+      message: 'Bootstrap configuration updated successfully'
     }
     fetchMock.mockResponseOnce(JSON.stringify(updateResponse))
 
@@ -90,7 +90,7 @@ describe('Bootstraps', () => {
   test('RemoveBootstrap should allow a user to view a Bootstrap Configuration and return success', async () => {
     const removeResponse = {
       status: 200,
-      message: 'Configuration Removed'
+      message: 'Bootstrap configuration deleted'
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeResponse))
 
@@ -115,7 +115,7 @@ describe('Bootstraps', () => {
   test('UpdateBootstrapConnection should retrive all bootstraps and return success', async () => {
     const connResponse = {
       status: 200,
-      message: 'Bootstrap Connection Successful'
+      message: 'Bootstrap connection successful'
     }
     fetchMock.mockResponseOnce(JSON.stringify(connResponse))
 

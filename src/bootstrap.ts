@@ -73,7 +73,7 @@ export default class Bootstrap {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const createResponse: Response = { status: response.status, message: 'Bootstrap created' }
+      const createResponse: Response = { status: response.status, message: 'Bootstrap configuration created' }
       return createResponse
     } catch (error) {
       throw error
@@ -111,7 +111,7 @@ export default class Bootstrap {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const whitelistResponse: Response = { status: response.status, message: 'Bootstrap State Updated Successfully' }
+      const whitelistResponse: Response = { status: response.status, message: 'Bootstrap configuration state updated successfully' }
       return whitelistResponse
     } catch (error) {
       throw error
@@ -149,7 +149,7 @@ export default class Bootstrap {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const updateResponse: Response = { status: response.status, message: 'Bootstrap Updated Successfully' }
+      const updateResponse: Response = { status: response.status, message: 'Bootstrap configuration updated successfully' }
       return updateResponse
     } catch (error) {
       throw error
@@ -245,7 +245,7 @@ export default class Bootstrap {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const removeResponse: Response = { status: response.status, message: 'Configuration Removed' }
+      const removeResponse: Response = { status: response.status, message: 'Bootstrap configuration deleted' }
       return removeResponse
     } catch (error) {
       throw error
@@ -340,7 +340,7 @@ export default class Bootstrap {
         const errorRes = await response.json()
         throw this.bootstrapError.HandleError(errorRes.message, response.status)
       }
-      const connResponse: Response = { status: response.status, message: 'Bootstrap Connection Successful' }
+      const connResponse: Response = { status: response.status, message: 'Bootstrap connection successful' }
       return connResponse
     } catch (error) {
       throw error

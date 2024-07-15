@@ -387,7 +387,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const addUserResponse: Response = { status: response.status, message: 'User Added Successfully' }
+      const addUserResponse: Response = { status: response.status, message: 'User added successfully' }
       return addUserResponse
     } catch (error) {
       throw error
@@ -431,7 +431,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const removeUserResponse: Response = { status: response.status, message: 'User Removed Successfully' }
+      const removeUserResponse: Response = { status: response.status, message: 'User removed successfully' }
       return removeUserResponse
     } catch (error) {
       throw error
@@ -465,7 +465,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const deleteResponse: Response = { status: response.status, message: 'Channel Deleted' }
+      const deleteResponse: Response = { status: response.status, message: 'Channel deleted successfully' }
       return deleteResponse
     } catch (error) {
       throw error
@@ -546,7 +546,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const connectThingResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
+      const connectThingResponse: Response = { status: response.status, message: 'Thing connected successfully' }
       return connectThingResponse
     } catch (error) {
       throw error
@@ -584,7 +584,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const connectResponse: Response = { status: response.status, message: 'Thing Connected Successfully' }
+      const connectResponse: Response = { status: response.status, message: 'Thing connected successfully' }
       return connectResponse
     } catch (error) {
       throw error
@@ -625,7 +625,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const disconnectResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
+      const disconnectResponse: Response = { status: response.status, message: 'Thing disconnected successfully' }
       return disconnectResponse
     } catch (error) {
       throw error
@@ -665,7 +665,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const disconnectThingResponse: Response = { status: response.status, message: 'Thing Disconnected Successfully' }
+      const disconnectThingResponse: Response = { status: response.status, message: 'Thing disconnected successfully' }
       return disconnectThingResponse
     } catch (error) {
       throw error
@@ -744,7 +744,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const addUserGroupResponse: Response = { status: response.status, message: 'User Group Added Successfully' }
+      const addUserGroupResponse: Response = { status: response.status, message: 'Group added successfully' }
       return addUserGroupResponse
     } catch (error) {
       throw error
@@ -782,7 +782,7 @@ export default class Channels {
         const errorRes = await response.json()
         throw this.channelError.HandleError(errorRes.message, response.status)
       }
-      const removeUserGroupResponse: Response = { status: response.status, message: 'User Group Removed Successfully' }
+      const removeUserGroupResponse: Response = { status: response.status, message: 'Group removed successfully' }
       return removeUserGroupResponse
     } catch (error) {
       throw error

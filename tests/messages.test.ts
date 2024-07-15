@@ -43,10 +43,10 @@ describe('Messages', () => {
   })
 
   test('Send should send a message and return success', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ status: 200, message: 'Message sent' }))
+    fetchMock.mockResponseOnce(JSON.stringify({ status: 200, message: 'Message sent successfully' }))
 
     const response = await sdk.messages.Send(channelId, msg, thingKey)
-    expect(response).toEqual({ status: 200, message: 'Message sent' })
+    expect(response).toEqual({ status: 200, message: 'Message sent successfully' })
   })
 
   test('Read should read messages and return success', async () => {

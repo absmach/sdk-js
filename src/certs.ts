@@ -162,7 +162,7 @@ export default class Certs {
         const errorRes = await response.json()
         throw this.certsError.HandleError(errorRes.message, response.status)
       }
-      const revokeResponse: Response = { status: response.status, message: 'Cert Revoked Successfully' }
+      const revokeResponse: Response = { status: response.status, message: 'Cert revoked successfully' }
       return revokeResponse
     } catch (error) {
       throw error

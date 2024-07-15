@@ -74,7 +74,7 @@ export default class Messages {
         const errorRes = await response.json()
         throw this.messageError.HandleError(errorRes.message, response.status)
       }
-      const sendResponse: Response = { status: response.status, message: 'Message sent' }
+      const sendResponse: Response = { status: response.status, message: 'Message sent successfully' }
       return sendResponse
     } catch (error) {
       throw error

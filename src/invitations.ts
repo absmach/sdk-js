@@ -58,7 +58,7 @@ export default class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.message, response.status)
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation Sent Successfully' }
+      const inviteResponse: Response = { status: response.status, message: 'Invitation sent successfully' }
       return inviteResponse
     } catch (error) {
       throw error
@@ -162,7 +162,7 @@ export default class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.message, response.status)
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation Accepted Successfully' }
+      const inviteResponse: Response = { status: response.status, message: 'Invitation accepted successfully' }
       return inviteResponse
     } catch (error) {
       throw error
@@ -196,7 +196,7 @@ export default class Invitations {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.message, response.status)
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation Deleted Successfully' }
+      const inviteResponse: Response = { status: response.status, message: 'Invitation deleted successfully' }
       return inviteResponse
     } catch (error) {
       throw error
