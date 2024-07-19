@@ -191,6 +191,8 @@ export interface PageMetadata {
   object?: string
   permission?: string
   tag?: string
+  id?: string
+  tree?: boolean
   owner?: string
   shared_by?: string
   visibility?: string
