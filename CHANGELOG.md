@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.4.3
+
+### Patch Changes
+
+- a2611c4: Add id and tree to metadata
+
 ## 0.4.2
 
 ### Patch Changes
