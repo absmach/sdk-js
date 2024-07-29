@@ -27,6 +27,7 @@ export default class Users {
   private readonly hostUrl: URL
   private readonly contentType: string
   private readonly usersEndpoint: string
+  private readonly searchEndpoint: string
   private readonly userError: Errors
 
   public constructor ({ usersUrl, thingsUrl, hostUrl }: { usersUrl: string, thingsUrl?: string, hostUrl?: string }) {
@@ -43,6 +44,7 @@ export default class Users {
     }
     this.contentType = 'application/json'
     this.usersEndpoint = 'users'
+    this.searchEndpoint = 'search'
     this.userError = new Errors()
   }
 
@@ -851,6 +853,52 @@ export default class Users {
       }
       const deleteResponse: Response = { status: response.status, message: 'User deleted successfully' }
       return deleteResponse
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async SearchUsers (queryParams: PageMetadata, token: string): Promise<UsersPage> {
+    // Search for users
+    /**
+     * @method SearchUsers - Search for users.
+     * @param {Object} queryParams - Query parameters.
+     * @param {String} token - Access token.
+     * @example
+     * const queryParams = {
+     * "offset": 0,
+     * "limit": 10,
+     * "name": "John Doe"
+     * "id": "c52d-3b0d-43b9-8c3e-275c087d875af"
+     * }
+     * @returns {Object} - Users Page object.
+     **/
+
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    )
+
+    const options: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.usersEndpoint}/${this.searchEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          this.usersUrl
+        ).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.userError.HandleError(errorRes.message, response.status)
+      }
+      const usersData: UsersPage = await response.json()
+      return usersData
     } catch (error) {
       throw error
     }

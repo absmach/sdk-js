@@ -222,3 +222,14 @@ mySdk.users.DeleteUser(
   .catch((error) => {
     console.log(error)
   })
+
+mySdk.users.SearchUsers(
+  { name: '<userName>', id: '<userId>' },
+  token
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })

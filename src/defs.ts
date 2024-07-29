@@ -187,6 +187,7 @@ export interface PageMetadata {
   metadata?: Record<string, any>
   status?: string
   action?: string
+  id?: string
   subject?: string
   object?: string
   permission?: string
