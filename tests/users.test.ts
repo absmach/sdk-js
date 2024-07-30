@@ -249,4 +249,11 @@ describe('Users', () => {
     const response = await sdk.users.DeleteUser(userId, token)
     expect(response).toEqual(deleteResponse)
   })
+
+  test('search user should search for a user and return success', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(UsersPage))
+
+    const response = await sdk.users.SearchUsers(queryParams, token)
+    expect(response).toEqual(UsersPage)
+  })
 })
