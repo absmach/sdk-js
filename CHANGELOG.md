@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.5.0
+
+### Minor Changes
+
+- 9bd2134: Add search endpoint to users
+
 ## 0.4.3
 
 ### Patch Changes
