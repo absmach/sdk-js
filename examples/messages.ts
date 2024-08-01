@@ -4,7 +4,7 @@ import SDK from '../src/sdk'
 const defaultUrl = 'http://localhost'
 
 const mySdk = new SDK({
-  httpadapterUrl: defaultUrl + ':8008',
+  httpAdapterUrl: defaultUrl + ':8008',
   readersUrl: defaultUrl + ':9011'
 })
 
