@@ -312,4 +312,5 @@ export interface HealthInfo {
   commit: string
   description: string
   build_time: string
+  instance_id: string
 }
