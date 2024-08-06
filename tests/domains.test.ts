@@ -157,7 +157,7 @@ describe('Domains', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserfromDomainResponse))
 
-    const response = await sdk.domains.RemoveUserfromDomain(domainId, userIds, relation, token)
+    const response = await sdk.domains.RemoveUserfromDomain(domainId, userId, token)
     expect(response).toEqual(removeUserfromDomainResponse)
   })
 })
