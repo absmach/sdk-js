@@ -382,7 +382,7 @@ export default class Domains {
     /**
      * @method RemoveUserfromDomain - Removes user from domain.
      * @param {string} domainID - domain ID.
-     * @param {array} userIDs - array of user IDs.
+     * @param {string} userID - user ID.
      * @returns {object} - returns an object Response that carries the status code and a response message.
      */
     const req = { user_id: userID }
