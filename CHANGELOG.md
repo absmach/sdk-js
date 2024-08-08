@@ -1,5 +1,12 @@
 # @absmach/magistrala-sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- 6574165: update documentation
+- 6574165: Update remove user from domain to remove the need for relation
+
 ## 0.5.0
 
 ### Minor Changes
