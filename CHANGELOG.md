@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.6.0
+
+### Minor Changes
+
+- ac1b256: add service health check functionality
+
 ## 0.5.1
 
 ### Patch Changes

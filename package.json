@@ -1,6 +1,6 @@
 {
   "name": "@absmach/magistrala-sdk",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Official Magistrala sdk",
   "main": "./dist/sdk.js",
   "module": "./dist/sdk.mjs",
