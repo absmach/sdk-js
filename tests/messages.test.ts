@@ -8,8 +8,8 @@ import type {
 enableFetchMocks()
 
 const readersUrl = 'http://localhost'
-const httpadapterUrl = 'http://localhost'
-const sdk = new SDK({ readersUrl, httpadapterUrl })
+const httpAdapterUrl = 'http://localhost'
+const sdk = new SDK({ readersUrl, httpAdapterUrl })
 
 describe('Messages', () => {
   const channelId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'

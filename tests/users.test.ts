@@ -13,8 +13,8 @@ import type {
 } from '../src/sdk'
 enableFetchMocks()
 
-const usersURL = 'http://localhost'
-const sdk = new SDK({ usersUrl: usersURL })
+const usersUrl = 'http://localhost'
+const sdk = new SDK({ usersUrl })
 
 describe('Users', () => {
   const user: User = {

@@ -7,8 +7,8 @@ import type {
 } from '../src/sdk'
 enableFetchMocks()
 
-const invitationsURL = 'http://localhost'
-const sdk = new SDK({ invitationsUrl: invitationsURL })
+const invitationsUrl = 'http://localhost'
+const sdk = new SDK({ invitationsUrl })
 
 describe('Invitations', () => {
   const invitation: Invitation = {

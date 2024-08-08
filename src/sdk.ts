@@ -8,6 +8,7 @@ import Channels from './channels'
 import Messages from './messages'
 import Bootstrap from './bootstrap'
 import Journal from './journal'
+import Health from './health'
 
 export type {
   User,
@@ -45,7 +46,8 @@ export type {
   BootstrapPage,
   Journal,
   JournalsPage,
-  JournalsPageMetadata
+  JournalsPageMetadata,
+  HealthInfo
 } from './defs'
 
 const defaultUrl = 'http://localhost'
@@ -57,7 +59,7 @@ export interface SDKConfig {
   hostUrl?: string
   certsUrl?: string
   readersUrl?: string
-  httpadapterUrl?: string
+  httpAdapterUrl?: string
   invitationsUrl?: string
   bootstrapUrl?: string
   journalUrl?: string
@@ -74,6 +76,7 @@ class SDK {
   invitations: Invitations
   bootstrap: Bootstrap
   Journal: Journal
+  Health: Health
   constructor ({
     usersUrl = defaultUrl,
     domainsUrl = defaultUrl,
@@ -81,7 +84,7 @@ class SDK {
     hostUrl = defaultUrl,
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
-    httpadapterUrl = defaultUrl,
+    httpAdapterUrl = defaultUrl,
     invitationsUrl = defaultUrl,
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl
@@ -92,10 +95,11 @@ class SDK {
     this.certs = new Certs(certsUrl)
     this.groups = new Groups({ usersUrl, thingsUrl })
     this.channels = new Channels({ thingsUrl, usersUrl })
-    this.messages = new Messages({ readersUrl, httpadapterUrl })
+    this.messages = new Messages({ readersUrl, httpAdapterUrl })
     this.invitations = new Invitations(invitationsUrl)
     this.bootstrap = new Bootstrap(bootstrapUrl)
     this.Journal = new Journal(journalUrl)
+    this.Health = new Health({ usersUrl, thingsUrl, bootstrapUrl, certsUrl, readersUrl, httpAdapterUrl, journalUrl, invitationsUrl })
   }
 }
 

@@ -305,3 +305,12 @@ export interface JournalsPage {
   offset: number
   limit: number
 }
+
+export interface HealthInfo {
+  status: string
+  version: string
+  commit: string
+  description: string
+  build_time: string
+  instance_id: string
+}

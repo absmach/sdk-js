@@ -12,19 +12,19 @@ export default class Messages {
    * @method Messages - Messages is used for sending and reading messages.
    * It provides methods for sending and reading messages.
    * @param {string} readersUrl - The url of the readers service.
-   * @param {string} httpadapterUrl - The URL of the Magistrala Messages adapter.
+   * @param {string} httpAdapterUrl - The URL of the Magistrala Messages adapter.
    * @param {string} contentType - The content type of the request.
    * @returns {Messages} - Returns a Messages object.
    */
 
   private readonly readersUrl: URL
-  private readonly httpadapterUrl: URL
+  private readonly httpAdapterUrl: URL
   private readonly messageError: Errors
   private readonly contentType: string
 
-  public constructor ({ readersUrl, httpadapterUrl }: { readersUrl: string, httpadapterUrl: string }) {
+  public constructor ({ readersUrl, httpAdapterUrl }: { readersUrl: string, httpAdapterUrl: string }) {
     this.readersUrl = new URL(readersUrl)
-    this.httpadapterUrl = new URL(httpadapterUrl)
+    this.httpAdapterUrl = new URL(httpAdapterUrl)
     this.contentType = 'application/json'
     this.messageError = new Errors()
   }
@@ -66,7 +66,7 @@ export default class Messages {
       const response = await fetch(
         new URL(
           `channels/${chanId}/messages${subtopic}`,
-          this.httpadapterUrl
+          this.httpAdapterUrl
         ).toString(),
         options
       )

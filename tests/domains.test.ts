@@ -10,8 +10,8 @@ import type {
 } from '../src/sdk'
 enableFetchMocks()
 
-const domainsURL = 'http://localhost'
-const sdk = new SDK({ domainsUrl: domainsURL })
+const domainsUrl = 'http://localhost'
+const sdk = new SDK({ domainsUrl })
 
 describe('Domains', () => {
   const domain: Domain = {
