@@ -126,8 +126,7 @@ mySdk.domains.AddUsertoDomain(
 
 mySdk.domains.RemoveUserfromDomain(
   '<domainID>',
-  ['<userID>', '<userID>'],
-  'administrator',
+  '<userID>',
   token
 )
   .then((response: any) => {

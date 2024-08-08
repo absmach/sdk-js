@@ -377,16 +377,15 @@ export default class Domains {
     }
   }
 
-  public async RemoveUserfromDomain (domainID: string, userIDs: string[], relation: Relation, token: string): Promise<Response> {
+  public async RemoveUserfromDomain (domainID: string, userID: string, token: string): Promise<Response> {
     // RemoveUserfromDomain removes user from domain.
     /**
      * @method RemoveUserfromDomain - Removes user from domain.
      * @param {string} domainID - domain ID.
-     * @param {array} userIDs - array of user IDs.
-     * @param {string} relation - user relation to domain such as 'administrator', 'member'.
+     * @param {string} userID - user ID.
      * @returns {object} - returns an object Response that carries the status code and a response message.
      */
-    const req = { user_ids: userIDs, relation }
+    const req = { user_id: userID }
     const options: RequestInit = {
       method: 'POST',
       headers: {
