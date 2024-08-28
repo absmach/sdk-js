@@ -56,7 +56,6 @@ export interface SDKConfig {
   usersUrl?: string
   domainsUrl?: string
   thingsUrl?: string
-  hostUrl?: string
   certsUrl?: string
   readersUrl?: string
   httpAdapterUrl?: string
@@ -81,7 +80,6 @@ class SDK {
     usersUrl = defaultUrl,
     domainsUrl = defaultUrl,
     thingsUrl = defaultUrl,
-    hostUrl = defaultUrl,
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpAdapterUrl = defaultUrl,
@@ -89,7 +87,7 @@ class SDK {
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl
   }: SDKConfig = {}) {
-    this.users = new Users({ usersUrl, thingsUrl, hostUrl })
+    this.users = new Users({ usersUrl, thingsUrl })
     this.domains = new Domains({ domainsUrl, usersUrl })
     this.things = new Things({ thingsUrl, usersUrl })
     this.certs = new Certs(certsUrl)

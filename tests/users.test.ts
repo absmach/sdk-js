@@ -100,6 +100,7 @@ describe('Users', () => {
   const confPass = '12345678'
   const oldSecret = '12345678'
   const newSecret = '87654321'
+  const hostUrl: string = 'http://localhost'
 
   beforeEach(() => {
     fetchMock.resetMocks()
@@ -224,7 +225,7 @@ describe('Users', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(resetPasswordRequestResponse))
 
-    const response = await sdk.users.ResetPasswordRequest(email)
+    const response = await sdk.users.ResetPasswordRequest(email, hostUrl)
     expect(response).toEqual(resetPasswordRequestResponse)
   })
 

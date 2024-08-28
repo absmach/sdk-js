@@ -24,23 +24,17 @@ export default class Users {
    */
   private readonly usersUrl: URL
   private readonly thingsUrl?: URL
-  private readonly hostUrl: URL
   private readonly contentType: string
   private readonly usersEndpoint: string
   private readonly searchEndpoint: string
   private readonly userError: Errors
 
-  public constructor ({ usersUrl, thingsUrl, hostUrl }: { usersUrl: string, thingsUrl?: string, hostUrl?: string }) {
+  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
     this.usersUrl = new URL(usersUrl)
     if (thingsUrl !== undefined) {
       this.thingsUrl = new URL(thingsUrl)
     } else {
       this.thingsUrl = new URL('')
-    }
-    if (hostUrl !== undefined) {
-      this.hostUrl = new URL(hostUrl)
-    } else {
-      this.hostUrl = new URL('')
     }
     this.contentType = 'application/json'
     this.usersEndpoint = 'users'
@@ -748,11 +742,12 @@ export default class Users {
     }
   }
 
-  public async ResetPasswordRequest (email: string): Promise<Response> {
+  public async ResetPasswordRequest (email: string, hostUrl: string): Promise<Response> {
     // Sends a request to reset a password
     /**
      * @method ResetPasswordRequest - Sends a request
      * @param {String} email - User email.
+     * @param {string} hostUrl - URL of the host UI.
      * @returns {Obj} - Response - Status of the request and a message.
      */
 
@@ -760,7 +755,7 @@ export default class Users {
       method: 'POST',
       headers: {
         'Content-Type': this.contentType,
-        Referer: this.hostUrl.toString()
+        Referer: hostUrl
       },
       body: JSON.stringify({ email })
     }
