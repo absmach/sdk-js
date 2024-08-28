@@ -747,6 +747,7 @@ export default class Users {
     /**
      * @method ResetPasswordRequest - Sends a request
      * @param {String} email - User email.
+     * @param {string} hostUrl - URL of the host UI.
      * @returns {Obj} - Response - Status of the request and a message.
      */
 
