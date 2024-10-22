@@ -44,6 +44,18 @@ export default class Things {
   }
 
   public async Create (thing: Thing, domainId: string, token: string): Promise<Thing> {
+    // Creates a new thing
+    /**
+     * @method Create - Creates a new thing.
+     * @param {Object} thing - Thing object.
+     * @param {string} domainId - Domain ID.
+     * @param {String} token - Access token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name":"thing1",
+     * }
+     */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -78,7 +90,7 @@ export default class Things {
     /**
      * @method CreateThings - Creates multiple things.
      * @param {Object} things - Array of things.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -127,7 +139,7 @@ export default class Things {
      * with pagination metadata.
      * @param {string} channelID - channel ID.
      * @param {Object} queryParams - Query parameters such as offset and limit.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Channels list.
      */
@@ -170,7 +182,7 @@ export default class Things {
     /**
      * @method Enable - Enables a thing when provided with a valid token and thing ID.
      * @param {string} thingID - Thing ID.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Returns updated thing.
      */
@@ -207,7 +219,7 @@ export default class Things {
     /**
      * @method Disable - Disables a thing when provided with a valid token, domain ID and thing ID.
      * @param {string} thingId - Thing ID.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Returns disabled thing
      */
@@ -244,7 +256,7 @@ export default class Things {
      * @method Update - Updates thing when provided with a valid token,
      * domain ID and thing object.
      * @param {Object} thing - Thing object.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -347,7 +359,7 @@ export default class Things {
      * domain ID and thing object.
      *
      * @param {Object} thing - Thing object.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -400,7 +412,7 @@ export default class Things {
      * retrieved using authorization token.
      * @method Thing - Gets a Thing.
      * @param {String} thingId - Thing ID.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {String} token - Access token.
      * @returns {Object} - Thing object.
      * @example
@@ -442,7 +454,7 @@ export default class Things {
      * @method Permissions - Retrieves thing permissions when provided with a valid token
      * and thing ID.
      * @param {string} thingId - Thing ID.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing permissions.
      * @example
@@ -489,7 +501,7 @@ export default class Things {
      *
      * @method Things - Gets all things with pagination.
      * @param {Object} queryParams - Query parameters.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {String} token - Access token.
      * @returns {Object} - Thing object.
      * @example
@@ -578,8 +590,8 @@ export default class Things {
      * @method ShareThing - Shares a thing with a user.
      * @param {string} thingId - Thing ID.
      * @param {Relation} Relation - User relation to the thing.
-     * @param {string} domainId - Id of the domain.
-     * @param {string[]} userIDs - Array of user ID's.
+     * @param {string} domainId - Domain ID.
+     * @param  {string []} userIDs - Array of user ID's.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *
@@ -624,9 +636,9 @@ export default class Things {
     /**
      * @method UnShareThing - UnShares a thing with a user.
      * @param {string} thingId - Thing ID.
-     * @param {string[]} userIDs - Array of user ID's.
+     * @param  {string []} userIDs - Array of user ID's.
      * @param {string} Relation - User relation to the thing.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *
@@ -664,7 +676,7 @@ export default class Things {
     /**
      * @method DeleteThing - Deletes a thing.
      * @param {string} thingId - Thing ID.
-     * @param {string} domainId - Id of the domain.
+     * @param {string} domainId - Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *  */
