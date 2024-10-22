@@ -29,6 +29,7 @@ export default class Bootstrap {
   private readonly whitelistEndpoint: string
   private readonly bootstrapCertsEndpoint: string
   private readonly bootstrapConnEndpoint: string
+  private readonly domainsEndpoint: string
   private readonly secureEndpoint: string
 
   public constructor (bootstrapUrl: string) {
@@ -40,14 +41,16 @@ export default class Bootstrap {
     this.bootstrapCertsEndpoint = 'things/configs/certs'
     this.bootstrapConnEndpoint = 'things/configs/connections'
     this.secureEndpoint = 'secure'
+    this.domainsEndpoint = 'domains'
     this.bootstrapError = new Errors()
   }
 
-  public async AddBootstrap (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
+  public async AddBootstrap (Bootstrap: BootstrapConfig, domainId: string, token: string): Promise<Response> {
     // Create a bootstrap configuration
     /**
          * @method Create - Create a new bootstrap configuration.
          * @param {object} config - The configuration object.
+         * @param {string} domainId - The Domain ID.
          * @param {string} token - Authentication Token.
          * @example
          * const config = {
@@ -67,7 +70,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(this.configsEndpoint, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -80,12 +83,13 @@ export default class Bootstrap {
     }
   }
 
-  public async Whitelist (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
+  public async Whitelist (Bootstrap: BootstrapConfig, domainId: string, token: string): Promise<Response> {
     // Update a bootstrap configuration
     /**
     * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
     * This changes the status of the config to whitelisted.
     * @param {object} config - The configuration object.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - Authentication Token.
     * @example
     * const config = {
@@ -105,7 +109,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.whitelistEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.whitelistEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -118,12 +122,13 @@ export default class Bootstrap {
     }
   }
 
-  public async UpdateBootstrap (Bootstrap: BootstrapConfig, token: string): Promise<Response> {
+  public async UpdateBootstrap (Bootstrap: BootstrapConfig, domainId: string, token: string): Promise<Response> {
     // Update a bootstrap configuration
     /**
     * @method Update - Allows a logged in user to update a bootstrap configuration.
     * This can change the name of the config and metadata.
     * @param {object} config - The configuration object.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - The token to be used for authentication.
     * @example
     * const config = {
@@ -143,7 +148,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.configsEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -156,12 +161,13 @@ export default class Bootstrap {
     }
   }
 
-  public async ViewBootstrap (thingId: string, token: string): Promise<BootstrapConfig> {
+  public async ViewBootstrap (thingId: string, domainId: string, token: string): Promise<BootstrapConfig> {
     // View a bootstrap configuration
     /**
     * @method View - Allows a logged in user to view a bootstrap configuration.
     * Once provided with the thingId and a valid token, it returns the configuration object.
-    * @param {string} thing_id - The thingId of the configuration to be viewed.
+    * @param {string} thingId - The thingId of the configuration to be viewed.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - Authentication Token.
     */
 
@@ -174,7 +180,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -187,15 +193,16 @@ export default class Bootstrap {
     }
   }
 
-  public async UpdateBootstrapCerts (configs: BootstrapConfig, token: string): Promise<BootstrapConfig> {
+  public async UpdateBootstrapCerts (configs: BootstrapConfig, domainId: string, token: string): Promise<BootstrapConfig> {
     // Update certs of a bootstrap configuration
     /**
     * @method UpdateCerts - Allows a logged in user to update the certs of a bootstrap configuration.
     * Update is performed by replacing the current certificate data with values provided in a request payload.
-    * @param {string} config_id - The config_id of the configuration to be updated. This can also mean the thing_id.
+    * @param {string} configId - The config_id of the configuration to be updated. This can also mean the thing_id.
     * @param {string} client_cert - The client certificate to be used.
     * @param {string} client_key - The client key to be used.
     * @param {string} ca - The certificate authority to be used.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - Authentication Token.
     *
     */
@@ -209,7 +216,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.bootstrapCertsEndpoint}/${configs.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.bootstrapCertsEndpoint}/${configs.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -222,12 +229,13 @@ export default class Bootstrap {
     }
   }
 
-  public async RemoveBootstrap (thingId: string, token: string): Promise<Response> {
+  public async RemoveBootstrap (thingId: string, domainId: string, token: string): Promise<Response> {
     // Remove a bootstrap configuration
     /**
     * @method Remove - Allows a logged in user to delete a bootstrap configuration.
-    * @param {string} config_id - The config_id of the configuration to be deleted.
-    * This can also mean the thing_id.
+    * @param {string} configId - The config ID of the configuration to be deleted.
+    * This can also mean the thing ID.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - Authentication Token.
     */
     const options: RequestInit = {
@@ -239,7 +247,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -282,11 +290,12 @@ export default class Bootstrap {
     }
   }
 
-  public async Bootstraps (queryParams: PageMetadata, token: string): Promise<BootstrapPage> {
+  public async Bootstraps (queryParams: PageMetadata, domainId: string, token: string): Promise<BootstrapPage> {
     // Retrive all bootstraps with pagination
     /**
      * @method Bootstraps - Gets all bootstraps with pagination.
      * @param {Object} queryParams - Query parameters.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      *  @returns {Object} - Bootstrap Page.
      */
@@ -303,7 +312,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.configsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -316,7 +325,7 @@ export default class Bootstrap {
     }
   }
 
-  public async UpdateBootstrapConnection (thingId: string, channels: string[], token: string): Promise<Response> {
+  public async UpdateBootstrapConnection (thingId: string, domainId: string, channels: string[], token: string): Promise<Response> {
     // Update a bootstrap connection
     /**
     * @method UpdateConnection - Allows a logged in user to update the connection of a bootstrap configuration.
@@ -334,7 +343,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.bootstrapConnEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${this.domainsEndpoint}/${domainId}/${this.bootstrapConnEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
