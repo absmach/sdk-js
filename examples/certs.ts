@@ -7,11 +7,13 @@ const mySdk = new SDK({
 })
 
 const token = '<token>'
+const domainId = '<domainId>'
 
 mySdk.certs
   .IssueCert(
     '<thingID>',
     '<valid>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -24,6 +26,7 @@ mySdk.certs
 mySdk.certs
   .ViewCertByThing(
     '<thingID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -36,6 +39,7 @@ mySdk.certs
 mySdk.certs
   .ViewCert(
     '<certID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -48,6 +52,7 @@ mySdk.certs
 mySdk.certs
   .RevokeCert(
     '<thingID>',
+    domainId,
     token
   )
   .then((response: any) => {

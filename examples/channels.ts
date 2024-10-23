@@ -11,10 +11,11 @@ const mySdk = new SDK({
 // Channels.ts examples.
 
 const token = '<token>'
+const domainId = '<domainId>'
 
 mySdk.channels
   .CreateChannel(
-    { name: '<channelName>' }, token)
+    { name: '<channelName>' }, domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -23,7 +24,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Channel('<channelID>', token)
+  .Channel('<channelID>', domainId, token)
   .then((response: any) => {
     console.log(response)
   })
@@ -32,7 +33,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Channels({ offset: 0, limit: 10 }, token)
+  .Channels({ offset: 0, limit: 10 }, domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -43,6 +44,7 @@ mySdk.channels
 mySdk.channels
   .UpdateChannel(
     { id: '<channelId>', name: '<channelName>' },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -53,7 +55,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Disable({ id: '<channelId>' }, token)
+  .Disable('<channelId>', domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -62,7 +64,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .Enable({ id: '<channelId>' }, token)
+  .Enable('<channelId>', domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -74,6 +76,7 @@ mySdk.channels
   .ChannelsByThing(
     '<thingId>',
     { offset: 0, limit: 5 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -87,6 +90,7 @@ mySdk.channels
   .ConnectThing(
     '<thingId>',
     '<channelId>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -100,6 +104,7 @@ mySdk.channels
   .DisconnectThing(
     '<thingId>',
     '<channelId>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -113,6 +118,7 @@ mySdk.channels
   .Connect(
     '<thingId>',
     '<channelId>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -126,6 +132,7 @@ mySdk.channels
   .Disconnect(
     '<thingId>',
     '<channelId>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -139,6 +146,7 @@ mySdk.channels
   .ListChannelUsers(
     '<channelId>',
     { offset: 0, limit: 5 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -152,6 +160,7 @@ mySdk.channels
   .ListChannelUserGroups(
     '<channelId>',
     { offset: 0, limit: 5 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -162,7 +171,7 @@ mySdk.channels
   })
 
 mySdk.channels
-  .ChannelPermissions('<channelId>', token)
+  .ChannelPermissions('<channelId>', domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -177,6 +186,7 @@ mySdk.channels
       '<userId1>', '<userId2>'
     ],
     'administrator',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -193,6 +203,7 @@ mySdk.channels
       '<userId1>', '<userId2>'
     ],
     'administrator',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -208,6 +219,7 @@ mySdk.channels
     [
       '<UserGroupId1>', '<UserGroupId2>'
     ],
+    domainId,
     token
   )
   .then((response: any) => {
@@ -223,6 +235,7 @@ mySdk.channels
     [
       '<UserGroupId1>', '<UserGroupId2>'
     ],
+    domainId,
     token
   )
   .then((response: any) => {
@@ -234,7 +247,8 @@ mySdk.channels
 
 mySdk.channels
   .DeleteChannel(
-    { id: '<channelId>' },
+    '<channelId>',
+    domainId,
     token
   )
   .then((response: any) => {

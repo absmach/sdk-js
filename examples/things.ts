@@ -10,11 +10,12 @@ const mySdk = new SDK({
 
 // Things.ts examples.
 
+const domainId = '<domainId>'
 const token = '<token>'
 
 mySdk.things
   .Create(
-    { name: '<thingName>' }, token
+    { name: '<thingName>' }, domainId, token
   )
   .then((response: any) => {
     console.log('response:', response)
@@ -24,7 +25,7 @@ mySdk.things
   })
 
 mySdk.things
-  .Disable({ id: '<thingId>' }, token)
+  .Disable('<thingId>', domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -33,7 +34,7 @@ mySdk.things
   })
 
 mySdk.things
-  .Enable({ id: '<thingId>' }, token)
+  .Enable('<thingId>', domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -43,7 +44,7 @@ mySdk.things
 
 mySdk.things
   .UpdateThing(
-    { id: '<thingId>', name: '<thingName>' }, token)
+    { id: '<thingId>', name: '<thingName>' }, domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -52,7 +53,7 @@ mySdk.things
   })
 
 mySdk.things
-  .UpdateThingSecret({ id: '<thingId>', credentials: { secret: 'newSecret' } }, token
+  .UpdateThingSecret({ id: '<thingId>', credentials: { secret: 'newSecret' } }, domainId, token
   )
   .then((response: any) => {
     console.log(response)
@@ -64,6 +65,7 @@ mySdk.things
 mySdk.things
   .UpdateThingTags(
     { id: '<thingId>', tags: ['<tag1>', '<tag2>'] },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -74,7 +76,7 @@ mySdk.things
   })
 
 mySdk.things
-  .ThingsByChannel('<channelId>', { offset: 0, limit: 5 }, token)
+  .ThingsByChannel('<channelId>', { offset: 0, limit: 5 }, domainId, token)
   .then((response: any) => {
     console.log(response)
   })
@@ -83,7 +85,7 @@ mySdk.things
   })
 
 mySdk.things
-  .Things({ offset: 0, limit: 10 }, token)
+  .Things({ offset: 0, limit: 10 }, domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -92,7 +94,7 @@ mySdk.things
   })
 
 mySdk.things
-  .Thing('<thingId>', token)
+  .Thing('<thingId>', domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -101,16 +103,7 @@ mySdk.things
   })
 
 mySdk.things
-  .ThingsPermissions('<thingId>', token)
-  .then((response: any) => {
-    console.log('response: ', response)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-mySdk.things
-  .IdentifyThing('<thingKey>')
+  .ThingsPermissions('<thingId>', domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -125,7 +118,7 @@ mySdk.things
     'administrator',
     [
       '<userId1>', '<userId2>'
-    ], token)
+    ], domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -140,7 +133,7 @@ mySdk.things
 
     [
       '<userId1>', '<userId2>'
-    ], token)
+    ], domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
@@ -152,6 +145,7 @@ mySdk.things
   .ListThingUsers(
     '<thingId>',
     { offset: 0, limit: 10 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -162,7 +156,7 @@ mySdk.things
   })
 
 mySdk.things
-  .DeleteThing({ id: '<thingId>' }, token)
+  .DeleteThing('<thingId>', domainId, token)
   .then((response: any) => {
     console.log('response: ', response)
   })
@@ -171,7 +165,7 @@ mySdk.things
   })
 
 mySdk.things
-  .CreateThings([{ name: '<thingName>' }, { name: '<thingName>' }], token)
+  .CreateThings([{ name: '<thingName>' }, { name: '<thingName>' }], domainId, token)
   .then((response: any) => {
     console.log('response:', response)
   })
