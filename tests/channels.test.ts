@@ -17,7 +17,7 @@ const sdk = new SDK({ thingsUrl, usersUrl })
 
 describe('Channels', () => {
   const channel: Channel = {
-    id: 'bb7edb32-2eac-4aad-aebe-ed96fe073879',
+    id: '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9',
     name: 'channelName',
     domain_id: 'bb7edb32-2eac-4aad-aebe-ed96fe073879',
     description: ''
@@ -68,6 +68,7 @@ describe('Channels', () => {
   }
   const channelId = '290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9'
   const thingId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
+  const domainId = '886b4266-77d1-4258-abae-2931fb4f16de'
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6'
   const userIds = ['b9921574-f562-4048-a6bf-295c0036fc2a', 'ce42d80e-9773-49b2-a8c2-6aa748597a92']
@@ -82,35 +83,35 @@ describe('Channels', () => {
   test('Channel should retrieve a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel))
 
-    const response = await sdk.channels.Channel(channelId, token)
+    const response = await sdk.channels.Channel(channelId, domainId, token)
     expect(response).toEqual(channel)
   })
 
   test('CreateChannel should create a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel))
 
-    const response = await sdk.channels.CreateChannel(channel, token)
+    const response = await sdk.channels.CreateChannel(channel, domainId, token)
     expect(response).toEqual(channel)
   })
 
   test('UpdateChannel should retrieve a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel))
 
-    const response = await sdk.channels.UpdateChannel(channel, token)
+    const response = await sdk.channels.UpdateChannel(channel, domainId, token)
     expect(response).toEqual(channel)
   })
 
   test('Enable should enable a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel))
 
-    const response = await sdk.channels.Enable(channel, token)
+    const response = await sdk.channels.Enable(channelId, domainId, token)
     expect(response).toEqual(channel)
   })
 
   test('Disable should disable a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel))
 
-    const response = await sdk.channels.Disable(channel, token)
+    const response = await sdk.channels.Disable(channelId, domainId, token)
     expect(response).toEqual(channel)
   })
 
@@ -121,7 +122,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteResponse))
 
-    const response = await sdk.channels.DeleteChannel(channel, token)
+    const response = await sdk.channels.DeleteChannel(channelId, domainId, token)
     expect(response).toEqual(deleteResponse)
   })
 
@@ -132,7 +133,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(connectThingResponse))
 
-    const response = await sdk.channels.ConnectThing(thingId, channelId, token)
+    const response = await sdk.channels.ConnectThing(thingId, channelId, domainId, token)
     expect(response).toEqual(connectThingResponse)
   })
 
@@ -143,7 +144,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectThingResponse))
 
-    const response = await sdk.channels.DisconnectThing(thingId, channelId, token)
+    const response = await sdk.channels.DisconnectThing(thingId, channelId, domainId, token)
     expect(response).toEqual(DisconnectThingResponse)
   })
 
@@ -154,7 +155,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(connectResponse))
 
-    const response = await sdk.channels.Connect(thingId, channelId, token)
+    const response = await sdk.channels.Connect(thingId, channelId, domainId, token)
     expect(response).toEqual(connectResponse)
   })
 
@@ -165,14 +166,14 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectResponse))
 
-    const response = await sdk.channels.Disconnect(thingId, channelId, token)
+    const response = await sdk.channels.Disconnect(thingId, channelId, domainId, token)
     expect(response).toEqual(DisconnectResponse)
   })
 
   test('ListChannelUsers should list users in a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(usersPage))
 
-    const response = await sdk.channels.ListChannelUsers(channelId, queryParams, token)
+    const response = await sdk.channels.ListChannelUsers(channelId, queryParams, domainId, token)
     expect(response).toEqual(usersPage)
   })
 
@@ -183,7 +184,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserResponse))
 
-    const response = await sdk.channels.AddUserToChannel(channelId, userIds, relation, token)
+    const response = await sdk.channels.AddUserToChannel(channelId, userIds, relation, domainId, token)
     expect(response).toEqual(addUserResponse)
   })
 
@@ -194,35 +195,35 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserResponse))
 
-    const response = await sdk.channels.RemoveUserFromChannel(channelId, userIds, relation, token)
+    const response = await sdk.channels.RemoveUserFromChannel(channelId, userIds, relation, domainId, token)
     expect(response).toEqual(removeUserResponse)
   })
 
   test('Channels should return a list of channels and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
-    const response = await sdk.channels.Channels(queryParams, token)
+    const response = await sdk.channels.Channels(queryParams, domainId, token)
     expect(response).toEqual(channelsPage)
   })
 
   test('ChannelsByThing should retrieve things a channel is connected to and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
-    const response = await sdk.channels.ChannelsByThing(channelId, queryParams, token)
+    const response = await sdk.channels.ChannelsByThing(channelId, queryParams, domainId, token)
     expect(response).toEqual(channelsPage)
   })
 
   test('ChannelPermissions should retrieve channel permissions and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(permissions))
 
-    const response = await sdk.channels.ChannelPermissions(channelId, token)
+    const response = await sdk.channels.ChannelPermissions(channelId, domainId, token)
     expect(response).toEqual(permissions)
   })
 
   test('ListChannelUsersGroups list user groups in a channel and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(groupsPage))
 
-    const response = await sdk.channels.ListChannelUserGroups(channelId, queryParams, token)
+    const response = await sdk.channels.ListChannelUserGroups(channelId, queryParams, domainId, token)
     expect(response).toEqual(groupsPage)
   })
 
@@ -233,7 +234,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserGroupResponse))
 
-    const response = await sdk.channels.AddUserGroupToChannel(channelId, userGroupIds, token)
+    const response = await sdk.channels.AddUserGroupToChannel(channelId, userGroupIds, domainId, token)
     expect(response).toEqual(addUserGroupResponse)
   })
 
@@ -244,7 +245,7 @@ describe('Channels', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserGroupResponse))
 
-    const response = await sdk.channels.RemoveUserGroupFromChannel(channelId, userGroupIds, token)
+    const response = await sdk.channels.RemoveUserGroupFromChannel(channelId, userGroupIds, domainId, token)
     expect(response).toEqual(removeUserGroupResponse)
   })
 })

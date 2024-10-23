@@ -46,6 +46,8 @@ describe('Groups', () => {
 
   const userIds = ['886b4266-77d1-4258-abae-2931fb4f16de', '886b4266-77d1-4258-abae-2931fb4f16de']
 
+  const domainId = '886b4266-77d1-4258-abae-2931fb4f16de'
+
   const relation: Relation = 'administrator'
 
   const user: User = {
@@ -86,49 +88,49 @@ describe('Groups', () => {
   test('create group should create a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(group))
 
-    const response = await sdk.groups.CreateGroup(group, token)
+    const response = await sdk.groups.CreateGroup(group, domainId, token)
     expect(response).toEqual(group)
   })
 
   test('group should get a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(group))
 
-    const response = await sdk.groups.Group(groupId, token)
+    const response = await sdk.groups.Group(groupId, domainId, token)
     expect(response).toEqual(group)
   })
 
   test('groups should get all groups and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(groupsPage))
 
-    const response = await sdk.groups.Groups(queryParams, token)
+    const response = await sdk.groups.Groups(queryParams, domainId, token)
     expect(response).toEqual(groupsPage)
   })
 
   test('group permissions should get a groups permissions and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(permissions))
 
-    const response = await sdk.groups.GroupPermissions(groupId, token)
+    const response = await sdk.groups.GroupPermissions(groupId, domainId, token)
     expect(response).toEqual(permissions)
   })
 
   test('update group should update a groups name and metadata and return sucess', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(group))
 
-    const response = await sdk.groups.UpdateGroup(group, token)
+    const response = await sdk.groups.UpdateGroup(group, domainId, token)
     expect(response).toEqual(group)
   })
 
   test('enable group should enable a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(group))
 
-    const response = await sdk.groups.EnableGroup(groupId, token)
+    const response = await sdk.groups.EnableGroup(groupId, domainId, token)
     expect(response).toEqual(group)
   })
 
   test('disable group should disable a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(group))
 
-    const response = await sdk.groups.DisableGroup(groupId, token)
+    const response = await sdk.groups.DisableGroup(groupId, domainId, token)
     expect(response).toEqual(group)
   })
 
@@ -139,7 +141,7 @@ describe('Groups', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(deleteGroupResponse))
 
-    const response = await sdk.groups.DeleteGroup(groupId, token)
+    const response = await sdk.groups.DeleteGroup(groupId, domainId, token)
     expect(response).toEqual(deleteGroupResponse)
   })
 
@@ -150,7 +152,7 @@ describe('Groups', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(addUserResponse))
 
-    const response = await sdk.groups.AddUserToGroup(groupId, userIds, relation, token)
+    const response = await sdk.groups.AddUserToGroup(groupId, userIds, relation, domainId, token)
     expect(response).toEqual(addUserResponse)
   })
 
@@ -161,35 +163,35 @@ describe('Groups', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(removeUserResponse))
 
-    const response = await sdk.groups.RemoveUserFromGroup(groupId, userIds, relation, token)
+    const response = await sdk.groups.RemoveUserFromGroup(groupId, userIds, relation, domainId, token)
     expect(response).toEqual(removeUserResponse)
   })
 
   test('group users should get all users in a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(usersPage))
 
-    const response = await sdk.groups.ListGroupUsers(groupId, queryParams, token)
+    const response = await sdk.groups.ListGroupUsers(groupId, queryParams, domainId, token)
     expect(response).toEqual(usersPage)
   })
 
   test('list group channels should get all the channels in a group and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
-    const response = await sdk.groups.ListGroupChannels(groupId, queryParams, token)
+    const response = await sdk.groups.ListGroupChannels(groupId, queryParams, domainId, token)
     expect(response).toEqual(channelsPage)
   })
 
   test('parents should get all of a groups parents and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(groupsPage))
 
-    const response = await sdk.groups.Parents(groupId, queryParams, token)
+    const response = await sdk.groups.Parents(groupId, queryParams, domainId, token)
     expect(response).toEqual(groupsPage)
   })
 
   test('children should get all of a groups children and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(groupsPage))
 
-    const response = await sdk.groups.Children(groupId, queryParams, token)
+    const response = await sdk.groups.Children(groupId, queryParams, domainId, token)
     expect(response).toEqual(groupsPage)
   })
 })
