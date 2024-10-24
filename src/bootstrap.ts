@@ -29,7 +29,6 @@ export default class Bootstrap {
   private readonly whitelistEndpoint: string
   private readonly bootstrapCertsEndpoint: string
   private readonly bootstrapConnEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly secureEndpoint: string
 
   public constructor (bootstrapUrl: string) {
@@ -41,7 +40,6 @@ export default class Bootstrap {
     this.bootstrapCertsEndpoint = 'things/configs/certs'
     this.bootstrapConnEndpoint = 'things/configs/connections'
     this.secureEndpoint = 'secure'
-    this.domainsEndpoint = 'domains'
     this.bootstrapError = new Errors()
   }
 
@@ -70,7 +68,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.configsEndpoint}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -109,7 +107,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.whitelistEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.whitelistEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -148,7 +146,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.configsEndpoint}/${Bootstrap.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -180,7 +178,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -216,7 +214,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.bootstrapCertsEndpoint}/${configs.thing_id}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.bootstrapCertsEndpoint}/${configs.thing_id}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -247,7 +245,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.configsEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -312,7 +310,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.configsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.configsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()
@@ -343,7 +341,7 @@ export default class Bootstrap {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.bootstrapConnEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
+        new URL(`${domainId}/${this.bootstrapConnEndpoint}/${thingId}`, this.bootstrapUrl).toString(), options
       )
       if (!response.ok) {
         const errorRes = await response.json()

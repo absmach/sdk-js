@@ -27,7 +27,6 @@ export default class Channels {
   private readonly usersUrl?: URL
   private readonly contentType: string
   private readonly channelsEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly channelError: Errors
   private readonly thingsUrl: URL
   public constructor ({ usersUrl, thingsUrl }: { usersUrl?: string, thingsUrl: string }) {
@@ -39,7 +38,6 @@ export default class Channels {
     }
     this.contentType = 'application/json'
     this.channelsEndpoint = 'channels'
-    this.domainsEndpoint = 'domains'
     this.channelError = new Errors()
   }
 
@@ -77,7 +75,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -109,7 +107,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -151,7 +149,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/things/${thingID}/${this.channelsEndpoint}?${new URLSearchParams(
+          `${domainId}/things/${thingID}/${this.channelsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -195,7 +193,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}?${new URLSearchParams(
+          `${domainId}/${this.channelsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -238,7 +236,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/channels/${channel.id}`,
+          `${domainId}/channels/${channel.id}`,
           this.thingsUrl
         ).toString(),
         options
@@ -273,7 +271,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/disable`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/disable`,
           this.thingsUrl
         ).toString(),
         options
@@ -308,7 +306,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/enable`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/enable`,
           this.thingsUrl
         ).toString(),
         options
@@ -348,7 +346,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/permissions`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/permissions`,
           this.thingsUrl
         ).toString(),
         options
@@ -394,7 +392,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/users/assign`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/users/assign`,
           this.thingsUrl
         ).toString(),
         options
@@ -440,7 +438,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/users/unassign`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/users/unassign`,
           this.thingsUrl
         ).toString(),
         options
@@ -475,7 +473,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl
+          `${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl
         ).toString(),
         options
       )
@@ -518,7 +516,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/channels/${channelId}/groups?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/channels/${channelId}/groups?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -561,7 +559,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/connect`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/connect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -601,7 +599,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/connect`, this.thingsUrl).toString(),
+        new URL(`${domainId}/connect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -643,7 +641,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/disconnect`, this.thingsUrl
+          `${domainId}/disconnect`, this.thingsUrl
         ).toString(),
         options
       )
@@ -685,7 +683,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/disconnect`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/disconnect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -727,7 +725,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/channels/${channelId}/users?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/channels/${channelId}/users?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -768,7 +766,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/groups/assign`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/groups/assign`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -808,7 +806,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.channelsEndpoint}/${channelId}/groups/unassign`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/groups/unassign`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {

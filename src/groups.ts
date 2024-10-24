@@ -26,7 +26,6 @@ export default class Groups {
   private readonly thingsUrl?: URL
   private readonly contentType: string
   private readonly groupsEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly groupError: Errors
 
   public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
@@ -38,7 +37,6 @@ export default class Groups {
     }
     this.contentType = 'application/json'
     this.groupsEndpoint = 'groups'
-    this.domainsEndpoint = 'domains'
     this.groupError = new Errors()
   }
 
@@ -74,7 +72,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -109,7 +107,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -151,7 +149,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -184,7 +182,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/permissions`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/permissions`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -224,7 +222,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -257,7 +255,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/enable`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/enable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -290,7 +288,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/disable`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/disable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -315,7 +313,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -354,7 +352,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -392,7 +390,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -430,7 +428,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -468,7 +466,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/channels?${new URLSearchParams(stringParams).toString()}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/channels?${new URLSearchParams(stringParams).toString()}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -506,7 +504,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -543,7 +541,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.groupsEndpoint}/${groupId}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {

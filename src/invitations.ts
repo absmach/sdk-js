@@ -17,14 +17,12 @@ export default class Invitations {
   private readonly invitationsUrl: URL
   private readonly contentType: string
   private readonly invitationsEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly invitationError: Errors
 
   public constructor (invitationsUrl: string) {
     this.invitationsUrl = new URL(invitationsUrl)
     this.contentType = 'application/json'
     this.invitationsEndpoint = 'invitations'
-    this.domainsEndpoint = 'domains'
     this.invitationError = new Errors()
   }
 
@@ -54,7 +52,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -88,7 +86,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -126,7 +124,7 @@ export default class Invitations {
     try {
       const response = await fetch(
         new URL(
-            `${this.domainsEndpoint}/${domainId}/${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+            `${domainId}/${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
             this.invitationsUrl
         ).toString(),
         options
@@ -160,7 +158,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -193,7 +191,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {

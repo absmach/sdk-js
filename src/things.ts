@@ -27,7 +27,6 @@ export default class Things {
   private readonly usersUrl?: URL
   private readonly contentType: string
   private readonly thingsEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly thingError: Errors
 
   public constructor ({ thingsUrl, usersUrl }: { thingsUrl: string, usersUrl?: string }) {
@@ -39,7 +38,6 @@ export default class Things {
     }
     this.contentType = 'application/json'
     this.thingsEndpoint = 'things'
-    this.domainsEndpoint = 'domains'
     this.thingError = new Errors()
   }
 
@@ -67,7 +65,7 @@ export default class Things {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -113,7 +111,7 @@ export default class Things {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -159,7 +157,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/channels/${channelID}/${this.thingsEndpoint}?${new URLSearchParams(
+          `${domainId}/channels/${channelID}/${this.thingsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -198,7 +196,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/enable`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/enable`,
           this.thingsUrl
         ).toString(),
         options
@@ -234,7 +232,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/disable`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/disable`,
           this.thingsUrl
         ).toString(),
         options
@@ -285,7 +283,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thing.id}`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}`,
           this.thingsUrl
         ).toString(),
         options
@@ -336,7 +334,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thing.id}/secret`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}/secret`,
           this.thingsUrl
         ).toString(),
         options
@@ -389,7 +387,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thing.id}/tags`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}/tags`,
           this.thingsUrl
         ).toString(),
         options
@@ -430,7 +428,7 @@ export default class Things {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -474,7 +472,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/permissions`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/permissions`,
           this.thingsUrl
         ).toString(), options
       )
@@ -527,7 +525,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
@@ -562,7 +560,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/users?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/users?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -609,7 +607,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/share`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/share`,
           this.thingsUrl
         ).toString(),
         options
@@ -655,7 +653,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}/unshare`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/unshare`,
           this.thingsUrl
         ).toString(),
         options
@@ -691,7 +689,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/${this.thingsEndpoint}/${thingId}`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}`,
           this.thingsUrl
         ).toString(),
         options

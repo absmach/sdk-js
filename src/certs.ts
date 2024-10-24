@@ -19,14 +19,12 @@ export default class Certs {
   private readonly certsUrl: URL
   private readonly contentType: string
   private readonly certsEndpoint: string
-  private readonly domainsEndpoint: string
   private readonly certsError: Errors
 
   constructor (certsUrl: string) {
     this.certsUrl = new URL(certsUrl)
     this.contentType = 'application/json'
     this.certsEndpoint = 'certs'
-    this.domainsEndpoint = 'domains'
     this.certsError = new Errors()
   }
 
@@ -59,7 +57,7 @@ export default class Certs {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.certsEndpoint}`, this.certsUrl).toString(),
+        new URL(`${domainId}/${this.certsEndpoint}`, this.certsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -93,7 +91,7 @@ export default class Certs {
     }
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/serials/${thingID}`, this.certsUrl).toString(),
+        new URL(`${domainId}/serials/${thingID}`, this.certsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -128,7 +126,7 @@ export default class Certs {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
+        new URL(`${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -162,7 +160,7 @@ export default class Certs {
 
     try {
       const response = await fetch(
-        new URL(`${this.domainsEndpoint}/${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
+        new URL(`${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
         options
       )
       if (!response.ok) {
