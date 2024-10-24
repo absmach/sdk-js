@@ -20,7 +20,6 @@ export default class Channels {
    * @param {string} content_type - Content type for the requests which is an application
    * json
    * @param {string} channelsEndpoint - Endpoint for the channels' service.
-   * @param {string} domainsEndpoint - Endpoint for the domains' service.
    * @returns {Object} -Channels object
    *
    */
