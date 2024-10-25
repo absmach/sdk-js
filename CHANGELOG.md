@@ -1,5 +1,12 @@
 # @absmach/magistrala-sdk
 
+## 0.6.2
+
+### Patch Changes
+
+- 66fb8a4: move host url from sdk param to specific function param. This enables flexibility of the UI to allow for multitenancy
+- 66fb8a4: add documentation
+
 ## 0.6.1
 
 ### Patch Changes
