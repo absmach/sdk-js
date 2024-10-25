@@ -46,7 +46,7 @@ describe('Invitations', () => {
     }
     fetchMock.mockResponseOnce(JSON.stringify(SendInvitationResponse))
 
-    const response = await sdk.invitations.SendInvitation(invitation, domainId, token)
+    const response = await sdk.invitations.SendInvitation(invitation, token)
     expect(response).toEqual(SendInvitationResponse)
   })
 

@@ -14,10 +14,9 @@ const domainId = '<domainId>'
 mySdk.invitations.SendInvitation(
   {
     user_id: '<userID>',
-    domain_id: '<domainID>',
+    domain_id: domainId,
     relation: 'administrator'
   },
-  domainId,
   token
 )
   .then((response: any) => {
