@@ -26,12 +26,11 @@ export default class Invitations {
     this.invitationError = new Errors()
   }
 
-  public async SendInvitation (invitation: Invitation, domainId: string, token: string): Promise<Response> {
+  public async SendInvitation (invitation: Invitation, token: string): Promise<Response> {
     // SendInvitation sends an invitation to the email address associated with the given user.
     /**
      * @method SendInvitation - sends an invitation to the email address associated with the given user.
      * @param {Object} invitation - The invitation object.
-     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The response object which has a status and a message.
      * @example
@@ -52,7 +51,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
+        new URL(`${invitation.domain_id as string}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
