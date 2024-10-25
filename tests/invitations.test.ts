@@ -60,7 +60,7 @@ describe('Invitations', () => {
   test('invitations should return a list of invitations and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitationsPage))
 
-    const response = await sdk.invitations.Invitations(queryParams, token)
+    const response = await sdk.invitations.Invitations(queryParams, domainId, token)
     expect(response).toEqual(invitationsPage)
   })
 

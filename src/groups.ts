@@ -40,13 +40,14 @@ export default class Groups {
     this.groupError = new Errors()
   }
 
-  public async CreateGroup (group: Group, token: string): Promise<Group> {
+  public async CreateGroup (group: Group, domainId: string, token: string): Promise<Group> {
     // Creates a new group
     /**
-     * @method Create - Creates a new group once the user is authenticated.
+     * @method CreateGroup - Creates a new group once the user is authenticated.
      * and a valid token is provided. The group's parent or child status in the
      * heirarchy can also be established.
      * @param {object} group - The group object to be created.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's token.
      * @example
      * const group = {
@@ -71,7 +72,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(this.groupsEndpoint, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -85,11 +86,12 @@ export default class Groups {
     }
   }
 
-  public async Group (groupID: string, token: string): Promise<Group> {
+  public async Group (groupId: string, domainId: string, token: string): Promise<Group> {
     // Gets information about a group by ID
     /**
-     * @method Get - Provide a group's information once given the group ID and a valid token.
-     * @param {string} groupID - The group's ID.
+     * @method Group - Provide a group's information once given the group ID and a valid token.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object.
      * @example
@@ -105,7 +107,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -119,11 +121,12 @@ export default class Groups {
     }
   }
 
-  public async Groups (queryParams: PageMetadata, token: string): Promise<GroupsPage> {
+  public async Groups (queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
     // Get a list of enabled groups
     /**
      * @method Groups - Provides a list of all the groups in the database once given a valid token.
      * @param {string} token - The user's access token.
+     * @param {string} domainId - The Domain ID.
      * @param {Object} queryParams - Query parameters.
      * @returns {object} - Returns a list of all the groups in the database.
      * @example
@@ -146,7 +149,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -160,11 +163,12 @@ export default class Groups {
     }
   }
 
-  public async GroupPermissions (groupID: string, token: string): Promise<Permissions> {
+  public async GroupPermissions (groupId: string, domainId: string, token: string): Promise<Permissions> {
     // Gets a group permissions by ID
     /**
      * @method GroupPermissions - Provides a group's permissions once given the group ID and a valid token.
-     * @param {string} groupID - The group's ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group's permissions in a string array.
      */
@@ -178,7 +182,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/permissions`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/permissions`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -192,12 +196,13 @@ export default class Groups {
     }
   }
 
-  public async UpdateGroup (group: Group, token: string): Promise<Group> {
+  public async UpdateGroup (group: Group, domainId: string, token: string): Promise<Group> {
     // Updates a group's information such a name and metadata.
     /**
      * @method UpdateGroup - Updates a group's information such a name and metadata when given a
      * valid token and group ID.
      * @param {object} group - The group object to be updated.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns the updated group object.
      * @example
@@ -217,7 +222,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -231,11 +236,12 @@ export default class Groups {
     }
   }
 
-  public async EnableGroup (groupID: string, token: string): Promise<Group> {
+  public async EnableGroup (groupId: string, domainId: string, token: string): Promise<Group> {
     // Enable a group.
     /**
-     * @method EnableGroup - Enables a group when given a valid token and group ID.
-     * @param {string} group_id - The group's ID.
+     * @method EnableGroup - Enables a previously disabled group when given a valid token and group ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
@@ -249,7 +255,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/enable`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/enable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -263,11 +269,12 @@ export default class Groups {
     }
   }
 
-  public async DisableGroup (groupID: string, token: string): Promise<Group> {
+  public async DisableGroup (groupId: string, domainId: string, token: string): Promise<Group> {
     // Disable a group.
     /**
      * @method DisableGroup - Disables a group when given a valid token and group ID.
-     * @param {string} group_id - The group's ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
@@ -281,7 +288,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/disable`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/disable`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -295,7 +302,7 @@ export default class Groups {
     }
   }
 
-  public async DeleteGroup (groupID: string, token: string): Promise<Response> {
+  public async DeleteGroup (groupId: string, domainId: string, token: string): Promise<Response> {
     const options: RequestInit = {
       method: 'DELETE',
       headers: {
@@ -306,7 +313,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -320,19 +327,20 @@ export default class Groups {
     }
   }
 
-  public async AddUserToGroup (groupID: string, userIDs: string[], relation: GroupRelation, token: string): Promise<Response> {
+  public async AddUserToGroup (groupId: string, userIds: string[], relation: GroupRelation, domainId: string, token: string): Promise<Response> {
     // Adds a user to a group thus creating a membership
     /**
      * @method AddUserToGroup -Assigns a user to a group when given a valid token, group ID,
      * user IDs, and relation. This allows the user to perform
      * some action on the group.
      * @param {string} groupId - The group's ID.
-     * @param {Array} userIDs - The members IDs.
+     * @param {Array} userIds - The members IDs.
      * @param {String} relation - The member's role.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
-    const req = { user_ids: userIDs, relation }
+    const req = { user_ids: userIds, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -344,7 +352,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users/assign`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -358,19 +366,20 @@ export default class Groups {
     }
   }
 
-  public async RemoveUserFromGroup (groupID: string, userIDs: string[], relation: GroupRelation, token: string): Promise<Response> {
+  public async RemoveUserFromGroup (groupId: string, userIds: string[], relation: GroupRelation, domainId: string, token: string): Promise<Response> {
     // Removes a user from a group thus deleting a membership
     /**
      * @method RemoveUserToGroup - Unassigns a user from a group when given a valid token, group ID,
      * user IDs, and relation. This removes the user's ability to perform
      * some action on the group.
      * @param {string} groupId - The group's ID.
-     * @param {Array} userIDs - The members IDs.
+     * @param {Array} userIds - The members IDs.
      * @param {String} relation - The member's role.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
-    const req = { user_ids: userIDs, relation }
+    const req = { user_ids: userIds, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -382,7 +391,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users/unassign`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -396,12 +405,13 @@ export default class Groups {
     }
   }
 
-  public async ListGroupUsers (groupID: string, queryParams: PageMetadata, token: string): Promise<UsersPage> {
+  public async ListGroupUsers (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<UsersPage> {
     // Get a group's users.
     /**
      * @method ListGroupUsers - Provides a list of a groups' users when provided with
      * a valid token and group ID.
-     * @param {string} groupID - The group's ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's users.
@@ -419,7 +429,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -433,12 +443,13 @@ export default class Groups {
     }
   }
 
-  public async ListGroupChannels (groupID: string, queryParams: PageMetadata, token: string): Promise<ChannelsPage> {
+  public async ListGroupChannels (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<ChannelsPage> {
     // Get a group's channels.
     /**
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
      * a valid token and group ID.
-     * @param {string} groupID - The group's ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's channels.
@@ -456,7 +467,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/channels?${new URLSearchParams(stringParams).toString()}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/channels?${new URLSearchParams(stringParams).toString()}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -470,12 +481,13 @@ export default class Groups {
     }
   }
 
-  public async Parents (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
+  public async Parents (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
     // Get a group's parents.
     /**
      * @method Parents - Provides a list of a groups' parents when provided with
      * a valid token and group ID.
-     * @param {string} groupID - The group's ID.
+     * @param {string} groupId - The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's parents.
@@ -493,7 +505,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -507,11 +519,12 @@ export default class Groups {
     }
   }
 
-  public async Children (groupID: string, queryParams: PageMetadata, token: string): Promise<GroupsPage> {
+  public async Children (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
     // Get a group's children.
     /**
      * @method Children - Provides a list of a groups' children.
      * @param {string} groupId- The group's ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's children.
@@ -529,7 +542,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${this.groupsEndpoint}/${groupID}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {

@@ -9,11 +9,12 @@ const mySdk = new SDK({
 })
 
 const token = '<token>'
+const domainId = '<domainId>'
 
 mySdk.invitations.SendInvitation(
   {
     user_id: '<userID>',
-    domain_id: '<domainID>',
+    domain_id: domainId,
     relation: 'administrator'
   },
   token
@@ -42,6 +43,7 @@ mySdk.invitations.Invitations(
     limit: 10,
     offset: 0
   },
+  domainId,
   token
 )
   .then((response: any) => {

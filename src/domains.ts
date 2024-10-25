@@ -109,7 +109,7 @@ export default class Domains {
 
     /**
      * @method Domain - retrieves domain with provided ID.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object domain.
      */
@@ -141,7 +141,7 @@ export default class Domains {
     // DomainPermissions retrieves domain permissions with provided ID.
     /**
      * @method DomainPermissions - retrieves domain permissions with provided ID.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
@@ -247,7 +247,7 @@ export default class Domains {
     // ListDomainUsers returns list of users for the given domain ID and filters.
     /**
      * @method ListDomainUsers - retrieves all users for a domain with provided query parameters.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {object} queryParams - query parameters such as total, offset, limit.
      * @param {string} token - user token.
      * @returns {object} - returns an object UsersPage that shows a list of users.
@@ -282,8 +282,8 @@ export default class Domains {
   public async EnableDomain (domainID: string, token: string): Promise<Response> {
     // EnableDomain enables domain with provided ID.
     /**
-     * @method EnableDomain - Enables domain with provided ID.
-     * @param {string} domainID - domain ID.
+     * @method EnableDomain - Enables a previously disabled domain with provided ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object Response that carries the status code and a response message.
      */
@@ -315,7 +315,7 @@ export default class Domains {
     // DisableDomain disables domain with provided ID.
     /**
      * @method DisableDomain - Disables domain with provided ID.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object Response that carries the status code and a response message.
      */
@@ -347,7 +347,7 @@ export default class Domains {
     // AddUsertoDomain adds user to domain.
     /**
      * @method AddUsertoDomain - Adds user to domain.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {array} userIDs - array of user IDs.
      * @param {string} relation - user relation to domain such as 'administrator', 'member'.
      */
@@ -381,7 +381,7 @@ export default class Domains {
     // RemoveUserfromDomain removes user from domain.
     /**
      * @method RemoveUserfromDomain - Removes user from domain.
-     * @param {string} domainID - domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} userID - user ID.
      * @returns {object} - returns an object Response that carries the status code and a response message.
      */

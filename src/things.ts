@@ -41,7 +41,19 @@ export default class Things {
     this.thingError = new Errors()
   }
 
-  public async Create (thing: Thing, token: string): Promise<Thing> {
+  public async Create (thing: Thing, domainId: string, token: string): Promise<Thing> {
+    // Creates a new thing
+    /**
+     * @method Create - Creates a new thing.
+     * @param {Object} thing - Thing object.
+     * @param {string} domainId - The Domain ID.
+     * @param {String} token - Access token.
+     * @returns {Object} - Thing object.
+     * @example
+     * const thing = {
+     * "name":"thing1",
+     * }
+     */
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -53,7 +65,7 @@ export default class Things {
 
     try {
       const response = await fetch(
-        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -69,12 +81,14 @@ export default class Things {
 
   public async CreateThings (
     things: Thing[],
+    domainId: string,
     token: string
   ): Promise<ThingsPage> {
     // Creates multiple things.
     /**
      * @method CreateThings - Creates multiple things.
      * @param {Object} things - Array of things.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -84,6 +98,8 @@ export default class Things {
      * "tags": [
      * "tag1"
      * ],
+     * }
+     * ]
      * */
     const options: RequestInit = {
       method: 'POST',
@@ -95,7 +111,7 @@ export default class Things {
     }
     try {
       const response = await fetch(
-        new URL(`${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}/bulk`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -112,14 +128,17 @@ export default class Things {
   public async ThingsByChannel (
     channelID: string,
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<ThingsPage> {
-    // Retrieves list of channels connected to specified thing with pagination metadata.
+    // Retrieves list of things connected to specified channel with pagination metadata.
     /**
-     * @method GetByChannel - Retrieves list of channels connected to specified thing
+     * @method ThingsByChannel - Retrieves list of things connected to specified channel
      * with pagination metadata.
-     * @param {string} thing_id - Thing ID.
+     * @param {string} channelID - channel ID.
      * @param {Object} queryParams - Query parameters such as offset and limit.
+     * @param {string} domainId - The Domain ID.
+     * @param {string} token - User token.
      * @returns {Object} - Channels list.
      */
 
@@ -138,7 +157,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `channels/${channelID}/${this.thingsEndpoint}?${new URLSearchParams(
+          `${domainId}/channels/${channelID}/${this.thingsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -156,11 +175,49 @@ export default class Things {
     }
   }
 
-  public async Disable (thing: Thing, token: string): Promise<Thing> {
+  public async Enable (thingId: string, domainId: string, token: string): Promise<Thing> {
+    // Enables a thing.
+    /**
+     * @method Enable - Enables a previously disabled thing when provided with a valid token and thing ID.
+     * @param {string} thingID - Thing ID.
+     * @param {string} domainId - The Domain ID.
+     * @param {string} token - User token.
+     * @returns {Object} - Returns updated thing.
+     */
+
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.thingsEndpoint}/${thingId}/enable`,
+          this.thingsUrl
+        ).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.thingError.HandleError(errorRes.message, response.status)
+      }
+      const enabledThing: Thing = await response.json()
+      return enabledThing
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async Disable (thingId: string, domainId: string, token: string): Promise<Thing> {
     // Disables thing.
     /**
-     * @method Disable - Deletes a thing when provided with a valid token and thing ID.
-     * @param {string} thing_id - Thing ID.
+     * @method Disable - Disables a thing when provided with a valid token, domain ID and thing ID.
+     * @param {string} thingId - Thing ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Returns disabled thing
      */
@@ -170,13 +227,12 @@ export default class Things {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(thing)
+      }
     }
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}/disable`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/disable`,
           this.thingsUrl
         ).toString(),
         options
@@ -192,13 +248,13 @@ export default class Things {
     }
   }
 
-  public async UpdateThing (thing: Thing, token: string): Promise<Thing> {
+  public async UpdateThing (thing: Thing, domainId: string, token: string): Promise<Thing> {
     // Updates thing.
     /**
      * @method Update - Updates thing when provided with a valid token,
-     * thing ID and thing object.
-     * @param {string} thing_id - Thing ID.
+     * domain ID and thing object.
      * @param {Object} thing - Thing object.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -227,7 +283,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}`,
           this.thingsUrl
         ).toString(),
         options
@@ -243,11 +299,11 @@ export default class Things {
     }
   }
 
-  public async UpdateThingSecret (thing: Thing, token: string): Promise<Thing> {
+  public async UpdateThingSecret (thing: Thing, domainId: string, token: string): Promise<Thing> {
     // Updates thing secret.
     /**
-     * @method UpdateThingSecret - Updates thing secret when provided with a valid token,
-     * thing ID and thing object.
+     * @method UpdateThingSecret - Updates thing secret when provided with a valid token and domain ID,
+     * domain ID and thing object.
      * @param {string} thing_id - Thing ID.
      * @param {Object} thing - Thing object.
      * @param {string} token - User token.
@@ -278,7 +334,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}/secret`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}/secret`,
           this.thingsUrl
         ).toString(),
         options
@@ -294,14 +350,14 @@ export default class Things {
     }
   }
 
-  public async UpdateThingTags (thing: Thing, token: string): Promise<Thing> {
+  public async UpdateThingTags (thing: Thing, domainId: string, token: string): Promise<Thing> {
     // Updates thing tags.
     /**
      * @method UpdateThingTags - Updates thing tags when provided with a valid token,
-     * thing ID and thing object.
+     * domain ID and thing object.
      *
-     * @param {string} thing_id - Thing ID.
      * @param {Object} thing - Thing object.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing object.
      * @example
@@ -331,7 +387,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}/tags`,
+          `${domainId}/${this.thingsEndpoint}/${thing.id}/tags`,
           this.thingsUrl
         ).toString(),
         options
@@ -347,17 +403,18 @@ export default class Things {
     }
   }
 
-  public async Thing (thingId: string, token: string): Promise<Thing> {
-    // Gets a user
+  public async Thing (thingId: string, domainId: string, token: string): Promise<Thing> {
+    // Gets a thing
     /**
-     * Provides information about the user with provided ID. The user is
-     * retrieved using authorization user_token.
-     * @method User - Gets a user.
-     * @param {String} userId - User ID.
+     * Provides information about the thing with provided ID. The thing is
+     * retrieved using authorization token.
+     * @method Thing - Gets a Thing.
+     * @param {String} thingId - Thing ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Access token.
-     * @returns {Object} - User object.
+     * @returns {Object} - Thing object.
      * @example
-     * const userId = "886b4266-77d1-4258-abae-2931fb4f16de"
+     * const thingId = "886b4266-77d1-4258-abae-2931fb4f16de"
      *
      */
 
@@ -371,32 +428,7 @@ export default class Things {
 
     try {
       const response = await fetch(
-        new URL(`${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
-        options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.message, response.status)
-      }
-      const thingData: Thing = await response.json()
-      return thingData
-    } catch (error) {
-      throw error
-    }
-  }
-
-  public async IdentifyThing (thingKey: string): Promise<Thing> {
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Thing ${thingKey}`
-      }
-    }
-
-    try {
-      const response = await fetch(
-        new URL(this.thingsEndpoint, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.thingsEndpoint}/${thingId}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -411,14 +443,16 @@ export default class Things {
   }
 
   public async ThingsPermissions (
-    thingID: string,
+    thingId: string,
+    domainId: string,
     token: string
   ): Promise<Permissions> {
     // Retrieves thing permissions.
     /**
      * @method Permissions - Retrieves thing permissions when provided with a valid token
      * and thing ID.
-     * @param {string}
+     * @param {string} thingId - Thing ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Thing permissions.
      * @example
@@ -438,7 +472,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thingID}/permissions`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/permissions`,
           this.thingsUrl
         ).toString(), options
       )
@@ -453,45 +487,9 @@ export default class Things {
     }
   }
 
-  public async Enable (thing: Thing, token: string): Promise<Thing> {
-    // Enables a thing.
-    /**
-     * @method Enable - Enables a thing when provided with a valid token and thing ID.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Returns updated thing.
-     */
-
-    const options: RequestInit = {
-      method: 'POST',
-      headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(thing)
-    }
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${this.thingsEndpoint}/${thing.id}/enable`,
-          this.thingsUrl
-        ).toString(),
-        options
-      )
-      if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.thingError.HandleError(errorRes.message, response.status)
-      }
-      const enabledThing: Thing = await response.json()
-      return enabledThing
-    } catch (error) {
-      throw error
-    }
-  }
-
   public async Things (
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<ThingsPage> {
     // Gets all things with pagination.
@@ -501,6 +499,7 @@ export default class Things {
      *
      * @method Things - Gets all things with pagination.
      * @param {Object} queryParams - Query parameters.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Access token.
      * @returns {Object} - Thing object.
      * @example
@@ -526,7 +525,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.thingsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
@@ -545,6 +544,7 @@ export default class Things {
   public async ListThingUsers (
     thingId: string,
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<UsersPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -560,7 +560,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thingId}/users?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/users?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -580,13 +580,16 @@ export default class Things {
     thingId: string,
     Relation: Relation,
     userIDs: string[],
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Shares a thing with a user.
     /**
      * @method ShareThing - Shares a thing with a user.
      * @param {string} thingId - Thing ID.
-     * @param {string} userId - User ID.
+     * @param {Relation} Relation - User relation to the thing.
+     * @param {string} domainId - The Domain ID.
+     * @param  {string []} userIDs - Array of user ID's.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *
@@ -604,7 +607,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thingId}/share`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/share`,
           this.thingsUrl
         ).toString(),
         options
@@ -624,13 +627,16 @@ export default class Things {
     thingId: string,
     Relation: string,
     userIDs: string[],
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Shares a thing with a user.
     /**
      * @method UnShareThing - UnShares a thing with a user.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} user_id - User ID.
+     * @param {string} thingId - Thing ID.
+     * @param  {string []} userIDs - Array of user ID's.
+     * @param {string} Relation - User relation to the thing.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * @returns {Object} - Nothing
      *
@@ -647,7 +653,7 @@ export default class Things {
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thingId}/unshare`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}/unshare`,
           this.thingsUrl
         ).toString(),
         options
@@ -663,25 +669,27 @@ export default class Things {
     }
   }
 
-  public async DeleteThing (thing: Thing, token: string): Promise<Response> {
+  public async DeleteThing (thingId: string, domainId: string, token: string): Promise<Response> {
     // Deletes a thing.
     /**
      * @method DeleteThing - Deletes a thing.
-     * @param {string}
+     * @param {string} thingId - Thing ID.
+     * @param {string} domainId - The Domain ID.
+     * @param {string} token - User token.
+     * @returns {Object} - Nothing
      *  */
     const options: RequestInit = {
       method: 'DELETE',
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(thing)
+      }
     }
 
     try {
       const response = await fetch(
         new URL(
-          `${this.thingsEndpoint}/${thing.id}`,
+          `${domainId}/${this.thingsEndpoint}/${thingId}`,
           this.thingsUrl
         ).toString(),
         options

@@ -9,11 +9,13 @@ const mySdk = new SDK({
 })
 
 const token = '<token>'
+const domainId = '<domainId>'
 
 mySdk.groups
   .CreateGroup({
     name: '<groupName>'
   },
+  domainId,
   token
   )
   .then((response: any) => {
@@ -26,6 +28,7 @@ mySdk.groups
 mySdk.groups
   .Group(
     '<groupID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -38,6 +41,7 @@ mySdk.groups
 mySdk.groups
   .Groups(
     { offset: 0, limit: 10 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -50,6 +54,7 @@ mySdk.groups
 mySdk.groups
   .GroupPermissions(
     '<groupID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -65,6 +70,7 @@ mySdk.groups
       name: '<groupName>',
       id: '<groupID>'
     },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -77,6 +83,7 @@ mySdk.groups
 mySdk.groups
   .EnableGroup(
     '<groupID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -89,6 +96,7 @@ mySdk.groups
 mySdk.groups
   .DisableGroup(
     '<groupID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -101,6 +109,7 @@ mySdk.groups
 mySdk.groups
   .DeleteGroup(
     '<groupID>',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -115,6 +124,7 @@ mySdk.groups
     '<groupID>',
     ['<userID>', '<userID>'],
     'administrator',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -129,6 +139,7 @@ mySdk.groups
     '<groupID>',
     ['<userID>', '<userID>'],
     'administrator',
+    domainId,
     token
   )
   .then((response: any) => {
@@ -142,6 +153,7 @@ mySdk.groups
   .ListGroupUsers(
     '<groupID>',
     { offset: 0, limit: 10 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -155,6 +167,7 @@ mySdk.groups
   .ListGroupChannels(
     '<groupID>',
     { offset: 0, limit: 10 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -168,6 +181,7 @@ mySdk.groups
   .Children(
     '<groupID>',
     { offset: 0, limit: 10, level: 2 },
+    domainId,
     token
   )
   .then((response: any) => {
@@ -181,6 +195,7 @@ mySdk.groups
   .Parents(
     '<groupID>',
     { offset: 0, limit: 10, level: 2 },
+    domainId,
     token
   )
   .then((response: any) => {

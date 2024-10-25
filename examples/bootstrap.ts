@@ -7,6 +7,7 @@ const mySdk = new SDK({
 })
 
 const token = '<token>'
+const domainId = '<domainId>'
 
 mySdk.bootstrap.AddBootstrap(
   {
@@ -15,6 +16,7 @@ mySdk.bootstrap.AddBootstrap(
     thing_id: '<thingId>',
     name: '<bootstrapName>'
   },
+  domainId,
   token
 )
   .then((response: any) => {
@@ -31,6 +33,7 @@ mySdk.bootstrap.Whitelist(
     thing_id: '<thingId>',
     name: '<bootstrapName>'
   },
+  domainId,
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -44,6 +47,7 @@ mySdk.bootstrap.UpdateBootstrap(
     name: 'Bootstrap1',
     thing_id: '<thingId>'
   },
+  domainId,
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -54,6 +58,7 @@ mySdk.bootstrap.UpdateBootstrap(
 
 mySdk.bootstrap.ViewBootstrap(
   '<thingId>',
+  domainId,
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -69,6 +74,7 @@ mySdk.bootstrap.UpdateBootstrapCerts(
     client_key: '<clientKey>',
     ca_cert: '<caCert>'
   },
+  domainId,
   token
 )
   .then((response: any) => {
@@ -80,6 +86,7 @@ mySdk.bootstrap.UpdateBootstrapCerts(
 
 mySdk.bootstrap.RemoveBootstrap(
   '<thingId>',
+  domainId,
   token)
   .then((response: any) => {
     console.log('response:', response)
@@ -101,6 +108,7 @@ mySdk.bootstrap.Bootstrap(
 
 mySdk.bootstrap.Bootstraps(
   { offset: 0, limit: 10 },
+  domainId,
   token
 )
   .then((response: any) => {
@@ -112,6 +120,7 @@ mySdk.bootstrap.Bootstraps(
 
 mySdk.bootstrap.UpdateBootstrapConnection(
   '<thingId>',
+  domainId,
   ['<channelId>', '<channelId2>'],
   token)
   .then((response: any) => {

@@ -51,7 +51,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(this.invitationsEndpoint, this.invitationsUrl).toString(),
+        new URL(`${invitation.domain_id as string}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -65,11 +65,13 @@ export default class Invitations {
     }
   }
 
-  public async Invitation (userID: string, domainID: string, token: string): Promise<Invitation> {
+  public async Invitation (userId: string, domainId: string, token: string): Promise<Invitation> {
     // Invitation returns the invitation for the given user and domain.
     /**
      * @method Invitation - returns the invitation for the given user and domain.
      * @param {Object} invitation - The invitation object.
+     * @param {string} userId - The User ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The invitation object.
      */
@@ -83,7 +85,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${userID}/${domainID}`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -97,11 +99,12 @@ export default class Invitations {
     }
   }
 
-  public async Invitations (queryParams: PageMetadata, token: string): Promise<InvitationsPage> {
+  public async Invitations (queryParams: PageMetadata, domainId: string, token: string): Promise<InvitationsPage> {
     // Invitations returns a list of invitations.
     /**
      * @method Invitations - returns a list of invitations.
      * @param {Object} queryParams - The query parameters such as limit and offset.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The invitations page object that has a list of invitations and pagination information.
      */
@@ -120,7 +123,7 @@ export default class Invitations {
     try {
       const response = await fetch(
         new URL(
-            `${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+            `${domainId}/${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
             this.invitationsUrl
         ).toString(),
         options
@@ -136,11 +139,11 @@ export default class Invitations {
     }
   }
 
-  public async AcceptInvitation (domainID: string, token: string): Promise<Response> {
+  public async AcceptInvitation (domainId: string, token: string): Promise<Response> {
     // AcceptInvitation accepts an invitation by adding the user to the domain that they were invited to.
     /**
      * @method AcceptInvitation - accepts an invitation by adding the user to the domain that they were invited to.
-     * @param {String} domainID - The Domain ID.
+     * @param {String} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The response object which has a status and a message.
      */
@@ -149,13 +152,12 @@ export default class Invitations {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ domain_id: domainID })
+      }
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -169,12 +171,12 @@ export default class Invitations {
     }
   }
 
-  public async DeleteInvitation (userID: string, domainID: string, token: string): Promise<Response> {
+  public async DeleteInvitation (userId: string, domainId: string, token: string): Promise<Response> {
     // DeleteInvitation deletes an invitation.
     /**
      * @method DeleteInvitation - deletes an invitation.
-     * @param {string} userID - The Users ID.
-     * @param {string} domainID - The Domain ID.
+     * @param {string} userId - The Users ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The response object which has a status and a message.
      */
@@ -183,13 +185,12 @@ export default class Invitations {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ user_id: userID, domain_id: domainID })
+      }
     }
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${userID}/${domainID}`, this.invitationsUrl).toString(),
+        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {

@@ -42,6 +42,7 @@ export default class Channels {
 
   public async CreateChannel (
     channel: Channel,
+    domainId: string,
     token: string
   ): Promise<Channel> {
     // Creates a new a channel
@@ -49,18 +50,17 @@ export default class Channels {
      * @method Create - Creates new channels when provided with a channel object
      * with viable fresh information and a valid token.
      * @param {Object} channel - Channel Object with a name and id.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      * @example
      * const channel = {
      * "name": "channelName",
      * "description": "long channel description",
-     * "parent_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
      *  "metadata": {
      *       "domain": "example.com"
      *  },
      * "status": "enabled",
-     * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
      * }
      *
      */
@@ -74,7 +74,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(this.channelsEndpoint, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -88,11 +88,12 @@ export default class Channels {
     }
   }
 
-  public async Channel (channelId: string, token: string): Promise<Channel> {
+  public async Channel (channelId: string, domainId: string, token: string): Promise<Channel> {
     // Retrieves channel with specified id.
     /**
      * @method Get - Retrieves channel with specified id and a valid token.
      * @param {String} channel_id - Channel id.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      */
@@ -105,7 +106,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -122,13 +123,15 @@ export default class Channels {
   public async ChannelsByThing (
     thingID: string,
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<ChannelsPage> {
-    // Retrieves list of things connected to specified channel with pagination metadata.
+    // Retrieves list of channels a thing is connected to with pagination metadata.
     /**
-     * @method GetByThing - Retrieves list of things connected to specified channel with pagination metadata.
+     * @method ChannelsByThing - Retrieves list of channels a thing is connected to with pagination metadata.
      * @param {String} channel_id - Channel id.
      * @param {Object} queryParams - Query parameters for the request.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {List} - Channels Page.
      */
@@ -145,7 +148,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `things/${thingID}/${this.channelsEndpoint}?${new URLSearchParams(
+          `${domainId}/things/${thingID}/${this.channelsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -165,12 +168,14 @@ export default class Channels {
 
   public async Channels (
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<ChannelsPage> {
     // Provides a list of all channels with pagination metadata.
     /**
      * @method GetAll - Provides a list of all channels with pagination metadata.
      * @param {Object} queryParams - Query parameters for the request.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - returns Channels Page
      */
@@ -187,7 +192,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}?${new URLSearchParams(
+          `${domainId}/${this.channelsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.thingsUrl
@@ -207,12 +212,14 @@ export default class Channels {
 
   public async UpdateChannel (
     channel: Channel,
+    domainId: string,
     token: string
   ): Promise<Channel> {
     // Updates channel with specified id.
     /**
      * @method Update - Updates channel with specified id.
      * @param {Object} channel - Channel object with new information.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - returns updated Channel.
      */
@@ -228,7 +235,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `channels/${channel.id}`,
+          `${domainId}/channels/${channel.id}`,
           this.thingsUrl
         ).toString(),
         options
@@ -244,11 +251,12 @@ export default class Channels {
     }
   }
 
-  public async Disable (channel: Channel, token: string): Promise<Channel> {
+  public async Disable (channelId: string, domainId: string, token: string): Promise<Channel> {
     // Disables channel with specified id.
     /**
      * @method Disable - Disables channel with specified id.
-     * @param {Object} channel - Channel object with new information.
+     * @param {Object} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Creturns Disabled channel.
      */
@@ -262,7 +270,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channel.id}/disable`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/disable`,
           this.thingsUrl
         ).toString(),
         options
@@ -278,11 +286,12 @@ export default class Channels {
     }
   }
 
-  public async Enable (channel: Channel, token: string): Promise<Channel> {
+  public async Enable (channelId: string, domainId: string, token: string): Promise<Channel> {
     // Enables channel with specified id.
     /**
-     * @method Enable - Enables channel with specified id.
-     * @param {Object} channel - Channel object with new information.
+     * @method Enable - Enables a previously disabled channel with specified id.
+     * @param {Object} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Returns Enabled Channel.
      */
@@ -296,7 +305,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channel.id}/enable`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/enable`,
           this.thingsUrl
         ).toString(),
         options
@@ -314,6 +323,7 @@ export default class Channels {
 
   public async ChannelPermissions (
     channelId: string,
+    domainId: string,
     token: string
   ): Promise<Permissions> {
     // Retrieves channel permissions.
@@ -321,6 +331,7 @@ export default class Channels {
      * @method ChannelPermission - Retrieves channel permissions with specified id..
      * @param {Object}
      * @param {string} token - Authentication token.
+     * @param {string} domainId - The Domain ID.
      * @returns {object} - returns channel domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
      */
@@ -334,7 +345,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channelId}/permissions`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/permissions`,
           this.thingsUrl
         ).toString(),
         options
@@ -351,22 +362,24 @@ export default class Channels {
   }
 
   public async AddUserToChannel (
-    channelID: string,
-    userIDs: string[],
+    channelId: string,
+    userIds: string[],
     relation: GroupRelation,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Adds user to channel.
     /**
      * @method AddUser - Adds user to channel when provided with a valid token,
      * channel id and a user id.
-     * @param {string} user_id - User ID.
-     * @param {string} channel_id - Channel ID.
+     * @param  {string []} userIds - Array of user id's.
+     * @param {string} channelId - Channel ID.
      * @param {string} relation - The member's role.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns Response - 'User Added Successfully'.
      *  */
-    const req = { user_ids: userIDs, relation }
+    const req = { user_ids: userIds, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -378,7 +391,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channelID}/users/assign`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/users/assign`,
           this.thingsUrl
         ).toString(),
         options
@@ -395,22 +408,24 @@ export default class Channels {
   }
 
   public async RemoveUserFromChannel (
-    channelID: string,
-    userIDs: string[],
+    channelId: string,
+    userIds: string[],
     relation: GroupRelation,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Removes user from channel.
     /**
-     * @method RemoveUser - Removes user from channel when provided with a valid token,
+     * @method RemoveUserFromChannel - Removes user from channel when provided with a valid token,
      * channel id and a user id.
      * @param {String} relation - The member's role.
-     * @param {string} user_id - User ID.
-     * @param {string} channel_id - Channel ID.
+     * @param  {string []} userIds - Array of user id's.
+     * @param {string} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token -  Authentication token.
      * @returns Response - 'User Removed Successfully'.
      * */
-    const req = { user_ids: userIDs, relation }
+    const req = { user_ids: userIds, relation }
     const options: RequestInit = {
       method: 'POST',
       headers: {
@@ -422,7 +437,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channelID}/users/unassign`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/users/unassign`,
           this.thingsUrl
         ).toString(),
         options
@@ -438,11 +453,12 @@ export default class Channels {
     }
   }
 
-  public async DeleteChannel (channel: Channel, token: string): Promise<Response> {
+  public async DeleteChannel (channelId: string, domainId: string, token: string): Promise<Response> {
     // Deletes channel with specified id.
     /**
-     * @method Disable - Deletes channel with specified id.
-     * @param {Object} channel - Channel object with new information.
+     * @method DeleteChannel - Deletes channel with specified id.
+     * @param {Object} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Returns response message.
      */
@@ -451,13 +467,12 @@ export default class Channels {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(channel)
+      }
     }
     try {
       const response = await fetch(
         new URL(
-          `${this.channelsEndpoint}/${channel.id}`, this.thingsUrl
+          `${domainId}/${this.channelsEndpoint}/${channelId}`, this.thingsUrl
         ).toString(),
         options
       )
@@ -475,13 +490,15 @@ export default class Channels {
   public async ListChannelUserGroups (
     channelId: string,
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<GroupsPage> {
     // Lists groups in a channel.
     /**
      * @method ListChannelUsersGroups - Lists groups in a channel.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} channelId - Channel ID.
      * @param {Object} queryParams - Query parameters for the request.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token
      * @returns {Object} - Groups Page.
      * */
@@ -498,7 +515,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `channels/${channelId}/groups?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/channels/${channelId}/groups?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -517,15 +534,17 @@ export default class Channels {
   public async ConnectThing (
     thingId: string,
     channelId: string,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Connects thing to channel.
     /**
-     * @method Connect - Connects thing to channel when provided with a valid token,
+     * @method ConnectThing - Connects thing to channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} thingId - Thing ID.
+     * @param {string} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
      */
@@ -539,7 +558,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}/things/${thingId}/connect`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/connect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -556,14 +575,16 @@ export default class Channels {
   public async Connect (
     thingId: string,
     channelId: string,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Connects thing to channel.
     /**
-     * @method Connects - Connect thing to channel when provided with a valid token,
+     * @method Connect - Connect thing to channel when provided with a valid token,
      * channel id and thing id.
-     * @param thing_ids - thing ID.
-     * @param channel_ids - channel Is.
+     * @param thingId - thing ID.
+     * @param channelId - channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns Response - 'Thing Connected Successfully'.
      */
@@ -577,7 +598,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL('/connect', this.thingsUrl).toString(),
+        new URL(`${domainId}/connect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -594,6 +615,7 @@ export default class Channels {
   public async Disconnect (
     thingId: string,
     channelId: string,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Disconnects thing from channel.
@@ -601,8 +623,9 @@ export default class Channels {
      * @method Disconnect - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} thingId - Thing ID.
+     * @param {string} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
      */
@@ -617,7 +640,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          '/disconnect', this.thingsUrl
+          `${domainId}/disconnect`, this.thingsUrl
         ).toString(),
         options
       )
@@ -635,15 +658,16 @@ export default class Channels {
   public async DisconnectThing (
     thingId: string,
     channelId: string,
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Disconnects thing from channel.
     /**
-     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
+     * @method DisconnectThing - Disconnects thing from channel when provided with a valid token,
      * channel id and a thing id. The thing must have an action that it can perform over
      * the channel.
-     * @param {string} thing_id - Thing ID.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} thingId - Thing ID.
+     * @param {string} channelId - Channel ID.
      * @param {string} token - Authentication token.
      *
      */
@@ -658,7 +682,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}/things/${thingId}/disconnect`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/disconnect`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -675,13 +699,15 @@ export default class Channels {
   public async ListChannelUsers (
     channelId: string,
     queryParams: PageMetadata,
+    domainId: string,
     token: string
   ): Promise<UsersPage> {
     // Lists users in a channel.
     /**
      * @method ListChannelUsers - Lists users in a channel.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} channelId - Channel ID.
      * @param {Object} queryParams - Query parameters for the request.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns {Object} - Users Page.
      * */
@@ -698,7 +724,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `channels/${channelId}/users?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/channels/${channelId}/users?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -717,6 +743,7 @@ export default class Channels {
   public async AddUserGroupToChannel (
     channelId: string,
     userGroupIds: string[],
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Adds user group to channel.
@@ -724,7 +751,8 @@ export default class Channels {
      * @method AddUserGroup - Adds user group to channel when provided with a valid token,
      * channel id and a user group id.
      * @param {string []} userGroupIds - User Group IDs.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * */
     const options = {
@@ -737,7 +765,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}/groups/assign`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/groups/assign`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -754,6 +782,7 @@ export default class Channels {
   public async RemoveUserGroupFromChannel (
     channelId: string,
     userGroupIds: string[],
+    domainId: string,
     token: string
   ): Promise<Response> {
     // Removes user group from channel.
@@ -761,7 +790,8 @@ export default class Channels {
      * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
      * channel id and a user group id.
      * @param {string []} userGroupIds - User Group IDs.
-     * @param {string} channel_id - Channel ID.
+     * @param {string} channelId - Channel ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * */
     const options = {
@@ -775,7 +805,7 @@ export default class Channels {
     }
     try {
       const response = await fetch(
-        new URL(`${this.channelsEndpoint}/${channelId}/groups/unassign`, this.thingsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/groups/unassign`, this.thingsUrl).toString(),
         options
       )
       if (!response.ok) {
