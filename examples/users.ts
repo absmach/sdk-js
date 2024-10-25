@@ -191,7 +191,7 @@ mySdk.users.ListUserGroups(
   })
 
 mySdk.users.ResetPasswordRequest(
-  '<email>'
+  '<email>', '<hostUrl>'
 )
   .then((response: any) => {
     console.log('response: ', response)
