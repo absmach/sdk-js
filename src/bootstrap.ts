@@ -329,6 +329,7 @@ export default class Bootstrap {
     * @method UpdateConnection - Allows a logged in user to update the connection of a bootstrap configuration.
     * @param {string} thing_id - The thing_id of the configuration to be updated.
     * @param {object} channels - The channels object to be used for the update.
+    * @param {string} domainId - The Domain ID.
     * @param {string} token - The token to be used for authentication.
     * */
     const options: RequestInit = {

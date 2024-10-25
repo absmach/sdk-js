@@ -47,7 +47,7 @@ export default class Groups {
      * and a valid token is provided. The group's parent or child status in the
      * heirarchy can also be established.
      * @param {object} group - The group object to be created.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's token.
      * @example
      * const group = {
@@ -91,7 +91,7 @@ export default class Groups {
     /**
      * @method Group - Provide a group's information once given the group ID and a valid token.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object.
      * @example
@@ -126,7 +126,7 @@ export default class Groups {
     /**
      * @method Groups - Provides a list of all the groups in the database once given a valid token.
      * @param {string} token - The user's access token.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {Object} queryParams - Query parameters.
      * @returns {object} - Returns a list of all the groups in the database.
      * @example
@@ -168,7 +168,7 @@ export default class Groups {
     /**
      * @method GroupPermissions - Provides a group's permissions once given the group ID and a valid token.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group's permissions in a string array.
      */
@@ -202,7 +202,7 @@ export default class Groups {
      * @method UpdateGroup - Updates a group's information such a name and metadata when given a
      * valid token and group ID.
      * @param {object} group - The group object to be updated.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns the updated group object.
      * @example
@@ -241,7 +241,7 @@ export default class Groups {
     /**
      * @method EnableGroup - Enables a group when given a valid token and group ID.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
@@ -274,7 +274,7 @@ export default class Groups {
     /**
      * @method DisableGroup - Disables a group when given a valid token and group ID.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
@@ -336,7 +336,7 @@ export default class Groups {
      * @param {string} groupId - The group's ID.
      * @param {Array} userIds - The members IDs.
      * @param {String} relation - The member's role.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
@@ -375,6 +375,7 @@ export default class Groups {
      * @param {string} groupId - The group's ID.
      * @param {Array} userIds - The members IDs.
      * @param {String} relation - The member's role.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
@@ -410,7 +411,7 @@ export default class Groups {
      * @method ListGroupUsers - Provides a list of a groups' users when provided with
      * a valid token and group ID.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's users.
@@ -448,7 +449,7 @@ export default class Groups {
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
      * a valid token and group ID.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's channels.
@@ -486,7 +487,7 @@ export default class Groups {
      * @method Parents - Provides a list of a groups' parents when provided with
      * a valid token and group ID.
      * @param {string} groupId - The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's parents.
@@ -523,7 +524,7 @@ export default class Groups {
     /**
      * @method Children - Provides a list of a groups' children.
      * @param {string} groupId- The group's ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @param {object} queryParams - The query parameters such as offset and limit.
      * @returns {object} - Returns a list of a group's children.

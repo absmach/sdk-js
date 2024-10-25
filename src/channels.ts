@@ -50,7 +50,7 @@ export default class Channels {
      * @method Create - Creates new channels when provided with a channel object
      * with viable fresh information and a valid token.
      * @param {Object} channel - Channel Object with a name and id.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      * @example
@@ -93,7 +93,7 @@ export default class Channels {
     /**
      * @method Get - Retrieves channel with specified id and a valid token.
      * @param {String} channel_id - Channel id.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Channel object.
      */
@@ -131,7 +131,7 @@ export default class Channels {
      * @method ChannelsByThing - Retrieves list of channels a thing is connected to with pagination metadata.
      * @param {String} channel_id - Channel id.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {List} - Channels Page.
      */
@@ -175,7 +175,7 @@ export default class Channels {
     /**
      * @method GetAll - Provides a list of all channels with pagination metadata.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - returns Channels Page
      */
@@ -219,7 +219,7 @@ export default class Channels {
     /**
      * @method Update - Updates channel with specified id.
      * @param {Object} channel - Channel object with new information.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - returns updated Channel.
      */
@@ -256,7 +256,7 @@ export default class Channels {
     /**
      * @method Disable - Disables channel with specified id.
      * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Creturns Disabled channel.
      */
@@ -291,7 +291,7 @@ export default class Channels {
     /**
      * @method Enable - Enables channel with specified id.
      * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Returns Enabled Channel.
      */
@@ -331,7 +331,7 @@ export default class Channels {
      * @method ChannelPermission - Retrieves channel permissions with specified id..
      * @param {Object}
      * @param {string} token - Authentication token.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @returns {object} - returns channel domain permissions eg:
      *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
      */
@@ -375,7 +375,7 @@ export default class Channels {
      * @param  {string []} userIds - Array of user id's.
      * @param {string} channelId - Channel ID.
      * @param {string} relation - The member's role.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns Response - 'User Added Successfully'.
      *  */
@@ -421,7 +421,7 @@ export default class Channels {
      * @param {String} relation - The member's role.
      * @param  {string []} userIds - Array of user id's.
      * @param {string} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token -  Authentication token.
      * @returns Response - 'User Removed Successfully'.
      * */
@@ -458,7 +458,7 @@ export default class Channels {
     /**
      * @method DeleteChannel - Deletes channel with specified id.
      * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.
      * @returns {Object} - Returns response message.
      */
@@ -498,7 +498,7 @@ export default class Channels {
      * @method ListChannelUsersGroups - Lists groups in a channel.
      * @param {string} channelId - Channel ID.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token
      * @returns {Object} - Groups Page.
      * */
@@ -544,7 +544,7 @@ export default class Channels {
      * the channel.
      * @param {string} thingId - Thing ID.
      * @param {string} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
      */
@@ -584,7 +584,7 @@ export default class Channels {
      * channel id and thing id.
      * @param thingId - thing ID.
      * @param channelId - channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns Response - 'Thing Connected Successfully'.
      */
@@ -625,7 +625,7 @@ export default class Channels {
      * the channel.
      * @param {string} thingId - Thing ID.
      * @param {string} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
      */
@@ -707,7 +707,7 @@ export default class Channels {
      * @method ListChannelUsers - Lists users in a channel.
      * @param {string} channelId - Channel ID.
      * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns {Object} - Users Page.
      * */
@@ -752,7 +752,7 @@ export default class Channels {
      * channel id and a user group id.
      * @param {string []} userGroupIds - User Group IDs.
      * @param {string} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * */
     const options = {
@@ -791,7 +791,7 @@ export default class Channels {
      * channel id and a user group id.
      * @param {string []} userGroupIds - User Group IDs.
      * @param {string} channelId - Channel ID.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.
      * */
     const options = {

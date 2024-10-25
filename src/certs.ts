@@ -35,7 +35,7 @@ export default class Certs {
      * Requires a thingID and a valid time in hours as well as a token.
      * @param {string} thingID - The thingID of the thing to be issued a certificate.
      * @param {string} valid - The time in hours for which the certificate is valid such as '10h'
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {String} token - Access token.
      * @example
      * const certs = {
@@ -77,7 +77,7 @@ export default class Certs {
      * @method ViewCertByThing - Allows a logged in user to view a certificate serial once they
      * provide a valid connected thing-id and token.
      * @param {string} thingID - The thingID of the thing whose certificate is to be viewed.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The token to be used for authentication.
      *
      */
@@ -111,7 +111,7 @@ export default class Certs {
      * @method ViewCert - Allows a logged in user to view a certificate once they
      * provide a valid cert-id and token.
      * @param {string} id - The ID of the certificate to be viewed.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The token to be used for authentication.
      *
      */
@@ -146,7 +146,7 @@ export default class Certs {
      * @method RevokeCert - Allows a logged in user to delete a certificate once they
      * provide a valid thing-id and token.
      * @param {string} id - The id of the certificate to be revoked.
-     * @param {string} domainId - Domain ID.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - The token to be used for authentication.
      */
 
