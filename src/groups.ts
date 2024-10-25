@@ -239,7 +239,7 @@ export default class Groups {
   public async EnableGroup (groupId: string, domainId: string, token: string): Promise<Group> {
     // Enable a group.
     /**
-     * @method EnableGroup - Enables a group when given a valid token and group ID.
+     * @method EnableGroup - Enables a previously disabled group when given a valid token and group ID.
      * @param {string} groupId - The group's ID.
      * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.

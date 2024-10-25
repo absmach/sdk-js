@@ -178,7 +178,7 @@ export default class Things {
   public async Enable (thingId: string, domainId: string, token: string): Promise<Thing> {
     // Enables a thing.
     /**
-     * @method Enable - Enables a thing when provided with a valid token and thing ID.
+     * @method Enable - Enables a previously disabled thing when provided with a valid token and thing ID.
      * @param {string} thingID - Thing ID.
      * @param {string} domainId - The Domain ID.
      * @param {string} token - User token.

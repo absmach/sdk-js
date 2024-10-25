@@ -289,7 +289,7 @@ export default class Channels {
   public async Enable (channelId: string, domainId: string, token: string): Promise<Channel> {
     // Enables channel with specified id.
     /**
-     * @method Enable - Enables channel with specified id.
+     * @method Enable - Enables a previously disabled channel with specified id.
      * @param {Object} channelId - Channel ID.
      * @param {string} domainId - The Domain ID.
      * @param {String} token - Authentication token.

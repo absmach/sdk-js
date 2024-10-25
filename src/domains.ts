@@ -282,7 +282,7 @@ export default class Domains {
   public async EnableDomain (domainID: string, token: string): Promise<Response> {
     // EnableDomain enables domain with provided ID.
     /**
-     * @method EnableDomain - Enables domain with provided ID.
+     * @method EnableDomain - Enables a previously disabled domain with provided ID.
      * @param {string} domainId - The Domain ID.
      * @param {string} token - user token.
      * @returns {object} - returns an object Response that carries the status code and a response message.
