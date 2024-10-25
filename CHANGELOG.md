@@ -1,5 +1,12 @@
 # @absmach/magistrala-sdk
 
+## 0.6.1
+
+### Patch Changes
+
+- c4f60b9: remove domains endpoints
+- c4f60b9: update things, channels, groups, bootstrap, certs api endpoints to have domain id
+
 ## 0.6.0
 
 ### Minor Changes
