@@ -265,7 +265,7 @@ export default class Domains {
 
     try {
       const response = await fetch(
-        new URL(`/domains/${domainID}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(`${domainID}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
         options
       )
       if (!response.ok) {
