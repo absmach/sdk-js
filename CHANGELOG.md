@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.6.3
+
+### Patch Changes
+
+- 43a05d9: remove domains prefix from domain users url
+
 ## 0.6.2
 
 ### Patch Changes
