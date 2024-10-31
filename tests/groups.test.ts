@@ -52,10 +52,12 @@ describe('Groups', () => {
 
   const user: User = {
     id: '886b4266-77d1-4258-abae-2931fb4f16de',
-    name: 'fkatwigs',
+    first_name: 'tahliah',
+    last_name: 'barnett',
     tags: ['holy', 'terrain'],
+    email: 'fkatwigs@email.com',
     credentials: {
-      identity: 'fkatwigs@email.com',
+      username: 'fkatwigs@email.com',
       secret: '12345678'
     },
     role: 'administrator',

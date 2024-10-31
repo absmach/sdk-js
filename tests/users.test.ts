@@ -9,7 +9,8 @@ import type {
   GroupsPage,
   Thing,
   ThingsPage,
-  Channel
+  Channel,
+  Token
 } from '../src/sdk'
 enableFetchMocks()
 
@@ -19,14 +20,17 @@ const sdk = new SDK({ usersUrl })
 describe('Users', () => {
   const user: User = {
     id: '886b4266-77d1-4258-abae-2931fb4f16de',
-    name: 'fkatwigs',
+    first_name: 'tahliah',
+    last_name: 'barnett',
+    email: 'fkatwigs@email.com',
     tags: ['holy', 'terrain'],
     credentials: {
-      identity: 'fkatwigs@email.com',
+      username: 'fkatwigs',
       secret: '12345678'
     },
-    role: 'administrator',
-    status: 'enabled'
+    role: 'admin',
+    status: 'enabled',
+    profile_picture: 'https://holyterrain.com'
   }
 
   const UsersPage: UsersPage = {
@@ -37,12 +41,18 @@ describe('Users', () => {
   }
 
   const login: Login = {
-    identity: 'twigs@email.com',
+    email: 'twigs@email.com',
     secret: '12345678',
-    domain_id: '886b4266-77d1-4258-abae-2931fb4f16de'
+    username: 'fkatwigs'
+  }
+
+  const tokenObject: Token = {
+    access_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9',
+    refresh_token: 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9'
   }
 
   const token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9'
+  const refreshToken = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9'
 
   const queryParams = {
     offset: 0,
@@ -114,20 +124,20 @@ describe('Users', () => {
   })
 
   test('create token should create a token for a user and return success', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(login))
+    fetchMock.mockResponseOnce(JSON.stringify(tokenObject))
 
     const response = await sdk.users.CreateToken(login)
-    expect(response).toEqual(login)
+    expect(response).toEqual(tokenObject)
   })
 
   test("refresh token should refresh a user's token and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(login))
+    fetchMock.mockResponseOnce(JSON.stringify(tokenObject))
 
-    const response = await sdk.users.RefreshToken(login, token)
-    expect(response).toEqual(login)
+    const response = await sdk.users.RefreshToken(refreshToken)
+    expect(response).toEqual(tokenObject)
   })
 
-  test('users should return a list of users and return success', async () => {
+  test('users should get a list of users and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage))
 
     const response = await sdk.users.Users(queryParams, token)
@@ -141,10 +151,24 @@ describe('Users', () => {
     expect(response).toEqual(user)
   })
 
-  test('update user identity should update a user identity and return success', async () => {
+  test('update user email should update a user email address and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user))
 
-    const response = await sdk.users.UpdateUserIdentity(user, token)
+    const response = await sdk.users.UpdateEmail(user, token)
+    expect(response).toEqual(user)
+  })
+
+  test('update username should update a username and return success', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(user))
+
+    const response = await sdk.users.UpdateUsername(user, token)
+    expect(response).toEqual(user)
+  })
+
+  test('update user profile picture should update a user profile picture URL and return success', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(user))
+
+    const response = await sdk.users.UpdateProfilePicture(user, token)
     expect(response).toEqual(user)
   })
 

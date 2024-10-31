@@ -35,6 +35,7 @@ export type {
   Relation,
   GroupRelation,
   credentials,
+  thingcredentials,
   UserBasicInfo,
   DomainBasicInfo,
   Permissions,
