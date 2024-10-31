@@ -11,8 +11,8 @@ const token = '<token>'
 
 mySdk.users
   .Create({
-    first_name: '<first_name>',
-    last_name: '<last_name>',
+    first_name: '<firstName>',
+    last_name: '<lastName>',
     email: '<email>',
     credentials: {
       username: '<username>',
@@ -48,7 +48,7 @@ mySdk.users.UserProfile(
   })
 
 mySdk.users.CreateToken(
-  { email: '<userEmail>', secret: '<password>' }
+  { email: '<email>', secret: '<password>' }
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -78,7 +78,7 @@ mySdk.users.RefreshToken(
   })
 
 mySdk.users.Update(
-  { id: '<userId>', first_name: '<first_name>', last_name: '<last_name>' },
+  { id: '<userId>', first_name: '<firstName>', last_name: '<lastName>' },
   token
 )
   .then((response: any) => {
@@ -111,7 +111,7 @@ mySdk.users.UpdateUsername(
   })
 
 mySdk.users.UpdateProfilePicture(
-  { id: '<userId>', profile_picture: '<profile_picture>' },
+  { id: '<userId>', profile_picture: '<profilePicture>' },
   token
 )
   .then((response: any) => {
@@ -133,7 +133,7 @@ mySdk.users.UpdateUserTags(
   })
 
 mySdk.users.UpdateUserRole(
-  { id: '<userId>', role: '<userRole>' },
+  { id: '<userId>', role: '<role>' },
   token
 )
   .then((response: any) => {
@@ -188,8 +188,9 @@ mySdk.users.UpdateUserPassword(
   })
 
 mySdk.users.ListUserChannels(
+  '<domainId>',
   '<userId>',
-  { domain_id: '<domainId>', offset: 0, limit: 10 },
+  { offset: 0, limit: 10 },
   token
 )
   .then((response: any) => {
@@ -200,8 +201,9 @@ mySdk.users.ListUserChannels(
   })
 
 mySdk.users.ListUserThings(
+  '<domainId>',
   '<userId>',
-  { domain_id: '<domainId>', offset: 0, limit: 10 },
+  { offset: 0, limit: 10 },
   token
 )
   .then((response: any) => {
@@ -212,8 +214,9 @@ mySdk.users.ListUserThings(
   })
 
 mySdk.users.ListUserGroups(
+  '<domainId>',
   '<userId>',
-  { domain_id: '<domainId>', offset: 0, limit: 10 },
+  { offset: 0, limit: 10 },
   token
 )
   .then((response: any) => {
@@ -257,7 +260,7 @@ mySdk.users.DeleteUser(
   })
 
 mySdk.users.SearchUsers(
-  { username: '<username>', id: '<userId>' },
+  { username: '<username>' },
   token
 )
   .then((response: any) => {

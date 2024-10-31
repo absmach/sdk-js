@@ -90,15 +90,13 @@ export default class Users {
     // Issue Access and Refresh Token used for authenticating into the system
     /**
      * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system. A user can use either their email or username to login.
-     * @param {Object} user - User object.
+     * @param {Object} login - Login object with username, password and email.
      * @returns {Object} - Access, Refresh Token and Access Type.
      * @example
-     * const user = {
-     *"email": "jdoe@example.com"
-     * "credentials": {
-     *   "username": "admin",
+     * const login = {
+     *  "email": "jdoe@example.com"
+     *  "username": "admin",
      *  "password": "12345678"
-     * }
      * }
      */
 
@@ -307,7 +305,7 @@ export default class Users {
     /**
      * @method UpdateUserEmail - Updates the profile picture of a user.
      * The profile picture is updated using authorization user_token. The profile picture is
-     * represehnted as a string URL.
+     * provided as a string URL.
      * @param {Object} user - User object.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
@@ -702,6 +700,7 @@ export default class Users {
   }
 
   public async ListUserGroups (
+    domainId: string,
     userId: string,
     queryParams: PageMetadata,
     token: string
@@ -711,7 +710,7 @@ export default class Users {
      * Gets the various groups a user belongs to.
      * @method ListUserGroups - Get memberships of a user.
      * @param {String} userId - Member ID that can be gotten from the pageMetadata.
-     * @param {String} domainId - Domain ID that is gotten from the pageMetadata.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Groups object.
@@ -731,7 +730,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${queryParams.domain_id}/${this.usersEndpoint}/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -749,6 +748,7 @@ export default class Users {
 
   public async ListUserThings (
     userId: string,
+    domainId: string,
     queryParams: PageMetadata,
     token: string
   ): Promise<ThingsPage> {
@@ -757,7 +757,7 @@ export default class Users {
      * Gets the various things a user owns.
      * @method ListUserThings - Get memberships of a user.
      * @param {String} userId - Member ID.
-     * @param {String} domainId - Domain ID that is gotten from the pageMetadata.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Things object.
@@ -776,7 +776,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${queryParams.domain_id}/${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
@@ -793,6 +793,7 @@ export default class Users {
   }
 
   public async ListUserChannels (
+    domainId: string,
     userId: string,
     queryParams: PageMetadata,
     token: string
@@ -802,7 +803,7 @@ export default class Users {
      * Gets the various channels a user owns.
      * @method ListUserChannels - Get channels of a user.
      * @param {String} userId - Member ID.
-     * @param {String} domainId - Domain ID that is gotten from the pageMetadata.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Channels object.
@@ -822,7 +823,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${queryParams.domain_id}/${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options

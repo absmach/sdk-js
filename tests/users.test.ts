@@ -60,6 +60,7 @@ describe('Users', () => {
   }
 
   const userId = '886b4266-77d1-4258-abae-2931fb4f16de'
+  const domainId = '886b4266-77d1-4258-abae-2931fb4f16de'
 
   const group: Group = {
     id: '886b4266-77d1-4258-abae-2931fb4f16de',
@@ -224,21 +225,21 @@ describe('Users', () => {
   test('list user groups should return a list of groups associated with a user and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(GroupsPage))
 
-    const response = await sdk.users.ListUserGroups(userId, queryParams, token)
+    const response = await sdk.users.ListUserGroups(domainId, userId, queryParams, token)
     expect(response).toEqual(GroupsPage)
   })
 
   test('list user things should return a list of things associated with a user and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(ThingsPage))
 
-    const response = await sdk.users.ListUserThings(userId, queryParams, token)
+    const response = await sdk.users.ListUserThings(domainId, userId, queryParams, token)
     expect(response).toEqual(ThingsPage)
   })
 
   test('list user channels should return a list of channels associated with a user and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage))
 
-    const response = await sdk.users.ListUserChannels(userId, queryParams, token)
+    const response = await sdk.users.ListUserChannels(domainId, userId, queryParams, token)
     expect(response).toEqual(channelsPage)
   })
 
