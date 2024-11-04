@@ -90,7 +90,7 @@ export default class Users {
     // Issue Access and Refresh Token used for authenticating into the system
     /**
      * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system. A user can use either their email or username to login.
-     * @param {Object} login - Login object with username, password and email.
+     * @param {Object} login - Login object with identity and secret. The identity can either be the email or the username of the user to be logged in.
      * @returns {Object} - Access, Refresh Token and Access Type.
      * @example
      * const login = {

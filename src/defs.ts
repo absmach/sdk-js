@@ -112,8 +112,7 @@ export interface ChannelsPage {
 }
 
 export interface Login {
-  username?: string
-  email?: string
+  identity?: string
   secret?: string
 }
 

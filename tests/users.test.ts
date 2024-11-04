@@ -41,9 +41,8 @@ describe('Users', () => {
   }
 
   const login: Login = {
-    email: 'twigs@email.com',
     secret: '12345678',
-    username: 'fkatwigs'
+    identity: 'fkatwigs'
   }
 
   const tokenObject: Token = {
