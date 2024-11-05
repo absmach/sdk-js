@@ -212,7 +212,6 @@ export interface PageMetadata {
   list_perms?: boolean
   invited_by?: string
   user_id?: string
-  domain_id?: string
   relation?: string
   from?: number
   to?: number

@@ -56,7 +56,7 @@ export default class Users {
      * "last_name": "Doe",
      * "credentials": {
      *    "username": "admin",
-     *   "password": "12345678"
+     *   "secret": "12345678"
      * }
      * }
      */
@@ -94,9 +94,8 @@ export default class Users {
      * @returns {Object} - Access, Refresh Token and Access Type.
      * @example
      * const login = {
-     *  "email": "jdoe@example.com"
-     *  "username": "admin",
-     *  "password": "12345678"
+     *  "identity": "admin",
+     *  "secret": "12345678"
      * }
      */
 
@@ -166,7 +165,7 @@ export default class Users {
   }
 
   public async Update (user: User, token: string): Promise<User> {
-    // Update a user names and metadata
+    // Update a user's names and metadata
     /**
      * @method Update - Updates a user's firstName, lastName and metadata.
      * @param {Object} user - User object.
