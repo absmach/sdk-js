@@ -1,5 +1,17 @@
 # @absmach/magistrala-sdk
 
+## 0.7.0
+
+### Minor Changes
+
+- e754d29: update users client to match Magistrala with new fields and functions
+
+### Patch Changes
+
+- e754d29: update createToken example
+- e754d29: rename password back to secret in credentials
+- e754d29: modify issue token function to use identity instead of username
+
 ## 0.6.3
 
 ### Patch Changes
