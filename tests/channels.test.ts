@@ -23,14 +23,16 @@ describe('Channels', () => {
     description: ''
   }
   const user: User = {
-    name: 'userName',
-    id: 'bb7edb32-2eac-4aad-aebe-ed96fe073879',
+    id: '886b4266-77d1-4258-abae-2931fb4f16de',
+    first_name: 'tahliah',
+    last_name: 'barnett',
+    tags: ['holy', 'terrain'],
+    email: 'fkatwigs@email.com',
     credentials: {
-      identity: 'useridentity'
+      username: 'fkatwigs@email.com',
+      secret: '12345678'
     },
-    metadata: {
-      domain: 'example.com'
-    },
+    role: 'administrator',
     status: 'enabled'
   }
   const group: Group = {

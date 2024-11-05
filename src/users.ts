@@ -51,9 +51,12 @@ export default class Users {
      * @returns {Object} - User object.
      * @example
      * const user = {
+     *  "email": "admin@example.com",
+     * "first_name": "John",
+     * "last_name": "Doe",
      * "credentials": {
-     *    "identity": "admin@example.com",
-     *   "password": "12345678"
+     *    "username": "admin",
+     *   "secret": "12345678"
      * }
      * }
      */
@@ -86,15 +89,13 @@ export default class Users {
   public async CreateToken (login: Login): Promise<Token> {
     // Issue Access and Refresh Token used for authenticating into the system
     /**
-     * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system.
-     * @param {Object} user - User object.
-     * @returns {Object} - Access and Refresh Token.
+     * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system. A user can use either their email or username to login.
+     * @param {Object} login - Login object with identity and secret. The identity can either be the email or the username of the user to be logged in.
+     * @returns {Object} - Access, Refresh Token and Access Type.
      * @example
-     * const user = {
-     * "credentials": {
-     *   "identity": "admin@example.com",
-     *  "password": "12345678"
-     * }
+     * const login = {
+     *  "identity": "admin",
+     *  "secret": "12345678"
      * }
      */
 
@@ -124,16 +125,14 @@ export default class Users {
     }
   }
 
-  public async RefreshToken (login: Login, refreshToken: string): Promise<Token> {
+  public async RefreshToken (refreshToken: string): Promise<Token> {
     // provides a new access token and refresh token.
     /**
      * @method Refresh_token - Provides a new access token and refresh token.
-     * @param {Object} user - User object.
-     * @param {String} refreshToken - Refresh token.
+     * @param {String} refreshToken - refresh_token which is gotten from the token struct and used to get a new access token.
      * @returns {Object} - Access and Refresh Token.
      * @example
-     * const user = {
-     *   "identity": "c52d-3b0d-43b9-8c3e-275c087d875af"
+     * const refreshToken = "c52d-3b0d-43b9-8c3e-275c087d875af"
      * }
      *
      */
@@ -143,8 +142,7 @@ export default class Users {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${refreshToken}`
-      },
-      body: JSON.stringify(login)
+      }
     }
 
     try {
@@ -167,16 +165,20 @@ export default class Users {
   }
 
   public async Update (user: User, token: string): Promise<User> {
-    // Update a user
+    // Update a user's names and metadata
     /**
-     * @method Update - Update a user. Updates a user's name and metadata.
+     * @method Update - Updates a user's firstName, lastName and metadata.
      * @param {Object} user - User object.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
      * @example
      * const user = {
      * "id": "c52d-3b0d-43b9-8c3e-275c087d875af",
-     * "name": "John Doe"
+     * "first_name": "John",
+     * "last_name": "Doe",
+     * "metadata": {
+     * "doctor": "bar"
+     * }
      * }
      *
      */
@@ -209,11 +211,54 @@ export default class Users {
     }
   }
 
-  public async UpdateUserIdentity (user: User, token: string): Promise<User> {
-    // Update a user identity
+  public async UpdateEmail (user: User, token: string): Promise<User> {
+    // Update a user email
     /**
-     * @method UpdateUserIdentity - Update a user identity for a currently logged in user.
-     * The user Identity is updated using authorization user_token
+     * @method UpdateEmail - Update a user email for a currently logged in user.
+     * The user Email is updated using authorization user_token
+     * @param {Object} user - User object.
+     * @param {String} token - Access token.
+     * @returns {Object} - User object.
+     * @example
+     * const user = {
+     * "id": "c52d-3b0d-43b9-8c3e-275c087d875af",
+     * "email": "fkatwigs@email.com"
+     *
+     * }
+     */
+
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ email: user.email })
+    }
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.usersEndpoint}/${user.id}/email`,
+          this.usersUrl
+        ).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.userError.HandleError(errorRes.message, response.status)
+      }
+      const userData: User = await response.json()
+      return userData
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async UpdateUsername (user: User, token: string): Promise<User> {
+    // Update a user's Username
+    /**
+     * @method UpdateUsername - Updates a user's username.
+     * The username is updated using authorization user_token
      * @param {Object} user - User object.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
@@ -221,7 +266,7 @@ export default class Users {
      * const user = {
      * "id": "c52d-3b0d-43b9-8c3e-275c087d875af",
      * "credentials": {
-     *  "identity": "fkatwigs@email.com"
+     *  "username": "fkatwigs"
      * }
      *
      * }
@@ -233,12 +278,55 @@ export default class Users {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ identity: user.credentials?.identity })
+      body: JSON.stringify({ username: user.credentials?.username })
     }
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}/${user.id}/identity`,
+          `${this.usersEndpoint}/${user.id}/username`,
+          this.usersUrl
+        ).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.userError.HandleError(errorRes.message, response.status)
+      }
+      const userData: User = await response.json()
+      return userData
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async UpdateProfilePicture (user: User, token: string): Promise<User> {
+    // Update a user profile picture
+    /**
+     * @method UpdateUserEmail - Updates the profile picture of a user.
+     * The profile picture is updated using authorization user_token. The profile picture is
+     * provided as a string URL.
+     * @param {Object} user - User object.
+     * @param {String} token - Access token.
+     * @returns {Object} - User object.
+     * @example
+     * const user = {
+     * "id": "c52d-3b0d-43b9-8c3e-275c087d875af",
+     * "profile_picture": "https://cloudstorage.example.com/bucket-name/user-images/profile-picture.jpg"
+     *}
+     */
+
+    const options: RequestInit = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ profile_picture: user.profile_picture })
+    }
+    try {
+      const response = await fetch(
+        new URL(
+          `${this.usersEndpoint}/${user.id}/picture`,
           this.usersUrl
         ).toString(),
         options
@@ -265,15 +353,11 @@ export default class Users {
      * @returns {Object} - User object.
      * @example
      * const user = {
-     *  "name": "example",
      *      "id": "886b4266-77d1-4258-abae-2931fb4f16de"
      *      "tags": [
      *          "back",
-     *           "end"
+     *         "end"
      *       ]
-     *       "metadata": {
-     *          "foo": "bar"
-     *       }
      *  }
      *
      */
@@ -320,6 +404,9 @@ export default class Users {
      * @param {String} newSecret - New password.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
+     * @example
+     * const oldSecret = "12345678"
+     * const newSecret = "87654321"
      *
      */
 
@@ -360,6 +447,11 @@ export default class Users {
      * @param {String} role - New role.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
+     * @example
+     * const user = {
+     *  "id": "886b4266-77d1-4258-abae-2931fb4f16de",
+     *  "role": "admin"
+     * }
      *
      */
 
@@ -435,14 +527,11 @@ export default class Users {
   public async UserProfile (token: string): Promise<User> {
     // Gets a user's profile
     /**
-     * Provides information about the user with provided ID. The user is
+     * Provides information about the currently logged in user. The user is
      * retrieved using authorization user_token.
      * @method UserProfile - Gets a user's Profile.
-     * @param {String} userId - User ID.
-     * @param {String} token - Access token.
+     * @param {String} token - Access token that is unique to the user.
      * @returns {Object} - User object.
-     * @example
-     * const userId = "886b4266-77d1-4258-abae-2931fb4f16de"
      *
      */
 
@@ -480,13 +569,14 @@ export default class Users {
      * authorization user_token.
      *
      * @method Users - Gets all users with pagination.
-     * @param {Object} queryParams - Query parameters.
+     * @param {Object} queryParams - Query parameters such as total, limit, offset and names.
      * @param {String} token - Access token.
      * @returns {Object} - User object.
      * @example
      * const queryParams = {
      * "offset": 0,
-     * "limit": 10
+     * "limit": 10,
+     * "total": 100,
      * }
      *
      */
@@ -609,6 +699,7 @@ export default class Users {
   }
 
   public async ListUserGroups (
+    domainId: string,
     userId: string,
     queryParams: PageMetadata,
     token: string
@@ -617,7 +708,8 @@ export default class Users {
     /**
      * Gets the various groups a user belongs to.
      * @method ListUserGroups - Get memberships of a user.
-     * @param {String} userId - Member ID.
+     * @param {String} userId - Member ID that can be gotten from the pageMetadata.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Groups object.
@@ -637,7 +729,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
@@ -655,6 +747,7 @@ export default class Users {
 
   public async ListUserThings (
     userId: string,
+    domainId: string,
     queryParams: PageMetadata,
     token: string
   ): Promise<ThingsPage> {
@@ -663,6 +756,7 @@ export default class Users {
      * Gets the various things a user owns.
      * @method ListUserThings - Get memberships of a user.
      * @param {String} userId - Member ID.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Things object.
@@ -681,7 +775,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
@@ -698,6 +792,7 @@ export default class Users {
   }
 
   public async ListUserChannels (
+    domainId: string,
     userId: string,
     queryParams: PageMetadata,
     token: string
@@ -707,6 +802,7 @@ export default class Users {
      * Gets the various channels a user owns.
      * @method ListUserChannels - Get channels of a user.
      * @param {String} userId - Member ID.
+     * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
      * @returns {Object} - Channels object.
@@ -726,7 +822,7 @@ export default class Users {
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
@@ -863,7 +959,7 @@ export default class Users {
      * const queryParams = {
      * "offset": 0,
      * "limit": 10,
-     * "name": "John Doe"
+     * "first_name": "John",
      * "id": "c52d-3b0d-43b9-8c3e-275c087d875af"
      * }
      * @returns {Object} - Users Page object.

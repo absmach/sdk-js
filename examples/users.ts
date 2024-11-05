@@ -11,9 +11,11 @@ const token = '<token>'
 
 mySdk.users
   .Create({
-    name: '<name>',
+    first_name: '<firstName>',
+    last_name: '<lastName>',
+    email: '<email>',
     credentials: {
-      identity: '<useremail>',
+      username: '<username>',
       secret: '<password>'
     }
   })
@@ -46,7 +48,7 @@ mySdk.users.UserProfile(
   })
 
 mySdk.users.CreateToken(
-  { identity: '<userEmail>', secret: '<password>', domain_id: '<domainId>' }
+  { identity: '<username | email>', secret: '<password>' }
 )
   .then((response: any) => {
     console.log('response: ', response)
@@ -56,7 +58,6 @@ mySdk.users.CreateToken(
   })
 
 mySdk.users.RefreshToken(
-  { identity: '<userId>' },
   '<refreshToken>'
 )
   .then((response: any) => {
@@ -67,7 +68,7 @@ mySdk.users.RefreshToken(
   })
 
 mySdk.users.Update(
-  { id: '<userId>', name: '<userName>' },
+  { id: '<userId>', first_name: '<firstName>', last_name: '<lastName>' },
   token
 )
   .then((response: any) => {
@@ -77,8 +78,30 @@ mySdk.users.Update(
     console.log(error)
   })
 
-mySdk.users.UpdateUserIdentity(
-  { id: '<userId>', credentials: { identity: '<userIdentity>' } },
+mySdk.users.UpdateEmail(
+  { id: '<userId>', email: '<email>' },
+  token
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.users.UpdateUsername(
+  { id: '<userId>', credentials: { username: '<username>' } },
+  token
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.users.UpdateProfilePicture(
+  { id: '<userId>', profile_picture: '<profilePicture>' },
   token
 )
   .then((response: any) => {
@@ -100,7 +123,7 @@ mySdk.users.UpdateUserTags(
   })
 
 mySdk.users.UpdateUserRole(
-  { id: '<userId>', role: '<userRole>' },
+  { id: '<userId>', role: '<role>' },
   token
 )
   .then((response: any) => {
@@ -155,6 +178,7 @@ mySdk.users.UpdateUserPassword(
   })
 
 mySdk.users.ListUserChannels(
+  '<domainId>',
   '<userId>',
   { offset: 0, limit: 10 },
   token
@@ -167,6 +191,7 @@ mySdk.users.ListUserChannels(
   })
 
 mySdk.users.ListUserThings(
+  '<domainId>',
   '<userId>',
   { offset: 0, limit: 10 },
   token
@@ -179,6 +204,7 @@ mySdk.users.ListUserThings(
   })
 
 mySdk.users.ListUserGroups(
+  '<domainId>',
   '<userId>',
   { offset: 0, limit: 10 },
   token
@@ -224,7 +250,7 @@ mySdk.users.DeleteUser(
   })
 
 mySdk.users.SearchUsers(
-  { name: '<userName>', id: '<userId>' },
+  { username: '<username>' },
   token
 )
   .then((response: any) => {

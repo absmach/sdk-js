@@ -1,8 +1,11 @@
 export interface UserBasicInfo {
   id?: string
-  name?: string
+  first_name?: string
+  last_name?: string
+  email?: string
   credentials?: credentials
   status?: Status
+  profile_picture?: string
 }
 
 export interface User extends UserBasicInfo {
@@ -22,6 +25,11 @@ export interface UsersPage {
 }
 
 export interface credentials {
+  username?: string
+  secret?: string
+}
+
+export interface thingcredentials {
   identity?: string
   secret?: string
 }
@@ -29,7 +37,7 @@ export interface credentials {
 export interface ThingBasicInfo {
   id?: string
   name?: string
-  credentials?: credentials
+  credentials?: thingcredentials
   status?: Status
 }
 
@@ -106,7 +114,6 @@ export interface ChannelsPage {
 export interface Login {
   identity?: string
   secret?: string
-  domain_id?: string
 }
 
 export interface Token {
@@ -181,8 +188,10 @@ export interface PageMetadata {
   order?: string
   direction?: string
   level?: number
-  identity?: string
-  name?: string
+  email?: string
+  username?: string
+  first_name?: string
+  last_name?: string
   type?: string
   metadata?: Record<string, any>
   status?: string
