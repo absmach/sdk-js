@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.8.1
+
+### Patch Changes
+
+- 963294e: Add permissions to User's struct
+
 ## 0.8.0
 
 ### Minor Changes
