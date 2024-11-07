@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.8.0
+
+### Minor Changes
+
+- 9845a4b: return name to pageMetadata
+
 ## 0.7.0
 
 ### Minor Changes
