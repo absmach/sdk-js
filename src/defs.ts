@@ -10,6 +10,7 @@ export interface UserBasicInfo {
 
 export interface User extends UserBasicInfo {
   role?: string
+  permissions?: string[]
   tags?: string[]
   metadata?: Record<string, any>
   created_at?: Date
