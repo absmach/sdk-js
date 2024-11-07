@@ -192,6 +192,7 @@ export interface PageMetadata {
   username?: string
   first_name?: string
   last_name?: string
+  name?: string
   type?: string
   metadata?: Record<string, any>
   status?: string
