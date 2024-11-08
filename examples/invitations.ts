@@ -15,7 +15,7 @@ mySdk.invitations.SendInvitation(
   {
     user_id: '<userID>',
     domain_id: domainId,
-    relation: 'contributor'
+    relation: 'administrator'
   },
   token
 )
@@ -76,7 +76,7 @@ mySdk.invitations.RejectInvitation(
 
 mySdk.invitations.DeleteInvitation(
   '<userID>',
-  '<domainID>',
+  domainId,
   token
 )
   .then((response: any) => {

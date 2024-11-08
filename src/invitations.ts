@@ -54,7 +54,6 @@ export default class Invitations {
         new URL(`${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
       )
-      console.log('url', response.url)
       if (!response.ok) {
         const errorRes = await response.json()
         throw this.invitationError.HandleError(errorRes.message, response.status)
