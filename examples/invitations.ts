@@ -15,7 +15,7 @@ mySdk.invitations.SendInvitation(
   {
     user_id: '<userID>',
     domain_id: domainId,
-    relation: 'administrator'
+    relation: 'contributor'
   },
   token
 )
@@ -28,7 +28,7 @@ mySdk.invitations.SendInvitation(
 
 mySdk.invitations.Invitation(
   '<userID>',
-  '<domainID>',
+  domainId,
   token
 )
   .then((response: any) => {
@@ -43,7 +43,6 @@ mySdk.invitations.Invitations(
     limit: 10,
     offset: 0
   },
-  domainId,
   token
 )
   .then((response: any) => {
@@ -54,7 +53,18 @@ mySdk.invitations.Invitations(
   })
 
 mySdk.invitations.AcceptInvitation(
-  '<domainID>',
+  domainId,
+  token
+)
+  .then((response: any) => {
+    console.log('response: ', response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+mySdk.invitations.RejectInvitation(
+  domainId,
   token
 )
   .then((response: any) => {
@@ -65,8 +75,8 @@ mySdk.invitations.AcceptInvitation(
   })
 
 mySdk.invitations.DeleteInvitation(
-  '<domainID>',
   '<userID>',
+  '<domainID>',
   token
 )
   .then((response: any) => {
