@@ -1,5 +1,5 @@
 ---
-"@absmach/magistrala-sdk": minor
+"@absmach/magistrala-sdk": patch
 ---
 
 Remove domain id in invitations file
