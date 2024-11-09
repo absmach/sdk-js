@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.8.2
+
+### Patch Changes
+
+- 45fff20: Remove domain id in invitations file
+
 ## 0.8.1
 
 ### Patch Changes
