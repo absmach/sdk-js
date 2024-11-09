@@ -60,7 +60,7 @@ describe('Invitations', () => {
   test('invitations should return a list of invitations and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitationsPage))
 
-    const response = await sdk.invitations.Invitations(queryParams, domainId, token)
+    const response = await sdk.invitations.Invitations(queryParams, token)
     expect(response).toEqual(invitationsPage)
   })
 
@@ -73,6 +73,17 @@ describe('Invitations', () => {
 
     const response = await sdk.invitations.AcceptInvitation(domainId, token)
     expect(response).toEqual(AcceptInvitationResponse)
+  })
+
+  test('reject invitation should reject an invitation and return success', async () => {
+    const RejectInvitationResponse = {
+      status: 200,
+      message: 'Invitation rejected successfully'
+    }
+    fetchMock.mockResponseOnce(JSON.stringify(RejectInvitationResponse))
+
+    const response = await sdk.invitations.RejectInvitation(domainId, token)
+    expect(response).toEqual(RejectInvitationResponse)
   })
 
   test('delete invitation should delete an invitation and return success', async () => {

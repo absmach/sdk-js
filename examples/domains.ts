@@ -8,10 +8,9 @@ const mySdk = new SDK({
 })
 
 const token = '<token>'
-
 mySdk.domains
   .CreateDomain(
-    { name: '<domainName>' },
+    { name: '<domainName>', alias: '<domainAlias>' },
     token
   )
   .then((response: any) => {

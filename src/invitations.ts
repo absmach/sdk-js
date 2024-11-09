@@ -51,7 +51,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${invitation.domain_id as string}/${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -85,7 +85,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${userId}/${domainId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -99,12 +99,11 @@ export default class Invitations {
     }
   }
 
-  public async Invitations (queryParams: PageMetadata, domainId: string, token: string): Promise<InvitationsPage> {
+  public async Invitations (queryParams: PageMetadata, token: string): Promise<InvitationsPage> {
     // Invitations returns a list of invitations.
     /**
      * @method Invitations - returns a list of invitations.
      * @param {Object} queryParams - The query parameters such as limit and offset.
-     * @param {string} domainId - The Domain ID.
      * @param {string} token - The user's access token.
      * @returns {Object} - The invitations page object that has a list of invitations and pagination information.
      */
@@ -123,7 +122,7 @@ export default class Invitations {
     try {
       const response = await fetch(
         new URL(
-            `${domainId}/${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+            `${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
             this.invitationsUrl
         ).toString(),
         options
@@ -144,7 +143,7 @@ export default class Invitations {
     /**
      * @method AcceptInvitation - accepts an invitation by adding the user to the domain that they were invited to.
      * @param {String} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
+     * @param {string} token - The invited user's access token.
      * @returns {Object} - The response object which has a status and a message.
      */
     const options: RequestInit = {
@@ -152,12 +151,13 @@ export default class Invitations {
       headers: {
         'Content-Type': this.contentType,
         Authorization: `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify({ domain_id: domainId })
     }
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
@@ -165,6 +165,39 @@ export default class Invitations {
         throw this.invitationError.HandleError(errorRes.message, response.status)
       }
       const inviteResponse: Response = { status: response.status, message: 'Invitation accepted successfully' }
+      return inviteResponse
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async RejectInvitation (domainId: string, token: string): Promise<Response> {
+    // RejectInvitation rejects an invitation by declining an invitation a user was sent to join a domain.
+    /**
+     * @method RejectInvitation - rejects an invitation by declining an invitation a user was sent to join a domain.
+     * @param {String} domainId - The Domain ID.
+     * @param {string} token - The invited user's access token.
+     * @returns {Object} - The response object which has a status and a message.
+     */
+    const options: RequestInit = {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.contentType,
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ domain_id: domainId })
+    }
+
+    try {
+      const response = await fetch(
+        new URL(`${this.invitationsEndpoint}/reject`, this.invitationsUrl).toString(),
+        options
+      )
+      if (!response.ok) {
+        const errorRes = await response.json()
+        throw this.invitationError.HandleError(errorRes.message, response.status)
+      }
+      const inviteResponse: Response = { status: response.status, message: 'Invitation rejected successfully' }
       return inviteResponse
     } catch (error) {
       throw error
@@ -190,7 +223,7 @@ export default class Invitations {
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.invitationsEndpoint}/${userId}`, this.invitationsUrl).toString(),
+        new URL(`${this.invitationsEndpoint}/${userId}/${domainId}`, this.invitationsUrl).toString(),
         options
       )
       if (!response.ok) {
