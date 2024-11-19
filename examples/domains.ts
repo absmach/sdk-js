@@ -7,8 +7,8 @@ const mySdk = new SDK({
   usersUrl: defaultUrl + ":9002",
 });
 
-const token = "<token>";
-const domainId = "<domainId>";
+const token = "token";
+const domainId = "<domainID>";
 
 mySdk.domains
   .CreateDomain({ name: "<domainName>", alias: "<domainAlias>" }, token)
@@ -119,7 +119,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .CreateDomainRole(domainId, "<role_name>", token)
+  .CreateDomainRole(domainId, "<roleName>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -160,7 +160,99 @@ mySdk.domains
   });
 
 mySdk.domains
-  .DeleteDomainRole(domainId, "<role_name>", token)
+  .DeleteDomainRole(domainId, "<roleName>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .AddDomainRoleActions(
+    domainId,
+    "<roleName>",
+    ["<roleAction1>", "<roleAction2>"],
+    token
+  )
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .ListDomainRoleActions(domainId, "<roleName>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .DeleteDomainRoleActions(
+    domainId,
+    "<roleName>",
+    ["<roleAction1>", "<roleAction2>"],
+    token
+  )
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .DeleteAllDomainRoleActions(domainId, "<roleName>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .AddDomainRoleMembers(domainId, "<roleName>", ["<userID>", "<userID>"], token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .ListDomainRoleMembers(
+    domainId,
+    "<roleName>",
+    { offset: 0, limit: 10 },
+    token
+  )
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .DeleteDomainRoleMembers(
+    domainId,
+    "<roleName>",
+    ["<userID>", "<userID>"],
+    token
+  )
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .DeleteAllDomainRoleMembers(domainId, "<roleName>", token)
   .then((response) => {
     console.log("response: ", response);
   })

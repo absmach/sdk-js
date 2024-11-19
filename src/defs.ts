@@ -191,7 +191,12 @@ export type GroupRelation =
 
 export type Status = "enabled" | "disabled";
 
-export interface PageMetadata {
+export interface BasicPageMeta {
+  total?: number;
+  offset?: number;
+  limit?: number;
+}
+export interface PageMetadata extends BasicPageMeta {
   total?: number;
   offset?: number;
   limit?: number;
