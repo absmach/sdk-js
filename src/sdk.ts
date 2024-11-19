@@ -48,7 +48,12 @@ export type {
   Journal,
   JournalsPage,
   JournalsPageMetadata,
-  HealthInfo
+  HealthInfo,
+  Role,
+  RolePage,
+  EntityActionRole,
+  EntityMemberRole,
+  MembersPage
 } from './defs'
 
 const defaultUrl = 'http://localhost'
