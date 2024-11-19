@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.8.3
+
+### Patch Changes
+
+- 8f198fc: Add domainId to read messages
+
 ## 0.8.2
 
 ### Patch Changes
