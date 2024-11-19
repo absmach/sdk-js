@@ -215,12 +215,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .AddDomainRoleMembers(
-    domainId,
-    "<roleName>",
-    ["<member1>", "<member2>"],
-    token
-  )
+  .AddDomainRoleMembers(domainId, "<roleName>", ["<userID>", "<userID>"], token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -246,7 +241,7 @@ mySdk.domains
   .DeleteDomainRoleMembers(
     domainId,
     "<roleName>",
-    ["<member1>", "<member2>"],
+    ["<userID>", "<userID>"],
     token
   )
   .then((response) => {
