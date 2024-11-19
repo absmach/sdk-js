@@ -2158,7 +2158,7 @@ require = (function () {
             // return fetch(url , options)
             //     .then((response) => {
             //         if (!response.ok) {
-            //             return this.userError.HandleError(this.userError.errors, response.status);
+            //             return Errors.HandleError(this.userError.errors, response.status);
             //             // throw new Error(`HTTP error! Status: ${response.status}`);
             //         }
             //         return response.json();

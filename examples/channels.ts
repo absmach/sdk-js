@@ -1,259 +1,258 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  thingsUrl: defaultUrl + ':9000',
-  usersUrl: defaultUrl + ':9002'
-})
+  thingsUrl: `${defaultUrl}:9000`,
+  usersUrl: `${defaultUrl}:9002`,
+});
 
 // Channels.ts examples.
 
-const token = '<token>'
-const domainId = '<domainId>'
+const token = "<token>";
+const domainId = "<domainId>";
 
 mySdk.channels
-  .CreateChannel(
-    { name: '<channelName>' }, domainId, token)
+  .CreateChannel({ name: "<channelName>" }, domainId, token)
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
-  .Channel('<channelID>', domainId, token)
+  .Channel("<channelID>", domainId, token)
   .then((response: any) => {
-    console.log(response)
+    console.log(response);
   })
   .catch((error: any) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .Channels({ offset: 0, limit: 10 }, domainId, token)
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .UpdateChannel(
-    { id: '<channelId>', name: '<channelName>' },
+    { id: "<channelId>", name: "<channelName>" },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
-  .Disable('<channelId>', domainId, token)
+  .Disable("<channelId>", domainId, token)
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
-  .Enable('<channelId>', domainId, token)
+  .Enable("<channelId>", domainId, token)
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .ChannelsByThing(
-    '<thingId>',
+    "<thingId>",
     { offset: 0, limit: 5 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .ConnectThing(
-    '<thingId>',
-    '<channelId>',
+    "<thingId>",
+    "<channelId>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .DisconnectThing(
-    '<thingId>',
-    '<channelId>',
+    "<thingId>",
+    "<channelId>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .Connect(
-    '<thingId>',
-    '<channelId>',
+    "<thingId>",
+    "<channelId>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response:', response)
+    console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .Disconnect(
-    '<thingId>',
-    '<channelId>',
+    "<thingId>",
+    "<channelId>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .ListChannelUsers(
-    '<channelId>',
+    "<channelId>",
     { offset: 0, limit: 5 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error: any) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .ListChannelUserGroups(
-    '<channelId>',
+    "<channelId>",
     { offset: 0, limit: 5 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error: any) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
-  .ChannelPermissions('<channelId>', domainId, token)
+  .ChannelPermissions("<channelId>", domainId, token)
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .AddUserToChannel(
-    '<channelId>',
+    "<channelId>",
     [
-      '<userId1>', '<userId2>'
+      "<userId1>", "<userId2>",
     ],
-    'administrator',
+    "administrator",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .RemoveUserFromChannel(
-    '<channelId>',
+    "<channelId>",
     [
-      '<userId1>', '<userId2>'
+      "<userId1>", "<userId2>",
     ],
-    'administrator',
+    "administrator",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .AddUserGroupToChannel(
-    '<channelId>',
+    "<channelId>",
     [
-      '<UserGroupId1>', '<UserGroupId2>'
+      "<UserGroupId1>", "<UserGroupId2>",
     ],
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .RemoveUserGroupFromChannel(
-    '<channelId>',
+    "<channelId>",
     [
-      '<UserGroupId1>', '<UserGroupId2>'
+      "<UserGroupId1>", "<UserGroupId2>",
     ],
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.channels
   .DeleteChannel(
-    '<channelId>',
+    "<channelId>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

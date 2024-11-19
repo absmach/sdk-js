@@ -9,11 +9,9 @@ import Errors from "./errors";
 
 export default class Roles {
   private readonly contentType: string;
-  private readonly roleError: Errors;
 
   public constructor() {
     this.contentType = "application/json";
-    this.roleError = new Errors();
   }
 
   public async ListAvailableActions(url: URL, endpoint: string, token: string) {
@@ -32,7 +30,7 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const actions = await response.json();
       return actions;
@@ -69,7 +67,7 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const role: Role = await response.json();
       return role;
@@ -107,7 +105,7 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const roles: RolePage = await response.json();
       return roles;
@@ -138,7 +136,7 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const role: Role = await response.json();
       return role;
@@ -171,10 +169,10 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const role: Role = await response.json();
-      return role;
+      const updatedRole: Role = await response.json();
+      return updatedRole;
     } catch (error) {
       throw error;
     }
@@ -202,7 +200,7 @@ export default class Roles {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.roleError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const deleteResponse: Response = {
         status: response.status,

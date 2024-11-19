@@ -1,87 +1,87 @@
 // Imposrt the SDK class from the mainflux-sdk package
 
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  invitationsUrl: defaultUrl + ':9020'
-})
+  invitationsUrl: `${defaultUrl}:9020`,
+});
 
-const token = '<token>'
-const domainId = '<domainId>'
+const token = "<token>";
+const domainId = "<domainId>";
 
 mySdk.invitations.SendInvitation(
   {
-    user_id: '<userID>',
+    user_id: "<userID>",
     domain_id: domainId,
-    relation: 'administrator'
+    relation: "administrator",
   },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.invitations.Invitation(
-  '<userID>',
+  "<userID>",
   domainId,
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.invitations.Invitations(
   {
     limit: 10,
-    offset: 0
+    offset: 0,
   },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.invitations.AcceptInvitation(
   domainId,
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.invitations.RejectInvitation(
   domainId,
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.invitations.DeleteInvitation(
-  '<userID>',
+  "<userID>",
   domainId,
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

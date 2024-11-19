@@ -16,10 +16,13 @@ export default class Domains {
   // Domains API client
 
   private readonly domainsUrl: URL;
+
   private readonly usersUrl?: URL;
+
   private readonly contentType: string;
+
   private readonly domainsEndpoint: string;
-  private readonly domainError: Errors;
+
   private readonly domainRoles: Roles;
 
   public constructor({
@@ -37,7 +40,6 @@ export default class Domains {
     }
     this.contentType = "application/json";
     this.domainsEndpoint = "domains";
-    this.domainError = new Errors();
     this.domainRoles = new Roles();
   }
 
@@ -72,7 +74,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: Domain = await response.json();
       return domainData;
@@ -109,7 +111,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: Domain = await response.json();
       return domainData;
@@ -145,7 +147,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: Domain = await response.json();
       return domainData;
@@ -186,7 +188,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: Permissions = await response.json();
       return domainData;
@@ -229,7 +231,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: DomainsPage = await response.json();
       return domainData;
@@ -274,7 +276,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: DomainsPage = await response.json();
       return domainData;
@@ -317,7 +319,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: UsersPage = await response.json();
       return domainData;
@@ -355,7 +357,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const enableResponse: Response = {
         status: response.status,
@@ -396,7 +398,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const disableResponse: Response = {
         status: response.status,
@@ -441,7 +443,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const addResponse: Response = {
         status: response.status,
@@ -485,7 +487,7 @@ export default class Domains {
       );
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.domainError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const removeResponse: Response = {
         status: response.status,

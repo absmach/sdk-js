@@ -1,33 +1,33 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  httpAdapterUrl: defaultUrl + ':8008',
-  readersUrl: defaultUrl + ':9011'
-})
+  httpAdapterUrl: `${defaultUrl}:8008`,
+  readersUrl: `${defaultUrl}:9011`,
+});
 
-const token = '<token>'
+const token = "<token>";
 
 mySdk.messages
   .Send(
-    '<channelId>',
-    '<message>',
-    '<thingKey>'
+    "<channelId>",
+    "<message>",
+    "<thingKey>",
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error: unknown) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.messages
-  .Read({ offset: 0, limit: 10 }, '<channelId>', token, '<domainId>')
+  .Read({ offset: 0, limit: 10 }, "<channelId>", token, "<domainId>")
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error: unknown) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

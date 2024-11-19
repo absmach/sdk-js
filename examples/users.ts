@@ -1,261 +1,260 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  usersUrl: defaultUrl + ':9002',
-  thingsUrl: defaultUrl + ':9000'
-})
-const token = '<token>'
+  usersUrl: `${defaultUrl}:9002`,
+  thingsUrl: `${defaultUrl}:9000`,
+});
+const token = "<token>";
 
 mySdk.users
   .Create({
-    first_name: '<firstName>',
-    last_name: '<lastName>',
-    email: '<email>',
+    first_name: "<firstName>",
+    last_name: "<lastName>",
+    email: "<email>",
     credentials: {
-      username: '<username>',
-      secret: '<password>'
-    }
+      username: "<username>",
+      secret: "<password>",
+    },
   })
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.User(
-  '<userId>',
-  token
+  "<userId>",
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UserProfile(
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.CreateToken(
-  { identity: '<username | email>', secret: '<password>' }
+  { identity: "<username | email>", secret: "<password>" },
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.RefreshToken(
-  '<refreshToken>'
+  "<refreshToken>",
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.Update(
-  { id: '<userId>', first_name: '<firstName>', last_name: '<lastName>' },
-  token
+  { id: "<userId>", first_name: "<firstName>", last_name: "<lastName>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateEmail(
-  { id: '<userId>', email: '<email>' },
-  token
+  { id: "<userId>", email: "<email>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateUsername(
-  { id: '<userId>', credentials: { username: '<username>' } },
-  token
+  { id: "<userId>", credentials: { username: "<username>" } },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateProfilePicture(
-  { id: '<userId>', profile_picture: '<profilePicture>' },
-  token
+  { id: "<userId>", profile_picture: "<profilePicture>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateUserTags(
-  { id: '<userId>', tags: ['foo', 'bar'] },
-  token
+  { id: "<userId>", tags: ["foo", "bar"] },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateUserRole(
-  { id: '<userId>', role: '<role>' },
-  token
+  { id: "<userId>", role: "<role>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.Disable(
-  { id: '<userId>' },
-  token
+  { id: "<userId>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.Enable(
-  { id: '<userId>' },
-  token
+  { id: "<userId>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.Users(
   { offset: 0, limit: 10 },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.UpdateUserPassword(
-  '<oldSecret>', '<newSecret>',
-  token
+  "<oldSecret>",
+  "<newSecret>",
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.ListUserChannels(
-  '<domainId>',
-  '<userId>',
+  "<domainId>",
+  "<userId>",
   { offset: 0, limit: 10 },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.ListUserThings(
-  '<domainId>',
-  '<userId>',
+  "<domainId>",
+  "<userId>",
   { offset: 0, limit: 10 },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.ListUserGroups(
-  '<domainId>',
-  '<userId>',
+  "<domainId>",
+  "<userId>",
   { offset: 0, limit: 10 },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
-mySdk.users.ResetPasswordRequest(
-  '<email>', '<hostUrl>'
-)
+mySdk.users.ResetPasswordRequest("<email>", "<hostUrl>")
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.ResetPassword(
-  '<password>',
-  '<confPass>',
-  token
+  "<password>",
+  "<confPass>",
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.DeleteUser(
-  '<userId>',
-  token
+  "<userId>",
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.users.SearchUsers(
-  { username: '<username>' },
-  token
+  { username: "<username>" },
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

@@ -1,22 +1,22 @@
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  journalUrl: defaultUrl + ':9021'
-})
+  journalUrl: `${defaultUrl}:9021`,
+});
 
-const token = '<token>'
+const token = "<token>";
 
 mySdk.Journal.Journal(
-  '<entityType>',
-  '<entityId>',
+  "<entityType>",
+  "<entityId>",
   { offset: 0, limit: 10 },
-  token
+  token,
 )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

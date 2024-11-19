@@ -1,63 +1,63 @@
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  certsUrl: defaultUrl + ':9019'
-})
+  certsUrl: `${defaultUrl}:9019`,
+});
 
-const token = '<token>'
-const domainId = '<domainId>'
+const token = "<token>";
+const domainId = "<domainId>";
 
 mySdk.certs
   .IssueCert(
-    '<thingID>',
-    '<valid>',
+    "<thingID>",
+    "<valid>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.certs
   .ViewCertByThing(
-    '<thingID>',
+    "<thingID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.certs
   .ViewCert(
-    '<certID>',
+    "<certID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.certs
   .RevokeCert(
-    '<thingID>',
+    "<thingID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
