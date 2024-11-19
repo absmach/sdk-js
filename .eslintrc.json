@@ -12,7 +12,6 @@
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-throw-literal": "off",
     "no-useless-catch": "off",
-    "no-unused-vars": "off",
-    "@quotes": "double"
+    "no-unused-vars": "off"
   }
 }

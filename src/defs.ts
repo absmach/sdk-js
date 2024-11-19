@@ -336,10 +336,10 @@ export interface HealthInfo {
 }
 
 export interface Role {
-  id: string;
+  id?: string;
   name?: string;
   entity_id?: string;
-  created_by: string;
+  created_by?: string;
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string;
