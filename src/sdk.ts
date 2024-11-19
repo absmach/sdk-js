@@ -73,16 +73,27 @@ export interface SDKConfig {
 
 class SDK {
   users: Users;
+
   domains: Domains;
+
   things: Things;
+
   certs: Certs;
+
   groups: Groups;
+
   channels: Channels;
+
   messages: Messages;
+
   invitations: Invitations;
+
   bootstrap: Bootstrap;
+
   Journal: Journal;
+
   Health: Health;
+
   constructor({
     usersUrl = defaultUrl,
     domainsUrl = defaultUrl,
