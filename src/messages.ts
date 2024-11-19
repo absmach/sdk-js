@@ -81,7 +81,7 @@ export default class Messages {
     }
   }
 
-  public async Read (pm: MessagesPageMetadata, channelId: string, token: string): Promise<MessagesPage> {
+  public async Read (pm: MessagesPageMetadata, channelId: string, token: string, domainId: string): Promise<MessagesPage> {
     // Read messages
     /**
      *
@@ -89,6 +89,7 @@ export default class Messages {
      * add-on such as Timescale. Messages are read from the http adapter.
      * @param {string} channel_id - The ID of the channel to read the message from.
      * @param {string} token - Authentication token.
+     * @param {string} domain_id - The ID of the domain.
      */
 
     const stringParams: Record<string, string> = Object.fromEntries(
@@ -111,7 +112,7 @@ export default class Messages {
     try {
       const response = await fetch(
         new URL(
-        `channels/${chanId}/messages${subtopicPart}?${new URLSearchParams(stringParams).toString()}`,
+        `${domainId}/channels/${chanId}/messages${subtopicPart}?${new URLSearchParams(stringParams).toString()}`,
         this.readersUrl
         ).toString(),
         options

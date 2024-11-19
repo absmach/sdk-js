@@ -23,9 +23,10 @@ describe('Messages', () => {
       time: 1276020076.001,
       value: 120.1
     }
-  const msg = '{"bn":"base-name:","bt":1.276020076001e+09, "bu":"A","bver":5, "n":"voltage","u":"V","v":120.1}'
+  const msg = '[{"n": "temp","bu": "C","u": "C","v": 23000}]'
   const thingKey = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
-  const token = '<token>'
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjdlZGIzM'
+  const domainId = 'bb7edb32-2eac-4aad-aebe-ed96fe073879'
   const queryParams = {
     offset: 0,
     limit: 10
@@ -52,7 +53,7 @@ describe('Messages', () => {
   test('Read should read messages and return success', async () => {
     fetchMock.mockResponseOnce(JSON.stringify(messagesPage))
 
-    const response = await sdk.messages.Read(queryParams, channelId, token)
+    const response = await sdk.messages.Read(queryParams, channelId, token, domainId)
     expect(response).toEqual(messagesPage)
   })
 })
