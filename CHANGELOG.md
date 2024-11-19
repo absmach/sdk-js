@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.1
+
+### Patch Changes
+
+- 287856d: add actions and members to roles
+
 ## 0.9.0
 
 ### Minor Changes
