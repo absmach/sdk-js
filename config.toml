@@ -14,3 +14,4 @@ user_token = ""
   things_url = "http://localhost:9000"
   tls_verification = false
   users_url = "http://localhost:9002"
+  channels_url = "http://localhost:9005"

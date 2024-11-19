@@ -4,7 +4,7 @@ import SDK from "../src/sdk";
 const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  thingsUrl: `${defaultUrl}:9000`,
+  channelsUrl: `${defaultUrl}:9005`,
   usersUrl: `${defaultUrl}:9002`,
 });
 
@@ -31,27 +31,40 @@ mySdk.channels
     console.log(error);
   });
 
-mySdk.channels
-  .Channels({ offset: 0, limit: 10 }, domainId, token)
-  .then((response: any) => {
-    console.log("response:", response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// mySdk.channels
+//   .Channels({ offset: 0, limit: 10 }, domainId, token)
+//   .then((response: any) => {
+//     console.log('response:', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
-mySdk.channels
-  .UpdateChannel(
-    { id: "<channelId>", name: "<channelName>" },
-    domainId,
-    token,
-  )
-  .then((response: any) => {
-    console.log("response:", response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// mySdk.channels
+//   .UpdateChannelNameAndMetadata(
+//     { id: 'c641ccfb-5b65-4f2c-8a26-1c589f5e6c1e', name: 'Oleg', metadata: { key: 'value' } },
+//     domainId,
+//     token
+//   )
+//   .then((response: any) => {
+//     console.log('response:', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// mySdk.channels
+//   .UpdateChannelTags(
+//     { id: 'c641ccfb-5b65-4f2c-8a26-1c589f5e6c1e', tags: ['tag1', 'tag2'] },
+//     domainId,
+//     token
+//   )
+//   .then((response: any) => {
+//     console.log('response:', response)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
 
 mySdk.channels
   .Disable("<channelId>", domainId, token)
@@ -256,3 +269,19 @@ mySdk.channels
   .catch((error) => {
     console.log(error);
   });
+
+mySdk.channels.ChannelParents(domainId, "41e38246-4477-4773-8da4-9fb619624bf4', 'baed602d-c690-4df2-aa0c-3b1d7fbc2783", token)
+.then((response: any) => {
+    console.log('response: ', response)
+   })
+   .catch((error) => {
+     console.log(error)
+   })
+
+mySdk.channels.DeleteChannelParents(domainId, '41e38246-4477-4773-8da4-9fb619624bf4', token)
+.then((response: any) => {
+    console.log('response: ', response)
+   })
+   .catch((error) => {
+     console.log(error)
+   })
