@@ -609,4 +609,84 @@ export default class Domains {
       throw error;
     }
   }
+
+  public async AddDomainRoleActions(
+    domainId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.AddRoleActions(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        actions,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListDomainRoleActions(
+    domainId: string,
+    roleName: string,
+    token: string
+  ) {
+    try {
+      const updatedRole = await this.domainRoles.ListRoleActions(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        token
+      );
+      return updatedRole;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteDomainRoleActions(
+    domainId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.DeleteRoleActions(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        actions,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteAllDomainRoleActions(
+    domainId: string,
+    roleName: string,
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.DeleteAllRoleActions(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

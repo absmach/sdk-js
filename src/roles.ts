@@ -207,4 +207,151 @@ export default class Roles {
       throw error;
     }
   }
+
+  public async AddRoleActions(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ actions: actions }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/actions`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const actions: string[] = await response.json();
+      return actions;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListRoleActions(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/actions`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const actions: string[] = await response.json();
+      return actions;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteRoleActions(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ actions: actions }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/actions/delete`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "Role actions deleted successfully",
+      };
+      return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteAllRoleActions(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/actions/delete-all`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "Role actions deleted successfully",
+      };
+      return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
