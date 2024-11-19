@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.0
+
+### Minor Changes
+
+- a975a8e: Update the sdk to use the new access control by introducing roles
+
 ## 0.8.3
 
 ### Patch Changes
