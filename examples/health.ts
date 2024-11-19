@@ -1,4 +1,4 @@
-import SDK from "../dist/sdk";
+import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
 
@@ -15,8 +15,7 @@ const mySdk = new SDK({
 });
 
 // Things service Health
-mySdk.Health
-  .Health("things")
+mySdk.Health.Health("things")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -25,8 +24,7 @@ mySdk.Health
   });
 
 // Users service Health
-mySdk.Health
-  .Health("users")
+mySdk.Health.Health("users")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -35,8 +33,7 @@ mySdk.Health
   });
 
 // Bootstrap service Health
-mySdk.Health
-  .Health("bootstrap")
+mySdk.Health.Health("bootstrap")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -45,8 +42,7 @@ mySdk.Health
   });
 
 // Certs service Health
-mySdk.Health
-  .Health("certs")
+mySdk.Health.Health("certs")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -55,8 +51,7 @@ mySdk.Health
   });
 
 // Reader service Health
-mySdk.Health
-  .Health("reader")
+mySdk.Health.Health("reader")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -65,8 +60,7 @@ mySdk.Health
   });
 
 // Http Adapter service Health
-mySdk.Health
-  .Health("http-adapter")
+mySdk.Health.Health("http-adapter")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -75,8 +69,7 @@ mySdk.Health
   });
 
 // Journal service Health
-mySdk.Health
-  .Health("journal")
+mySdk.Health.Health("journal")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -85,8 +78,7 @@ mySdk.Health
   });
 
 // Invitations service Health
-mySdk.Health
-  .Health("invitations")
+mySdk.Health.Health("invitations")
   .then((response: any) => {
     console.log("response: ", response);
   })
