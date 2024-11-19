@@ -1,9 +1,5 @@
-import Errors from './errors'
-import {
-  type Cert,
-  type CertSerials,
-  type Response
-} from './defs'
+import Errors from "./errors";
+import { type Cert, type CertSerials, type Response } from "./defs";
 
 export default class Certs {
   // Certs API Client
@@ -16,19 +12,24 @@ export default class Certs {
    * @returns {Certs} - Returns a Certs object.
    */
 
-  private readonly certsUrl: URL
-  private readonly contentType: string
-  private readonly certsEndpoint: string
-  private readonly certsError: Errors
+  private readonly certsUrl: URL;
 
-  constructor (certsUrl: string) {
-    this.certsUrl = new URL(certsUrl)
-    this.contentType = 'application/json'
-    this.certsEndpoint = 'certs'
-    this.certsError = new Errors()
+  private readonly contentType: string;
+
+  private readonly certsEndpoint: string;
+
+  constructor(certsUrl: string) {
+    this.certsUrl = new URL(certsUrl);
+    this.contentType = "application/json";
+    this.certsEndpoint = "certs";
   }
 
-  public async IssueCert (thingID: string, valid: string, domainId: string, token: string): Promise<Cert> {
+  public async IssueCert(
+    thingID: string,
+    valid: string,
+    domainId: string,
+    token: string
+  ): Promise<Cert> {
     // Issue a certificate
     /**
      * @method IssueCert - Issue a certificate to a thing.
@@ -47,31 +48,35 @@ export default class Certs {
      *  }
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ thing_id: thingID, ttl: valid })
-    }
+      body: JSON.stringify({ thing_id: thingID, ttl: valid }),
+    };
 
     try {
       const response = await fetch(
         new URL(`${domainId}/${this.certsEndpoint}`, this.certsUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const cert: Cert = await response.json()
-      return cert
+      const cert: Cert = await response.json();
+      return cert;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ViewCertByThing (thingID: string, domainId: string, token: string): Promise<CertSerials> {
+  public async ViewCertByThing(
+    thingID: string,
+    domainId: string,
+    token: string
+  ): Promise<CertSerials> {
     // View certificates by thingID
     /**
      * @method ViewCertByThing - Allows a logged in user to view a certificate serial once they
@@ -83,29 +88,33 @@ export default class Certs {
      */
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await fetch(
         new URL(`${domainId}/serials/${thingID}`, this.certsUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const certsPage: CertSerials = await response.json()
-      return certsPage
+      const certsPage: CertSerials = await response.json();
+      return certsPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ViewCert (id: string, domainId: string, token: string): Promise<Cert> {
+  public async ViewCert(
+    id: string,
+    domainId: string,
+    token: string
+  ): Promise<Cert> {
     // View certificate by certID
     /**
      * @method ViewCert - Allows a logged in user to view a certificate once they
@@ -117,30 +126,37 @@ export default class Certs {
      */
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
+        new URL(
+          `${domainId}/${this.certsEndpoint}/${id}`,
+          this.certsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const cert: Cert = await response.json()
-      return cert
+      const cert: Cert = await response.json();
+      return cert;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async RevokeCert (id: string, domainId: string, token: string): Promise<Response> {
+  public async RevokeCert(
+    id: string,
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // Revoke a certificate
     /**
      * @method RevokeCert - Allows a logged in user to delete a certificate once they
@@ -151,26 +167,32 @@ export default class Certs {
      */
 
     const options: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.certsEndpoint}/${id}`, this.certsUrl).toString(),
+        new URL(
+          `${domainId}/${this.certsEndpoint}/${id}`,
+          this.certsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.certsError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const revokeResponse: Response = { status: response.status, message: 'Cert revoked successfully' }
-      return revokeResponse
+      const revokeResponse: Response = {
+        status: response.status,
+        message: "Cert revoked successfully",
+      };
+      return revokeResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

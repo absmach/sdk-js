@@ -1,10 +1,10 @@
-import Errors from './errors'
+import Errors from "./errors";
 import type {
   Response,
   Invitation,
   InvitationsPage,
-  PageMetadata
-} from './defs'
+  PageMetadata,
+} from "./defs";
 
 export default class Invitations {
   // Invitations API client
@@ -14,19 +14,22 @@ export default class Invitations {
    * @param {string} invitationsUrl - The URL of the invitations service.
    * @returns {Object} - The Invitations object.
    */
-  private readonly invitationsUrl: URL
-  private readonly contentType: string
-  private readonly invitationsEndpoint: string
-  private readonly invitationError: Errors
+  private readonly invitationsUrl: URL;
 
-  public constructor (invitationsUrl: string) {
-    this.invitationsUrl = new URL(invitationsUrl)
-    this.contentType = 'application/json'
-    this.invitationsEndpoint = 'invitations'
-    this.invitationError = new Errors()
+  private readonly contentType: string;
+
+  private readonly invitationsEndpoint: string;
+
+  public constructor(invitationsUrl: string) {
+    this.invitationsUrl = new URL(invitationsUrl);
+    this.contentType = "application/json";
+    this.invitationsEndpoint = "invitations";
   }
 
-  public async SendInvitation (invitation: Invitation, token: string): Promise<Response> {
+  public async SendInvitation(
+    invitation: Invitation,
+    token: string
+  ): Promise<Response> {
     // SendInvitation sends an invitation to the email address associated with the given user.
     /**
      * @method SendInvitation - sends an invitation to the email address associated with the given user.
@@ -41,31 +44,38 @@ export default class Invitations {
      * }
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(invitation)
-    }
+      body: JSON.stringify(invitation),
+    };
 
     try {
       const response = await fetch(
         new URL(`${this.invitationsEndpoint}`, this.invitationsUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation sent successfully' }
-      return inviteResponse
+      const inviteResponse: Response = {
+        status: response.status,
+        message: "Invitation sent successfully",
+      };
+      return inviteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Invitation (userId: string, domainId: string, token: string): Promise<Invitation> {
+  public async Invitation(
+    userId: string,
+    domainId: string,
+    token: string
+  ): Promise<Invitation> {
     // Invitation returns the invitation for the given user and domain.
     /**
      * @method Invitation - returns the invitation for the given user and domain.
@@ -76,30 +86,36 @@ export default class Invitations {
      * @returns {Object} - The invitation object.
      */
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${userId}/${domainId}`, this.invitationsUrl).toString(),
+        new URL(
+          `${this.invitationsEndpoint}/${userId}/${domainId}`,
+          this.invitationsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const invitationData: Invitation = await response.json()
-      return invitationData
+      const invitationData: Invitation = await response.json();
+      return invitationData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Invitations (queryParams: PageMetadata, token: string): Promise<InvitationsPage> {
+  public async Invitations(
+    queryParams: PageMetadata,
+    token: string
+  ): Promise<InvitationsPage> {
     // Invitations returns a list of invitations.
     /**
      * @method Invitations - returns a list of invitations.
@@ -109,36 +125,41 @@ export default class Invitations {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
         new URL(
-            `${this.invitationsEndpoint}?${new URLSearchParams(stringParams).toString()}`,
-            this.invitationsUrl
+          `${this.invitationsEndpoint}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.invitationsUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const invitationData: InvitationsPage = await response.json()
-      return invitationData
+      const invitationData: InvitationsPage = await response.json();
+      return invitationData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async AcceptInvitation (domainId: string, token: string): Promise<Response> {
+  public async AcceptInvitation(
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // AcceptInvitation accepts an invitation by adding the user to the domain that they were invited to.
     /**
      * @method AcceptInvitation - accepts an invitation by adding the user to the domain that they were invited to.
@@ -147,31 +168,40 @@ export default class Invitations {
      * @returns {Object} - The response object which has a status and a message.
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ domain_id: domainId })
-    }
+      body: JSON.stringify({ domain_id: domainId }),
+    };
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/accept`, this.invitationsUrl).toString(),
+        new URL(
+          `${this.invitationsEndpoint}/accept`,
+          this.invitationsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation accepted successfully' }
-      return inviteResponse
+      const inviteResponse: Response = {
+        status: response.status,
+        message: "Invitation accepted successfully",
+      };
+      return inviteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async RejectInvitation (domainId: string, token: string): Promise<Response> {
+  public async RejectInvitation(
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // RejectInvitation rejects an invitation by declining an invitation a user was sent to join a domain.
     /**
      * @method RejectInvitation - rejects an invitation by declining an invitation a user was sent to join a domain.
@@ -180,31 +210,41 @@ export default class Invitations {
      * @returns {Object} - The response object which has a status and a message.
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ domain_id: domainId })
-    }
+      body: JSON.stringify({ domain_id: domainId }),
+    };
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/reject`, this.invitationsUrl).toString(),
+        new URL(
+          `${this.invitationsEndpoint}/reject`,
+          this.invitationsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation rejected successfully' }
-      return inviteResponse
+      const inviteResponse: Response = {
+        status: response.status,
+        message: "Invitation rejected successfully",
+      };
+      return inviteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async DeleteInvitation (userId: string, domainId: string, token: string): Promise<Response> {
+  public async DeleteInvitation(
+    userId: string,
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // DeleteInvitation deletes an invitation.
     /**
      * @method DeleteInvitation - deletes an invitation.
@@ -214,26 +254,32 @@ export default class Invitations {
      * @returns {Object} - The response object which has a status and a message.
      */
     const options: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${this.invitationsEndpoint}/${userId}/${domainId}`, this.invitationsUrl).toString(),
+        new URL(
+          `${this.invitationsEndpoint}/${userId}/${domainId}`,
+          this.invitationsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.invitationError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const inviteResponse: Response = { status: response.status, message: 'Invitation deleted successfully' }
-      return inviteResponse
+      const inviteResponse: Response = {
+        status: response.status,
+        message: "Invitation deleted successfully",
+      };
+      return inviteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

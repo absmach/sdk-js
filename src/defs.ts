@@ -3,7 +3,7 @@ export interface UserBasicInfo {
   first_name?: string;
   last_name?: string;
   email?: string;
-  credentials?: credentials;
+  credentials?: Credentials;
   status?: Status;
   profile_picture?: string;
 }
@@ -25,12 +25,12 @@ export interface UsersPage {
   limit: number;
 }
 
-export interface credentials {
+export interface Credentials {
   username?: string;
   secret?: string;
 }
 
-export interface thingcredentials {
+export interface ThingCredentials {
   identity?: string;
   secret?: string;
 }
@@ -38,7 +38,7 @@ export interface thingcredentials {
 export interface ThingBasicInfo {
   id?: string;
   name?: string;
-  credentials?: thingcredentials;
+  credentials?: ThingCredentials;
   status?: Status;
 }
 

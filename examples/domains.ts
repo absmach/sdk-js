@@ -3,8 +3,8 @@ import SDK from "../src/sdk";
 const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  domainsUrl: defaultUrl + ":9003",
-  usersUrl: defaultUrl + ":9002",
+  domainsUrl: `${defaultUrl}:9003`,
+  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "token";
@@ -150,7 +150,7 @@ mySdk.domains
     domainId,
     "<role_name>",
     { name: "<updated_role_name>" },
-    token
+    token,
   )
   .then((response) => {
     console.log("response: ", response);

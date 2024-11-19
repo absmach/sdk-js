@@ -1,4 +1,4 @@
-import Errors from './errors'
+import Errors from "./errors";
 import type {
   User,
   UsersPage,
@@ -8,8 +8,8 @@ import type {
   PageMetadata,
   Token,
   Response,
-  ChannelsPage
-} from './defs'
+  ChannelsPage,
+} from "./defs";
 
 export default class Users {
   // Users API client
@@ -22,27 +22,35 @@ export default class Users {
    * @param {String} usersUrl - URL to the Users service.
    * @returns {Object} - Users object.
    */
-  private readonly usersUrl: URL
-  private readonly thingsUrl?: URL
-  private readonly contentType: string
-  private readonly usersEndpoint: string
-  private readonly searchEndpoint: string
-  private readonly userError: Errors
+  private readonly usersUrl: URL;
 
-  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
-    this.usersUrl = new URL(usersUrl)
+  private readonly thingsUrl?: URL;
+
+  private readonly contentType: string;
+
+  private readonly usersEndpoint: string;
+
+  private readonly searchEndpoint: string;
+
+  public constructor({
+    usersUrl,
+    thingsUrl,
+  }: {
+    usersUrl: string;
+    thingsUrl?: string;
+  }) {
+    this.usersUrl = new URL(usersUrl);
     if (thingsUrl !== undefined) {
-      this.thingsUrl = new URL(thingsUrl)
+      this.thingsUrl = new URL(thingsUrl);
     } else {
-      this.thingsUrl = new URL('')
+      this.thingsUrl = new URL("");
     }
-    this.contentType = 'application/json'
-    this.usersEndpoint = 'users'
-    this.searchEndpoint = 'search'
-    this.userError = new Errors()
+    this.contentType = "application/json";
+    this.usersEndpoint = "users";
+    this.searchEndpoint = "search";
   }
 
-  public async Create (user: User, token?: string): Promise<User> {
+  public async Create(user: User, token?: string): Promise<User> {
     // Creates a new user
     /**
      * @method Create - Creates a new user.
@@ -62,31 +70,31 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
 
     try {
       const response = await fetch(
         new URL(this.usersEndpoint, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async CreateToken (login: Login): Promise<Token> {
+  public async CreateToken(login: Login): Promise<Token> {
     // Issue Access and Refresh Token used for authenticating into the system
     /**
      * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system. A user can use either their email or username to login.
@@ -100,32 +108,29 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType
+        "Content-Type": this.contentType,
       },
-      body: JSON.stringify(login)
-    }
+      body: JSON.stringify(login),
+    };
     try {
       const response = await fetch(
-        new URL(
-          `${this.usersEndpoint}/tokens/issue`,
-          this.usersUrl
-        ).toString(),
+        new URL(`${this.usersEndpoint}/tokens/issue`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const tokenData: Token = await response.json()
-      return tokenData
+      const tokenData: Token = await response.json();
+      return tokenData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async RefreshToken (refreshToken: string): Promise<Token> {
+  public async RefreshToken(refreshToken: string): Promise<Token> {
     // provides a new access token and refresh token.
     /**
      * @method Refresh_token - Provides a new access token and refresh token.
@@ -138,12 +143,12 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${refreshToken}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    };
 
     try {
       const response = await fetch(
@@ -152,19 +157,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const tokenData: Token = await response.json()
-      return tokenData
+      const tokenData: Token = await response.json();
+      return tokenData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Update (user: User, token: string): Promise<User> {
+  public async Update(user: User, token: string): Promise<User> {
     // Update a user's names and metadata
     /**
      * @method Update - Updates a user's firstName, lastName and metadata.
@@ -184,34 +189,31 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
 
     try {
       const response = await fetch(
-        new URL(
-          `${this.usersEndpoint}/${user.id}`,
-          this.usersUrl
-        ).toString(),
+        new URL(`${this.usersEndpoint}/${user.id}`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateEmail (user: User, token: string): Promise<User> {
+  public async UpdateEmail(user: User, token: string): Promise<User> {
     // Update a user email
     /**
      * @method UpdateEmail - Update a user email for a currently logged in user.
@@ -228,13 +230,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ email: user.email })
-    }
+      body: JSON.stringify({ email: user.email }),
+    };
     try {
       const response = await fetch(
         new URL(
@@ -242,19 +244,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateUsername (user: User, token: string): Promise<User> {
+  public async UpdateUsername(user: User, token: string): Promise<User> {
     // Update a user's Username
     /**
      * @method UpdateUsername - Updates a user's username.
@@ -273,13 +275,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ username: user.credentials?.username })
-    }
+      body: JSON.stringify({ username: user.credentials?.username }),
+    };
     try {
       const response = await fetch(
         new URL(
@@ -287,19 +289,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateProfilePicture (user: User, token: string): Promise<User> {
+  public async UpdateProfilePicture(user: User, token: string): Promise<User> {
     // Update a user profile picture
     /**
      * @method UpdateUserEmail - Updates the profile picture of a user.
@@ -316,13 +318,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ profile_picture: user.profile_picture })
-    }
+      body: JSON.stringify({ profile_picture: user.profile_picture }),
+    };
     try {
       const response = await fetch(
         new URL(
@@ -330,19 +332,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateUserTags (user: User, token: string): Promise<User> {
+  public async UpdateUserTags(user: User, token: string): Promise<User> {
     // Update a user's tags.
     /**
      *  Updates tags of the user with provided ID. Tags is updated using
@@ -363,13 +365,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
 
     try {
       const response = await fetch(
@@ -378,19 +380,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateUserPassword (
+  public async UpdateUserPassword(
     oldSecret: string,
     newSecret: string,
     token: string
@@ -411,34 +413,31 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ old_secret: oldSecret, new_secret: newSecret })
-    }
+      body: JSON.stringify({ old_secret: oldSecret, new_secret: newSecret }),
+    };
 
     try {
       const response = await fetch(
-        new URL(
-          `${this.usersEndpoint}/secret`,
-          this.usersUrl
-        ).toString(),
+        new URL(`${this.usersEndpoint}/secret`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateUserRole (user: User, token: string): Promise<User> {
+  public async UpdateUserRole(user: User, token: string): Promise<User> {
     // Update a user's role.
     /**
      * Updates password of the user with provided valid token.
@@ -456,13 +455,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
 
     try {
       const response = await fetch(
@@ -471,19 +470,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async User (userId: string, token: string): Promise<User> {
+  public async User(userId: string, token: string): Promise<User> {
     // Gets a user
     /**
      * Provides information about the user with provided ID. The user is
@@ -498,33 +497,30 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(
-          `${this.usersEndpoint}/${userId}`,
-          this.usersUrl
-        ).toString(),
+        new URL(`${this.usersEndpoint}/${userId}`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UserProfile (token: string): Promise<User> {
+  public async UserProfile(token: string): Promise<User> {
     // Gets a user's profile
     /**
      * Provides information about the currently logged in user. The user is
@@ -536,30 +532,30 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
         new URL(`${this.usersEndpoint}/profile`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Users (
+  public async Users(
     queryParams: PageMetadata,
     token: string
   ): Promise<UsersPage> {
@@ -583,36 +579,38 @@ export default class Users {
 
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          `${this.usersEndpoint}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const usersData: UsersPage = await response.json()
-      return usersData
+      const usersData: UsersPage = await response.json();
+      return usersData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Disable (user: User, token: string): Promise<User> {
+  public async Disable(user: User, token: string): Promise<User> {
     // Disable a user
     /**
      * Disables a user with provided ID and valid token.
@@ -628,13 +626,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
 
     try {
       const response = await fetch(
@@ -643,19 +641,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Enable (user: User, token: string): Promise<User> {
+  public async Enable(user: User, token: string): Promise<User> {
     // Enable a user.
     /**
      * Enables a previously disabled user when provided with token and valid ID.
@@ -672,13 +670,13 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
-    }
+      body: JSON.stringify(user),
+    };
     try {
       const response = await fetch(
         new URL(
@@ -686,19 +684,19 @@ export default class Users {
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const userData: User = await response.json()
-      return userData
+      const userData: User = await response.json();
+      return userData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ListUserGroups (
+  public async ListUserGroups(
     domainId: string,
     userId: string,
     queryParams: PageMetadata,
@@ -717,35 +715,37 @@ export default class Users {
 
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.usersEndpoint}/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${
+            this.usersEndpoint
+          }/${userId}/groups?${new URLSearchParams(stringParams).toString()}`,
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsData: GroupsPage = await response.json()
-      return groupsData
+      const groupsData: GroupsPage = await response.json();
+      return groupsData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ListUserThings (
+  public async ListUserThings(
     userId: string,
     domainId: string,
     queryParams: PageMetadata,
@@ -763,35 +763,37 @@ export default class Users {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.usersEndpoint}/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${
+            this.usersEndpoint
+          }/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const thingsData: ThingsPage = await response.json()
-      return thingsData
+      const thingsData: ThingsPage = await response.json();
+      return thingsData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ListUserChannels (
+  public async ListUserChannels(
     domainId: string,
     userId: string,
     queryParams: PageMetadata,
@@ -810,35 +812,40 @@ export default class Users {
 
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.usersEndpoint}/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${
+            this.usersEndpoint
+          }/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
           this.thingsUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const channelsPage: ChannelsPage = await response.json()
-      return channelsPage
+      const channelsPage: ChannelsPage = await response.json();
+      return channelsPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ResetPasswordRequest (email: string, hostUrl: string): Promise<Response> {
+  public async ResetPasswordRequest(
+    email: string,
+    hostUrl: string
+  ): Promise<Response> {
     // Sends a request to reset a password
     /**
      * @method ResetPasswordRequest - Sends a request
@@ -848,30 +855,33 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Referer: hostUrl
+        "Content-Type": this.contentType,
+        Referer: hostUrl,
       },
-      body: JSON.stringify({ email })
-    }
+      body: JSON.stringify({ email }),
+    };
     try {
       const response = await fetch(
-        new URL('/password/reset-request', this.usersUrl).toString(),
+        new URL("/password/reset-request", this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const resetRequestResponse: Response = { status: response.status, message: 'Email with reset link sent successfully' }
-      return resetRequestResponse
+      const resetRequestResponse: Response = {
+        status: response.status,
+        message: "Email with reset link sent successfully",
+      };
+      return resetRequestResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ResetPassword (
+  public async ResetPassword(
     password: string,
     confPass: string,
     token: string
@@ -887,33 +897,32 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': this.contentType
+        "Content-Type": this.contentType,
       },
-      body: JSON.stringify({ token, password, confirm_password: confPass })
-    }
+      body: JSON.stringify({ token, password, confirm_password: confPass }),
+    };
     try {
       const response = await fetch(
-        new URL('/password/reset', this.usersUrl).toString(),
+        new URL("/password/reset", this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const resetResponse: Response = { status: response.status, message: 'Password reset successfully' }
-      return resetResponse
+      const resetResponse: Response = {
+        status: response.status,
+        message: "Password reset successfully",
+      };
+      return resetResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async DeleteUser
-  (
-    userId: string,
-    token: string
-  ): Promise<Response> {
+  public async DeleteUser(userId: string, token: string): Promise<Response> {
     // Deletes a user
     /**
      * @method DeleteUser - Deletes a user.
@@ -924,32 +933,35 @@ export default class Users {
      */
 
     const options: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(
-          `${this.usersEndpoint}/${userId}`,
-          this.usersUrl
-        ).toString(),
+        new URL(`${this.usersEndpoint}/${userId}`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteResponse: Response = { status: response.status, message: 'User deleted successfully' }
-      return deleteResponse
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "User deleted successfully",
+      };
+      return deleteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async SearchUsers (queryParams: PageMetadata, token: string): Promise<UsersPage> {
+  public async SearchUsers(
+    queryParams: PageMetadata,
+    token: string
+  ): Promise<UsersPage> {
     // Search for users
     /**
      * @method SearchUsers - Search for users.
@@ -963,35 +975,37 @@ export default class Users {
      * "id": "c52d-3b0d-43b9-8c3e-275c087d875af"
      * }
      * @returns {Object} - Users Page object.
-     **/
+     * */
 
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await fetch(
         new URL(
-          `${this.usersEndpoint}/${this.searchEndpoint}?${new URLSearchParams(stringParams).toString()}`,
+          `${this.usersEndpoint}/${this.searchEndpoint}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
           this.usersUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.userError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const usersData: UsersPage = await response.json()
-      return usersData
+      const usersData: UsersPage = await response.json();
+      return usersData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

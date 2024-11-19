@@ -1,206 +1,207 @@
 // Import the SDK class from the mainflux-sdk package
-import SDK from '../src/sdk'
+import SDK from "../src/sdk";
 
-const defaultUrl = 'http://localhost'
+const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
-  usersUrl: defaultUrl + ':9002',
-  thingsUrl: defaultUrl + ':9000'
-})
+  usersUrl: `${defaultUrl}:9002`,
+  thingsUrl: `${defaultUrl}:9000`,
+});
 
-const token = '<token>'
-const domainId = '<domainId>'
+const token = "<token>";
+const domainId = "<domainId>";
 
 mySdk.groups
-  .CreateGroup({
-    name: '<groupName>'
-  },
-  domainId,
-  token
+  .CreateGroup(
+    {
+      name: "<groupName>",
+    },
+    domainId,
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .Group(
-    '<groupID>',
+    "<groupID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .Groups(
     { offset: 0, limit: 10 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .GroupPermissions(
-    '<groupID>',
+    "<groupID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .UpdateGroup(
     {
-      name: '<groupName>',
-      id: '<groupID>'
+      name: "<groupName>",
+      id: "<groupID>",
     },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .EnableGroup(
-    '<groupID>',
+    "<groupID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .DisableGroup(
-    '<groupID>',
+    "<groupID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .DeleteGroup(
-    '<groupID>',
+    "<groupID>",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .AddUserToGroup(
-    '<groupID>',
-    ['<userID>', '<userID>'],
-    'administrator',
+    "<groupID>",
+    ["<userID>", "<userID>"],
+    "administrator",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .RemoveUserFromGroup(
-    '<groupID>',
-    ['<userID>', '<userID>'],
-    'administrator',
+    "<groupID>",
+    ["<userID>", "<userID>"],
+    "administrator",
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .ListGroupUsers(
-    '<groupID>',
+    "<groupID>",
     { offset: 0, limit: 10 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .ListGroupChannels(
-    '<groupID>',
+    "<groupID>",
     { offset: 0, limit: 10 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .Children(
-    '<groupID>',
+    "<groupID>",
     { offset: 0, limit: 10, level: 2 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });
 
 mySdk.groups
   .Parents(
-    '<groupID>',
+    "<groupID>",
     { offset: 0, limit: 10, level: 2 },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
-    console.log('response: ', response)
+    console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error)
-  })
+    console.log(error);
+  });

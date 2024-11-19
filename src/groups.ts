@@ -1,4 +1,4 @@
-import Errors from './errors'
+import Errors from "./errors";
 import type {
   Group,
   GroupsPage,
@@ -7,8 +7,8 @@ import type {
   Response,
   UsersPage,
   GroupRelation,
-  ChannelsPage
-} from './defs'
+  ChannelsPage,
+} from "./defs";
 
 export default class Groups {
   // Groups API client
@@ -22,25 +22,36 @@ export default class Groups {
    * @param {string} groupsEndpoint - The endpoint of the Groups service.
    * @returns {Groups} - Returns a Groups object.
    */
-  private readonly usersUrl: URL
-  private readonly thingsUrl?: URL
-  private readonly contentType: string
-  private readonly groupsEndpoint: string
-  private readonly groupError: Errors
+  private readonly usersUrl: URL;
 
-  public constructor ({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
-    this.usersUrl = new URL(usersUrl)
+  private readonly thingsUrl?: URL;
+
+  private readonly contentType: string;
+
+  private readonly groupsEndpoint: string;
+
+  public constructor({
+    usersUrl,
+    thingsUrl,
+  }: {
+    usersUrl: string;
+    thingsUrl?: string;
+  }) {
+    this.usersUrl = new URL(usersUrl);
     if (thingsUrl !== undefined) {
-      this.thingsUrl = new URL(thingsUrl)
+      this.thingsUrl = new URL(thingsUrl);
     } else {
-      this.thingsUrl = new URL('')
+      this.thingsUrl = new URL("");
     }
-    this.contentType = 'application/json'
-    this.groupsEndpoint = 'groups'
-    this.groupError = new Errors()
+    this.contentType = "application/json";
+    this.groupsEndpoint = "groups";
   }
 
-  public async CreateGroup (group: Group, domainId: string, token: string): Promise<Group> {
+  public async CreateGroup(
+    group: Group,
+    domainId: string,
+    token: string
+  ): Promise<Group> {
     // Creates a new group
     /**
      * @method CreateGroup - Creates a new group once the user is authenticated.
@@ -62,31 +73,35 @@ export default class Groups {
      * }
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(group)
-    }
+      body: JSON.stringify(group),
+    };
 
     try {
       const response = await fetch(
         new URL(`${domainId}/${this.groupsEndpoint}`, this.usersUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const group: Group = await response.json()
-      return group
+      const newGroup: Group = await response.json();
+      return newGroup;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Group (groupId: string, domainId: string, token: string): Promise<Group> {
+  public async Group(
+    groupId: string,
+    domainId: string,
+    token: string
+  ): Promise<Group> {
     // Gets information about a group by ID
     /**
      * @method Group - Provide a group's information once given the group ID and a valid token.
@@ -98,30 +113,37 @@ export default class Groups {
      * const group_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
      */
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const group: Group = await response.json()
-      return group
+      const group: Group = await response.json();
+      return group;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Groups (queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
+  public async Groups(
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<GroupsPage> {
     // Get a list of enabled groups
     /**
      * @method Groups - Provides a list of all the groups in the database once given a valid token.
@@ -137,33 +159,42 @@ export default class Groups {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
 
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsData: GroupsPage = await response.json()
-      return groupsData
+      const groupsData: GroupsPage = await response.json();
+      return groupsData;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async GroupPermissions (groupId: string, domainId: string, token: string): Promise<Permissions> {
+  public async GroupPermissions(
+    groupId: string,
+    domainId: string,
+    token: string
+  ): Promise<Permissions> {
     // Gets a group permissions by ID
     /**
      * @method GroupPermissions - Provides a group's permissions once given the group ID and a valid token.
@@ -173,30 +204,37 @@ export default class Groups {
      * @returns {object} - Returns a group's permissions in a string array.
      */
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/permissions`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/permissions`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const permission: Permissions = await response.json()
-      return permission
+      const permission: Permissions = await response.json();
+      return permission;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async UpdateGroup (group: Group, domainId: string, token: string): Promise<Group> {
+  public async UpdateGroup(
+    group: Group,
+    domainId: string,
+    token: string
+  ): Promise<Group> {
     // Updates a group's information such a name and metadata.
     /**
      * @method UpdateGroup - Updates a group's information such a name and metadata when given a
@@ -212,31 +250,38 @@ export default class Groups {
      * }
      */
     const options: RequestInit = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(group)
-    }
+      body: JSON.stringify(group),
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${group.id}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${group.id}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const updatedGroup: Group = await response.json()
-      return updatedGroup
+      const updatedGroup: Group = await response.json();
+      return updatedGroup;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async EnableGroup (groupId: string, domainId: string, token: string): Promise<Group> {
+  public async EnableGroup(
+    groupId: string,
+    domainId: string,
+    token: string
+  ): Promise<Group> {
     // Enable a group.
     /**
      * @method EnableGroup - Enables a previously disabled group when given a valid token and group ID.
@@ -246,30 +291,37 @@ export default class Groups {
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/enable`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/enable`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const group: Group = await response.json()
-      return group
+      const group: Group = await response.json();
+      return group;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async DisableGroup (groupId: string, domainId: string, token: string): Promise<Group> {
+  public async DisableGroup(
+    groupId: string,
+    domainId: string,
+    token: string
+  ): Promise<Group> {
     // Disable a group.
     /**
      * @method DisableGroup - Disables a group when given a valid token and group ID.
@@ -279,55 +331,74 @@ export default class Groups {
      * @returns {object} - Returns a group object with the status reading 'Disabled'.
      */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/disable`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/disable`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const group: Group = await response.json()
-      return group
+      const group: Group = await response.json();
+      return group;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async DeleteGroup (groupId: string, domainId: string, token: string): Promise<Response> {
+  public async DeleteGroup(
+    groupId: string,
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     const options: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteResponse: Response = { status: response.status, message: 'Group deleted successfully' }
-      return deleteResponse
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "Group deleted successfully",
+      };
+      return deleteResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async AddUserToGroup (groupId: string, userIds: string[], relation: GroupRelation, domainId: string, token: string): Promise<Response> {
+  public async AddUserToGroup(
+    groupId: string,
+    userIds: string[],
+    relation: GroupRelation,
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // Adds a user to a group thus creating a membership
     /**
      * @method AddUserToGroup -Assigns a user to a group when given a valid token, group ID,
@@ -340,33 +411,45 @@ export default class Groups {
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
-    const req = { user_ids: userIds, relation }
+    const req = { user_ids: userIds, relation };
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(req)
-    }
+      body: JSON.stringify(req),
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addResponse: Response = { status: response.status, message: 'User added successfully' }
-      return addResponse
+      const addResponse: Response = {
+        status: response.status,
+        message: "User added successfully",
+      };
+      return addResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async RemoveUserFromGroup (groupId: string, userIds: string[], relation: GroupRelation, domainId: string, token: string): Promise<Response> {
+  public async RemoveUserFromGroup(
+    groupId: string,
+    userIds: string[],
+    relation: GroupRelation,
+    domainId: string,
+    token: string
+  ): Promise<Response> {
     // Removes a user from a group thus deleting a membership
     /**
      * @method RemoveUserToGroup - Unassigns a user from a group when given a valid token, group ID,
@@ -379,33 +462,44 @@ export default class Groups {
      * @param {string} token - The user's access token.
      * @returns {Object} - Returns a response object that has a status code and a message.
      */
-    const req = { user_ids: userIds, relation }
+    const req = { user_ids: userIds, relation };
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(req)
-    }
+      body: JSON.stringify(req),
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const removeResponse: Response = { status: response.status, message: 'User removed successfully' }
-      return removeResponse
+      const removeResponse: Response = {
+        status: response.status,
+        message: "User removed successfully",
+      };
+      return removeResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ListGroupUsers (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<UsersPage> {
+  public async ListGroupUsers(
+    groupId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<UsersPage> {
     // Get a group's users.
     /**
      * @method ListGroupUsers - Provides a list of a groups' users when provided with
@@ -418,32 +512,42 @@ export default class Groups {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/users?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${
+            this.groupsEndpoint
+          }/${groupId}/users?${new URLSearchParams(stringParams).toString()}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const usersPage: UsersPage = await response.json()
-      return usersPage
+      const usersPage: UsersPage = await response.json();
+      return usersPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async ListGroupChannels (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<ChannelsPage> {
+  public async ListGroupChannels(
+    groupId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<ChannelsPage> {
     // Get a group's channels.
     /**
      * @method ListGroupChannels - Provides a list of a groups' channels when provided with
@@ -456,32 +560,44 @@ export default class Groups {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/channels?${new URLSearchParams(stringParams).toString()}`, this.thingsUrl).toString(),
+        new URL(
+          `${domainId}/${
+            this.groupsEndpoint
+          }/${groupId}/channels?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.thingsUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const channelsPage: ChannelsPage = await response.json()
-      return channelsPage
+      const channelsPage: ChannelsPage = await response.json();
+      return channelsPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Parents (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
+  public async Parents(
+    groupId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<GroupsPage> {
     // Get a group's parents.
     /**
      * @method Parents - Provides a list of a groups' parents when provided with
@@ -494,32 +610,42 @@ export default class Groups {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${
+            this.groupsEndpoint
+          }/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsPage: GroupsPage = await response.json()
-      return groupsPage
+      const groupsPage: GroupsPage = await response.json();
+      return groupsPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Children (groupId: string, queryParams: PageMetadata, domainId: string, token: string): Promise<GroupsPage> {
+  public async Children(
+    groupId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<GroupsPage> {
     // Get a group's children.
     /**
      * @method Children - Provides a list of a groups' children.
@@ -531,28 +657,35 @@ export default class Groups {
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    )
+    );
     const options: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': this.contentType,
-        Authorization: `Bearer ${token}`
-      }
-    }
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}/${groupId}/children?${new URLSearchParams(stringParams).toString()}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${
+            this.groupsEndpoint
+          }/${groupId}/children?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.usersUrl
+        ).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.groupError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsPage: GroupsPage = await response.json()
-      return groupsPage
+      const groupsPage: GroupsPage = await response.json();
+      return groupsPage;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }
