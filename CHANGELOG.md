@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.2
+
+### Patch Changes
+
+- cdea55e: update linter
+
 ## 0.9.1
 
 ### Patch Changes
