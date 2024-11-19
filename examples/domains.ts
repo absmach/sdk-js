@@ -20,7 +20,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .UpdateDomain({ name: "<domainName>", id: "<domainID>" }, token)
+  .UpdateDomain({ name: "<domainName>", id: domainId }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -29,7 +29,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .Domain("<domainID>", token)
+  .Domain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -38,7 +38,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .DomainPermissions("<domainID>", token)
+  .DomainPermissions(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -65,7 +65,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .ListDomainUsers("<domainID>", { offset: 0, limit: 10 }, token)
+  .ListDomainUsers(domainId, { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -74,7 +74,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .EnableDomain("<domainID>", token)
+  .EnableDomain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -83,7 +83,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .DisableDomain("<domainID>", token)
+  .DisableDomain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -92,12 +92,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .AddUsertoDomain(
-    "<domainID>",
-    ["<userID>", "<userID>"],
-    "administrator",
-    token
-  )
+  .AddUsertoDomain(domainId, ["<userID>", "<userID>"], "administrator", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -106,7 +101,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .RemoveUserfromDomain("<domainID>", "<userID>", token)
+  .RemoveUserfromDomain(domainId, "<userID>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
