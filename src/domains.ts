@@ -8,6 +8,7 @@ import type {
   UsersPage,
   Relation,
   Role,
+  BasicPageMeta,
 } from "./defs";
 import Roles from "./roles";
 
@@ -678,6 +679,88 @@ export default class Domains {
   ) {
     try {
       const response = await this.domainRoles.DeleteAllRoleActions(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async AddDomainRoleMembers(
+    domainId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.AddRoleMembers(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        members,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListDomainRoleMembers(
+    domainId: string,
+    roleName: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ) {
+    try {
+      const updatedRole = await this.domainRoles.ListRoleMembers(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        queryParams,
+        token
+      );
+      return updatedRole;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteDomainRoleMembers(
+    domainId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.DeleteRoleMembers(
+        this.domainsUrl,
+        this.domainsEndpoint,
+        domainId,
+        roleName,
+        members,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteAllDomainRoleMembers(
+    domainId: string,
+    roleName: string,
+    token: string
+  ) {
+    try {
+      const response = await this.domainRoles.DeleteAllRoleMembers(
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,

@@ -1,4 +1,10 @@
-import type { PageMetadata, Role, RolePage, Response } from "./defs";
+import type {
+  PageMetadata,
+  Role,
+  RolePage,
+  Response,
+  BasicPageMeta,
+} from "./defs";
 import Errors from "./errors";
 
 export default class Roles {
@@ -322,7 +328,6 @@ export default class Roles {
     endpoint: string,
     entityId: string,
     roleName: string,
-
     token: string
   ) {
     const options: RequestInit = {
@@ -348,6 +353,159 @@ export default class Roles {
       const deleteResponse: Response = {
         status: response.status,
         message: "Role actions deleted successfully",
+      };
+      return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async AddRoleMembers(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ members: members }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/members`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const members: string[] = await response.json();
+      return members;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListRoleMembers(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/members?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const members: string[] = await response.json();
+      return members;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteRoleMembers(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ members: members }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/members/delete`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "Role members deleted successfully",
+      };
+      return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async DeleteAllRoleMembers(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    roleName: string,
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/${roleName}/members/delete-all`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw this.roleError.HandleError(errorRes.message, response.status);
+      }
+      const deleteResponse: Response = {
+        status: response.status,
+        message: "Role members deleted successfully",
       };
       return deleteResponse;
     } catch (error) {
