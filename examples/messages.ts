@@ -24,7 +24,7 @@ mySdk.messages
   })
 
 mySdk.messages
-  .Read({ offset: 0, limit: 10 }, 'channelId', token)
+  .Read({ offset: 0, limit: 10 }, '<channelId>', token, '<domainId>')
   .then((response: any) => {
     console.log('response: ', response)
   })
