@@ -1,13 +1,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type {
-  Domain,
-  DomainsPage,
-  User,
-  UsersPage,
-  Relation,
-} from "../src/sdk";
+import type { Domain, DomainsPage, User, UsersPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -27,16 +21,7 @@ describe("Domains", () => {
 
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
 
-  const permissions = ["admin", "editor", "viewer"];
-
   const userId = "886b4266-77d1-4258-abae-2931fb4f16de";
-
-  const userIds = [
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-  ];
-
-  const relation: Relation = "administrator";
 
   const domainsPage: DomainsPage = {
     domains: [domain],
@@ -103,13 +88,6 @@ describe("Domains", () => {
     expect(response).toEqual(domain);
   });
 
-  test("domain permissions should return a list of permissions and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(permissions));
-
-    const response = await sdk.domains.DomainPermissions(domainId, token);
-    expect(response).toEqual(permissions);
-  });
-
   test("list user domains should return a list of user domains and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domainsPage));
 
@@ -154,34 +132,15 @@ describe("Domains", () => {
     expect(response).toEqual(disableDomainResponse);
   });
 
-  test("add user to domain should add a user to a domain and return success", async () => {
-    const addUsertoDomainResponse = {
+  test("freeze domain should freeze a domain and return success", async () => {
+    const freezeDomainResponse = {
       status: 200,
-      message: "User added successfully",
+      message: "Domain frozen successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(addUsertoDomainResponse));
 
-    const response = await sdk.domains.AddUsertoDomain(
-      domainId,
-      userIds,
-      relation,
-      token,
-    );
-    expect(response).toEqual(addUsertoDomainResponse);
-  });
+    fetchMock.mockResponseOnce(JSON.stringify(freezeDomainResponse));
 
-  test("remove user from domain should remove a user from a domain and return success", async () => {
-    const removeUserfromDomainResponse = {
-      status: 200,
-      message: "User removed successfully",
-    };
-    fetchMock.mockResponseOnce(JSON.stringify(removeUserfromDomainResponse));
-
-    const response = await sdk.domains.RemoveUserfromDomain(
-      domainId,
-      userId,
-      token,
-    );
-    expect(response).toEqual(removeUserfromDomainResponse);
+    const response = await sdk.domains.FreezeDomain(domainId, token);
+    expect(response).toEqual(freezeDomainResponse);
   });
 });

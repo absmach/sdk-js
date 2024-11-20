@@ -3,10 +3,8 @@ import type {
   Domain,
   PageMetadata,
   DomainsPage,
-  Permissions,
   Response,
   UsersPage,
-  Relation,
   Role,
   BasicPageMeta,
   RolePage,
@@ -154,45 +152,6 @@ export default class Domains {
         throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: Domain = await response.json();
-      return domainData;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * @method DomainPermissions
-   * Retrieves permissions associated with a domain.
-   * @param {string} domainId - The unique ID of the domain.
-   * @param {string} token - Authorization token.
-   * @returns {Promise<Permissions>} - Permissions for the domain.
-   * @throws {Error} If the domain permissions cannot be fetched.
-   */
-  public async DomainPermissions(
-    domainId: string,
-    token: string,
-  ): Promise<Permissions> {
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${this.domainsEndpoint}/${domainId}/permissions`,
-          this.domainsUrl,
-        ).toString(),
-        options,
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const domainData: Permissions = await response.json();
       return domainData;
     } catch (error) {
       throw error;
@@ -418,35 +377,29 @@ export default class Domains {
   }
 
   /**
-   * @method AddUsertoDomain
-   * Adds a user to a specific domain, granting them access with specified relations.
-   * @param {string} domainId - The unique identifier of the domain.
-   * @param {string[]} userIds - The unique identifier of the user to add.
-   * @param {Relation} relation - The relation being assigned to the user.
+   * @method FreezeDomain
+   * Freezes the specified domain.
+   * @param {string} domainId - The unique identifier of the domain to disable.
    * @param {string} token - Authorization token.
-   * @returns {Promise<Response>} A promise that resolves when the user is added.
-   * @throws {Error} If user cannot be added to domain.
+   * @returns {Promise<Response>} A promise that resolves when the domain is frozen.
+   * @throws {Error} If the domain cannot be frozen.
    */
-  public async AddUsertoDomain(
+  public async FreezeDomain(
     domainId: string,
-    userIds: string[],
-    relation: Relation,
     token: string,
   ): Promise<Response> {
-    const req = { user_ids: userIds, relation };
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(req),
     };
 
     try {
       const response = await fetch(
         new URL(
-          `${this.domainsEndpoint}/${domainId}/users/assign`,
+          `${this.domainsEndpoint}/${domainId}/freeze`,
           this.domainsUrl,
         ).toString(),
         options,
@@ -455,57 +408,11 @@ export default class Domains {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addResponse: Response = {
+      const disableResponse: Response = {
         status: response.status,
-        message: "User added successfully",
+        message: "Domain frozen successfully",
       };
-      return addResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * @method RemoveUserfromDomain
-   * Removes a user from a specific domain, revoking their access.
-   * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} userId - The unique identifier of the user to remove.
-   * @param {string} token - Authorization token.
-   * @returns {Promise<Response>} A promise that resolves when the user is removed.
-   * @throws {Error} If user cannot be removed from domain.
-   */
-  public async RemoveUserfromDomain(
-    domainId: string,
-    userId: string,
-    token: string,
-  ): Promise<Response> {
-    const req = { user_id: userId };
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(req),
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${this.domainsEndpoint}/${domainId}/users/unassign`,
-          this.domainsUrl,
-        ).toString(),
-        options,
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const removeResponse: Response = {
-        status: response.status,
-        message: "User removed successfully",
-      };
-      return removeResponse;
+      return disableResponse;
     } catch (error) {
       throw error;
     }

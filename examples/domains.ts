@@ -38,15 +38,6 @@ mySdk.domains
   });
 
 mySdk.domains
-  .DomainPermissions(domainId, token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-mySdk.domains
   .Domains({ offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
@@ -92,16 +83,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .AddUsertoDomain(domainId, ["<userID>", "<userID>"], "administrator", token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-mySdk.domains
-  .RemoveUserfromDomain(domainId, "<userID>", token)
+  .FreezeDomain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -173,7 +155,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<roleAction1>", "<roleAction2>"],
-    token
+    token,
   )
   .then((response) => {
     console.log("response: ", response);
@@ -196,7 +178,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<roleAction1>", "<roleAction2>"],
-    token
+    token,
   )
   .then((response) => {
     console.log("response: ", response);
@@ -228,7 +210,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     { offset: 0, limit: 10 },
-    token
+    token,
   )
   .then((response) => {
     console.log("response: ", response);
@@ -242,7 +224,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<userID>", "<userID>"],
-    token
+    token,
   )
   .then((response) => {
     console.log("response: ", response);
