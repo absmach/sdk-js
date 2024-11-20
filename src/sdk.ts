@@ -124,8 +124,6 @@ class SDK {
       thingsUrl,
       bootstrapUrl,
       certsUrl,
-      channelsUrl,
-      groupsUrl,
       readersUrl,
       httpAdapterUrl,
       journalUrl,

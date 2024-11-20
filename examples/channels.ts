@@ -270,18 +270,18 @@ mySdk.channels
     console.log(error);
   });
 
-mySdk.channels.ChannelParents(domainId, "41e38246-4477-4773-8da4-9fb619624bf4', 'baed602d-c690-4df2-aa0c-3b1d7fbc2783", token)
-.then((response: any) => {
-    console.log('response: ', response)
-   })
-   .catch((error) => {
-     console.log(error)
-   })
+mySdk.channels.ChannelParents(domainId, "<channelId>", "<parentId>", token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-mySdk.channels.DeleteChannelParents(domainId, '41e38246-4477-4773-8da4-9fb619624bf4', token)
-.then((response: any) => {
-    console.log('response: ', response)
-   })
-   .catch((error) => {
-     console.log(error)
-   })
+mySdk.channels.DeleteChannelParents(domainId, "<channelId>", token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });

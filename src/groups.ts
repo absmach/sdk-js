@@ -26,17 +26,18 @@ export default class Groups {
 
   private readonly thingsUrl?: URL;
 
-  private readonly groupsUrl: URL
+  private readonly groupsUrl: URL;
+
   private readonly contentType: string;
 
   private readonly groupsEndpoint: string;
 
-  public constructor ({ usersUrl, groupsUrl }: { usersUrl: string, groupsUrl?: string }) {
-    this.usersUrl = new URL(usersUrl)
+  public constructor({ usersUrl, groupsUrl }: { usersUrl: string, groupsUrl?: string }) {
+    this.usersUrl = new URL(usersUrl);
     if (groupsUrl !== undefined) {
-      this.groupsUrl = new URL(groupsUrl)
+      this.groupsUrl = new URL(groupsUrl);
     } else {
-      this.groupsUrl = new URL('')
+      this.groupsUrl = new URL("");
     }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";

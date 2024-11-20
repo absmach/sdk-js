@@ -1,5 +1,7 @@
 import Errors from "./errors";
 
+import Roles from "./roles";
+
 import type {
   Channel,
   GroupsPage,
@@ -9,9 +11,9 @@ import type {
   ChannelsPage,
   UsersPage,
   GroupRelation,
+  Role,
 } from "./defs";
 
-import Roles from "./roles";
 export default class Channels {
   // Channels API client
   /**
@@ -31,10 +33,10 @@ export default class Channels {
 
   private readonly channelsEndpoint: string;
 
- // private readonly thingsUrl: URL;
+  private readonly channelsUrl: URL;
 
-  private readonly channelsUrl: URL
   private readonly channelRoles: Roles;
+
   public constructor({
     usersUrl,
     channelsUrl,
@@ -50,6 +52,7 @@ export default class Channels {
     }
     this.contentType = "application/json";
     this.channelsEndpoint = "channels";
+    this.channelRoles = new Roles();
   }
 
   public async CreateChannel(
@@ -225,14 +228,14 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const channelsPage: ChannelsPage = await response.json()
+      const channelsPage: ChannelsPage = await response.json();
       return channelsPage;
     } catch (error) {
       throw error;
     }
   }
 
-  public async UpdateChannelNameAndMetadata (
+  public async UpdateChannelNameAndMetadata(
     channel: Channel,
     domainId: string,
     token: string
@@ -258,7 +261,7 @@ export default class Channels {
       const response = await fetch(
         new URL(
           `${domainId}/channels/${channel.id}`,
-         this.channelsUrl
+          this.channelsUrl
         ).toString(),
         options
       );
@@ -266,14 +269,14 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const updatedChannel: Channel = await response.json()
-      return updatedChannel
+      const updatedChannel: Channel = await response.json();
+      return updatedChannel;
     } catch (error) {
       throw error;
     }
   }
 
-  public async UpdateChannelTags (
+  public async UpdateChannelTags(
     channel: Channel,
     domainId: string,
     token: string
@@ -288,7 +291,7 @@ export default class Channels {
      */
 
     const options: RequestInit = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -302,20 +305,20 @@ export default class Channels {
           this.channelsUrl
         ).toString(),
         options
-      )
+      );
       console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
-        throw this.channelError.HandleError(errorRes.message, response.status);
+        throw Errors.HandleError(errorRes.message, response.status);
       }
       const updatedChannel: Channel = await response.json();
-      return updatedChannel
+      return updatedChannel;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async Disable (
+  public async Disable(
     channelId: string,
     domainId: string,
     token: string
@@ -553,9 +556,7 @@ export default class Channels {
     };
     try {
       const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}`, this.channelsUrl
-        ).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}`, this.channelsUrl).toString(),
         options
       );
       if (!response.ok) {
@@ -919,21 +920,19 @@ export default class Channels {
           this.channelsUrl
         ).toString(),
         options
-      )
+      );
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: 'Channel Group Parent deleted successfully' }
-      return deleteChannelParentsResponse
+      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
+      return deleteChannelParentsResponse;
     } catch (error) {
       throw error;
     }
   }
 
-  
-
-  public async ChannelParents (domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
+  public async ChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
     // Sets of parent to a channel.
     /**
      * @method ChannelParents - Sets a parent to a channels.
@@ -944,30 +943,30 @@ export default class Channels {
      * @returns {string} Response.
      * */
     const options: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': this.contentType,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ parent_group_id: parentGroupId })
-  }
-  try {
+    };
+    try {
       const response = await fetch(
         new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/parent`, this.channelsUrl).toString(),
         options
-      )
+      );
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent added successfully }
-      return addChannelParentsResponse
+      const addChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent added successfully" };
+      return addChannelParentsResponse;
     } catch (error) {
       throw error;
     }
   }
 
-  public async DeleteChannelParents (domainId: string, channelId: string, token: string) : Promise<Response> {
+  public async DeleteChannelParents(domainId: string, channelId: string, token: string) : Promise<Response> {
     // Deletes parent from a channel.
     /**
      * @method DeleteChannelParents - Deletes parent from a channel.
@@ -977,12 +976,12 @@ export default class Channels {
      * @returns {string} - Response.
      * */
     const options: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': this.contentType,
+        "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`
       },
-    }
+    };
     try {
       const response = await fetch(
         new URL(
@@ -991,20 +990,20 @@ export default class Channels {
         ).toString(),
         options
       );
-      console.log("url", response.url)
+      console.log("url", response.url);
       if (!response.ok) {
-        const errorRes = await response.json()
-        throw this.channelError.HandleError(errorRes.message, response.status)
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: 'Channel Group Parent deleted successfully' }
-      return deleteChannelParentsResponse
+      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
+      return deleteChannelParentsResponse;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  public async CreateDomainRole(
-    domainId: string,
+  public async CreateChannelRole(
+    channelId: string,
     roleName: string,
     token: string,
     optionalActions?: string[],
@@ -1014,7 +1013,7 @@ export default class Channels {
       const role = await this.channelRoles.CreateRole(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         token,
         optionalActions,
@@ -1026,8 +1025,8 @@ export default class Channels {
     }
   }
 
-  public async ListDomainRoles(
-    domainId: string,
+  public async ListChannelRoles(
+    channelId: string,
     queryParams: PageMetadata,
     token: string
   ) {
@@ -1035,7 +1034,7 @@ export default class Channels {
       const rolesPage = await this.channelRoles.ListRoles(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         queryParams,
         token
       );
@@ -1045,8 +1044,8 @@ export default class Channels {
     }
   }
 
-  public async ViewDomainRole(
-    domainId: string,
+  public async ViewChannelRole(
+    channelId: string,
     roleName: string,
     token: string
   ) {
@@ -1054,7 +1053,7 @@ export default class Channels {
       const role = await this.channelRoles.ViewRole(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         token
       );
@@ -1064,8 +1063,8 @@ export default class Channels {
     }
   }
 
-  public async UpdateDomainRole(
-    domainId: string,
+  public async UpdateChannelRole(
+    channelId: string,
     roleName: string,
     role: Role,
     token: string
@@ -1074,7 +1073,7 @@ export default class Channels {
       const updatedRole = await this.channelRoles.UpdateRole(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         role,
         token
@@ -1085,8 +1084,8 @@ export default class Channels {
     }
   }
 
-   public async DeleteDomainRole(
-    domainId: string,
+  public async DeleteChannelRole(
+    channelId: string,
     roleName: string,
     token: string
   ) {
@@ -1094,7 +1093,7 @@ export default class Channels {
       const response = await this.channelRoles.DeleteRole(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         token
       );
@@ -1104,8 +1103,8 @@ export default class Channels {
     }
   }
 
-  public async AddDomainRoleActions(
-    domainId: string,
+  public async AddChannelRoleActions(
+    channelId: string,
     roleName: string,
     actions: string[],
     token: string
@@ -1114,7 +1113,7 @@ export default class Channels {
       const response = await this.channelRoles.AddRoleActions(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         actions,
         token
@@ -1125,8 +1124,8 @@ export default class Channels {
     }
   }
 
-  public async ListDomainRoleActions(
-    domainId: string,
+  public async ListChannelRoleActions(
+    channelId: string,
     roleName: string,
     token: string
   ) {
@@ -1134,7 +1133,7 @@ export default class Channels {
       const updatedRole = await this.channelRoles.ListRoleActions(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         token
       );
@@ -1144,8 +1143,8 @@ export default class Channels {
     }
   }
 
-  public async DeleteDomainRoleActions(
-    domainId: string,
+  public async DeleteChannelRoleActions(
+    channelId: string,
     roleName: string,
     actions: string[],
     token: string
@@ -1154,7 +1153,7 @@ export default class Channels {
       const response = await this.channelRoles.DeleteRoleActions(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
         actions,
         token
@@ -1165,8 +1164,8 @@ export default class Channels {
     }
   }
 
-  public async DeleteAllDomainRoleActions(
-    domainId: string,
+  public async DeleteAllChannelRleActions(
+    channelId: string,
     roleName: string,
     token: string
   ) {
@@ -1174,29 +1173,8 @@ export default class Channels {
       const response = await this.channelRoles.DeleteAllRoleActions(
         this.channelsUrl,
         this.channelsEndpoint,
-        domainId,
+        channelId,
         roleName,
-        token
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async AddDomainRoleMembers(
-    domainId: string,
-    roleName: string,
-    members: string[],
-    token: string
-  ) {
-    try {
-      const response = await this.channelRoles.AddRoleMembers(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        domainId,
-        roleName,
-        members,
         token
       );
       return response;
