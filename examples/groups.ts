@@ -5,7 +5,7 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
-  groupsUrl: `${defaultUrl}:9004`,
+  thingsUrl: `${defaultUrl}:9000`,
 });
 
 const token = "<token>";

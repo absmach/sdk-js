@@ -4,14 +4,9 @@ import Roles from "./roles";
 
 import type {
   Channel,
-  GroupsPage,
   PageMetadata,
-  Permissions,
   Response,
   ChannelsPage,
-  UsersPage,
-  GroupRelation,
-  Role,
 } from "./defs";
 
 export default class Channels {
@@ -145,37 +140,40 @@ export default class Channels {
     }
   }
 
-  public async ChannelsByThing(
-    thingID: string,
-    queryParams: PageMetadata,
+  public async CreateChannels(
+    things: Channel[],
     domainId: string,
     token: string
   ): Promise<ChannelsPage> {
-    // Retrieves list of channels a thing is connected to with pagination metadata.
+    // Creates multiple channels.
     /**
-     * @method ChannelsByThing - Retrieves list of channels a thing is connected to with pagination metadata.
-     * @param {String} channel_id - Channel id.
-     * @param {Object} queryParams - Query parameters for the request.
+     * @method CreateChannels - Creates multiple channels.
+     * @param {Object} channels - Array of channels.
      * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {List} - Channels Page.
-     */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options = {
-      method: "GET",
+     * @param {string} token - User token.
+     * @returns {Object} - Channel object.
+     * @example
+     * const channels = [
+     * {
+     * "name": "channel3",
+     * "tags": [
+     * "tag1"
+     * ],
+     * }
+     * ]
+     * */
+    const options: RequestInit = {
+      method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(things),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/things/${thingID}/${
-            this.channelsEndpoint
-          }?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/${this.channelsEndpoint}/bulk`,
           this.channelsUrl
         ).toString(),
         options
@@ -184,8 +182,8 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const channelsPage: ChannelsPage = await response.json();
-      return channelsPage;
+      const channelData: ChannelsPage = await response.json();
+      return channelData;
     } catch (error) {
       throw error;
     }
@@ -396,144 +394,6 @@ export default class Channels {
     }
   }
 
-  public async ChannelPermissions(
-    channelId: string,
-    domainId: string,
-    token: string
-  ): Promise<Permissions> {
-    // Retrieves channel permissions.
-    /**
-     * @method ChannelPermission - Retrieves channel permissions with specified id..
-     * @param {Object}
-     * @param {string} token - Authentication token.
-     * @param {string} domainId - The Domain ID.
-     * @returns {object} - returns channel domain permissions eg:
-     *  { permissions: [ 'admin', 'edit', 'view', 'membership' ] }
-     */
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/permissions`,
-          this.channelsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const permissions: Permissions = await response.json();
-      return permissions;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async AddUserToChannel(
-    channelId: string,
-    userIds: string[],
-    relation: GroupRelation,
-    domainId: string,
-    token: string
-  ): Promise<Response> {
-    // Adds user to channel.
-    /**
-     * @method AddUser - Adds user to channel when provided with a valid token,
-     * channel id and a user id.
-     * @param  {string []} userIds - Array of user id's.
-     * @param {string} channelId - Channel ID.
-     * @param {string} relation - The member's role.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     * @returns Response - 'User Added Successfully'.
-     *  */
-    const req = { user_ids: userIds, relation };
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(req),
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/users/assign`,
-          this.channelsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const addUserResponse: Response = {
-        status: response.status,
-        message: "User added successfully",
-      };
-      return addUserResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async RemoveUserFromChannel(
-    channelId: string,
-    userIds: string[],
-    relation: GroupRelation,
-    domainId: string,
-    token: string
-  ): Promise<Response> {
-    // Removes user from channel.
-    /**
-     * @method RemoveUserFromChannel - Removes user from channel when provided with a valid token,
-     * channel id and a user id.
-     * @param {String} relation - The member's role.
-     * @param  {string []} userIds - Array of user id's.
-     * @param {string} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token -  Authentication token.
-     * @returns Response - 'User Removed Successfully'.
-     * */
-    const req = { user_ids: userIds, relation };
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(req),
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/users/unassign`,
-          this.channelsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const removeUserResponse: Response = {
-        status: response.status,
-        message: "User removed successfully",
-      };
-      return removeUserResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
   public async DeleteChannel(
     channelId: string,
     domainId: string,
@@ -573,65 +433,21 @@ export default class Channels {
     }
   }
 
-  public async ListChannelUserGroups(
+  public async ConnectClient(
+    clientIds: string[],
     channelId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<GroupsPage> {
-    // Lists groups in a channel.
-    /**
-     * @method ListChannelUsersGroups - Lists groups in a channel.
-     * @param {string} channelId - Channel ID.
-     * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token
-     * @returns {Object} - Groups Page.
-     * */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/channels/${channelId}/groups?${new URLSearchParams(
-            stringParams
-          ).toString()}`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const groupsPage: GroupsPage = await response.json();
-      return groupsPage;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ConnectThing(
-    thingId: string,
-    channelId: string,
+    connectionTypes: string[],
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Connects thing to channel.
+    // Connects clients to channel.
     /**
-     * @method ConnectThing - Connects thing to channel when provided with a valid token,
-     * channel id and a thing id. The thing must have an action that it can perform over
+     * @method ConnectClient - Connects clients to channel when provided with a valid token,
+     * channel id and a Client id. The Client must have an action that it can perform over
      * the channel.
-     * @param {string} thingId - Thing ID.
+     * @param {array} clientIds - Client IDs.
      * @param {string} channelId - Channel ID.
+     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
      * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
@@ -642,12 +458,12 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ thing_id: thingId, channel_id: channelId }),
+      body: JSON.stringify({ client_ids: clientIds, channel_id: channelId, types: connectionTypes }),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/connect`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/connect`,
           this.channelsUrl
         ).toString(),
         options
@@ -656,28 +472,30 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const connectThingResponse: Response = {
+      const connectClientResponse: Response = {
         status: response.status,
-        message: "Thing connected successfully",
+        message: "Clients connected successfully",
       };
-      return connectThingResponse;
+      return connectClientResponse;
     } catch (error) {
       throw error;
     }
   }
 
   public async Connect(
-    thingId: string,
-    channelId: string,
+    clientIds: string[],
+    channelIds: string[],
+    connectionTypes: string[],
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Connects thing to channel.
+    // Connects client to channel.
     /**
-     * @method Connect - Connect thing to channel when provided with a valid token,
+     * @method Connect - Connect client to channel when provided with a valid token,
      * channel id and thing id.
-     * @param thingId - thing ID.
-     * @param channelId - channel ID.
+     * @param clientIds - clients ID.
+     * @param channelIds - channels ID.
+     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
      * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      * @returns Response - 'Thing Connected Successfully'.
@@ -688,11 +506,11 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ thing_id: thingId, channel_id: channelId }),
+      body: JSON.stringify({ client_ids: clientIds, channel_ids: channelIds, types: connectionTypes }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/connect`, this.channelsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/connect`, this.channelsUrl).toString(),
         options
       );
       if (!response.ok) {
@@ -701,7 +519,7 @@ export default class Channels {
       }
       const connectResponse: Response = {
         status: response.status,
-        message: "Thing connected successfully",
+        message: "Clients connected successfully",
       };
       return connectResponse;
     } catch (error) {
@@ -710,18 +528,20 @@ export default class Channels {
   }
 
   public async Disconnect(
-    thingId: string,
-    channelId: string,
+    clientIds: string[],
+    channelIds: string[],
+    connectionTypes: string[],
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects thing from channel.
+    // Disconnects client from channel.
     /**
-     * @method Disconnect - Disconnects thing from channel when provided with a valid token,
-     * channel id and a thing id. The thing must have an action that it can perform over
+     * @method Disconnect - Disconnects client from channel when provided with a valid token,
+     * channel id and a client id. The client must have an action that it can perform over
      * the channel.
-     * @param {string} thingId - Thing ID.
-     * @param {string} channelId - Channel ID.
+     * @param {string} clientIds - Client IDs.
+     * @param {string} channelIds - Channel IDs.
+     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
      * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
      *
@@ -732,11 +552,11 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ thing_id: thingId, channel_id: channelId }),
+      body: JSON.stringify({ client_ids: clientIds, channel_ids: channelIds, types: connectionTypes }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/disconnect`, this.channelsUrl).toString(),
+        new URL(`${domainId}/${this.channelsEndpoint}/disconnect`, this.channelsUrl).toString(),
         options
       );
       if (!response.ok) {
@@ -745,7 +565,7 @@ export default class Channels {
       }
       const disconnectResponse: Response = {
         status: response.status,
-        message: "Thing disconnected successfully",
+        message: "Clients disconnected successfully",
       };
       return disconnectResponse;
     } catch (error) {
@@ -753,21 +573,23 @@ export default class Channels {
     }
   }
 
-  public async DisconnectThing(
-    thingId: string,
+  public async DisconnectClient(
+    clientIds: string[],
     channelId: string,
+    connectionTypes: string[],
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects thing from channel.
+    // Disconnects clients from channel.
     /**
-     * @method DisconnectThing - Disconnects thing from channel when provided with a valid token,
-     * channel id and a thing id. The thing must have an action that it can perform over
+     * @method Disconnectclient - Disconnects clients from channel when provided with a valid token,
+     * channel id and a client id. The client must have an action that it can perform over
      * the channel.
-     * @param {string} thingId - Thing ID.
+     * @param {string} clientId - Client ID.
      * @param {string} channelId - Channel ID.
+     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
+     * @param {string} domainId - The Domain ID.
      * @param {string} token - Authentication token.
-     *
      */
     const options = {
       method: "POST",
@@ -775,12 +597,12 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ thing_id: thingId, channel_id: channelId }),
+      body: JSON.stringify({ client_ids: clientIds, channel_id: channelId, types: connectionTypes }),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/things/${thingId}/disconnect`,
+          `${domainId}/${this.channelsEndpoint}/${channelId}/disconnect`,
           this.channelsUrl
         ).toString(),
         options
@@ -789,144 +611,11 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const disconnectThingResponse: Response = {
+      const disconnectClientResponse: Response = {
         status: response.status,
-        message: "Thing disconnected successfully",
+        message: "Clients disconnected successfully",
       };
-      return disconnectThingResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ListChannelUsers(
-    channelId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<UsersPage> {
-    // Lists users in a channel.
-    /**
-     * @method ListChannelUsers - Lists users in a channel.
-     * @param {string} channelId - Channel ID.
-     * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     * @returns {Object} - Users Page.
-     * */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/channels/${channelId}/users?${new URLSearchParams(
-            stringParams
-          ).toString()}`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const usersPage: UsersPage = await response.json();
-      return usersPage;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async AddUserGroupToChannel(
-    channelId: string,
-    userGroupIds: string[],
-    domainId: string,
-    token: string
-  ): Promise<Response> {
-    // Adds user group to channel.
-    /**
-     * @method AddUserGroup - Adds user group to channel when provided with a valid token,
-     * channel id and a user group id.
-     * @param {string []} userGroupIds - User Group IDs.
-     * @param {string} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * */
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ group_ids: userGroupIds }),
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/groups/assign`,
-          this.channelsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const addUserGroupResponse: Response = {
-        status: response.status,
-        message: "Group added successfully",
-      };
-      return addUserGroupResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async RemoveUserGroupFromChannel(
-    channelId: string,
-    userGroupIds: string[],
-    domainId: string,
-    token: string
-  ): Promise<Response> {
-    // Removes user group from channel.
-    /**
-     * @method RemoveUserGroup - Removes user group from channel when provided with a valid token,
-     * channel id and a user group id.
-     * @param {string []} userGroupIds - User Group IDs.
-     * @param {string} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * */
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ group_ids: userGroupIds }),
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.channelsEndpoint}/${channelId}/groups/unassign`,
-          this.channelsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
-      return deleteChannelParentsResponse;
+      return disconnectClientResponse;
     } catch (error) {
       throw error;
     }
@@ -997,187 +686,6 @@ export default class Channels {
       }
       const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
       return deleteChannelParentsResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async CreateChannelRole(
-    channelId: string,
-    roleName: string,
-    token: string,
-    optionalActions?: string[],
-    optionalMembers?: string[]
-  ) {
-    try {
-      const role = await this.channelRoles.CreateRole(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        token,
-        optionalActions,
-        optionalMembers
-      );
-      return role;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ListChannelRoles(
-    channelId: string,
-    queryParams: PageMetadata,
-    token: string
-  ) {
-    try {
-      const rolesPage = await this.channelRoles.ListRoles(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        queryParams,
-        token
-      );
-      return rolesPage;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ViewChannelRole(
-    channelId: string,
-    roleName: string,
-    token: string
-  ) {
-    try {
-      const role = await this.channelRoles.ViewRole(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        token
-      );
-      return role;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async UpdateChannelRole(
-    channelId: string,
-    roleName: string,
-    role: Role,
-    token: string
-  ) {
-    try {
-      const updatedRole = await this.channelRoles.UpdateRole(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        role,
-        token
-      );
-      return updatedRole;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async DeleteChannelRole(
-    channelId: string,
-    roleName: string,
-    token: string
-  ) {
-    try {
-      const response = await this.channelRoles.DeleteRole(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        token
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async AddChannelRoleActions(
-    channelId: string,
-    roleName: string,
-    actions: string[],
-    token: string
-  ) {
-    try {
-      const response = await this.channelRoles.AddRoleActions(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        actions,
-        token
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ListChannelRoleActions(
-    channelId: string,
-    roleName: string,
-    token: string
-  ) {
-    try {
-      const updatedRole = await this.channelRoles.ListRoleActions(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        token
-      );
-      return updatedRole;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async DeleteChannelRoleActions(
-    channelId: string,
-    roleName: string,
-    actions: string[],
-    token: string
-  ) {
-    try {
-      const response = await this.channelRoles.DeleteRoleActions(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        actions,
-        token
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async DeleteAllChannelRleActions(
-    channelId: string,
-    roleName: string,
-    token: string
-  ) {
-    try {
-      const response = await this.channelRoles.DeleteAllRoleActions(
-        this.channelsUrl,
-        this.channelsEndpoint,
-        channelId,
-        roleName,
-        token
-      );
-      return response;
     } catch (error) {
       throw error;
     }

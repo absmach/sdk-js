@@ -26,18 +26,16 @@ export default class Groups {
 
   private readonly thingsUrl?: URL;
 
-  private readonly groupsUrl: URL;
-
   private readonly contentType: string;
 
   private readonly groupsEndpoint: string;
 
-  public constructor({ usersUrl, groupsUrl }: { usersUrl: string, groupsUrl?: string }) {
+  public constructor({ usersUrl, thingsUrl }: { usersUrl: string, thingsUrl?: string }) {
     this.usersUrl = new URL(usersUrl);
-    if (groupsUrl !== undefined) {
-      this.groupsUrl = new URL(groupsUrl);
+    if (thingsUrl !== undefined) {
+      this.thingsUrl = new URL(thingsUrl);
     } else {
-      this.groupsUrl = new URL("");
+      this.thingsUrl = new URL("");
     }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
@@ -79,7 +77,7 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}`, this.groupsUrl).toString(),
+        new URL(`${domainId}/${this.groupsEndpoint}`, this.thingsUrl).toString(),
         options
       );
       if (!response.ok) {

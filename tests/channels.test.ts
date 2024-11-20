@@ -3,10 +3,6 @@ import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 import SDK from "../src/sdk";
 import type {
   Channel,
-  GroupsPage,
-  UsersPage,
-  User,
-  Group,
   ChannelsPage,
 } from "../src/sdk";
 
@@ -22,67 +18,35 @@ describe("Channels", () => {
     name: "channelName",
     domain_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
     description: "",
+    tags: ["tag1", "tag2"],
   };
-  const user: User = {
-    id: "886b4266-77d1-4258-abae-2931fb4f16de",
-    first_name: "tahliah",
-    last_name: "barnett",
-    tags: ["holy", "terrain"],
-    email: "fkatwigs@email.com",
-    credentials: {
-      username: "fkatwigs@email.com",
-      secret: "12345678",
-    },
-    role: "administrator",
-    status: "enabled",
-  };
-  const group: Group = {
-    id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    domain_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    parent_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    name: "groupName",
-    description: "",
-    level: 1,
-    path: "",
-    status: "enabled",
-  };
-  const queryParams = {
-    offset: 0,
-    limit: 10,
-  };
-  const groupsPage: GroupsPage = {
-    groups: [group],
-    total: 2,
-    offset: 0,
-    limit: 10,
-  };
-
-  const usersPage: UsersPage = {
-    users: [user],
-    total: 2,
-    offset: 0,
-    limit: 10,
-  };
+  const channels = [
+    { name: "channel1", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
+    { name: "channel2", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
+  ];
   const channelsPage: ChannelsPage = {
     channels: [channel],
     total: 1,
     offset: 0,
     limit: 10,
   };
+  const queryParams = {
+    offset: 0,
+    limit: 10,
+  };
   const channelId = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
-  const thingId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
+  const groupId = "1be56995-aa42-4940-88e3-1fb1e82065fa";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
-  const userIds = [
+  const channelIds = [
     "b9921574-f562-4048-a6bf-295c0036fc2a",
     "ce42d80e-9773-49b2-a8c2-6aa748597a92",
   ];
-  const userGroupIds = [
+  const clientIds = [
     "b9921574-f562-4048-a6bf-295c0036fc2a",
     "ce42d80e-9773-49b2-a8c2-6aa748597a92",
   ];
-  const permissions = "admin";
-  const relation = "administrator";
+  const connectionType = ["publish"];
 
   beforeEach(() => {
     fetchMock.resetMocks();
@@ -102,10 +66,31 @@ describe("Channels", () => {
     expect(response).toEqual(channel);
   });
 
-  test("UpdateChannel should retrieve a channel and return success", async () => {
+  test("CreateChannels should create multiple channels and return success", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(channels));
+
+    const response = await sdk.channels.CreateChannels(channels, domainId, token);
+    expect(response).toEqual(channels);
+  });
+
+  test("Channels should return a list of channels and return success", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(channelsPage));
+
+    const response = await sdk.channels.Channels(queryParams, domainId, token);
+    expect(response).toEqual(channelsPage);
+  });
+
+  test("UpdateChannelNameAndMetadata should update channel name and metadata and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
-    const response = await sdk.channels.UpdateChannel(channel, domainId, token);
+    const response = await sdk.channels.UpdateChannelNameAndMetadata(channel, domainId, token);
+    expect(response).toEqual(channel);
+  });
+
+  test("UpdateChannelTags should update channel tags and return success", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(channel));
+
+    const response = await sdk.channels.UpdateChannelTags(channel, domainId, token);
     expect(response).toEqual(channel);
   });
 
@@ -138,187 +123,102 @@ describe("Channels", () => {
     expect(response).toEqual(deleteResponse);
   });
 
-  test("ConnectThing should connect a thing to a channel and return success", async () => {
-    const connectThingResponse = {
+  test("ConnectClient should connect clients to a channel and return success", async () => {
+    const connectClientResponse = {
       status: 200,
-      message: "Thing connected successfully",
+      message: "Clients connected successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(connectThingResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(connectClientResponse));
 
-    const response = await sdk.channels.ConnectThing(
-      thingId,
+    const response = await sdk.channels.ConnectClient(
+      clientIds,
       channelId,
+      connectionType,
       domainId,
       token,
     );
-    expect(response).toEqual(connectThingResponse);
+    expect(response).toEqual(connectClientResponse);
   });
 
-  test("DisconnectThing should Disconnect a thing from a channel and return success", async () => {
+  test("DisconnectClient should disconnect clients from a channel and return success", async () => {
     const DisconnectThingResponse = {
       status: 200,
-      message: "Thing disconnected successfully",
+      message: "Clients disconnected successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectThingResponse));
 
-    const response = await sdk.channels.DisconnectThing(
-      thingId,
+    const response = await sdk.channels.DisconnectClient(
+      clientIds,
       channelId,
+      connectionType,
       domainId,
       token,
     );
     expect(response).toEqual(DisconnectThingResponse);
   });
 
-  test("Connect should connect a thing to a channel and return success", async () => {
+  test("Connect should connect clients to channels and return success", async () => {
     const connectResponse = {
       status: 200,
-      message: "Thing connected successfully",
+      message: "Clients connected successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(connectResponse));
 
     const response = await sdk.channels.Connect(
-      thingId,
-      channelId,
+      clientIds,
+      channelIds,
+      connectionType,
       domainId,
       token,
     );
     expect(response).toEqual(connectResponse);
   });
 
-  test("Disconnect should Disconnect a thing to a channel and return success", async () => {
+  test("Disconnect should disconnect clients to channels and return success", async () => {
     const DisconnectResponse = {
       status: 200,
-      message: "Thing disconnected successfully",
+      message: "Clients disconnected successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(DisconnectResponse));
 
     const response = await sdk.channels.Disconnect(
-      thingId,
-      channelId,
+      clientIds,
+      channelIds,
+      connectionType,
       domainId,
       token,
     );
     expect(response).toEqual(DisconnectResponse);
   });
 
-  test("ListChannelUsers should list users in a channel and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(usersPage));
-
-    const response = await sdk.channels.ListChannelUsers(
-      channelId,
-      queryParams,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(usersPage);
-  });
-
-  test("AddUserToChannel should add users to a channel and return success", async () => {
-    const addUserResponse = {
+  test("ChannelParents should set a group parent to a channel and return success", async () => {
+    const ChannelParentsResponse = {
       status: 200,
-      message: "User added successfully",
+      message: "Channel Group Parent added successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(addUserResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.AddUserToChannel(
-      channelId,
-      userIds,
-      relation,
+    const response = await sdk.channels.ChannelParents(
       domainId,
+      channelId,
+      groupId,
       token,
     );
-    expect(response).toEqual(addUserResponse);
+    expect(response).toEqual(ChannelParentsResponse);
   });
 
-  test("RemoveUserFromChannel should remove a user from a channel and return success", async () => {
-    const removeUserResponse = {
+  test("DeleteChannelParents should delete a group parent from a channel and return success", async () => {
+    const ChannelParentsResponse = {
       status: 200,
-      message: "User removed successfully",
+      message: "Channel Group Parent deleted successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(removeUserResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.RemoveUserFromChannel(
-      channelId,
-      userIds,
-      relation,
+    const response = await sdk.channels.DeleteChannelParents(
       domainId,
+      channelId,
       token,
     );
-    expect(response).toEqual(removeUserResponse);
-  });
-
-  test("Channels should return a list of channels and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(channelsPage));
-
-    const response = await sdk.channels.Channels(queryParams, domainId, token);
-    expect(response).toEqual(channelsPage);
-  });
-
-  test("ChannelsByThing should retrieve things a channel is connected to and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(channelsPage));
-
-    const response = await sdk.channels.ChannelsByThing(
-      channelId,
-      queryParams,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(channelsPage);
-  });
-
-  test("ChannelPermissions should retrieve channel permissions and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(permissions));
-
-    const response = await sdk.channels.ChannelPermissions(
-      channelId,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(permissions);
-  });
-
-  test("ListChannelUsersGroups list user groups in a channel and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(groupsPage));
-
-    const response = await sdk.channels.ListChannelUserGroups(
-      channelId,
-      queryParams,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(groupsPage);
-  });
-
-  test("AddUserGroupToChannel should add a user group to a channel and return success", async () => {
-    const addUserGroupResponse = {
-      status: 200,
-      message: "Group added successfully",
-    };
-    fetchMock.mockResponseOnce(JSON.stringify(addUserGroupResponse));
-
-    const response = await sdk.channels.AddUserGroupToChannel(
-      channelId,
-      userGroupIds,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(addUserGroupResponse);
-  });
-
-  test("RemoveUserGroupFromChannel should remove a user group from a channel and return success", async () => {
-    const removeUserGroupResponse = {
-      status: 200,
-      message: "Group removed successfully",
-    };
-    fetchMock.mockResponseOnce(JSON.stringify(removeUserGroupResponse));
-
-    const response = await sdk.channels.RemoveUserGroupFromChannel(
-      channelId,
-      userGroupIds,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(removeUserGroupResponse);
+    expect(response).toEqual(ChannelParentsResponse);
   });
 });

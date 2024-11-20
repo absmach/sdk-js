@@ -6,6 +6,8 @@ export default class Health {
 
   private readonly thingsUrl?: URL;
 
+  private readonly channelsUrl?: URL;
+
   private readonly bootstrapUrl?: URL;
 
   private readonly certsUrl?: URL;
@@ -23,6 +25,7 @@ export default class Health {
   public constructor({
     usersUrl,
     thingsUrl,
+    channelsUrl,
     bootstrapUrl,
     certsUrl,
     readersUrl,
@@ -32,6 +35,7 @@ export default class Health {
   }: {
     usersUrl?: string;
     thingsUrl?: string;
+    channelsUrl?: string;
     bootstrapUrl?: string;
     certsUrl?: string;
     readersUrl?: string;
@@ -44,6 +48,9 @@ export default class Health {
     }
     if (thingsUrl !== undefined) {
       this.thingsUrl = new URL(thingsUrl);
+    }
+    if (channelsUrl !== undefined) {
+      this.channelsUrl = new URL(channelsUrl);
     }
     if (bootstrapUrl !== undefined) {
       this.bootstrapUrl = new URL(bootstrapUrl);
@@ -75,6 +82,10 @@ export default class Health {
       }
       case "users": {
         url = this.usersUrl;
+        break;
+      }
+      case "channels": {
+        url = this.channelsUrl;
         break;
       }
       case "bootstrap": {
