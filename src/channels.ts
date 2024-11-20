@@ -1,7 +1,5 @@
 import Errors from "./errors";
 
-import Roles from "./roles";
-
 import type {
   Channel,
   PageMetadata,
@@ -22,7 +20,6 @@ export default class Channels {
    * @returns {Object} -Channels object
    *
    */
-  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -30,50 +27,30 @@ export default class Channels {
 
   private readonly channelsUrl: URL;
 
-  private readonly channelRoles: Roles;
-
   public constructor({
-    usersUrl,
     channelsUrl,
   }: {
-    usersUrl?: string;
     channelsUrl:string;
   }) {
     this.channelsUrl = new URL(channelsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
     this.contentType = "application/json";
     this.channelsEndpoint = "channels";
-    this.channelRoles = new Roles();
   }
 
+  /**
+  * Creates a new a channel
+  * @method Create - Creates new channels when provided with a channel object
+  * with viable fresh information and a valid token.
+  * @param {Object} channel - Channel Object with a name and id.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - Channel object.
+  */
   public async CreateChannel(
     channel: Channel,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Creates a new a channel
-    /**
-     * @method Create - Creates new channels when provided with a channel object
-     * with viable fresh information and a valid token.
-     * @param {Object} channel - Channel Object with a name and id.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - Channel object.
-     * @example
-     * const channel = {
-     * "name": "channelName",
-     * "description": "long channel description",
-     *  "metadata": {
-     *       "domain": "example.com"
-     *  },
-     * "status": "enabled",
-     * }
-     *
-     */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -101,19 +78,19 @@ export default class Channels {
     }
   }
 
+  /**
+  * Retrieves channel with specified id.
+  * @method Get - Retrieves channel with specified id and a valid token.
+  * @param {String} channelId - Channel id.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - Channel object.
+  */
   public async Channel(
     channelId: string,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Retrieves channel with specified id.
-    /**
-     * @method Get - Retrieves channel with specified id and a valid token.
-     * @param {String} channel_id - Channel id.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - Channel object.
-     */
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -140,35 +117,26 @@ export default class Channels {
     }
   }
 
+  /**
+  * Creates multiple channels.
+  * @method CreateChannels - Creates multiple channels.
+  * @param {Object} channels - Array of channels.
+  * @param {string} domainId - The Domain ID.
+  * @param {string} token - User token.
+  * @returns {Object} - Channel object.
+  */
   public async CreateChannels(
-    things: Channel[],
+    channels: Channel[],
     domainId: string,
     token: string
   ): Promise<ChannelsPage> {
-    // Creates multiple channels.
-    /**
-     * @method CreateChannels - Creates multiple channels.
-     * @param {Object} channels - Array of channels.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Channel object.
-     * @example
-     * const channels = [
-     * {
-     * "name": "channel3",
-     * "tags": [
-     * "tag1"
-     * ],
-     * }
-     * ]
-     * */
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(things),
+      body: JSON.stringify(channels),
     };
     try {
       const response = await fetch(
@@ -189,19 +157,19 @@ export default class Channels {
     }
   }
 
+  // Provides a list of all channels with pagination metadata.
+  /**
+  * @method Channels - Provides a list of all channels with pagination metadata.
+  * @param {Object} queryParams - Query parameters for the request.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - returns Channels Page
+  */
   public async Channels(
     queryParams: PageMetadata,
     domainId: string,
     token: string
   ): Promise<ChannelsPage> {
-    // Provides a list of all channels with pagination metadata.
-    /**
-     * @method GetAll - Provides a list of all channels with pagination metadata.
-     * @param {Object} queryParams - Query parameters for the request.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - returns Channels Page
-     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
@@ -233,20 +201,19 @@ export default class Channels {
     }
   }
 
+  /**
+  * Updates channel metadata and name.
+  * @method Update - Updates channel metadata and name with specified id.
+  * @param {Object} channel - Channel object with new information.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - returns updated Channel.
+  */
   public async UpdateChannelNameAndMetadata(
     channel: Channel,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Updates channel metadata and name.
-    /**
-     * @method Update - Updates channel with specified id.
-     * @param {Object} channel - Channel object with new information.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - returns updated Channel.
-     */
-
     const options: RequestInit = {
       method: "PATCH",
       headers: {
@@ -274,20 +241,18 @@ export default class Channels {
     }
   }
 
+  /**
+  * @method Update - Updates channel tags with specified id.
+  * @param {Object} channel - Channel object with new information.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - returns updated Channel.
+  */
   public async UpdateChannelTags(
     channel: Channel,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Updates channel tags.
-    /**
-     * @method Update - Updates channel with specified id.
-     * @param {Object} channel - Channel object with new information.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - returns updated Channel.
-     */
-
     const options: RequestInit = {
       method: "PATCH",
       headers: {
@@ -316,19 +281,19 @@ export default class Channels {
     }
   }
 
+  /**
+  * Disables channel with specified id.
+  * @method Disable - Disables channel with specified id.
+  * @param {Object} channelId - Channel ID.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - returns Disabled channel.
+  */
   public async Disable(
     channelId: string,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Disables channel with specified id.
-    /**
-     * @method Disable - Disables channel with specified id.
-     * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - Creturns Disabled channel.
-     */
     const options = {
       method: "POST",
       headers: {
@@ -355,19 +320,19 @@ export default class Channels {
     }
   }
 
+  /**
+  * Enables channel with specified id.
+  * @method Enable - Enables a previously disabled channel with specified id.
+  * @param {Object} channelId - Channel ID.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - Returns Enabled Channel.
+  */
   public async Enable(
     channelId: string,
     domainId: string,
     token: string
   ): Promise<Channel> {
-    // Enables channel with specified id.
-    /**
-     * @method Enable - Enables a previously disabled channel with specified id.
-     * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - Returns Enabled Channel.
-     */
     const options = {
       method: "POST",
       headers: {
@@ -394,19 +359,19 @@ export default class Channels {
     }
   }
 
+  /**
+  * Deletes channel with specified id.
+  * @method DeleteChannel - Deletes channel with specified id.
+  * @param {Object} channelId - Channel ID.
+  * @param {string} domainId - The Domain ID.
+  * @param {String} token - Authentication token.
+  * @returns {Object} - Returns response message.
+  */
   public async DeleteChannel(
     channelId: string,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Deletes channel with specified id.
-    /**
-     * @method DeleteChannel - Deletes channel with specified id.
-     * @param {Object} channelId - Channel ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     * @returns {Object} - Returns response message.
-     */
     const options: RequestInit = {
       method: "DELETE",
       headers: {
@@ -433,6 +398,17 @@ export default class Channels {
     }
   }
 
+  /**
+  * Connects clients to channel.
+  * @method ConnectClient - Connects clients to channel when provided with a valid token,
+  * channel id and clients id. The client must have an action that it can perform over
+  * the channel.
+  * @param {array} clientIds - Client IDs.
+  * @param {string} channelId - Channel ID.
+  * @param connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+  * @param {string} domainId - The Domain ID.
+  * @param {string} token - Authentication token.
+  */
   public async ConnectClient(
     clientIds: string[],
     channelId: string,
@@ -440,18 +416,6 @@ export default class Channels {
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Connects clients to channel.
-    /**
-     * @method ConnectClient - Connects clients to channel when provided with a valid token,
-     * channel id and a Client id. The Client must have an action that it can perform over
-     * the channel.
-     * @param {array} clientIds - Client IDs.
-     * @param {string} channelId - Channel ID.
-     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     *
-     */
     const options = {
       method: "POST",
       headers: {
@@ -482,6 +446,17 @@ export default class Channels {
     }
   }
 
+  /**
+  * Connects client to channels.
+  * @method Connect - Connect clients to channels when provided with a valid token,
+  * channel ids and client ids.
+  * @param clientIds - client IDs.
+  * @param channelIds - channels IDs.
+  * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
+  * @param {string} domainId - The Domain ID.
+  * @param {string} token - Authentication token.
+  * @returns Response - Returns response message.
+  */
   public async Connect(
     clientIds: string[],
     channelIds: string[],
@@ -489,17 +464,6 @@ export default class Channels {
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Connects client to channel.
-    /**
-     * @method Connect - Connect client to channel when provided with a valid token,
-     * channel id and thing id.
-     * @param clientIds - clients ID.
-     * @param channelIds - channels ID.
-     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     * @returns Response - 'Thing Connected Successfully'.
-     */
     const options = {
       method: "POST",
       headers: {
@@ -527,6 +491,18 @@ export default class Channels {
     }
   }
 
+  /**
+  * Disconnects client from channel.
+  * @method Disconnect - Disconnects clients from channels when provided with a valid token,
+  * channel ids and client ids. The clients must have an action that it can perform over
+  * the channels.
+  * @param {string} clientIds - Client IDs.
+  * @param {string} channelIds - Channel IDs.
+  * @param connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+  * @param {string} domainId - The Domain ID.
+  * @param {string} token - Authentication token.
+  * @returns Response - Returns response message.
+  */
   public async Disconnect(
     clientIds: string[],
     channelIds: string[],
@@ -534,18 +510,6 @@ export default class Channels {
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects client from channel.
-    /**
-     * @method Disconnect - Disconnects client from channel when provided with a valid token,
-     * channel id and a client id. The client must have an action that it can perform over
-     * the channel.
-     * @param {string} clientIds - Client IDs.
-     * @param {string} channelIds - Channel IDs.
-     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     *
-     */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -573,6 +537,18 @@ export default class Channels {
     }
   }
 
+  /**
+  * Disconnects clients from channel.
+  * @method DisconnectClient - Disconnects clients from channel when provided with a valid token,
+  * channel id and a client id. The client must have an action that it can perform over
+  * the channel.
+  * @param {string} clientId - Client ID.
+  * @param {string} channelId - Channel ID.
+  * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
+  * @param {string} domainId - The Domain ID.
+  * @param {string} token - Authentication token.
+  * @returns Response - Returns response message.
+  */
   public async DisconnectClient(
     clientIds: string[],
     channelId: string,
@@ -580,17 +556,6 @@ export default class Channels {
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Disconnects clients from channel.
-    /**
-     * @method Disconnectclient - Disconnects clients from channel when provided with a valid token,
-     * channel id and a client id. The client must have an action that it can perform over
-     * the channel.
-     * @param {string} clientId - Client ID.
-     * @param {string} channelId - Channel ID.
-     * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication token.
-     */
     const options = {
       method: "POST",
       headers: {
@@ -621,16 +586,16 @@ export default class Channels {
     }
   }
 
+  /**
+  * Sets parent to a channel.
+  * @method ChannelParents - Sets a parent to a channels.
+  * @param {string} domainId - The Domain ID.
+  * @param {string} channelId - Channel ID.
+  * @param {string} parentGroupId - Parent Group ID.
+  * @param {string} token - User token.
+  * @returns Response - Returns response message.
+  */
   public async ChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
-    // Sets of parent to a channel.
-    /**
-     * @method ChannelParents - Sets a parent to a channels.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} channelId - Channel ID.
-     * @param {string} parentGroupId - Parent Group ID.
-     * @param {string} token - User token.
-     * @returns {string} Response.
-     * */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -655,15 +620,15 @@ export default class Channels {
     }
   }
 
+  /**
+  * Deletes parent from a channel.
+  * @method DeleteChannelParents - Deletes parent from a channel.
+  * @param {string} domainId - The Domain ID.
+  * @param {string} channelId - Channel ID.
+  * @param {string} parentGroupId - Parent Group ID.
+  * @returns Response - Returns response message.
+  */
   public async DeleteChannelParents(domainId: string, channelId: string, token: string) : Promise<Response> {
-    // Deletes parent from a channel.
-    /**
-     * @method DeleteChannelParents - Deletes parent from a channel.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} channelId - Channel ID.
-     * @param {string} parentGroupId - Parent Group ID.
-     * @returns {string} - Response.
-     * */
     const options: RequestInit = {
       method: "DELETE",
       headers: {

@@ -5,6 +5,7 @@ const defaultUrl = "http://localhost";
 const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
   thingsUrl: `${defaultUrl}:9000`,
+  channelsUrl: `${defaultUrl}:9005`,
   invitationsUrl: `${defaultUrl}:9020`,
   journalUrl: `${defaultUrl}:9021`,
   httpAdapterUrl: `${defaultUrl}:8008`,
@@ -25,6 +26,15 @@ mySdk.Health.Health("things")
 
 // Users service Health
 mySdk.Health.Health("users")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+// Channels service Health
+mySdk.Health.Health("channels")
   .then((response: any) => {
     console.log("response: ", response);
   })

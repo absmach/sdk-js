@@ -8,9 +8,8 @@ import type {
 
 enableFetchMocks();
 
-const thingsUrl = "http://localhost";
-const usersUrl = "http://localhost";
-const sdk = new SDK({ thingsUrl, usersUrl });
+const channelsUrl = "http://localhost";
+const sdk = new SDK({ channelsUrl });
 
 describe("Channels", () => {
   const channel: Channel = {
@@ -141,11 +140,11 @@ describe("Channels", () => {
   });
 
   test("DisconnectClient should disconnect clients from a channel and return success", async () => {
-    const DisconnectThingResponse = {
+    const DisconnectClientResponse = {
       status: 200,
       message: "Clients disconnected successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(DisconnectThingResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(DisconnectClientResponse));
 
     const response = await sdk.channels.DisconnectClient(
       clientIds,
@@ -154,7 +153,7 @@ describe("Channels", () => {
       domainId,
       token,
     );
-    expect(response).toEqual(DisconnectThingResponse);
+    expect(response).toEqual(DisconnectClientResponse);
   });
 
   test("Connect should connect clients to channels and return success", async () => {

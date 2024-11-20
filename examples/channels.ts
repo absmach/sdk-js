@@ -18,7 +18,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -27,7 +27,7 @@ mySdk.channels
     console.log(response);
   })
   .catch((error: any) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -36,7 +36,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -45,7 +45,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -58,7 +58,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -71,7 +71,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -80,7 +80,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -89,7 +89,7 @@ mySdk.channels
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -104,7 +104,7 @@ mySdk.channels
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -119,7 +119,7 @@ mySdk.channels
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -134,7 +134,7 @@ mySdk.channels
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
@@ -149,7 +149,7 @@ mySdk.channels
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
@@ -157,7 +157,7 @@ mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels.DeleteChannelParents(domainId, "<channelId>", token)
@@ -165,12 +165,12 @@ mySdk.channels.DeleteChannelParents(domainId, "<channelId>", token)
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.channels
   .DeleteChannel(
-    "41e38246-4477-4773-8da4-9fb619624bf4",
+    "<channelId>",
     domainId,
     token,
   )
@@ -178,5 +178,5 @@ mySdk.channels
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
