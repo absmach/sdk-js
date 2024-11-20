@@ -16,7 +16,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -25,7 +25,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -34,7 +34,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -43,7 +43,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -52,7 +52,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -61,7 +61,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -70,7 +70,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -79,7 +79,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -88,7 +88,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -97,7 +97,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -132,7 +132,7 @@ mySdk.domains
     domainId,
     "<role_name>",
     { name: "<updated_role_name>" },
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
@@ -155,7 +155,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<roleAction1>", "<roleAction2>"],
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
@@ -178,7 +178,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<roleAction1>", "<roleAction2>"],
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
@@ -210,7 +210,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     { offset: 0, limit: 10 },
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
@@ -224,7 +224,7 @@ mySdk.domains
     domainId,
     "<roleName>",
     ["<userID>", "<userID>"],
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
