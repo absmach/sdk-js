@@ -1,13 +1,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type {
-  Domain,
-  DomainsPage,
-  User,
-  UsersPage,
-  Relation,
-} from "../src/sdk";
+import type { Domain, DomainsPage, User, UsersPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -27,16 +21,12 @@ describe("Domains", () => {
 
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
 
-  const permissions = ["admin", "editor", "viewer"];
-
   const userId = "886b4266-77d1-4258-abae-2931fb4f16de";
 
-  const userIds = [
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-    "886b4266-77d1-4258-abae-2931fb4f16de",
-  ];
-
-  const relation: Relation = "administrator";
+  const roleName = "editor";
+  const actions = ["read", "write"];
+  const members = ["user1", "user2"];
+  const role = { name: roleName, actions, members };
 
   const domainsPage: DomainsPage = {
     domains: [domain],
@@ -103,20 +93,13 @@ describe("Domains", () => {
     expect(response).toEqual(domain);
   });
 
-  test("domain permissions should return a list of permissions and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(permissions));
-
-    const response = await sdk.domains.DomainPermissions(domainId, token);
-    expect(response).toEqual(permissions);
-  });
-
   test("list user domains should return a list of user domains and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domainsPage));
 
     const response = await sdk.domains.ListUserDomains(
       userId,
       queryParams,
-      token,
+      token
     );
     expect(response).toEqual(domainsPage);
   });
@@ -127,7 +110,7 @@ describe("Domains", () => {
     const response = await sdk.domains.ListDomainUsers(
       domainId,
       queryParams,
-      token,
+      token
     );
     expect(response).toEqual(usersPage);
   });
@@ -154,34 +137,198 @@ describe("Domains", () => {
     expect(response).toEqual(disableDomainResponse);
   });
 
-  test("add user to domain should add a user to a domain and return success", async () => {
-    const addUsertoDomainResponse = {
+  test("freeze domain should freeze a domain and return success", async () => {
+    const freezeDomainResponse = {
       status: 200,
-      message: "User added successfully",
+      message: "Domain frozen successfully",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(addUsertoDomainResponse));
 
-    const response = await sdk.domains.AddUsertoDomain(
-      domainId,
-      userIds,
-      relation,
-      token,
-    );
-    expect(response).toEqual(addUsertoDomainResponse);
+    fetchMock.mockResponseOnce(JSON.stringify(freezeDomainResponse));
+
+    const response = await sdk.domains.FreezeDomain(domainId, token);
+    expect(response).toEqual(freezeDomainResponse);
   });
 
-  test("remove user from domain should remove a user from a domain and return success", async () => {
-    const removeUserfromDomainResponse = {
-      status: 200,
-      message: "User removed successfully",
-    };
-    fetchMock.mockResponseOnce(JSON.stringify(removeUserfromDomainResponse));
+  test("ListDomainActions should return available actions", async () => {
+    const availableActions = ["read", "write", "delete"];
+    fetchMock.mockResponseOnce(JSON.stringify(availableActions));
 
-    const response = await sdk.domains.RemoveUserfromDomain(
+    const response = await sdk.domains.ListDomainActions(token);
+    expect(response).toEqual(availableActions);
+  });
+
+  test("CreateDomainRole should create a new role and return it", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(role));
+
+    const response = await sdk.domains.CreateDomainRole(
       domainId,
-      userId,
+      roleName,
       token,
+      actions,
+      members
     );
-    expect(response).toEqual(removeUserfromDomainResponse);
+    expect(response).toEqual(role);
+  });
+
+  test("ListDomainRoles should return a page of roles", async () => {
+    const rolesPage = { roles: [role], total: 1, offset: 0, limit: 10 };
+    fetchMock.mockResponseOnce(JSON.stringify(rolesPage));
+
+    const response = await sdk.domains.ListDomainRoles(
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(rolesPage);
+  });
+
+  test("ViewDomainRole should return details of a specific role", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(role));
+
+    const response = await sdk.domains.ViewDomainRole(
+      domainId,
+      roleName,
+      token
+    );
+    expect(response).toEqual(role);
+  });
+
+  test("UpdateDomainRole should update a role and return the updated role", async () => {
+    const updatedRole = { ...role, actions: [...role.actions, "execute"] };
+    fetchMock.mockResponseOnce(JSON.stringify(updatedRole));
+
+    const response = await sdk.domains.UpdateDomainRole(
+      domainId,
+      roleName,
+      updatedRole,
+      token
+    );
+    expect(response).toEqual(updatedRole);
+  });
+
+  test("DeleteDomainRole should delete a role and return success response", async () => {
+    const successResponse = {
+      status: 200,
+      message: "Role deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(successResponse));
+
+    const response = await sdk.domains.DeleteDomainRole(
+      domainId,
+      roleName,
+      token
+    );
+    expect(response).toEqual(successResponse);
+  });
+
+  test("AddDomainRoleActions should add actions to a role and return updated actions", async () => {
+    const updatedActions = [...actions, "execute"];
+    fetchMock.mockResponseOnce(JSON.stringify(updatedActions));
+
+    const response = await sdk.domains.AddDomainRoleActions(
+      domainId,
+      roleName,
+      ["execute"],
+      token
+    );
+    expect(response).toEqual(updatedActions);
+  });
+
+  test("ListDomainRoleActions should return actions of a specific role", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(actions));
+
+    const response = await sdk.domains.ListDomainRoleActions(
+      domainId,
+      roleName,
+      token
+    );
+    expect(response).toEqual(actions);
+  });
+
+  test("DeleteDomainRoleActions should remove actions from a role and return success response", async () => {
+    const successResponse = {
+      status: 200,
+      message: "Role actions deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(successResponse));
+
+    const response = await sdk.domains.DeleteDomainRoleActions(
+      domainId,
+      roleName,
+      ["write"],
+      token
+    );
+    expect(response).toEqual(successResponse);
+  });
+
+  test("DeleteAllDomainRoleActions should remove all actions from a role and return success response", async () => {
+    const successResponse = {
+      status: 200,
+      message: "Role actions deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(successResponse));
+
+    const response = await sdk.domains.DeleteAllDomainRoleActions(
+      domainId,
+      roleName,
+      token
+    );
+    expect(response).toEqual(successResponse);
+  });
+
+  test("AddDomainRoleMembers should add members to a role and return updated members", async () => {
+    const updatedMembers = [...members, "user3"];
+    fetchMock.mockResponseOnce(JSON.stringify(updatedMembers));
+
+    const response = await sdk.domains.AddDomainRoleMembers(
+      domainId,
+      roleName,
+      ["user3"],
+      token
+    );
+    expect(response).toEqual(updatedMembers);
+  });
+
+  test("ListDomainRoleMembers should return members of a specific role", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(members));
+
+    const response = await sdk.domains.ListDomainRoleMembers(
+      domainId,
+      roleName,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(members);
+  });
+
+  test("DeleteDomainRoleMembers should remove members from a role and return success response", async () => {
+    const successResponse = {
+      status: 200,
+      message: "Role members deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(successResponse));
+
+    const response = await sdk.domains.DeleteDomainRoleMembers(
+      domainId,
+      roleName,
+      ["user1"],
+      token
+    );
+    expect(response).toEqual(successResponse);
+  });
+
+  test("DeleteAllDomainRoleMembers should remove all members from a role and return success response", async () => {
+    const successResponse = {
+      status: 200,
+      message: "Role members deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(successResponse));
+
+    const response = await sdk.domains.DeleteAllDomainRoleMembers(
+      domainId,
+      roleName,
+      token
+    );
+    expect(response).toEqual(successResponse);
   });
 });

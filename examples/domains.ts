@@ -16,7 +16,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -25,7 +25,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -34,16 +34,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
-  });
-
-mySdk.domains
-  .DomainPermissions(domainId, token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -52,7 +43,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -61,7 +52,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -70,7 +61,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -79,7 +70,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -88,25 +79,16 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
-  .AddUsertoDomain(domainId, ["<userID>", "<userID>"], "administrator", token)
+  .FreezeDomain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
-  });
-
-mySdk.domains
-  .RemoveUserfromDomain(domainId, "<userID>", token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -115,7 +97,7 @@ mySdk.domains
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.domains
@@ -150,7 +132,7 @@ mySdk.domains
     domainId,
     "<role_name>",
     { name: "<updated_role_name>" },
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
