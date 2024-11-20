@@ -38,13 +38,13 @@ export default class Channels {
   }
 
   /**
-  * Creates a new a channel
-  * @method Create - Creates new channels when provided with a channel object
-  * with viable fresh information and a valid token.
-  * @param {Object} channel - Channel Object with a name and id.
+  * @method CreateChannel
+  * Creates a new channel
+  * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
   * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - Channel object.
+  * @param {String} token - Authorization token.
+  * @returns {Promise<Channel>} - The created channel object.
+  * @throws {Error} If the channel cannot be created.
   */
   public async CreateChannel(
     channel: Channel,
@@ -79,12 +79,13 @@ export default class Channels {
   }
 
   /**
-  * Retrieves channel with specified id.
-  * @method Get - Retrieves channel with specified id and a valid token.
-  * @param {String} channelId - Channel id.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - Channel object.
+  * @method Channel
+  * Retrieves a channel by its id.
+  * @param {String} channelId - The unique ID of the channel.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {String} token - Authorization token.
+  * @returns {Promise<Channel>} - The requested channel object.
+  * @throws {Error} If the channel cannot be fetched.
   */
   public async Channel(
     channelId: string,
@@ -118,12 +119,13 @@ export default class Channels {
   }
 
   /**
-  * Creates multiple channels.
-  * @method CreateChannels - Creates multiple channels.
-  * @param {Object} channels - Array of channels.
-  * @param {string} domainId - The Domain ID.
-  * @param {string} token - User token.
-  * @returns {Object} - Channel object.
+  * @method CreateChannels
+  * Creates multiple new channels.
+  * @param {Channel[]} channels - An array of channel objects, each containing details like name, metadata, and tags.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<ChannelsPage>} - A page of channels.
+  * @throws {Error} If the channels cannot be created.
   */
   public async CreateChannels(
     channels: Channel[],
@@ -157,13 +159,14 @@ export default class Channels {
     }
   }
 
-  // Provides a list of all channels with pagination metadata.
   /**
-  * @method Channels - Provides a list of all channels with pagination metadata.
-  * @param {Object} queryParams - Query parameters for the request.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - returns Channels Page
+  * @method Channels
+  * Retrieves all channels matching the provided query parameters.
+  * @param {PageMetadata} queryParams - Query parameters for the request.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {String} token - Authorization token.
+  * @returns {Promise<ChannelsPage>} - A page of channels.
+  * @throws {Error} If the domains cannot be fetched.
   */
   public async Channels(
     queryParams: PageMetadata,
@@ -202,12 +205,13 @@ export default class Channels {
   }
 
   /**
-  * Updates channel metadata and name.
-  * @method Update - Updates channel metadata and name with specified id.
-  * @param {Object} channel - Channel object with new information.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - returns updated Channel.
+  * @method UpdateChannelNameAndMetadata
+  * Updates an existing channel's metadata and name.
+  * @param {Channel} channel - Channel object with updated properties.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Channel>} - The updated channel object.
+  * @throws {Error} If the channel cannot be updated.
   */
   public async UpdateChannelNameAndMetadata(
     channel: Channel,
@@ -242,11 +246,13 @@ export default class Channels {
   }
 
   /**
-  * @method Update - Updates channel tags with specified id.
-  * @param {Object} channel - Channel object with new information.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - returns updated Channel.
+  * @method UpdateChannelTags
+  * Updates an existing channel's tags.
+  * @param {Channel} channel - Channel object with updated properties.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Channel>} - The updated channel object.
+  * @throws {Error} If the channel tags cannot be updated.
   */
   public async UpdateChannelTags(
     channel: Channel,
@@ -282,14 +288,15 @@ export default class Channels {
   }
 
   /**
-  * Disables channel with specified id.
-  * @method Disable - Disables channel with specified id.
-  * @param {Object} channelId - Channel ID.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - returns Disabled channel.
+  * @method DisableChannel
+  * Disables a spcific channel.
+  * @param {string} channelId - The  unique ID of the channel.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {String} token - Authorization token.
+  * @returns {Promise<Channel>} - The disabled channel object.
+  * @throws {Error} If the channel cannot be disabled.
   */
-  public async Disable(
+  public async DisableChannel(
     channelId: string,
     domainId: string,
     token: string
@@ -321,14 +328,15 @@ export default class Channels {
   }
 
   /**
-  * Enables channel with specified id.
-  * @method Enable - Enables a previously disabled channel with specified id.
-  * @param {Object} channelId - Channel ID.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - Returns Enabled Channel.
+  * @method EnableChannel
+  * Enables a previously disabled channel.
+  * @param {string} channelId - The  unique ID of the channel.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Channel>} - The enabled channel object.
+  * @throws {Error} If the channel cannot be enabled.
   */
-  public async Enable(
+  public async EnableChannel(
     channelId: string,
     domainId: string,
     token: string
@@ -360,12 +368,13 @@ export default class Channels {
   }
 
   /**
+  * @method DeleteChannel
   * Deletes channel with specified id.
-  * @method DeleteChannel - Deletes channel with specified id.
-  * @param {Object} channelId - Channel ID.
-  * @param {string} domainId - The Domain ID.
-  * @param {String} token - Authentication token.
-  * @returns {Object} - Returns response message.
+  * @param {Object} channelId - The  unique ID of the channel.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} A promise that resolves when the channel is deleted.
+  * @throws {Error} If the channel cannot be deleted.
   */
   public async DeleteChannel(
     channelId: string,
@@ -399,15 +408,15 @@ export default class Channels {
   }
 
   /**
-  * Connects clients to channel.
-  * @method ConnectClient - Connects clients to channel when provided with a valid token,
-  * channel id and clients id. The client must have an action that it can perform over
-  * the channel.
-  * @param {array} clientIds - Client IDs.
-  * @param {string} channelId - Channel ID.
-  * @param connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-  * @param {string} domainId - The Domain ID.
-  * @param {string} token - Authentication token.
+  * @method ConnectClient
+  * Connects multiple clients to a channel.
+  * @param {string[]} clientIds - An array of unique clients IDs to be connected.
+  * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
+  * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} A promise that resolves when the clients are connected to the channel.
+  * @throws {Error} If the clients cannot be connected to the channel.
   */
   public async ConnectClient(
     clientIds: string[],
@@ -447,15 +456,15 @@ export default class Channels {
   }
 
   /**
-  * Connects client to channels.
-  * @method Connect - Connect clients to channels when provided with a valid token,
-  * channel ids and client ids.
-  * @param clientIds - client IDs.
-  * @param channelIds - channels IDs.
-  * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe
-  * @param {string} domainId - The Domain ID.
-  * @param {string} token - Authentication token.
-  * @returns Response - Returns response message.
+  * @method Connect
+  * Connects multiple clients to multple channels.
+  * @param {string[]} clientIds - An array of unique clients IDs to be connected.
+  * @param {string[]} channelIds - An array of unique channels IDs to which the clients will connect.
+  * @param {string} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+  * @param {string} domainId - The  unique ID of the channel.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} A promise that resolves when the clients are connected to the channels.
+  * @throws {Error} If the clients cannot be connected to the channel.
   */
   public async Connect(
     clientIds: string[],
@@ -492,16 +501,15 @@ export default class Channels {
   }
 
   /**
-  * Disconnects client from channel.
-  * @method Disconnect - Disconnects clients from channels when provided with a valid token,
-  * channel ids and client ids. The clients must have an action that it can perform over
-  * the channels.
-  * @param {string} clientIds - Client IDs.
-  * @param {string} channelIds - Channel IDs.
-  * @param connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-  * @param {string} domainId - The Domain ID.
-  * @param {string} token - Authentication token.
-  * @returns Response - Returns response message.
+  * @method Disconnect
+  * Disconnects clients from channels.
+  * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
+  * @param {string[]} channelIds -  An array of unique channels IDs to which the clients will disconnect.
+  * @param {string}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} - A promise that resolves when the clients are disconnected from the channels.
+  * @throws {Error} If the clients cannot be disconnected from the channels.
   */
   public async Disconnect(
     clientIds: string[],
@@ -538,16 +546,15 @@ export default class Channels {
   }
 
   /**
+  * @method DisconnectClient
   * Disconnects clients from channel.
-  * @method DisconnectClient - Disconnects clients from channel when provided with a valid token,
-  * channel id and a client id. The client must have an action that it can perform over
-  * the channel.
-  * @param {string} clientId - Client ID.
-  * @param {string} channelId - Channel ID.
+  * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
+  * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
   * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
-  * @param {string} domainId - The Domain ID.
-  * @param {string} token - Authentication token.
-  * @returns Response - Returns response message.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} - A promise that resolves when the clients are disconnected from the channel.
+  * @throws {Error} If the clients cannot be disconnected from the channel.
   */
   public async DisconnectClient(
     clientIds: string[],
@@ -587,13 +594,14 @@ export default class Channels {
   }
 
   /**
+  * @method ChannelParents
   * Sets parent to a channel.
-  * @method ChannelParents - Sets a parent to a channels.
-  * @param {string} domainId - The Domain ID.
-  * @param {string} channelId - Channel ID.
-  * @param {string} parentGroupId - Parent Group ID.
-  * @param {string} token - User token.
-  * @returns Response - Returns response message.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} channelId - The unique ID of the channel to be updated.
+  * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully set for the specified channel.
+  * @throws {Error} If the parent group cannot be set for the channel.
   */
   public async ChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
@@ -621,12 +629,13 @@ export default class Channels {
   }
 
   /**
-  * Deletes parent from a channel.
-  * @method DeleteChannelParents - Deletes parent from a channel.
-  * @param {string} domainId - The Domain ID.
-  * @param {string} channelId - Channel ID.
-  * @param {string} parentGroupId - Parent Group ID.
-  * @returns Response - Returns response message.
+  * @method DeleteChannelParents
+  * Removes the parent group from a specified channel.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} channelId - The  unique ID of the channel.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully removed from the specified channel.
+  * @throws {Error} If the parent group cannot removed from the channel.
   */
   public async DeleteChannelParents(domainId: string, channelId: string, token: string) : Promise<Response> {
     const options: RequestInit = {

@@ -21,7 +21,7 @@ mySdk.Health.Health("things")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Users service Health
@@ -30,7 +30,7 @@ mySdk.Health.Health("users")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Channels service Health
@@ -39,7 +39,7 @@ mySdk.Health.Health("channels")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Bootstrap service Health
@@ -48,7 +48,7 @@ mySdk.Health.Health("bootstrap")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Certs service Health
@@ -57,7 +57,7 @@ mySdk.Health.Health("certs")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Reader service Health
@@ -66,7 +66,7 @@ mySdk.Health.Health("reader")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Http Adapter service Health
@@ -75,7 +75,7 @@ mySdk.Health.Health("http-adapter")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Journal service Health
@@ -84,7 +84,7 @@ mySdk.Health.Health("journal")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Invitations service Health
@@ -93,5 +93,5 @@ mySdk.Health.Health("invitations")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

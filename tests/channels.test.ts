@@ -93,17 +93,17 @@ describe("Channels", () => {
     expect(response).toEqual(channel);
   });
 
-  test("Enable should enable a channel and return success", async () => {
+  test("EnableChannel should enable a channel and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
-    const response = await sdk.channels.Enable(channelId, domainId, token);
+    const response = await sdk.channels.EnableChannel(channelId, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("Disable should disable a channel and return success", async () => {
+  test("DisableChannel should disable a channel and return success", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
-    const response = await sdk.channels.Disable(channelId, domainId, token);
+    const response = await sdk.channels.DisableChannel(channelId, domainId, token);
     expect(response).toEqual(channel);
   });
 

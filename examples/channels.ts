@@ -75,7 +75,7 @@ mySdk.channels
   });
 
 mySdk.channels
-  .Disable("<channelId>", domainId, token)
+  .DisableChannel("<channelId>", domainId, token)
   .then((response: any) => {
     console.log("response:", response);
   })
@@ -84,7 +84,7 @@ mySdk.channels
   });
 
 mySdk.channels
-  .Enable("<channelId>", domainId, token)
+  .EnableChannel("<channelId>", domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
