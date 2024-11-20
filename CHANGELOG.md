@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.3
+
+### Patch Changes
+
+- cfe872c: add documentation and tests for domains. Also adds missing functions
+
 ## 0.9.2
 
 ### Patch Changes
