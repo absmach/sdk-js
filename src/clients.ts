@@ -177,11 +177,11 @@ export default class Clients {
    * @param {string} ClientId - The  unique ID of the client.
    * @param {string} domainId -The  unique ID of the domain.
    * @param {string} token - Authorization token.
-   * @returns {Object} - The updated client object with disabled status.
+   * @returns {Promise<Client>} - The updated client object with disabled status.
    * @throws {Error} If the group cannot be disabled.
   */
   public async Disable(
-    ClientId: string,
+    clientId: string,
     domainId: string,
     token: string
   ): Promise<Client> {
@@ -195,7 +195,7 @@ export default class Clients {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.clientsEndpoint}/${ClientId}/disable`,
+          `${domainId}/${this.clientsEndpoint}/${clientId}/disable`,
           this.clientsUrl
         ).toString(),
         options
@@ -211,46 +211,31 @@ export default class Clients {
     }
   }
 
+  /**
+  * @method UpdateClient - Updates the information of an existing client.
+  * @param {Client} client- The client object.
+  * @param {string} domainId - The unique identifier of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Client>} - The updated channel object.
+  * @throws {Error} If the channel cannot be updated.
+  */
   public async UpdateClient(
-    Client: Client,
+    client: Client,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Updates Client.
-    /**
-     * @method Update - Updates Client when provided with a valid token,
-     * domain ID and Client object.
-     * @param {Object} Client - Client object.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Client object.
-     * @example
-     * const Client = {
-     * "name": "Client3",
-     * "tags": [
-     * "tag1"
-     * ],
-     * "credentials": {
-     * "identity": "Clientidentity",
-     * "secret":"12345678"
-     * },
-     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * }
-     */
-
     const options: RequestInit = {
       method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(Client),
+      body: JSON.stringify(client),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.clientsEndpoint}/${Client.id}`,
+          `${domainId}/${this.clientsEndpoint}/${client.id}`,
           this.clientsUrl
         ).toString(),
         options
@@ -259,53 +244,38 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const ClientData: Client = await response.json();
-      return ClientData;
+      const clientData: Client = await response.json();
+      return clientData;
     } catch (error) {
       throw error;
     }
   }
 
+  /**
+  * @method UpdateClientSecret - Updates an existing client's secret.
+  * @param {string} domainId - The  unique ID of the domain..
+  * @param {Client} client - Client object with updated properties.
+  * @param {string} token -  Authorization token..
+  * @returns {Promise<Client> } - The updated client object.
+  * @throws {Error} If the client secret cannot be updated.
+  */
   public async UpdateClientSecret(
-    Client: Client,
+    client: Client,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Updates Client secret.
-    /**
-     * @method UpdateClientSecret - Updates Client secret when provided with a valid token and domain ID,
-     * domain ID and Client object.
-     * @param {string} Client_id - Client ID.
-     * @param {Object} Client - Client object.
-     * @param {string} token - User token.
-     * @returns {Object} - Client object.
-     * @example
-     * const Client = {
-     * "name": "Client3",
-     * "tags": [
-     * "tag1"
-     * ],
-     * "credentials": {
-     * "identity": "Clientidentity",
-     * "secret":"56788912"
-     * },
-     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * }
-     */
-
     const options: RequestInit = {
       method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ secret: Client.credentials?.secret }),
+      body: JSON.stringify({ secret: client.credentials?.secret }),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.clientsEndpoint}/${Client.id}/secret`,
+          `${domainId}/${this.clientsEndpoint}/${client.id}/secret`,
           this.clientsUrl
         ).toString(),
         options
@@ -314,55 +284,39 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const ClientData: Client = await response.json();
-      return ClientData;
+      const clientData: Client = await response.json();
+      return clientData;
     } catch (error) {
       throw error;
     }
   }
 
+  /**
+  * @method UpdateClientTags - Updates an existing client's tags.
+  * @param {client} Client - Client object with updated properties.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<client>} - The updated client object.
+  * @throws {Error} If the client tags cannot be updated.
+  */
   public async UpdateClientTags(
-    Client: Client,
+    client: Client,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Updates Client tags.
-    /**
-     * @method UpdateClientTags - Updates Client tags when provided with a valid token,
-     * domain ID and Client object.
-     *
-     * @param {Object} Client - Client object.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Client object.
-     * @example
-     * const Client = {
-     * "name": "Client3",
-     * "tags": [
-     * "tag1"
-     * ],
-     * "credentials": {
-     * "identity": "Clientidentity",
-     * "secret":"56788912"
-     * },
-     * "owner": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * }
-     */
-
     const options: RequestInit = {
       method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(Client),
+      body: JSON.stringify(client),
     };
 
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.clientsEndpoint}/${Client.id}/tags`,
+          `${domainId}/${this.clientsEndpoint}/${client.id}/tags`,
           this.clientsUrl
         ).toString(),
         options
@@ -371,32 +325,26 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const ClientData: Client = await response.json();
-      return ClientData;
+      const clientData: Client = await response.json();
+      return clientData;
     } catch (error) {
       throw error;
     }
   }
 
+  /**
+  * @method Client - Retrieves a client by its id.
+  * @param {string} clientId - The unique ID of the client.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Client>} - The requested client object.
+  * @throws {Error} If the client cannot be fetched.
+  */
   public async Client(
     clientId: string,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Gets a Client
-    /**
-     * Provides information about the Client with provided ID. The Client is
-     * retrieved using authorization token.
-     * @method Client - Gets a Client.
-     * @param {String} ClientId - Client ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Access token.
-     * @returns {Object} - Client object.
-     * @example
-     * const ClientId = "886b4266-77d1-4258-abae-2931fb4f16de"
-     *
-     */
-
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -425,13 +373,12 @@ export default class Clients {
   }
 
   /**
-     * @method Clients
-     * Retrieves all clients matching the provided query parameters.
-     * @param {PageMetadata} queryParams - Query parameters for the request.
-     * @param {string} domainId - The  unique ID of the domain.
-     * @param {string} token - Authorization token.
-     * @returns {Promise<ClientsPage>} - A page of clients.
-     * @throws {Error} If the clients cannot be fetched.
+  * @method Clients - Retrieves all clients matching the provided query parameters.
+  * @param {PageMetadata} queryParams - Query parameters for the request.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<ClientsPage>} - A page of clients.
+  * @throws {Error} If the clients cannot be fetched.
   */
   public async Clients(
     queryParams: PageMetadata,
@@ -508,14 +455,13 @@ export default class Clients {
   }
 
   /**
-  * @method ClientParents
-  * Sets parent to a channel.
+  * @method ClientParents - Sets parent to a client.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} clientlId - The unique ID of the channel to be updated.
+  * @param {string} clientlId - The unique ID of the client to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
   * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully set for the specified channel.
-  * @throws {Error} If the parent group cannot be set for the channel.
+  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully set for the specified client.
+  * @throws {Error} If the parent group cannot be set for the client.
   */
   public async ClientParents(domainId: string, clientlId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
@@ -543,13 +489,12 @@ export default class Clients {
   }
 
   /**
-  * @method DeleteClientParents
-  * Removes the parent group from a specified client.
+  * @method DeleteClientParents - Removes the parent group from a specified client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} clientId - The  unique ID of the client.
   * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully removed from the specified channel.
-  * @throws {Error} If the parent group cannot removed from the channel.
+  * @returns {Promise<Response>} - A promise that resolves when the parent group is successfully removed from the specified client.
+  * @throws {Error} If the parent group cannot removed from the client.
   */
   public async DeleteClientParents(domainId: string, clientId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
@@ -579,19 +524,19 @@ export default class Clients {
     }
   }
 
+  /**
+  * @method DeleteClient - Deletes a client with specified id..
+  * @param {string} clientId - The  unique ID of the client.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} - A promise that resolves when the client is deleted.
+  * @throws {Error} If the client cannot be deleted.
+  */
   public async DeleteClient(
     ClientId: string,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Deletes a Client.
-    /**
-     * @method DeleteClient - Deletes a Client.
-     * @param {string} ClientId - Client ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - NoClient
-     *  */
     const options: RequestInit = {
       method: "DELETE",
       headers: {
@@ -623,8 +568,7 @@ export default class Clients {
   }
 
   /**
-   * @method CreateClientRole
-   * Creates a new role within a specific client.
+   * @method CreateClientRole - Creates a new role within a specific client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The name of the role to create.
    * @param {string} token - Authorization token.
@@ -658,8 +602,7 @@ export default class Clients {
   }
 
   /**
-   * @method ListClientRoles
-   * Lists all roles within a specific client.
+   * @method ListClientRoles - Lists all roles within a specific client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {PageMetadata} queryParams - Metadata for pagination or filters.
    * @param {string} token - Authorization token.
@@ -687,8 +630,7 @@ export default class Clients {
   }
 
   /**
-   * @method ViewClientRole
-   * Retrieves details about a specific role in a client.
+   * @method ViewClientRole - Retrieves details about a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -716,8 +658,7 @@ export default class Clients {
   }
 
   /**
-   * @method UpdateClientRole
-   * Updates the details of a specific role in a client.
+   * @method UpdateClientRole - Updates the details of a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {Role} role - The role to be updated.
@@ -748,9 +689,7 @@ export default class Clients {
   }
 
   /**
-   * Deletes a specific role from a client.
-   *
-   * @function DeleteClientRole
+   * @method DeleteClientRole - Deletes a specific role from a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -778,8 +717,7 @@ export default class Clients {
   }
 
   /**
-   * @method AddClientRoleActions
-   * Adds actions to a specific role in a client.
+   * @method AddClientRoleActions - Adds actions to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -810,8 +748,7 @@ export default class Clients {
   }
 
   /**
-   * @method ListClientRoleActions
-   * Lists all actions associated with a specific role in a client.
+   * @method ListClientRoleActions - Lists all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -839,8 +776,7 @@ export default class Clients {
   }
 
   /**
-   * @method DeleteClientRoleActions
-   * Deletes specific actions from a role in a client.
+   * @method DeleteClientRoleActions - Deletes specific actions from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string[]} actions - The actions to delete from the role.
@@ -871,8 +807,7 @@ export default class Clients {
   }
 
   /**
-   * @method DeleteAllClientRoleActions
-   * Deletes all actions associated with a specific role in a client.
+   * @method DeleteAllClientRoleActions - Deletes all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -900,8 +835,7 @@ export default class Clients {
   }
 
   /**
-   * @method AddClientRoleMembers
-   * Adds members to a specific role in a client.
+   * @method AddClientRoleMembers - Adds members to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to add.
@@ -932,8 +866,7 @@ export default class Clients {
   }
 
   /**
-   * @method ListClientRoleMembers
-   * Lists all members associated with a specific role in a client.
+   * @method ListClientRoleMembers - Lists all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string} token - Authorization token.
@@ -963,8 +896,7 @@ export default class Clients {
   }
 
   /**
-   * @method DeleteClientRoleMembers
-   * Deletes specific members from a role in a client.
+   * @method DeleteClientRoleMembers - Deletes specific members from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to delete.
@@ -995,8 +927,7 @@ export default class Clients {
   }
 
   /**
-   * @method DeleteAllClientRoleMembers
-   * Deletes all members associated with a specific role in a client.
+   * @method DeleteAllClientRoleMembers - Deletes all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} roleName - The unique identifier of the role.
    *  @param {string} token - Authorization token.
