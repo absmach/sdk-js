@@ -10,19 +10,11 @@ import type {
   BasicPageMeta,
 } from "./defs";
 
+/**
+ * @class Clients -
+ * Handles interactions with the clients API, including creating, updating, and managing clients, roles, and permissions.
+ */
 export default class Clients {
-  // Clients service client.
-  /**
-  @class Clients
-    private Clients_url: URL;
-    content_type: string;
-    ClientsEndpoint: string;
-   //
-   //Clients API is used for creating and managing Clients.
-   //It is used for creating, updating, deleting and retrieving Clients.
-   //@param {string} clients_url - Clients service URL.
-   //@returns {Object} - Clients service client.
-   */
   private readonly clientsUrl: URL;
 
   private readonly usersUrl?: URL;
@@ -33,6 +25,13 @@ export default class Clients {
 
   private readonly clientRoles: Roles;
 
+  /**
+   * @constructor
+   * Initializes the Clients API client.
+   * @param {object} config - Configuration object.
+   * @param {string} config.clientsUrl - Base URL for the clients API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
+   */
   public constructor({
     clientsUrl,
     usersUrl,
@@ -52,8 +51,7 @@ export default class Clients {
   }
 
   /**
-  * @method CreateClient
-  * Creates a new client.
+  * @method CreateClient - Creates a new client.
   * @param {Object} Client - Client object containing details like name and metadata.
   * @param {string} domainId -  The unique ID of the domain.
   * @param {stringtring} token - Authorization token.
@@ -94,8 +92,7 @@ export default class Clients {
   }
 
   /**
-     * @method CreateClients
-     * Creates multiple new clients.
+     * @method CreateClients - Creates multiple new clients.
      * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
      * @param {string} domainId -  The  unique ID of the domain.
      * @param {string} token - Authorization token.
@@ -113,7 +110,7 @@ export default class Clients {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(Clients),
+      body: JSON.stringify(clients),
     };
     try {
       const response = await fetch(
@@ -135,20 +132,19 @@ export default class Clients {
     }
   }
 
+  /**
+    * @method Enable - Enables a previously disabled client by its ID.
+     * @param {string} clientID - The  unique ID of the client.
+     * @param {string} domainId - The  unique ID of the domain.
+     * @param {string} token - Authorization token.
+     * @returns {Promise<Client>} - The updated client object with enabled status.
+     * @throws {Error} If the client cannot be enabled.
+  */
   public async Enable(
     clientId: string,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Enables a Client.
-    /**
-     * @method Enable - Enables a previously disabled Client when provided with a valid token and Client ID.
-     * @param {string} clientID - client ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Returns updated Client.
-     */
-
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -176,20 +172,19 @@ export default class Clients {
     }
   }
 
+  /**
+   * @method Disable - Disables an enabled client by its ID..
+   * @param {string} ClientId - The  unique ID of the client.
+   * @param {string} domainId -The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Object} - The updated client object with disabled status.
+   * @throws {Error} If the group cannot be disabled.
+  */
   public async Disable(
     ClientId: string,
     domainId: string,
     token: string
   ): Promise<Client> {
-    // Disables Client.
-    /**
-     * @method Disable - Disables a Client when provided with a valid token, domain ID and Client ID.
-     * @param {string} ClientId - Client ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - User token.
-     * @returns {Object} - Returns disabled Client
-     */
-
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -482,9 +477,9 @@ export default class Clients {
     domainId: string,
     token: string
   ): Promise<ClientsPage> {
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
+    // const stringParams: Record<string, string> = Object.fromEntries(
+    //   Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    // );
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -495,11 +490,12 @@ export default class Clients {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/users/${userId}/clients?${new URLSearchParams(stringParams).toString()}`,
+          `${domainId}/users/${userId}/clients`,
           this.usersUrl
         ).toString(),
         options
       );
+      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
