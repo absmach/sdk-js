@@ -3,75 +3,56 @@ import type {
   Group,
   GroupsPage,
   PageMetadata,
-  Permissions,
   Response,
-  UsersPage,
-  GroupRelation,
-  ChannelsPage,
+  Role,
+  RolePage,
+  BasicPageMeta,
+  HierarchyPageMeta,
+  HierarchyPage,
 } from "./defs";
+import Roles from "./roles";
 
+/**
+ * @class Groups -
+ * Handles interactions with the groups API,  including creating, updating, and managing groups, roles, and permissions.
+ */
 export default class Groups {
-  // Groups API client
-  /**
-   * @class Groups -
-   * Groups API client is used for managing groups. It is used for
-   * creating, updating, deleting, and retrieving groups.
-   * @param {string} groupsUrl - The URL of the Groups service.
-   * @param {string} clientsUrl- Clients service URL.
-   * @param {string} contentType - The content type of the request.
-   * @param {string} groupsEndpoint - The endpoint of the Groups service.
-   * @returns {Groups} - Returns a Groups object.
-   */
-  private readonly usersUrl: URL;
-
-  private readonly clientsUrl?: URL;
+  private readonly groupsUrl: URL;
 
   private readonly contentType: string;
 
   private readonly groupsEndpoint: string;
 
-  public constructor({
-    usersUrl,
-    clientsUrl,
-  }: {
-    usersUrl: string;
-    clientsUrl?: string;
-  }) {
-    this.usersUrl = new URL(usersUrl);
-    if (clientsUrl !== undefined) {
-      this.clientsUrl = new URL(clientsUrl);
-    } else {
-      this.clientsUrl = new URL("");
-    }
+  private readonly groupRoles: Roles;
+
+  /**
+   * @constructor
+   * Initializes the Groups API client.
+   * @param {object} config - Configuration object.
+   * @param {string} config.groupsUrl - Base URL for the groups API.
+   */
+  public constructor({ groupsUrl }: { groupsUrl: string }) {
+    this.groupsUrl = new URL(groupsUrl);
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
+    this.groupRoles = new Roles();
   }
 
+  /**
+   * @method CreateGroup - Creates a new group once the user is authenticated
+   * and a valid token is provided. The group's parent or child status in the
+   * heirarchy can also be established.
+   * @param {Group} group - The group object to be created.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Group>} group - The created group object.
+   * @throws {Error} - If the group cannot be created.
+   */
   public async CreateGroup(
     group: Group,
     domainId: string,
     token: string
   ): Promise<Group> {
-    // Creates a new group
-    /**
-     * @method CreateGroup - Creates a new group once the user is authenticated.
-     * and a valid token is provided. The group's parent or child status in the
-     * heirarchy can also be established.
-     * @param {object} group - The group object to be created.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's token.
-     * @example
-     * const group = {
-     * "name": "groupName",
-     * "description": "long group description",
-     * "parent_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "metadata": {
-     *   "domain": "example.com"
-     * },
-     * "status": "enabled",
-     * "owner_id": "bb7edb32-2eac-4aad-aebe-ed96fe073879"
-     * }
-     */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -83,7 +64,10 @@ export default class Groups {
 
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.groupsEndpoint}`, this.usersUrl).toString(),
+        new URL(
+          `${domainId}/${this.groupsEndpoint}`,
+          this.groupsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
@@ -97,21 +81,19 @@ export default class Groups {
     }
   }
 
+  /**
+   * @method Group - Retrieves information about a group by its ID.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Group>} group - The group object with its details.
+   * @throws {Error} - If the group information cannot be retrieved.
+   */
   public async Group(
     groupId: string,
     domainId: string,
     token: string
   ): Promise<Group> {
-    // Gets information about a group by ID
-    /**
-     * @method Group - Provide a group's information once given the group ID and a valid token.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {object} - Returns a group object.
-     * @example
-     * const group_id = "bb7edb32-2eac-4aad-aebe-ed96fe073879"
-     */
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -124,7 +106,7 @@ export default class Groups {
       const response = await fetch(
         new URL(
           `${domainId}/${this.groupsEndpoint}/${groupId}`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -139,24 +121,19 @@ export default class Groups {
     }
   }
 
+  /**
+   * @method Groups - Retrieves a list of groups with pagination support.
+   * @param {PageMetadata} queryParams - The query parameters for pagination (e.g., offset and limit).
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<GroupsPage>} groupsPage - A paginated list of groups.
+   * @throws {Error} - If the groups cannot be retrieved.
+   */
   public async Groups(
     queryParams: PageMetadata,
     domainId: string,
     token: string
   ): Promise<GroupsPage> {
-    // Get a list of enabled groups
-    /**
-     * @method Groups - Provides a list of all the groups in the database once given a valid token.
-     * @param {string} token - The user's access token.
-     * @param {string} domainId - The Domain ID.
-     * @param {Object} queryParams - Query parameters.
-     * @returns {object} - Returns a list of all the groups in the database.
-     * @example
-     * const queryParams = {
-     * "offset": 0,
-     * "limit": 10
-     * }
-     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
@@ -175,7 +152,7 @@ export default class Groups {
           `${domainId}/${this.groupsEndpoint}?${new URLSearchParams(
             stringParams
           ).toString()}`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -190,65 +167,19 @@ export default class Groups {
     }
   }
 
-  public async GroupPermissions(
-    groupId: string,
-    domainId: string,
-    token: string
-  ): Promise<Permissions> {
-    // Gets a group permissions by ID
-    /**
-     * @method GroupPermissions - Provides a group's permissions once given the group ID and a valid token.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {object} - Returns a group's permissions in a string array.
-     */
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.groupsEndpoint}/${groupId}/permissions`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const permission: Permissions = await response.json();
-      return permission;
-    } catch (error) {
-      throw error;
-    }
-  }
-
+  /**
+   * @method UpdateGroup - Updates the information of an existing group.
+   * @param {Group} group - The group object with updated details.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Group>} group - The updated group object.
+   * @throws {Error} - If the group cannot be updated.
+   */
   public async UpdateGroup(
     group: Group,
     domainId: string,
     token: string
   ): Promise<Group> {
-    // Updates a group's information such a name and metadata.
-    /**
-     * @method UpdateGroup - Updates a group's information such a name and metadata when given a
-     * valid token and group ID.
-     * @param {object} group - The group object to be updated.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {object} - Returns the updated group object.
-     * @example
-     * const group = {
-     * "id": "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-     * "name": "groupName"
-     * }
-     */
     const options: RequestInit = {
       method: "PUT",
       headers: {
@@ -262,7 +193,7 @@ export default class Groups {
       const response = await fetch(
         new URL(
           `${domainId}/${this.groupsEndpoint}/${group.id}`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -277,19 +208,19 @@ export default class Groups {
     }
   }
 
+  /**
+   * @method EnableGroup - Enables a disabled group by its ID.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Group>} group - The updated group object with enabled status.
+   * @throws {Error} - If the group cannot be enabled.
+   */
   public async EnableGroup(
     groupId: string,
     domainId: string,
     token: string
   ): Promise<Group> {
-    // Enable a group.
-    /**
-     * @method EnableGroup - Enables a previously disabled group when given a valid token and group ID.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {object} - Returns a group object with the status reading 'Disabled'.
-     */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -302,7 +233,7 @@ export default class Groups {
       const response = await fetch(
         new URL(
           `${domainId}/${this.groupsEndpoint}/${groupId}/enable`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -317,19 +248,19 @@ export default class Groups {
     }
   }
 
+  /**
+   * @method DisableGroup - Disables an enabled group by its ID.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Group>} group - The updated group object with disabled status.
+   * @throws {Error} - If the group cannot be disabled.
+   */
   public async DisableGroup(
     groupId: string,
     domainId: string,
     token: string
   ): Promise<Group> {
-    // Disable a group.
-    /**
-     * @method DisableGroup - Disables a group when given a valid token and group ID.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {object} - Returns a group object with the status reading 'Disabled'.
-     */
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -342,7 +273,7 @@ export default class Groups {
       const response = await fetch(
         new URL(
           `${domainId}/${this.groupsEndpoint}/${groupId}/disable`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -357,6 +288,14 @@ export default class Groups {
     }
   }
 
+  /**
+   * @method DeleteGroup - Deletes a group by its ID.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A response object confirming the deletion.
+   * @throws {Error} - If the group cannot be deleted.
+   */
   public async DeleteGroup(
     groupId: string,
     domainId: string,
@@ -374,7 +313,7 @@ export default class Groups {
       const response = await fetch(
         new URL(
           `${domainId}/${this.groupsEndpoint}/${groupId}`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -392,127 +331,21 @@ export default class Groups {
     }
   }
 
-  public async AddUserToGroup(
+  /**
+   * @method RetrieveGroupHierarchy - Retrieves the hierarchical structure of a group, including its parents and children.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {HierarchyPageMeta} queryParams - Pagination and query metadata.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<HierarchyPage>} hierarchyPage - A promise that resolves to the group's hierarchical structure.
+   * @throws {Error} - Throws an error if the hierarchy cannot be retrieved.
+   */
+  public async RetrieveGroupHierarchy(
     groupId: string,
-    userIds: string[],
-    relation: GroupRelation,
     domainId: string,
+    queryParams: HierarchyPageMeta,
     token: string
-  ): Promise<Response> {
-    // Adds a user to a group thus creating a membership
-    /**
-     * @method AddUserToGroup -Assigns a user to a group when given a valid token, group ID,
-     * user IDs, and relation. This allows the user to perform
-     * some action on the group.
-     * @param {string} groupId - The group's ID.
-     * @param {Array} userIds - The members IDs.
-     * @param {String} relation - The member's role.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {Object} - Returns a response object that has a status code and a message.
-     */
-    const req = { user_ids: userIds, relation };
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(req),
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.groupsEndpoint}/${groupId}/users/assign`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const addResponse: Response = {
-        status: response.status,
-        message: "User added successfully",
-      };
-      return addResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async RemoveUserFromGroup(
-    groupId: string,
-    userIds: string[],
-    relation: GroupRelation,
-    domainId: string,
-    token: string
-  ): Promise<Response> {
-    // Removes a user from a group thus deleting a membership
-    /**
-     * @method RemoveUserToGroup - Unassigns a user from a group when given a valid token, group ID,
-     * user IDs, and relation. This removes the user's ability to perform
-     * some action on the group.
-     * @param {string} groupId - The group's ID.
-     * @param {Array} userIds - The members IDs.
-     * @param {String} relation - The member's role.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @returns {Object} - Returns a response object that has a status code and a message.
-     */
-    const req = { user_ids: userIds, relation };
-    const options: RequestInit = {
-      method: "POST",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(req),
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${this.groupsEndpoint}/${groupId}/users/unassign`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const removeResponse: Response = {
-        status: response.status,
-        message: "User removed successfully",
-      };
-      return removeResponse;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ListGroupUsers(
-    groupId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<UsersPage> {
-    // Get a group's users.
-    /**
-     * @method ListGroupUsers - Provides a list of a groups' users when provided with
-     * a valid token and group ID.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @param {object} queryParams - The query parameters such as offset and limit.
-     * @returns {object} - Returns a list of a group's users.
-     */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
+  ): Promise<HierarchyPage> {
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -521,63 +354,19 @@ export default class Groups {
       },
     };
 
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/${
-            this.groupsEndpoint
-          }/${groupId}/users?${new URLSearchParams(stringParams).toString()}`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const usersPage: UsersPage = await response.json();
-      return usersPage;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  public async ListGroupChannels(
-    groupId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<ChannelsPage> {
-    // Get a group's channels.
-    /**
-     * @method ListGroupChannels - Provides a list of a groups' channels when provided with
-     * a valid token and group ID.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @param {object} queryParams - The query parameters such as offset and limit.
-     * @returns {object} - Returns a list of a group's channels.
-     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
 
     try {
       const response = await fetch(
         new URL(
           `${domainId}/${
             this.groupsEndpoint
-          }/${groupId}/channels?${new URLSearchParams(
+          }/${groupId}/hierarchy?${new URLSearchParams(
             stringParams
           ).toString()}`,
-          this.clientsUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -585,34 +374,74 @@ export default class Groups {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const channelsPage: ChannelsPage = await response.json();
-      return channelsPage;
+      const page: HierarchyPage = await response.json();
+      return page;
     } catch (error) {
       throw error;
     }
   }
 
-  public async Parents(
+  /**
+   * @method addParentGroup - Adds a parent group to the specified group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} parentId - The unique identifier of the parent group.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the addition response.
+   * @throws {Error} - Throws an error if the parent group cannot be added.
+   */
+  public async AddParentGroup(
     groupId: string,
-    queryParams: PageMetadata,
+    domainId: string,
+    parentId: string,
+    token: string
+  ): Promise<Response> {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ parent_id: parentId }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/parent`,
+          this.groupsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const addParentResponse: Response = {
+        status: response.status,
+        message: "Parent added successfully",
+      };
+      return addParentResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method removeParentGroup - Removes the parent group from the specified group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the removal response.
+   * @throws {Error} - Throws an error if the parent group cannot be removed.
+   */
+  public async RemoveParentGroup(
+    groupId: string,
     domainId: string,
     token: string
-  ): Promise<GroupsPage> {
-    // Get a group's parents.
-    /**
-     * @method Parents - Provides a list of a groups' parents when provided with
-     * a valid token and group ID.
-     * @param {string} groupId - The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @param {object} queryParams - The query parameters such as offset and limit.
-     * @returns {object} - Returns a list of a group's parents.
-     */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
+  ): Promise<Response> {
     const options: RequestInit = {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -622,10 +451,8 @@ export default class Groups {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${
-            this.groupsEndpoint
-          }/${groupId}/parents?${new URLSearchParams(stringParams).toString()}`,
-          this.usersUrl
+          `${domainId}/${this.groupsEndpoint}/${groupId}/parent`,
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -633,31 +460,166 @@ export default class Groups {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsPage: GroupsPage = await response.json();
-      return groupsPage;
+      const removeParentResponse: Response = {
+        status: response.status,
+        message: "Parent removed successfully",
+      };
+      return removeParentResponse;
     } catch (error) {
       throw error;
     }
   }
 
-  public async Children(
+  /**
+   * @method addChildrenGroups - Adds child groups to the specified group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string[]} childrenIds - List of unique identifiers of the child groups.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the addition response.
+   * @throws {Error} - Throws an error if the child groups cannot be added.
+   */
+  public async AddChildrenGroups(
     groupId: string,
-    queryParams: PageMetadata,
+    domainId: string,
+    childrenIds: string[],
+    token: string
+  ): Promise<Response> {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ children_ids: childrenIds }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/children`,
+          this.groupsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const addParentResponse: Response = {
+        status: response.status,
+        message: "Children added successfully",
+      };
+      return addParentResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method removeChildrenGroups - Removes specific child groups from the specified group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string[]} childrenIds - List of unique identifiers of the child groups to remove.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the removal response.
+   * @throws {Error} - Throws an error if the child groups cannot be removed.
+   */
+  public async RemoveChildrenGroups(
+    groupId: string,
+    domainId: string,
+    childrenIds: string[],
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ children_ids: childrenIds }),
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/children`,
+          this.groupsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const removeParentResponse: Response = {
+        status: response.status,
+        message: "Children removed successfully",
+      };
+      return removeParentResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method removeAllChildrenGroups - Removes all child groups from the specified group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the removal response.
+   * @throws {Error} - Throws an error if the child groups cannot be removed.
+   */
+  public async RemoveAllChildrenGroups(
+    groupId: string,
     domainId: string,
     token: string
+  ) {
+    const options: RequestInit = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.groupsEndpoint}/${groupId}/children/all`,
+          this.groupsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const removeParentResponse: Response = {
+        status: response.status,
+        message: "All children removed successfully",
+      };
+      return removeParentResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListChildrenGroups - Retrieves a paginated list of a group's child groups.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {PageMetadata} queryParams - The query parameters for pagination (e.g., offset and limit).
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<GroupsPage>} groupsPage - A paginated list of the group's child groups.
+   * @throws {Error} If the child groups cannot be retrieved.
+   */
+  public async ListChildrenGroups(
+    groupId: string,
+    domainId: string,
+    queryParams: PageMetadata,
+    token: string
   ): Promise<GroupsPage> {
-    // Get a group's children.
-    /**
-     * @method Children - Provides a list of a groups' children.
-     * @param {string} groupId- The group's ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The user's access token.
-     * @param {object} queryParams - The query parameters such as offset and limit.
-     * @returns {object} - Returns a list of a group's children.
-     */
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -666,6 +628,9 @@ export default class Groups {
       },
     };
 
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
     try {
       const response = await fetch(
         new URL(
@@ -674,7 +639,7 @@ export default class Groups {
           }/${groupId}/children?${new URLSearchParams(
             stringParams
           ).toString()}`,
-          this.usersUrl
+          this.groupsUrl
         ).toString(),
         options
       );
@@ -682,8 +647,433 @@ export default class Groups {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const groupsPage: GroupsPage = await response.json();
-      return groupsPage;
+
+      const groups: GroupsPage = await response.json();
+      return groups;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method listGroupActions - Lists all available actions for groups within a specified domain.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} actions - A promise that resolves to an array of available actions.
+   * @throws {Error} - Throws an error if the actions cannot be retrieved.
+   */
+  public async ListGroupActions(
+    domainId: string,
+    token: string
+  ): Promise<string[]> {
+    try {
+      const actions: string[] = await this.groupRoles.ListAvailableActions(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        token
+      );
+      return actions;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method createGroupRole - Creates a new role within a specific group and domain, with optional actions and members.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role to be created.
+   * @param {string} token - Authorization token.
+   * @param {string[]} [optionalActions] - Optional list of actions for the role.
+   * @param {string[]} [optionalMembers] - Optional list of members for the role.
+   * @returns {Promise<Role>} role - A promise that resolves to the created role object.
+   * @throws {Error} - Throws an error if the role cannot be created.
+   */
+  public async CreateGroupRole(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string,
+    optionalActions?: string[],
+    optionalMembers?: string[]
+  ): Promise<Role> {
+    try {
+      const role: Role = await this.groupRoles.CreateRole(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token,
+        optionalActions,
+        optionalMembers
+      );
+      return role;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method listGroupRoles - Retrieves a paginated list of roles for a specific group within a domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {PageMetadata} queryParams - Pagination and query metadata.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<RolePage>} rolesPage - A promise that resolves to a paginated list of roles.
+   * @throws {Error} - Throws an error if the roles cannot be retrieved.
+   */
+  public async ListGroupRoles(
+    groupId: string,
+    domainId: string,
+    queryParams: PageMetadata,
+    token: string
+  ): Promise<RolePage> {
+    try {
+      const rolesPage: RolePage = await this.groupRoles.ListRoles(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        queryParams,
+        token
+      );
+      return rolesPage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method viewGroupRole - Retrieves the details of a specific role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role to retrieve.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Role>} role - A promise that resolves to the role details.
+   * @throws {Error} - Throws an error if the role details cannot be retrieved.
+   */
+  public async ViewGroupRole(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string
+  ): Promise<Role> {
+    try {
+      const role = await this.groupRoles.ViewRole(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token
+      );
+      return role;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method updateGroupRole - Updates an existing role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role to update.
+   * @param {Role} role - The updated role object.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Role>} role - A promise that resolves to the updated role object.
+   * @throws {Error} - Throws an error if the role cannot be updated.
+   */
+  public async UpdateGroupRole(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    role: Role,
+    token: string
+  ): Promise<Role> {
+    try {
+      const updatedRole = await this.groupRoles.UpdateRole(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        role,
+        token
+      );
+      return updatedRole;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteGroupRole - Deletes a role within a specific group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role to delete.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
+   * @throws {Error} - Throws an error if the role cannot be deleted.
+   */
+  public async DeleteGroupRole(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string
+  ): Promise<Response> {
+    try {
+      const response = await this.groupRoles.DeleteRole(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method AddGroupRoleActions - Adds actions to a specific role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string[]} actions - List of actions to add.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} actions - A promise that resolves to the update response.
+   * @throws {Error} - Throws an error if the actions cannot be added.
+   */
+  public async AddGroupRoleActions(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ): Promise<string[]> {
+    try {
+      const response = await this.groupRoles.AddRoleActions(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        actions,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method listGroupRoleActions - Lists all actions associated with a specific role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} actions - A promise that resolves to a list of actions.
+   * @throws {Error} - Throws an error if the actions cannot be retrieved.
+   */
+  public async ListGroupRoleActions(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string
+  ): Promise<string[]> {
+    try {
+      const updatedRole = await this.groupRoles.ListRoleActions(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token
+      );
+      return updatedRole;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteGroupRoleActions - Removes specific actions from a role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string[]} actions - List of actions to remove.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
+   * @throws {Error} - Throws an error if the actions cannot be removed.
+   */
+  public async DeleteGroupRoleActions(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    actions: string[],
+    token: string
+  ): Promise<Response> {
+    try {
+      const response = await this.groupRoles.DeleteRoleActions(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        actions,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteAllGroupRoleActions - Removes all actions from a role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
+   * @throws {Error} - Throws an error if the actions cannot be removed.
+   */
+  public async DeleteAllGroupRoleActions(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string
+  ): Promise<Response> {
+    try {
+      const response = await this.groupRoles.DeleteAllRoleActions(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method addGroupRoleMembers - Adds members to a specific role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string[]} members - List of members to add.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} members - A promise that resolves to the updated list of members.
+   * @throws {Error} - Throws an error if the members cannot be added.
+   */
+  public async AddGroupRoleMembers(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ): Promise<string[]> {
+    try {
+      const response = await this.groupRoles.AddRoleMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        members,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method listGroupRoleMembers - Lists all members associated with a specific role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {BasicPageMeta} queryParams - Pagination and query metadata.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} members - A promise that resolves to a list of members.
+   * @throws {Error} - Throws an error if the members cannot be retrieved.
+   */
+  public async ListGroupRoleMembers(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<string[]> {
+    try {
+      const updatedRole = await this.groupRoles.ListRoleMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        queryParams,
+        token
+      );
+      return updatedRole;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteGroupRoleMembers - Removes specific members from a role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string[]} members - List of members to remove.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
+   * @throws {Error} - Throws an error if the members cannot be removed.
+   */
+  public async DeleteGroupRoleMembers(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    members: string[],
+    token: string
+  ): Promise<Response> {
+    try {
+      const response = await this.groupRoles.DeleteRoleMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        members,
+        token
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method deleteAllGroupRoleMembers - Removes all members from a role within a group and domain.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} roleName - The name of the role.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
+   * @throws {Error} - Throws an error if the members cannot be removed.
+   */
+  public async DeleteAllGroupRoleMembers(
+    groupId: string,
+    domainId: string,
+    roleName: string,
+    token: string
+  ): Promise<Response> {
+    try {
+      const response = await this.groupRoles.DeleteAllRoleMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        roleName,
+        token
+      );
+      return response;
     } catch (error) {
       throw error;
     }

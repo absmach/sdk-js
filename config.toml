@@ -15,3 +15,5 @@ user_token = ""
   tls_verification = false
   users_url = "http://localhost:9002"
   channels_url = "http://localhost:9005"
+  groups_url = "http://localhost:9004"
+  domains_url = "http://localhost:9003"

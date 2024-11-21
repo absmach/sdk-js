@@ -89,6 +89,18 @@ export interface GroupsPage {
   limit: number;
 }
 
+export interface HierarchyPageMeta {
+  level?: number;
+  direction?: number; // ancestors (+1) or descendants (-1)
+  // - `true`  - result is JSON tree representing groups hierarchy,
+  // - `false` - result is JSON array of groups.
+  tree?: boolean;
+}
+
+export interface HierarchyPage extends HierarchyPageMeta {
+  groups: Group[];
+}
+
 export interface ChannelBasicInfo {
   id?: string;
   name?: string;

@@ -1,4 +1,3 @@
-// Import the SDK class from the mainflux-sdk package
 import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
@@ -26,10 +25,8 @@ mySdk.users
     console.log(error);
   });
 
-mySdk.users.User(
-  "<userId>",
-  token,
-)
+mySdk.users
+  .User("<userId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -37,9 +34,8 @@ mySdk.users.User(
     console.log(error);
   });
 
-mySdk.users.UserProfile(
-  token,
-)
+mySdk.users
+  .UserProfile(token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -47,9 +43,8 @@ mySdk.users.UserProfile(
     console.log(error);
   });
 
-mySdk.users.CreateToken(
-  { identity: "<username | email>", secret: "<password>" },
-)
+mySdk.users
+  .CreateToken({ identity: "<username | email>", secret: "<password>" })
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -57,9 +52,8 @@ mySdk.users.CreateToken(
     console.log(error);
   });
 
-mySdk.users.RefreshToken(
-  "<refreshToken>",
-)
+mySdk.users
+  .RefreshToken("<refreshToken>")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -67,10 +61,11 @@ mySdk.users.RefreshToken(
     console.log(error);
   });
 
-mySdk.users.Update(
-  { id: "<userId>", first_name: "<firstName>", last_name: "<lastName>" },
-  token,
-)
+mySdk.users
+  .Update(
+    { id: "<userId>", first_name: "<firstName>", last_name: "<lastName>" },
+    token
+  )
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -78,10 +73,8 @@ mySdk.users.Update(
     console.log(error);
   });
 
-mySdk.users.UpdateEmail(
-  { id: "<userId>", email: "<email>" },
-  token,
-)
+mySdk.users
+  .UpdateEmail({ id: "<userId>", email: "<email>" }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -89,10 +82,11 @@ mySdk.users.UpdateEmail(
     console.log(error);
   });
 
-mySdk.users.UpdateUsername(
-  { id: "<userId>", credentials: { username: "<username>" } },
-  token,
-)
+mySdk.users
+  .UpdateUsername(
+    { id: "<userId>", credentials: { username: "<username>" } },
+    token
+  )
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -100,10 +94,11 @@ mySdk.users.UpdateUsername(
     console.log(error);
   });
 
-mySdk.users.UpdateProfilePicture(
-  { id: "<userId>", profile_picture: "<profilePicture>" },
-  token,
-)
+mySdk.users
+  .UpdateProfilePicture(
+    { id: "<userId>", profile_picture: "<profilePicture>" },
+    token
+  )
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -111,10 +106,8 @@ mySdk.users.UpdateProfilePicture(
     console.log(error);
   });
 
-mySdk.users.UpdateUserTags(
-  { id: "<userId>", tags: ["foo", "bar"] },
-  token,
-)
+mySdk.users
+  .UpdateUserTags({ id: "<userId>", tags: ["<tag>", "<tag>"] }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -122,10 +115,8 @@ mySdk.users.UpdateUserTags(
     console.log(error);
   });
 
-mySdk.users.UpdateUserRole(
-  { id: "<userId>", role: "<role>" },
-  token,
-)
+mySdk.users
+  .UpdateUserRole({ id: "<userId>", role: "<role>" }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -133,10 +124,8 @@ mySdk.users.UpdateUserRole(
     console.log(error);
   });
 
-mySdk.users.Disable(
-  { id: "<userId>" },
-  token,
-)
+mySdk.users
+  .Disable({ id: "<userId>" }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -144,10 +133,8 @@ mySdk.users.Disable(
     console.log(error);
   });
 
-mySdk.users.Enable(
-  { id: "<userId>" },
-  token,
-)
+mySdk.users
+  .Enable({ id: "<userId>" }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -155,10 +142,8 @@ mySdk.users.Enable(
     console.log(error);
   });
 
-mySdk.users.Users(
-  { offset: 0, limit: 10 },
-  token,
-)
+mySdk.users
+  .Users({ offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -166,11 +151,8 @@ mySdk.users.Users(
     console.log(error);
   });
 
-mySdk.users.UpdateUserPassword(
-  "<oldSecret>",
-  "<newSecret>",
-  token,
-)
+mySdk.users
+  .UpdateUserPassword("<oldSecret>", "<newSecret>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -178,12 +160,8 @@ mySdk.users.UpdateUserPassword(
     console.log(error);
   });
 
-mySdk.users.ListUserChannels(
-  "<domainId>",
-  "<userId>",
-  { offset: 0, limit: 10 },
-  token,
-)
+mySdk.users
+  .ListUserChannels("<domainId>", "<userId>", { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -204,12 +182,8 @@ mySdk.users.ListUserClients(
     console.log(error);
   });
 
-mySdk.users.ListUserGroups(
-  "<domainId>",
-  "<userId>",
-  { offset: 0, limit: 10 },
-  token,
-)
+mySdk.users
+  .ListUserGroups("<domainId>", "<userId>", { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -217,7 +191,8 @@ mySdk.users.ListUserGroups(
     console.log(error);
   });
 
-mySdk.users.ResetPasswordRequest("<email>", "<hostUrl>")
+mySdk.users
+  .ResetPasswordRequest("<email>", "<hostUrl>")
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -225,11 +200,8 @@ mySdk.users.ResetPasswordRequest("<email>", "<hostUrl>")
     console.log(error);
   });
 
-mySdk.users.ResetPassword(
-  "<password>",
-  "<confPass>",
-  token,
-)
+mySdk.users
+  .ResetPassword("<password>", "<confPass>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -237,10 +209,8 @@ mySdk.users.ResetPassword(
     console.log(error);
   });
 
-mySdk.users.DeleteUser(
-  "<userId>",
-  token,
-)
+mySdk.users
+  .DeleteUser("<userId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -248,10 +218,8 @@ mySdk.users.DeleteUser(
     console.log(error);
   });
 
-mySdk.users.SearchUsers(
-  { username: "<username>" },
-  token,
-)
+mySdk.users
+  .SearchUsers({ username: "<username>" }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
