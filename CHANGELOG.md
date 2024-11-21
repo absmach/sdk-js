@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.4
+
+### Patch Changes
+
+- 9fa7f26: update channels to match new access control
+
 ## 0.9.3
 
 ### Patch Changes
