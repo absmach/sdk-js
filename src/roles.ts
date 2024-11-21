@@ -65,7 +65,6 @@ export default class Roles {
         new URL(`${endpoint}/${entityId}/roles`, url).toString(),
         options,
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -238,7 +237,6 @@ export default class Roles {
         ).toString(),
         options,
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -273,7 +271,6 @@ export default class Roles {
         ).toString(),
         options,
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);

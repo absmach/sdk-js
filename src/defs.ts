@@ -273,7 +273,7 @@ export interface SenMLMessage {
 }
 
 export interface Cert {
-  Client_id?: string;
+  client_id?: string;
   cert_serial?: string;
   client_key?: string;
   client_cert?: string;
