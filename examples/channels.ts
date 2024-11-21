@@ -9,7 +9,7 @@ const mySdk = new SDK({
 
 // Channels.ts examples.
 
-const token = "token";
+const token = "<token>";
 const domainId = "<domainId>";
 
 mySdk.channels

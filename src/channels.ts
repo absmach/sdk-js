@@ -35,11 +35,10 @@ export default class Channels {
   }
 
   /**
-  * @method CreateChannel
-  * Creates a new channel
+  * @method CreateChannel - Creates a new channel
   * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {String} token - Authorization token.
+  * @param {string} token - Authorization token.
   * @returns {Promise<Channel>} - The created channel object.
   * @throws {Error} If the channel cannot be created.
   */
@@ -76,11 +75,10 @@ export default class Channels {
   }
 
   /**
-  * @method Channel
-  * Retrieves a channel by its id.
-  * @param {String} channelId - The unique ID of the channel.
+  * @method Channel - Retrieves a channel by its id.
+  * @param {string} channelId - The unique ID of the channel.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {String} token - Authorization token.
+  * @param {string} token - Authorization token.
   * @returns {Promise<Channel>} - The requested channel object.
   * @throws {Error} If the channel cannot be fetched.
   */
@@ -116,8 +114,7 @@ export default class Channels {
   }
 
   /**
-  * @method CreateChannels
-  * Creates multiple new channels.
+  * @method CreateChannels - Creates multiple new channels.
   * @param {Channel[]} channels - An array of channel objects, each containing details like name, metadata, and tags.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
@@ -157,11 +154,10 @@ export default class Channels {
   }
 
   /**
-  * @method Channels
-  * Retrieves all channels matching the provided query parameters.
+  * @method Channels - Retrieves all channels matching the provided query parameters.
   * @param {PageMetadata} queryParams - Query parameters for the request.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {String} token - Authorization token.
+  * @param {string} token - Authorization token.
   * @returns {Promise<ChannelsPage>} - A page of channels.
   * @throws {Error} If the channels cannot be fetched.
   */
@@ -202,8 +198,7 @@ export default class Channels {
   }
 
   /**
-  * @method UpdateChannelNameAndMetadata
-  * Updates an existing channel's metadata and name.
+  * @method UpdateChannelNameAndMetadata - Updates an existing channel's metadata and name.
   * @param {Channel} channel - Channel object with updated properties.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
@@ -243,8 +238,7 @@ export default class Channels {
   }
 
   /**
-  * @method UpdateChannelTags
-  * Updates an existing channel's tags.
+  * @method UpdateChannelTags - Updates an existing channel's tags.
   * @param {Channel} channel - Channel object with updated properties.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
@@ -272,7 +266,6 @@ export default class Channels {
         ).toString(),
         options
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -285,11 +278,10 @@ export default class Channels {
   }
 
   /**
-  * @method DisableChannel
-  * Disables a spcific channel.
+  * @method DisableChannel - Disables a spcific channel.
   * @param {string} channelId - The  unique ID of the channel.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {String} token - Authorization token.
+  * @param {string} token - Authorization token.
   * @returns {Promise<Channel>} - The disabled channel object.
   * @throws {Error} If the channel cannot be disabled.
   */
@@ -325,8 +317,7 @@ export default class Channels {
   }
 
   /**
-  * @method EnableChannel
-  * Enables a previously disabled channel.
+  * @method EnableChannel - Enables a previously disabled channel.
   * @param {string} channelId - The  unique ID of the channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
@@ -365,9 +356,8 @@ export default class Channels {
   }
 
   /**
-  * @method DeleteChannel
-  * Deletes channel with specified id.
-  * @param {Object} channelId - The  unique ID of the channel.
+  * @method DeleteChannel - Deletes channel with specified id.
+  * @param {string} channelId - The  unique ID of the channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} A promise that resolves when the channel is deleted.
@@ -405,8 +395,7 @@ export default class Channels {
   }
 
   /**
-  * @method ConnectClient
-  * Connects multiple clients to a channel.
+  * @method ConnectClient - Connects multiple clients to a channel.
   * @param {string[]} clientIds - An array of unique clients IDs to be connected.
   * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
   * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
@@ -453,11 +442,10 @@ export default class Channels {
   }
 
   /**
-  * @method Connect
-  * Connects multiple clients to multple channels.
+  * @method Connect - Connects multiple clients to multple channels.
   * @param {string[]} clientIds - An array of unique clients IDs to be connected.
   * @param {string[]} channelIds - An array of unique channels IDs to which the clients will connect.
-  * @param {string} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+  * @param {string[]} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
   * @param {string} domainId - The  unique ID of the channel.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} A promise that resolves when the clients are connected to the channels.
@@ -498,11 +486,10 @@ export default class Channels {
   }
 
   /**
-  * @method Disconnect
-  * Disconnects clients from channels.
+  * @method Disconnect - Disconnects clients from channels.
   * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
   * @param {string[]} channelIds -  An array of unique channels IDs to which the clients will disconnect.
-  * @param {string}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
+  * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} - A promise that resolves when the clients are disconnected from the channels.
@@ -543,11 +530,10 @@ export default class Channels {
   }
 
   /**
-  * @method DisconnectClient
-  * Disconnects clients from channel.
+  * @method DisconnectClient - Disconnects clients from channel.
   * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
   * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
-  * @param connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
+  * @param {string[]} connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} - A promise that resolves when the clients are disconnected from the channel.
@@ -591,8 +577,7 @@ export default class Channels {
   }
 
   /**
-  * @method ChannelParents
-  * Sets parent to a channel.
+  * @method ChannelParents - Sets parent to a channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} channelId - The unique ID of the channel to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
@@ -626,8 +611,7 @@ export default class Channels {
   }
 
   /**
-  * @method DeleteChannelParents
-  * Removes the parent group from a specified channel.
+  * @method DeleteChannelParents - Removes the parent group from a specified channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} channelId - The  unique ID of the channel.
   * @param {string} token - Authorization token.
@@ -650,7 +634,6 @@ export default class Channels {
         ).toString(),
         options
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
