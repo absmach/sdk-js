@@ -7,26 +7,23 @@ import type {
   ChannelsPage,
 } from "./defs";
 
+/**
+* @class Channels
+* Handles interactions with channels API, including creating, updating and managing channels.
+*/
 export default class Channels {
-  // Channels API client
-  /**
-   * @class Channels -
-   * Channels API is used for managing Channels. It is used for creating new
-   * channels, retrieving them, updating them and disabling them
-   * @param {string} channels_url - URL to the Channels service
-   * @param {string} content_type - Content type for the requests which is an application
-   * json
-   * @param {string} channelsEndpoint - Endpoint for the channels' service.
-   * @returns {Object} -Channels object
-   *
-   */
-
   private readonly contentType: string;
 
   private readonly channelsEndpoint: string;
 
   private readonly channelsUrl: URL;
 
+  /**
+   * @constructor
+   * Initializes the Channel API client.
+   * @param {object} config - Configuration object.
+   * @param {string} config.channelsUrl - Base URL for the channels API.
+   */
   public constructor({
     channelsUrl,
   }: {
@@ -41,7 +38,7 @@ export default class Channels {
   * @method CreateChannel
   * Creates a new channel
   * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
-  * @param {string} domainId - The Domain ID.
+  * @param {string} domainId - The  unique ID of the domain.
   * @param {String} token - Authorization token.
   * @returns {Promise<Channel>} - The created channel object.
   * @throws {Error} If the channel cannot be created.
@@ -166,7 +163,7 @@ export default class Channels {
   * @param {string} domainId - The  unique ID of the domain.
   * @param {String} token - Authorization token.
   * @returns {Promise<ChannelsPage>} - A page of channels.
-  * @throws {Error} If the domains cannot be fetched.
+  * @throws {Error} If the channels cannot be fetched.
   */
   public async Channels(
     queryParams: PageMetadata,
