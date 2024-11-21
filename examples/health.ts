@@ -5,6 +5,7 @@ const defaultUrl = "http://localhost";
 const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
   thingsUrl: `${defaultUrl}:9000`,
+  channelsUrl: `${defaultUrl}:9005`,
   invitationsUrl: `${defaultUrl}:9020`,
   journalUrl: `${defaultUrl}:9021`,
   httpAdapterUrl: `${defaultUrl}:8008`,
@@ -20,7 +21,7 @@ mySdk.Health.Health("things")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Users service Health
@@ -29,7 +30,16 @@ mySdk.Health.Health("users")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
+  });
+
+// Channels service Health
+mySdk.Health.Health("channels")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
   });
 
 // Bootstrap service Health
@@ -38,7 +48,7 @@ mySdk.Health.Health("bootstrap")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Certs service Health
@@ -47,7 +57,7 @@ mySdk.Health.Health("certs")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Reader service Health
@@ -56,7 +66,7 @@ mySdk.Health.Health("reader")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Http Adapter service Health
@@ -65,7 +75,7 @@ mySdk.Health.Health("http-adapter")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Journal service Health
@@ -74,7 +84,7 @@ mySdk.Health.Health("journal")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Invitations service Health
@@ -83,5 +93,5 @@ mySdk.Health.Health("invitations")
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

@@ -61,6 +61,7 @@ const defaultUrl = "http://localhost";
 
 export interface SDKConfig {
   usersUrl?: string;
+  channelsUrl?: string;
   domainsUrl?: string;
   thingsUrl?: string;
   certsUrl?: string;
@@ -96,6 +97,7 @@ class SDK {
 
   constructor({
     usersUrl = defaultUrl,
+    channelsUrl = defaultUrl,
     domainsUrl = defaultUrl,
     thingsUrl = defaultUrl,
     certsUrl = defaultUrl,
@@ -110,7 +112,7 @@ class SDK {
     this.things = new Things({ thingsUrl, usersUrl });
     this.certs = new Certs(certsUrl);
     this.groups = new Groups({ usersUrl, thingsUrl });
-    this.channels = new Channels({ thingsUrl, usersUrl });
+    this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
     this.invitations = new Invitations(invitationsUrl);
     this.bootstrap = new Bootstrap(bootstrapUrl);
@@ -118,6 +120,7 @@ class SDK {
     this.Health = new Health({
       usersUrl,
       thingsUrl,
+      channelsUrl,
       bootstrapUrl,
       certsUrl,
       readersUrl,

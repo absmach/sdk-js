@@ -97,6 +97,8 @@ export interface ChannelBasicInfo {
 export interface Channel extends ChannelBasicInfo {
   domain_id?: string | DomainBasicInfo;
   metadata?: Record<string, any>;
+  tags?: string[];
+  ParentGroup?: string;
   level?: number;
   path?: string;
   created_at?: Date;

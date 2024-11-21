@@ -7,6 +7,7 @@ enableFetchMocks();
 
 const usersUrl = "http://localhost";
 const thingsUrl = "http://localhost";
+const channelsUrl = "http://localhost";
 const certsUrl = "http://localhost";
 const readersUrl = "http://localhost";
 const httpAdapterUrl = "http://localhost";
@@ -17,6 +18,7 @@ const journalUrl = "http://localhost";
 const sdk = new SDK({
   usersUrl,
   thingsUrl,
+  channelsUrl,
   certsUrl,
   readersUrl,
   httpAdapterUrl,
@@ -33,6 +35,15 @@ describe("Health", () => {
     description: "users service",
     build_time: "2024-07-25_14:20:35",
     instance_id: "0b375343-1273-4efc-96a3-517ca74ec4c1",
+  };
+
+  const channelsServiceHealthInfo: HealthInfo = {
+    status: "pass",
+    version: "v0.14.0",
+    commit: "c3e7159cb762396f064d43d55c30d90011c9357f",
+    description: "channels service",
+    build_time: "2024-07-25_14:20:35",
+    instance_id: "aafd1f94-5d6b-4aa5-9b02-22f4e9d21423",
   };
 
   const thingsServiceHealthInfo: HealthInfo = {
@@ -114,6 +125,13 @@ describe("Health", () => {
 
     const response = await sdk.Health.Health("users");
     expect(response).toEqual(thingsServiceHealthInfo);
+  });
+
+  test("fetch channels service health information", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(channelsServiceHealthInfo));
+
+    const response = await sdk.Health.Health("channels");
+    expect(response).toEqual(channelsServiceHealthInfo);
   });
 
   test("fetch certs service health information", async () => {
