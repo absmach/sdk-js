@@ -17,8 +17,6 @@ import type {
 export default class Clients {
   private readonly clientsUrl: URL;
 
-  private readonly usersUrl?: URL;
-
   private readonly contentType: string;
 
   private readonly clientsEndpoint: string;
@@ -30,21 +28,13 @@ export default class Clients {
    * Initializes the Clients API client.
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
   public constructor({
     clientsUrl,
-    usersUrl,
   }: {
     clientsUrl: string;
-    usersUrl?: string;
   }) {
     this.clientsUrl = new URL(clientsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
     this.clientRoles = new Roles();
@@ -92,12 +82,12 @@ export default class Clients {
   }
 
   /**
-     * @method CreateClients - Creates multiple new clients.
-     * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
-     * @param {string} domainId -  The  unique ID of the domain.
-     * @param {string} token - Authorization token.
-     * @returns {Promise<ClientsPage>} - A page of clients.
-     * @throws {Error} If the clients cannot be created.
+  * @method CreateClients - Creates multiple new clients.
+  * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
+  * @param {string} domainId -  The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<ClientsPage>} - A page of clients.
+  * @throws {Error} If the clients cannot be created.
   */
   public async CreateClients(
     clients: Client[],
@@ -120,7 +110,6 @@ export default class Clients {
         ).toString(),
         options
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -133,12 +122,12 @@ export default class Clients {
   }
 
   /**
-    * @method Enable - Enables a previously disabled client by its ID.
-     * @param {string} clientID - The  unique ID of the client.
-     * @param {string} domainId - The  unique ID of the domain.
-     * @param {string} token - Authorization token.
-     * @returns {Promise<Client>} - The updated client object with enabled status.
-     * @throws {Error} If the client cannot be enabled.
+  * @method Enable - Enables a previously disabled client by its ID.
+  * @param {string} clientID - The  unique ID of the client.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Client>} - The updated client object with enabled status.
+  * @throws {Error} If the client cannot be enabled.
   */
   public async Enable(
     clientId: string,
@@ -411,22 +400,31 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const ClientsData: ClientsPage = await response.json();
-      return ClientsData;
+      const clientsData: ClientsPage = await response.json();
+      return clientsData;
     } catch (error) {
       throw error;
     }
   }
 
+  /**
+  * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
+  * @param {string} userId - The  unique ID of the user.
+  * @param {PageMetadata} queryParams - Query parameters for the request.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<ClientsPage>} - A page of clients.
+  * @throws {Error} If the clients cannot be fetched.
+  */
   public async ListUserClients(
     userId: string,
     queryParams: PageMetadata,
     domainId: string,
     token: string
   ): Promise<ClientsPage> {
-    // const stringParams: Record<string, string> = Object.fromEntries(
-    //   Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    // );
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -437,12 +435,13 @@ export default class Clients {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/users/${userId}/clients`,
-          this.usersUrl
+          `${domainId}/users/${userId}/clients?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.clientsUrl
         ).toString(),
         options
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -512,7 +511,6 @@ export default class Clients {
         ).toString(),
         options
       );
-      console.log("url", response.url);
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
@@ -562,6 +560,26 @@ export default class Clients {
         message: "Client deleted successfully",
       };
       return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListClientActions - Lists all actions available to a specific client.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<string[]>} A promise that resolves with an array of actions.
+   * @throws {Error} If client actions cannot be fetched.
+   */
+  public async ListClientActions(domainId: string, token: string): Promise<string[]> {
+    try {
+      const actions: string[] = await this.clientRoles.ListAvailableActions(
+        this.clientsUrl,
+        `${domainId}/${this.clientsEndpoint}`,
+        token,
+      );
+      return actions;
     } catch (error) {
       throw error;
     }

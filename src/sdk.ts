@@ -109,7 +109,7 @@ class SDK {
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, clientsUrl });
     this.domains = new Domains({ domainsUrl, usersUrl });
-    this.clients = new Clients({ clientsUrl, usersUrl });
+    this.clients = new Clients({ clientsUrl });
     this.certs = new Certs(certsUrl);
     this.groups = new Groups({ usersUrl, clientsUrl });
     this.channels = new Channels({ channelsUrl });

@@ -2,7 +2,7 @@ import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
 import type {
-  Client, ClientsPage, UsersPage, User,
+  Client, ClientsPage
 } from "../src/sdk";
 
 enableFetchMocks();
@@ -25,30 +25,11 @@ describe("Clients", () => {
     },
     status: "enabled",
   };
-  const user: User = {
-    id: "886b4266-77d1-4258-abae-2931fb4f16de",
-    first_name: "tahliah",
-    last_name: "barnett",
-    tags: ["holy", "terrain"],
-    email: "fkatwigs@email.com",
-    credentials: {
-      username: "fkatwigs@email.com",
-      secret: "12345678",
-    },
-    role: "administrator",
-    status: "enabled",
-  };
   const clients = [
     { name: "client1", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
     { name: "client2", id: "bb7edb32-2eac-4aad-aebe-ed96fe073879" },
   ];
   const queryParams = {
-    offset: 0,
-    limit: 10,
-  };
-  const usersPage: UsersPage = {
-    users: [user],
-    total: 2,
     offset: 0,
     limit: 10,
   };
@@ -134,8 +115,8 @@ describe("Clients", () => {
     expect(response).toEqual(clientsPage);
   });
 
-  test("ListUserClients should list users linked to a client and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(usersPage));
+  test("ListUserClients should list clients linked to a client and return success", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
 
     const response = await sdk.clients.ListUserClients(
       userId,
@@ -143,7 +124,7 @@ describe("Clients", () => {
       domainId,
       token,
     );
-    expect(response).toEqual(usersPage);
+    expect(response).toEqual(clientsPage);
   });
 
   test("DeleteClient should delete a client and return success", async () => {
@@ -155,6 +136,14 @@ describe("Clients", () => {
 
     const response = await sdk.clients.DeleteClient(clientId, domainId, token);
     expect(response).toEqual(deleteResponse);
+  });
+
+  test("ListClientActions should return available actions", async () => {
+    const availableActions = ["read", "write", "delete"];
+    fetchMock.mockResponseOnce(JSON.stringify(availableActions));
+
+    const response = await sdk.clients.ListClientActions(domainId, token);
+    expect(response).toEqual(availableActions);
   });
 
   test("CreateClientRole should create a new role and return it", async () => {
