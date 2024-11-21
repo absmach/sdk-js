@@ -17,14 +17,14 @@ export default class Groups {
    * Groups API client is used for managing groups. It is used for
    * creating, updating, deleting, and retrieving groups.
    * @param {string} groupsUrl - The URL of the Groups service.
-   * @param {string} thingsUrl- Things service URL.
+   * @param {string} clientsUrl- Clients service URL.
    * @param {string} contentType - The content type of the request.
    * @param {string} groupsEndpoint - The endpoint of the Groups service.
    * @returns {Groups} - Returns a Groups object.
    */
   private readonly usersUrl: URL;
 
-  private readonly thingsUrl?: URL;
+  private readonly clientsUrl?: URL;
 
   private readonly contentType: string;
 
@@ -32,16 +32,16 @@ export default class Groups {
 
   public constructor({
     usersUrl,
-    thingsUrl,
+    clientsUrl,
   }: {
     usersUrl: string;
-    thingsUrl?: string;
+    clientsUrl?: string;
   }) {
     this.usersUrl = new URL(usersUrl);
-    if (thingsUrl !== undefined) {
-      this.thingsUrl = new URL(thingsUrl);
+    if (clientsUrl !== undefined) {
+      this.clientsUrl = new URL(clientsUrl);
     } else {
-      this.thingsUrl = new URL("");
+      this.clientsUrl = new URL("");
     }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
@@ -577,7 +577,7 @@ export default class Groups {
           }/${groupId}/channels?${new URLSearchParams(
             stringParams
           ).toString()}`,
-          this.thingsUrl
+          this.clientsUrl
         ).toString(),
         options
       );

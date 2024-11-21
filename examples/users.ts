@@ -5,7 +5,7 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
-  thingsUrl: `${defaultUrl}:9000`,
+  clientsUrl: `${defaultUrl}:9006`,
 });
 const token = "<token>";
 
@@ -191,7 +191,7 @@ mySdk.users.ListUserChannels(
     console.log(error);
   });
 
-mySdk.users.ListUserThings(
+mySdk.users.ListUserClients(
   "<domainId>",
   "<userId>",
   { offset: 0, limit: 10 },

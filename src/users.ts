@@ -2,7 +2,7 @@ import Errors from "./errors";
 import type {
   User,
   UsersPage,
-  ThingsPage,
+  ClientsPage,
   GroupsPage,
   Login,
   PageMetadata,
@@ -24,7 +24,7 @@ export default class Users {
    */
   private readonly usersUrl: URL;
 
-  private readonly thingsUrl?: URL;
+  private readonly clientsUrl?: URL;
 
   private readonly contentType: string;
 
@@ -34,16 +34,16 @@ export default class Users {
 
   public constructor({
     usersUrl,
-    thingsUrl,
+    clientsUrl,
   }: {
     usersUrl: string;
-    thingsUrl?: string;
+    clientsUrl?: string;
   }) {
     this.usersUrl = new URL(usersUrl);
-    if (thingsUrl !== undefined) {
-      this.thingsUrl = new URL(thingsUrl);
+    if (clientsUrl !== undefined) {
+      this.clientsUrl = new URL(clientsUrl);
     } else {
-      this.thingsUrl = new URL("");
+      this.clientsUrl = new URL("");
     }
     this.contentType = "application/json";
     this.usersEndpoint = "users";
@@ -745,21 +745,21 @@ export default class Users {
     }
   }
 
-  public async ListUserThings(
+  public async ListUserClients(
     userId: string,
     domainId: string,
     queryParams: PageMetadata,
     token: string
-  ): Promise<ThingsPage> {
-    // Get things of a user.
+  ): Promise<ClientsPage> {
+    // Get clients of a user.
     /**
-     * Gets the various things a user owns.
-     * @method ListUserThings - Get memberships of a user.
+     * Gets the various clients a user owns.
+     * @method ListUserClients - Get memberships of a user.
      * @param {String} userId - Member ID.
      * @param {String} domainId - Domain ID.
      * @param {Object} queryParams - Query parameters for example offset and limit.
      * @param {String} token - Access token.
-     * @returns {Object} - Things object.
+     * @returns {Object} - Clients object.
      */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
@@ -777,8 +777,8 @@ export default class Users {
         new URL(
           `${domainId}/${
             this.usersEndpoint
-          }/${userId}/things?${new URLSearchParams(stringParams).toString()}`,
-          this.thingsUrl
+          }/${userId}/clients?${new URLSearchParams(stringParams).toString()}`,
+          this.clientsUrl
         ).toString(),
         options
       );
@@ -786,8 +786,8 @@ export default class Users {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const thingsData: ThingsPage = await response.json();
-      return thingsData;
+      const clientsData: ClientsPage = await response.json();
+      return clientsData;
     } catch (error) {
       throw error;
     }
@@ -827,7 +827,7 @@ export default class Users {
           `${domainId}/${
             this.usersEndpoint
           }/${userId}/channels?${new URLSearchParams(stringParams).toString()}`,
-          this.thingsUrl
+          this.clientsUrl
         ).toString(),
         options
       );

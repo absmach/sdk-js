@@ -30,19 +30,19 @@ export interface Credentials {
   secret?: string;
 }
 
-export interface ThingCredentials {
+export interface ClientCredentials {
   identity?: string;
   secret?: string;
 }
 
-export interface ThingBasicInfo {
+export interface ClientBasicInfo {
   id?: string;
   name?: string;
-  credentials?: ThingCredentials;
+  credentials?: ClientCredentials;
   status?: Status;
 }
 
-export interface Thing extends ThingBasicInfo {
+export interface Client extends ClientBasicInfo {
   tags?: string[];
   domain_id?: string | DomainBasicInfo;
   metadata?: Record<string, any>;
@@ -52,8 +52,8 @@ export interface Thing extends ThingBasicInfo {
   permissions?: string[];
 }
 
-export interface ThingsPage {
-  things: Thing[];
+export interface ClientsPage {
+  clients: Client[];
   total: number;
   offset: number;
   limit: number;
@@ -245,7 +245,7 @@ export interface MessagesPage {
 
 export interface MessagesPageMetadata extends PageMetadata {
   subtopic?: string;
-  publisher?: string | ThingBasicInfo;
+  publisher?: string | ClientBasicInfo;
   protocol?: string;
   comparator?: string;
   vb?: boolean;
@@ -259,7 +259,7 @@ export interface MessagesPageMetadata extends PageMetadata {
 export interface SenMLMessage {
   channel?: string | ChannelBasicInfo;
   subtopic?: string;
-  publisher?: string | ThingBasicInfo;
+  publisher?: string | ClientBasicInfo;
   protocol?: string;
   name?: string;
   unit?: string;
@@ -273,7 +273,7 @@ export interface SenMLMessage {
 }
 
 export interface Cert {
-  thing_id?: string;
+  Client_id?: string;
   cert_serial?: string;
   client_key?: string;
   client_cert?: string;
@@ -291,8 +291,7 @@ export interface BootstrapConfig {
   channels?: string[];
   external_id?: string;
   external_key?: string;
-  thing_id?: string;
-  thing_key?: string;
+  client_id?: string;
   name?: string;
   client_cert?: string;
   client_key?: string;

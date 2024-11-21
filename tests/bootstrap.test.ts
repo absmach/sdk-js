@@ -12,7 +12,7 @@ describe("Bootstraps", () => {
   const bootstrap: BootstrapConfig = {
     external_id: "012",
     external_key: "aabbcc",
-    thing_id: "77cbb344-7c41-47f3-a53a-a3d435b67207",
+    client_id: "77cbb344-7c41-47f3-a53a-a3d435b67207",
     name: "percius",
   };
   const queryParams: PageMetadata = {
