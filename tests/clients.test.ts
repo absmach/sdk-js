@@ -52,70 +52,70 @@ describe("Clients", () => {
     fetchMock.resetMocks();
   });
 
-  test("Create should create a client and return success", async () => {
+  test("Create should create a client", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.CreateClient(client, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("CreateClients should create multiple clients and return success", async () => {
+  test("Create clients should create multiple clients", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(clients));
 
     const response = await sdk.clients.CreateClients(clients, domainId, token);
     expect(response).toEqual(clients);
   });
 
-  test("Disable should disable a client and return success", async () => {
+  test("Disable should disable a client", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.Disable(clientId, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("Enable should enable a client and return success", async () => {
+  test("Enable should enable a client", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.Enable(clientId, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("UpdateClientSecret should update a client secret and return success", async () => {
+  test("Update client secret should update a client's secret", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.UpdateClientSecret(client, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("UpdateClientTags should update a client tags and return success", async () => {
+  test("Update client tags should update a client's tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.UpdateClientTags(client, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("Client should retrieve a client and return success", async () => {
+  test("Client should retrieve a client", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.Client(clientId, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("UpdateClient should update a client and return success", async () => {
+  test("Update client should update a client", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
     const response = await sdk.clients.UpdateClient(client, domainId, token);
     expect(response).toEqual(client);
   });
 
-  test("Clients should get a list of all clients and return success", async () => {
+  test("Clients should get a list of all clients", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
 
     const response = await sdk.clients.Clients(queryParams, domainId, token);
     expect(response).toEqual(clientsPage);
   });
 
-  test("ListUserClients should list clients linked to a client and return success", async () => {
+  test("List user clients should list clients linked to a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
 
     const response = await sdk.clients.ListUserClients(
@@ -127,7 +127,7 @@ describe("Clients", () => {
     expect(response).toEqual(clientsPage);
   });
 
-  test("DeleteClient should delete a client and return success", async () => {
+  test("Delete client should delete a client", async () => {
     const deleteResponse = {
       status: 200,
       message: "Client deleted successfully",
@@ -138,7 +138,7 @@ describe("Clients", () => {
     expect(response).toEqual(deleteResponse);
   });
 
-  test("ListClientActions should return available actions", async () => {
+  test("List client actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
     fetchMock.mockResponseOnce(JSON.stringify(availableActions));
 
@@ -146,7 +146,7 @@ describe("Clients", () => {
     expect(response).toEqual(availableActions);
   });
 
-  test("CreateClientRole should create a new role and return it", async () => {
+  test("Create client role should create a new role and return it", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(role));
 
     const response = await sdk.clients.CreateClientRole(
@@ -160,7 +160,7 @@ describe("Clients", () => {
     expect(response).toEqual(role);
   });
 
-  test("ListClientRoles should return a page of roles", async () => {
+  test("List client roles should return a page of roles", async () => {
     const rolesPage = { roles: [role], total: 1, offset: 0, limit: 10 };
     fetchMock.mockResponseOnce(JSON.stringify(rolesPage));
 
@@ -173,7 +173,7 @@ describe("Clients", () => {
     expect(response).toEqual(rolesPage);
   });
 
-  test("ViewClientRole should return details of a specific role", async () => {
+  test("View client role should return details of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(role));
 
     const response = await sdk.clients.ViewClientRole(
@@ -185,7 +185,7 @@ describe("Clients", () => {
     expect(response).toEqual(role);
   });
 
-  test("UpdateClientRole should update a role and return the updated role", async () => {
+  test("Update client role should update a role and return the updated role", async () => {
     const updatedRole = { ...role, actions: [...role.actions, "execute"] };
     fetchMock.mockResponseOnce(JSON.stringify(updatedRole));
 
@@ -199,7 +199,7 @@ describe("Clients", () => {
     expect(response).toEqual(updatedRole);
   });
 
-  test("DeleteClientRole should delete a role and return success response", async () => {
+  test("Delete client role should delete a role", async () => {
     const successResponse = {
       status: 200,
       message: "Role deleted successfully",
@@ -215,7 +215,7 @@ describe("Clients", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("AddClientRoleActions should add actions to a role and return updated actions", async () => {
+  test("Add client role actions should add actions to a role and return updated actions", async () => {
     const updatedActions = [...actions, "execute"];
     fetchMock.mockResponseOnce(JSON.stringify(updatedActions));
 
@@ -229,7 +229,7 @@ describe("Clients", () => {
     expect(response).toEqual(updatedActions);
   });
 
-  test("ListClientRoleActions should return actions of a specific role", async () => {
+  test("List client role actions should return actions of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(actions));
 
     const response = await sdk.clients.ListClientRoleActions(
@@ -241,7 +241,7 @@ describe("Clients", () => {
     expect(response).toEqual(actions);
   });
 
-  test("DeleteClientRoleActions should remove actions from a role and return success response", async () => {
+  test("Delete client role actions should remove actions from a role", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -258,7 +258,7 @@ describe("Clients", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllClientRoleActions should remove all actions from a role and return success response", async () => {
+  test("Delete all client role actions should remove all actions from a role", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -274,7 +274,7 @@ describe("Clients", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("AddClientRoleMembers should add members to a role and return updated members", async () => {
+  test("Add client role members should add members to a role and return updated members", async () => {
     const updatedMembers = [...members, "user3"];
     fetchMock.mockResponseOnce(JSON.stringify(updatedMembers));
 
@@ -288,7 +288,7 @@ describe("Clients", () => {
     expect(response).toEqual(updatedMembers);
   });
 
-  test("ListClientRoleMembers should return members of a specific role", async () => {
+  test("List client role members should return members of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(members));
 
     const response = await sdk.clients.ListClientRoleMembers(
@@ -301,7 +301,7 @@ describe("Clients", () => {
     expect(response).toEqual(members);
   });
 
-  test("DeleteClientRoleMembers should remove members from a role and return success response", async () => {
+  test("Delete client role members should remove members from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",
@@ -318,7 +318,7 @@ describe("Clients", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllClientRoleMembers should remove all members from a role and return success response", async () => {
+  test("Delete all client role members should remove all members from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",

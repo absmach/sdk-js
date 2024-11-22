@@ -1,4 +1,3 @@
-// Import the SDK class from the mainflux-sdk package
 import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
@@ -6,8 +5,6 @@ const defaultUrl = "http://localhost";
 const mySdk = new SDK({
   channelsUrl: `${defaultUrl}:9005`,
 });
-
-// Channels.ts examples.
 
 const token = "<token>";
 const domainId = "<domainId>";

@@ -1,4 +1,3 @@
-// Import the SDK class from the mainflux-sdk package
 import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
@@ -6,8 +5,6 @@ const defaultUrl = "http://localhost";
 const mySdk = new SDK({
   clientsUrl: `${defaultUrl}:9006`,
 });
-
-// Clients.ts examples.
 
 const token = "<token>";
 const domainId = "<domainId>";
@@ -201,7 +198,7 @@ mySdk.clients
     "<clientId>",
     domainId,
     "<roleName>",
-    ["roleAction1", "roleAction2"],
+    ["<action>", "<action>"],
     token
   )
   .then((response) => {
@@ -225,7 +222,7 @@ mySdk.clients
     "<clientId>",
     domainId,
     "<roleName>",
-    ["roleAction1", "roleAction2"],
+    ["<action>", "<action>"],
     token
   )
   .then((response) => {
@@ -245,7 +242,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .AddClientRoleMembers("<clientId>", domainId, "<roleName>", ["<userId1>", "<userId2>"], token)
+  .AddClientRoleMembers("<clientId>", domainId, "<roleName>", ["<userId>", "<userId>"], token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -273,8 +270,8 @@ mySdk.clients
     "<clientId>",
     domainId,
     "<roleName>",
-    ["<userId1>", "<userId2>"],
-    token
+    ["<userId>", "<userId>"],
+    token,
   )
   .then((response) => {
     console.log("response: ", response);
