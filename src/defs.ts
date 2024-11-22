@@ -45,11 +45,13 @@ export interface ClientBasicInfo {
 export interface Client extends ClientBasicInfo {
   tags?: string[];
   domain_id?: string | DomainBasicInfo;
+  parent_group_id?: string;
   metadata?: Record<string, any>;
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
   permissions?: string[];
+  identity?: string;
 }
 
 export interface ClientsPage {
@@ -91,16 +93,13 @@ export interface ChannelBasicInfo {
   id?: string;
   name?: string;
   status?: Status;
-  description?: string;
 }
 
 export interface Channel extends ChannelBasicInfo {
   domain_id?: string | DomainBasicInfo;
   metadata?: Record<string, any>;
   tags?: string[];
-  ParentGroup?: string;
-  level?: number;
-  path?: string;
+  parent_group_id?: string;
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string;

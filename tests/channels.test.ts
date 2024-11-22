@@ -16,7 +16,6 @@ describe("Channels", () => {
     id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
     name: "channelName",
     domain_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    description: "",
     tags: ["tag1", "tag2"],
   };
   const channels = [
