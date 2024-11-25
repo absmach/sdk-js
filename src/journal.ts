@@ -14,7 +14,7 @@ export default class Journal {
 
   /**
    * @constructor
-   * Initializes the Channel API client.
+   * Initializes the Journal API client.
    * @param {object} config - Configuration object.
    * @param {string} config.journalsUrl - Base URL for the journal API.
    */
