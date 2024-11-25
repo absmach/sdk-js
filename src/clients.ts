@@ -454,7 +454,7 @@ export default class Clients {
   }
 
   /**
-  * @method SetClientParents - Sets parent to a client.
+  * @method setClientParentGroup - Sets parent to a client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} clientId - The unique ID of the client to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
@@ -462,7 +462,7 @@ export default class Clients {
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified client.
   * @throws {Error} - If the parent group cannot be set for the client.
   */
-  public async SetClientParents(domainId: string, clientId: string, parentGroupId: string, token: string) : Promise<Response> {
+  public async setClientParentGroup(domainId: string, clientId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {

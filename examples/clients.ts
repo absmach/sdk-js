@@ -108,7 +108,7 @@ mySdk.clients
     console.log(error);
   });
 
-mySdk.clients.SetClientParents(domainId, "<clientId>", "<parentGroupId>", token)
+mySdk.clients.setClientParentGroup(domainId, "<clientId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })

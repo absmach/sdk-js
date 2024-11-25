@@ -189,14 +189,14 @@ describe("Channels", () => {
     expect(response).toEqual(DisconnectResponse);
   });
 
-  test("Set channel parents should set a group parent to a channel", async () => {
+  test("Set channel parent group should set a group parent to a channel", async () => {
     const ChannelParentsResponse = {
       status: 200,
       message: "Channel group parent added successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.SetChannelParents(
+    const response = await sdk.channels.SetChannelParentGroup(
       domainId,
       channelId,
       groupId,

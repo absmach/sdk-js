@@ -149,7 +149,7 @@ mySdk.channels
     console.error(error);
   });
 
-mySdk.channels.SetChannelParents(domainId, "<channelId>", "<groupParentId>", token)
+mySdk.channels.SetChannelParentGroup(domainId, "<channelId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })

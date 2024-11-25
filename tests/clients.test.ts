@@ -129,14 +129,14 @@ describe("Clients", () => {
     expect(response).toEqual(clientsPage);
   });
 
-  test("Set client parents should set a group parent to a Client", async () => {
+  test("Set client parent group should set a group parent to a Client", async () => {
     const ClientParentsResponse = {
       status: 200,
       message: "Client group parent added successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ClientParentsResponse));
 
-    const response = await sdk.clients.SetClientParents(
+    const response = await sdk.clients.setClientParentGroup(
       domainId,
       clientId,
       groupId,

@@ -577,7 +577,7 @@ export default class Channels {
   }
 
   /**
-  * @method SetChannelParents - Sets parent to a channel.
+  * @method SetChannelParentGroup - Sets parent to a channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} channelId - The unique ID of the channel to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
@@ -585,7 +585,7 @@ export default class Channels {
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified channel.
   * @throws {Error} - If the parent group cannot be set for the channel.
   */
-  public async SetChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
+  public async SetChannelParentGroup(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {
