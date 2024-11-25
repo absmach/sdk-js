@@ -20,5 +20,5 @@ mySdk.Journal.Journal(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
