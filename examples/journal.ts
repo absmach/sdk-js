@@ -7,10 +7,12 @@ const mySdk = new SDK({
 });
 
 const token = "<token>";
+const domainId = "<domainId>";
 
 mySdk.Journal.Journal(
   "<entityType>",
   "<entityId>",
+  domainId,
   { offset: 0, limit: 10 },
   token,
 )

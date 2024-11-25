@@ -9,7 +9,7 @@ const sdk = new SDK({ journalUrl });
 
 describe("Journal", () => {
   const journal: Journal = {
-    operation: "thing.view",
+    operation: "client.view",
     occurred_at: "2024-07-03T11:55:31.372177Z",
   };
 
@@ -21,7 +21,8 @@ describe("Journal", () => {
   };
 
   const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
-  const entityType = "thing";
+  const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
+  const entityType = "client";
   const entityId = "134135";
 
   const queryParams = {
@@ -32,12 +33,13 @@ describe("Journal", () => {
     fetchMock.resetMocks();
   });
 
-  test("journal should return a list of journals and return success", async () => {
+  test("Journal should return a list of journals", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(journalsPage));
 
     const response = await sdk.Journal.Journal(
       entityType,
       entityId,
+      domainId,
       queryParams,
       token,
     );
