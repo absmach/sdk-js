@@ -242,9 +242,9 @@ export default class Clients {
 
   /**
   * @method UpdateClientSecret - Updates an existing client's secret.
-  * @param {string} domainId - The  unique ID of the domain..
-  * @param {Client} client - Client object with updated properties.
-  * @param {string} token -  Authorization token..
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {Client} client - Client object with updated secret.
+  * @param {string} token -  Authorization token.
   * @returns {Promise<Client> } client - The updated client object.
   * @throws {Error} - If the client secret cannot be updated.
   */
@@ -282,7 +282,7 @@ export default class Clients {
 
   /**
   * @method UpdateClientTags - Updates an existing client's tags.
-  * @param {Client} client - Client object with updated properties.
+  * @param {Client} client - Client object with updated tags.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<client>} client - The updated client object.
@@ -480,7 +480,7 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addClientParentsResponse: Response = { status: response.status, message: "Client Group Parent added successfully" };
+      const addClientParentsResponse: Response = { status: response.status, message: "Client group parent added successfully" };
       return addClientParentsResponse;
     } catch (error) {
       throw error;
@@ -515,8 +515,8 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
-      return deleteChannelParentsResponse;
+      const deleteClientParentsResponse: Response = { status: response.status, message: "Client group parent deleted successfully" };
+      return deleteClientParentsResponse;
     } catch (error) {
       throw error;
     }
