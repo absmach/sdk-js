@@ -11,7 +11,7 @@ const domainId = "<domainId>";
 
 mySdk.certs
   .IssueCert(
-    "<thingID>",
+    "<clientId>",
     "<valid>",
     domainId,
     token,
@@ -20,12 +20,12 @@ mySdk.certs
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.certs
-  .ViewCertByThing(
-    "<thingID>",
+  .ViewCertByClient(
+    "<clientId>",
     domainId,
     token,
   )
@@ -33,7 +33,7 @@ mySdk.certs
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.certs
@@ -46,12 +46,12 @@ mySdk.certs
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.certs
   .RevokeCert(
-    "<thingID>",
+    "<clientId>",
     domainId,
     token,
   )
@@ -59,5 +59,5 @@ mySdk.certs
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

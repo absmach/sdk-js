@@ -10,7 +10,7 @@ const mySdk = new SDK({
 const token = "<token>";
 
 mySdk.messages
-  .Send("<channelId>", "<message>", "<thingKey>")
+  .Send("<channelId>", "<message>", "<clientKey>")
   .then((response: any) => {
     console.log("response: ", response);
   })

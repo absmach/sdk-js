@@ -21,7 +21,7 @@ describe("Messages", () => {
     value: 120.1,
   };
   const msg = '[{"n": "temp","bu": "C","u": "C","v": 23000}]';
-  const thingKey = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
+  const clientKey = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjdlZGIzM";
   const domainId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
   const queryParams = {
@@ -45,7 +45,7 @@ describe("Messages", () => {
       JSON.stringify({ status: 200, message: "Message sent successfully" }),
     );
 
-    const response = await sdk.messages.Send(channelId, msg, thingKey);
+    const response = await sdk.messages.Send(channelId, msg, clientKey);
     expect(response).toEqual({
       status: 200,
       message: "Message sent successfully",

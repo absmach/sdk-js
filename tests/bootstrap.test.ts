@@ -29,7 +29,7 @@ describe("Bootstraps", () => {
     "bb7edb32-2eac-4aad-aebe-ed96fe073879",
     "bb7edb32-2eac-4aad-aebe-ed96fe073879",
   ];
-  const thingId = "77cbb344-7c41-47f3-a53a-a3d435b67207";
+  const clientId = "77cbb344-7c41-47f3-a53a-a3d435b67207";
   const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const externalKey = "key";
@@ -84,7 +84,7 @@ describe("Bootstraps", () => {
     fetchMock.mockResponseOnce(JSON.stringify(bootstrap));
 
     const response = await sdk.bootstrap.ViewBootstrap(
-      thingId,
+      clientId,
       domainId,
       token,
     );
@@ -110,7 +110,7 @@ describe("Bootstraps", () => {
     fetchMock.mockResponseOnce(JSON.stringify(removeResponse));
 
     const response = await sdk.bootstrap.RemoveBootstrap(
-      thingId,
+      clientId,
       domainId,
       token,
     );
@@ -143,7 +143,7 @@ describe("Bootstraps", () => {
     fetchMock.mockResponseOnce(JSON.stringify(connResponse));
 
     const response = await sdk.bootstrap.UpdateBootstrapConnection(
-      thingId,
+      clientId,
       domainId,
       channels,
       token,

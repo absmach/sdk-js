@@ -35,23 +35,21 @@ export default class Messages {
     this.contentType = "application/json";
   }
 
+  /**
+  * @method Send- Sends message to a given Channel via HTTP adapter. Message is sent
+  * through a writer add-on such as Timescale. Message is sent to the
+  * HTTP adapter. The client and Channel must exist and the client connected to the Channel.
+  * @param {string} channel_id - The ID of the Channel to send the message to.
+  * @param {string} msg -message to send to the Channel that should be in encoded into
+  *       bytes format for example:
+  *       [{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]
+  * @param {string} client_key - The secret of the client sending the message.
+  */
   public async Send(
     channelId: string,
     msg: string,
-    thingKey: string
+    clientKey: string
   ): Promise<Response> {
-    // Send a message
-    /**
-     * @method Send- Sends message to a given Channel via HTTP adapter. Message is sent
-     * through a writer add-on such as Timescale. Message is sent to the
-     * HTTP adapter. The Thing and Channel must exist and the Thing connected to the Channel.
-     * @param {string} channel_id - The ID of the Channel to send the message to.
-     * @param {string} msg -message to send to the Channel that should be in encoded into
-     *       bytes format for example:
-     *       [{"bn":"demo", "bu":"V", "n":"voltage", "u":"V", "v":5}]
-     * @param {string} thing_key - The secret of the Thing sending the message.
-     */
-
     const chanNameParts = channelId.split(".", 2);
     const chanId = chanNameParts[0];
     let subtopic = "";
@@ -64,7 +62,7 @@ export default class Messages {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Thing ${thingKey}`,
+        Authorization: `client ${clientKey}`,
       },
       body: msg,
     };
@@ -90,22 +88,20 @@ export default class Messages {
     }
   }
 
+  /**
+  *
+  * @method Read - Read messages from a given channel. Messages are read from a reader
+  * add-on such as Timescale. Messages are read from the http adapter.
+  * @param {string} channel_id - The ID of the channel to read the message from.
+  * @param {string} token - Authorization token.
+  * @param {string} domainId - The  unique ID of the domain.
+  */
   public async Read(
     pm: MessagesPageMetadata,
     channelId: string,
     token: string,
     domainId: string
   ): Promise<MessagesPage> {
-    // Read messages
-    /**
-     *
-     * @method Read - Read messages from a given channel. Messages are read from a reader
-     * add-on such as Timescale. Messages are read from the http adapter.
-     * @param {string} channel_id - The ID of the channel to read the message from.
-     * @param {string} token - Authentication token.
-     * @param {string} domain_id - The ID of the domain.
-     */
-
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(pm).map(([key, value]) => [key, String(value)])
     );

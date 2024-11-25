@@ -13,7 +13,7 @@ mySdk.bootstrap.AddBootstrap(
   {
     external_id: "<externalId>",
     external_key: "externalKey",
-    thing_id: "<thingId>",
+    client_id: "<clientId>",
     name: "<bootstrapName>",
   },
   domainId,
@@ -30,7 +30,7 @@ mySdk.bootstrap.Whitelist(
   {
     external_id: "<externalId>",
     external_key: "<externalKey>",
-    thing_id: "<thingId>",
+    client_id: "<clientId>",
     name: "<bootstrapName>",
   },
   domainId,
@@ -46,7 +46,7 @@ mySdk.bootstrap.Whitelist(
 mySdk.bootstrap.UpdateBootstrap(
   {
     name: "Bootstrap1",
-    thing_id: "<thingId>",
+    client_id: "<clientId>",
   },
   domainId,
   token,
@@ -59,7 +59,7 @@ mySdk.bootstrap.UpdateBootstrap(
   });
 
 mySdk.bootstrap.ViewBootstrap(
-  "<thingId>",
+  "<clientId>",
   domainId,
   token,
 )
@@ -72,7 +72,7 @@ mySdk.bootstrap.ViewBootstrap(
 
 mySdk.bootstrap.UpdateBootstrapCerts(
   {
-    thing_id: "<thingId>",
+    client_id: "<clientId>",
     client_cert: "<clientCert>",
     client_key: "<clientKey>",
     ca_cert: "<caCert>",
@@ -88,7 +88,7 @@ mySdk.bootstrap.UpdateBootstrapCerts(
   });
 
 mySdk.bootstrap.RemoveBootstrap(
-  "<thingId>",
+  "<clientId>",
   domainId,
   token,
 )
@@ -123,7 +123,7 @@ mySdk.bootstrap.Bootstraps(
   });
 
 mySdk.bootstrap.UpdateBootstrapConnection(
-  "<thingId>",
+  "<clientId>",
   domainId,
   ["<channelId>", "<channelId2>"],
   token,
