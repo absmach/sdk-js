@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.5
+
+### Patch Changes
+
+- c195860: Update clients service to match new auth
+
 ## 0.9.4
 
 ### Patch Changes
