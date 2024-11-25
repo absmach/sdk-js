@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.6
+
+### Patch Changes
+
+- b6cbc3c: updates the groups service with the new auth refactor
+
 ## 0.9.5
 
 ### Patch Changes
