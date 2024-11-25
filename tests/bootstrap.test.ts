@@ -102,19 +102,19 @@ describe("Bootstraps", () => {
     expect(response).toEqual(bootstrap);
   });
 
-  test("RemoveBootstrap should allow a user to view a Bootstrap Configuration and return success", async () => {
-    const removeResponse = {
+  test("DeleteBootstrap should allow a user to view a Bootstrap Configuration and return success", async () => {
+    const deleteResponse = {
       status: 200,
       message: "Bootstrap configuration deleted",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(removeResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(deleteResponse));
 
-    const response = await sdk.bootstrap.RemoveBootstrap(
+    const response = await sdk.bootstrap.DeleteBootstrap(
       clientId,
       domainId,
       token,
     );
-    expect(response).toEqual(removeResponse);
+    expect(response).toEqual(deleteResponse);
   });
 
   test("Bootstrap should retrive a Bootstrap Configuration and return success", async () => {

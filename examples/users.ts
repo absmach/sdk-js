@@ -22,7 +22,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -31,7 +31,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -40,7 +40,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -49,7 +49,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -58,7 +58,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -70,7 +70,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -79,7 +79,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -91,7 +91,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -103,7 +103,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -112,7 +112,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -121,7 +121,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -130,7 +130,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -139,7 +139,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -148,7 +148,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -157,7 +157,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -166,7 +166,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users.ListUserClients(
@@ -179,7 +179,7 @@ mySdk.users.ListUserClients(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -188,7 +188,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -197,7 +197,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -206,7 +206,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -215,7 +215,7 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.users
@@ -224,5 +224,5 @@ mySdk.users
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

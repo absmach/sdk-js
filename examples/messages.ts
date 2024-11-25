@@ -14,8 +14,8 @@ mySdk.messages
   .then((response: any) => {
     console.log("response: ", response);
   })
-  .catch((error: unknown) => {
-    console.log(error);
+  .catch((error) => {
+    console.error(error);
   });
 
 mySdk.messages
@@ -23,6 +23,6 @@ mySdk.messages
   .then((response: any) => {
     console.log("response: ", response);
   })
-  .catch((error: unknown) => {
-    console.log(error);
+  .catch((error) => {
+    console.error(error);
   });

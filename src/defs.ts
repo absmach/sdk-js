@@ -291,7 +291,7 @@ export interface Cert {
   expiration?: string;
 }
 
-export interface CertSerials {
+export interface CertsPage {
   certs: Cert[];
   total: number;
   offset: number;

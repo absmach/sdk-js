@@ -23,7 +23,7 @@ mySdk.bootstrap.AddBootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.Whitelist(
@@ -40,12 +40,12 @@ mySdk.bootstrap.Whitelist(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.UpdateBootstrap(
   {
-    name: "Bootstrap1",
+    name: "<updatedBootstrapName>",
     client_id: "<clientId>",
   },
   domainId,
@@ -55,7 +55,7 @@ mySdk.bootstrap.UpdateBootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.ViewBootstrap(
@@ -67,7 +67,7 @@ mySdk.bootstrap.ViewBootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.UpdateBootstrapCerts(
@@ -84,10 +84,10 @@ mySdk.bootstrap.UpdateBootstrapCerts(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
-mySdk.bootstrap.RemoveBootstrap(
+mySdk.bootstrap.DeleteBootstrap(
   "<clientId>",
   domainId,
   token,
@@ -96,7 +96,7 @@ mySdk.bootstrap.RemoveBootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.Bootstrap(
@@ -107,7 +107,7 @@ mySdk.bootstrap.Bootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.Bootstraps(
@@ -119,7 +119,7 @@ mySdk.bootstrap.Bootstraps(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.UpdateBootstrapConnection(
@@ -132,7 +132,7 @@ mySdk.bootstrap.UpdateBootstrapConnection(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.bootstrap.SecureBootstrap(
@@ -144,5 +144,5 @@ mySdk.bootstrap.SecureBootstrap(
     console.log("response:", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

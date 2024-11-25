@@ -1,5 +1,5 @@
 import Errors from "./errors";
-import { type Cert, type CertSerials, type Response } from "./defs";
+import { type Cert, CertsPage, type Response } from "./defs";
 
 /**
 *@class Certs
@@ -19,12 +19,13 @@ export default class Certs {
   }
 
   /**
-  * @method IssueCert - Issue a certificate to a client.
-  * Requires a clientId and a valid time in hours as well as a token.
-  * @param {string} clientId - The clientId of the client to be issued a certificate.
+  * @method IssueCert - Issues a certificate to a client.
+  * @param {string} clientId - The unique ID of the client to be issued a certificate.
   * @param {string} valid - The time in hours for which the certificate is valid such as '10h'
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {String} token - Authorization token.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Cert>} cert - A promise that resolves with the certificate issued.
+  * @throws {Error} - If the certificate cannot be issued.
   */
   public async IssueCert(
     clientId: string,
@@ -58,17 +59,18 @@ export default class Certs {
   }
 
   /**
-  * @method ViewCertByClient - Allows a logged in user to view a certificate serial once they
-  * provide a valid connected client-id and token.
-  * @param {string} clientId - The clientId of the client whose certificate is to be viewed.
+  * @method ViewCertByClient -  Retrieves all certs matching the provided client Id.
+  * @param {string} clientId - The  unique ID of the client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
+  * @returns {Promise<CertsPage>} certsPage - A page of certs.
+  * @throws {Error} - If the certs cannot be fetched.
   */
   public async ViewCertByClient(
     clientId: string,
     domainId: string,
     token: string
-  ): Promise<CertSerials> {
+  ): Promise<CertsPage> {
     const options: RequestInit = {
       method: "GET",
       headers: {
@@ -85,7 +87,7 @@ export default class Certs {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const certsPage: CertSerials = await response.json();
+      const certsPage: CertsPage = await response.json();
       return certsPage;
     } catch (error) {
       throw error;
@@ -93,14 +95,15 @@ export default class Certs {
   }
 
   /**
-  * @method ViewCert - Allows a logged in user to view a certificate once they
-  * provide a valid cert-id and token.
-  * @param {string} id - The ID of the certificate to be viewed.
+  * @method ViewCert - Retrieves a certificate by its id.
+  * @param {string} certId - The  unique ID of the certificate.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
+  * @returns {Promise<Cert>} cert - The requested cert object.
+  * @throws {Error} - If the cert cannot be fetched.
   */
   public async ViewCert(
-    id: string,
+    certId: string,
     domainId: string,
     token: string
   ): Promise<Cert> {
@@ -115,7 +118,7 @@ export default class Certs {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.certsEndpoint}/${id}`,
+          `${domainId}/${this.certsEndpoint}/${certId}`,
           this.certsUrl
         ).toString(),
         options
@@ -132,14 +135,15 @@ export default class Certs {
   }
 
   /**
-  * @method RevokeCert - Allows a logged in user to delete a certificate once they
-  * provide a valid client-id and token.
-  * @param {string} id - The id of the certificate to be revoked.
+  * @method RevokeCert - Revokes and deletes a certificate with specified id.
+  * @param {string} certId - The  unique ID of the certificate to be revoked.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the cert is revoked.
+  * @throws {Error} - If the cert cannot be revoked.
   */
   public async RevokeCert(
-    id: string,
+    certId: string,
     domainId: string,
     token: string
   ): Promise<Response> {
@@ -154,7 +158,7 @@ export default class Certs {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.certsEndpoint}/${id}`,
+          `${domainId}/${this.certsEndpoint}/${certId}`,
           this.certsUrl
         ).toString(),
         options
