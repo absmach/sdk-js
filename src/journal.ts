@@ -29,7 +29,7 @@ export default class Journal {
   * @param {string} entityType - Entity type e.g client.
   * @param {string} entityId - The  unique ID of the entity.
   * @param {string} domainId - The  unique ID of the domain.
-  * @param {object} queryParams - Query parameters for the request.
+  * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
   * @param {string} token - Authorization token.
   * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
   * @throws {Error} - If the journals cannot be fetched.
