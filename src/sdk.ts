@@ -19,6 +19,8 @@ export type {
   GroupBasicInfo,
   Group,
   GroupsPage,
+  HierarchyPageMeta,
+  HierarchyPage,
   ChannelBasicInfo,
   Channel,
   ChannelsPage,
@@ -64,6 +66,7 @@ export interface SDKConfig {
   channelsUrl?: string;
   domainsUrl?: string;
   clientsUrl?: string;
+  groupsUrl?: string;
   certsUrl?: string;
   readersUrl?: string;
   httpAdapterUrl?: string;
@@ -100,6 +103,7 @@ class SDK {
     channelsUrl = defaultUrl,
     domainsUrl = defaultUrl,
     clientsUrl = defaultUrl,
+    groupsUrl = defaultUrl,
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpAdapterUrl = defaultUrl,
@@ -111,7 +115,7 @@ class SDK {
     this.domains = new Domains({ domainsUrl, usersUrl });
     this.clients = new Clients({ clientsUrl });
     this.certs = new Certs(certsUrl);
-    this.groups = new Groups({ usersUrl, clientsUrl });
+    this.groups = new Groups({ groupsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
     this.invitations = new Invitations(invitationsUrl);
@@ -127,6 +131,8 @@ class SDK {
       httpAdapterUrl,
       journalUrl,
       invitationsUrl,
+      domainsUrl,
+      groupsUrl,
     });
   }
 }

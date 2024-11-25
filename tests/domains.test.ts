@@ -65,35 +65,35 @@ describe("Domains", () => {
     fetchMock.resetMocks();
   });
 
-  test("create should create a domain and return success", async () => {
+  test("Create should create a domain", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domain));
 
     const response = await sdk.domains.CreateDomain(domain, token);
     expect(response).toEqual(domain);
   });
 
-  test("domains should return a list of domains and return success", async () => {
+  test("Domains should return a list of domains", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domainsPage));
 
     const response = await sdk.domains.Domains(queryParams, token);
     expect(response).toEqual(domainsPage);
   });
 
-  test("domain should return a domain and return success", async () => {
+  test("Domain should return a domain", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domain));
 
     const response = await sdk.domains.Domain(domainId, token);
     expect(response).toEqual(domain);
   });
 
-  test("update should update a domain name and metadata and return success", async () => {
+  test("Update should update a domain name and metadata", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domain));
 
     const response = await sdk.domains.UpdateDomain(domain, token);
     expect(response).toEqual(domain);
   });
 
-  test("list user domains should return a list of user domains and return success", async () => {
+  test("List user domains should return a list of user domains", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(domainsPage));
 
     const response = await sdk.domains.ListUserDomains(
@@ -104,7 +104,7 @@ describe("Domains", () => {
     expect(response).toEqual(domainsPage);
   });
 
-  test("list domain users should return a list of domain users and return success", async () => {
+  test("List domain users should return a list of domain users", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(usersPage));
 
     const response = await sdk.domains.ListDomainUsers(
@@ -115,7 +115,7 @@ describe("Domains", () => {
     expect(response).toEqual(usersPage);
   });
 
-  test("enable domain should enable a domain and return success", async () => {
+  test("Enable domain should enable a domain", async () => {
     const enableDomainResponse = {
       status: 200,
       message: "Domain enabled successfully",
@@ -126,7 +126,7 @@ describe("Domains", () => {
     expect(response).toEqual(enableDomainResponse);
   });
 
-  test("disable domain should disable a domain and return success", async () => {
+  test("Disable domain should disable a domain", async () => {
     const disableDomainResponse = {
       status: 200,
       message: "Domain disabled successfully",
@@ -137,7 +137,7 @@ describe("Domains", () => {
     expect(response).toEqual(disableDomainResponse);
   });
 
-  test("freeze domain should freeze a domain and return success", async () => {
+  test("Freeze domain should freeze a domain", async () => {
     const freezeDomainResponse = {
       status: 200,
       message: "Domain frozen successfully",
@@ -206,7 +206,7 @@ describe("Domains", () => {
     expect(response).toEqual(updatedRole);
   });
 
-  test("DeleteDomainRole should delete a role and return success response", async () => {
+  test("DeleteDomainRole should delete a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role deleted successfully",
@@ -245,7 +245,7 @@ describe("Domains", () => {
     expect(response).toEqual(actions);
   });
 
-  test("DeleteDomainRoleActions should remove actions from a role and return success response", async () => {
+  test("DeleteDomainRoleActions should remove actions from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -261,7 +261,7 @@ describe("Domains", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllDomainRoleActions should remove all actions from a role and return success response", async () => {
+  test("DeleteAllDomainRoleActions should remove all actions from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -301,7 +301,7 @@ describe("Domains", () => {
     expect(response).toEqual(members);
   });
 
-  test("DeleteDomainRoleMembers should remove members from a role and return success response", async () => {
+  test("DeleteDomainRoleMembers should remove members from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",
@@ -317,7 +317,7 @@ describe("Domains", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllDomainRoleMembers should remove all members from a role and return success response", async () => {
+  test("DeleteAllDomainRoleMembers should remove all members from a role response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",

@@ -8,7 +8,7 @@ const mySdk = new SDK({
 });
 
 const token = "token";
-const domainId = "<domainID>";
+const domainId = "<domainId>";
 
 mySdk.domains
   .CreateDomain({ name: "<domainName>", alias: "<domainAlias>" }, token)
@@ -47,7 +47,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .ListUserDomains("<userID>", { offset: 0, limit: 10 }, token)
+  .ListUserDomains("<userId>", { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -130,8 +130,8 @@ mySdk.domains
 mySdk.domains
   .UpdateDomainRole(
     domainId,
-    "<role_name>",
-    { name: "<updated_role_name>" },
+    "<roleName>",
+    { name: "<updatedRoleName>" },
     token
   )
   .then((response) => {
@@ -151,12 +151,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .AddDomainRoleActions(
-    domainId,
-    "<roleName>",
-    ["<roleAction1>", "<roleAction2>"],
-    token
-  )
+  .AddDomainRoleActions(domainId, "<roleName>", ["<action>", "<action>"], token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -177,7 +172,7 @@ mySdk.domains
   .DeleteDomainRoleActions(
     domainId,
     "<roleName>",
-    ["<roleAction1>", "<roleAction2>"],
+    ["<action>", "<action>"],
     token
   )
   .then((response) => {
@@ -197,7 +192,7 @@ mySdk.domains
   });
 
 mySdk.domains
-  .AddDomainRoleMembers(domainId, "<roleName>", ["<userID>", "<userID>"], token)
+  .AddDomainRoleMembers(domainId, "<roleName>", ["<userId>", "<userId>"], token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -223,7 +218,7 @@ mySdk.domains
   .DeleteDomainRoleMembers(
     domainId,
     "<roleName>",
-    ["<userID>", "<userID>"],
+    ["<userId>", "<userId>"],
     token
   )
   .then((response) => {

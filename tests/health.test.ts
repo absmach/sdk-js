@@ -109,6 +109,24 @@ describe("Health", () => {
     instance_id: "0b375343-1273-4efc-96a3-517ca74ec4c1",
   };
 
+  const domainsServiceHealthInfo: HealthInfo = {
+    status: "pass",
+    version: "v0.14.0",
+    commit: "c3e7159cb762396f064d43d55c30d90011c9357f",
+    description: "domains service",
+    build_time: "2024-07-25_14:20:35",
+    instance_id: "0b375343-1273-4efc-96a3-517ca74ec4c1",
+  };
+
+  const groupsServiceHealthInfo: HealthInfo = {
+    status: "pass",
+    version: "v0.14.0",
+    commit: "c3e7159cb762396f064d43d55c30d90011c9357f",
+    description: "groups service",
+    build_time: "2024-07-25_14:20:35",
+    instance_id: "0b375343-1273-4efc-96a3-517ca74ec4c1",
+  };
+
   beforeEach(() => {
     fetchMock.resetMocks();
   });
@@ -181,5 +199,19 @@ describe("Health", () => {
 
     const response = await sdk.Health.Health("http-adapter");
     expect(response).toEqual(httpAdapterServiceHealthInfo);
+  });
+
+  test("fetch domains service health information", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(domainsServiceHealthInfo));
+
+    const response = await sdk.Health.Health("domains");
+    expect(response).toEqual(domainsServiceHealthInfo);
+  });
+
+  test("fetch groups service health information", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(groupsServiceHealthInfo));
+
+    const response = await sdk.Health.Health("groups");
+    expect(response).toEqual(groupsServiceHealthInfo);
   });
 });

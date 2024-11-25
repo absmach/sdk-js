@@ -10,9 +10,10 @@ const mySdk = new SDK({
   journalUrl: `${defaultUrl}:9021`,
   httpAdapterUrl: `${defaultUrl}:8008`,
   readersUrl: `${defaultUrl}:9011`,
-  domainsUrl: `${defaultUrl}:8189`,
+  domainsUrl: `${defaultUrl}:9003`,
   certsUrl: `${defaultUrl}:9019`,
   bootstrapUrl: `${defaultUrl}:9013`,
+  groupsUrl: `${defaultUrl}:9004`,
 });
 
 // Clients service Health
@@ -89,6 +90,24 @@ mySdk.Health.Health("journal")
 
 // Invitations service Health
 mySdk.Health.Health("invitations")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Domains service Health
+mySdk.Health.Health("domains")
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Groups service Health
+mySdk.Health.Health("groups")
   .then((response: any) => {
     console.log("response: ", response);
   })

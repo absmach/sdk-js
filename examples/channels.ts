@@ -28,7 +28,11 @@ mySdk.channels
   });
 
 mySdk.channels
-  .CreateChannels([{ name: "<channelName1>" }, { name: "<channelName2>" }], domainId, token)
+  .CreateChannels(
+    [{ name: "<channelName1>" }, { name: "<channelName2>" }],
+    domainId,
+    token,
+  )
   .then((response: any) => {
     console.log("response:", response);
   })
@@ -49,7 +53,7 @@ mySdk.channels
   .UpdateChannelNameAndMetadata(
     { id: "<channelId>", name: "<channelName>", metadata: { key: "value" } },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -62,7 +66,7 @@ mySdk.channels
   .UpdateChannelTags(
     { id: "<channelId>", tags: ["tag1", "tag2"] },
     domainId,
-    token
+    token,
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -166,11 +170,7 @@ mySdk.channels.DeleteChannelParentGroup(domainId, "<channelId>", token)
   });
 
 mySdk.channels
-  .DeleteChannel(
-    "<channelId>",
-    domainId,
-    token,
-  )
+  .DeleteChannel("<channelId>", domainId, token)
   .then((response: any) => {
     console.log("response: ", response);
   })

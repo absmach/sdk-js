@@ -1,4 +1,3 @@
-// Import the SDK class from the mainflux-sdk package
 import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
@@ -11,11 +10,7 @@ const mySdk = new SDK({
 const token = "<token>";
 
 mySdk.messages
-  .Send(
-    "<channelId>",
-    "<message>",
-    "<thingKey>",
-  )
+  .Send("<channelId>", "<message>", "<thingKey>")
   .then((response: any) => {
     console.log("response: ", response);
   })
