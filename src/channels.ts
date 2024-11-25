@@ -577,7 +577,7 @@ export default class Channels {
   }
 
   /**
-  * @method ChannelParents - Sets parent to a channel.
+  * @method SetChannelParents - Sets parent to a channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} channelId - The unique ID of the channel to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
@@ -585,7 +585,7 @@ export default class Channels {
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified channel.
   * @throws {Error} - If the parent group cannot be set for the channel.
   */
-  public async ChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
+  public async SetChannelParents(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -603,7 +603,7 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent added successfully" };
+      const addChannelParentsResponse: Response = { status: response.status, message: "Channel group parent added successfully" };
       return addChannelParentsResponse;
     } catch (error) {
       throw error;
@@ -611,14 +611,14 @@ export default class Channels {
   }
 
   /**
-  * @method DeleteChannelParents - Removes the parent group from a specified channel.
+  * @method DeleteChannelParentGroup - Removes the parent group from a specified channel.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} channelId - The  unique ID of the channel.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified channel.
   * @throws {Error} - If the parent group cannot removed from the channel.
   */
-  public async DeleteChannelParents(domainId: string, channelId: string, token: string) : Promise<Response> {
+  public async DeleteChannelParentGroup(domainId: string, channelId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "DELETE",
       headers: {
@@ -638,7 +638,7 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel Group Parent deleted successfully" };
+      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel group parent deleted successfully" };
       return deleteChannelParentsResponse;
     } catch (error) {
       throw error;

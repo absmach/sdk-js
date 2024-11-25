@@ -35,7 +35,7 @@ export type {
   InvitationsPage,
   Relation,
   GroupRelation,
-  Credentials,
+  UserCredentials,
   ClientCredentials,
   UserBasicInfo,
   DomainBasicInfo,

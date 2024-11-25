@@ -3,7 +3,7 @@ export interface UserBasicInfo {
   first_name?: string;
   last_name?: string;
   email?: string;
-  credentials?: Credentials;
+  credentials?: UserCredentials;
   status?: Status;
   profile_picture?: string;
 }
@@ -25,7 +25,7 @@ export interface UsersPage {
   limit: number;
 }
 
-export interface Credentials {
+export interface UserCredentials {
   username?: string;
   secret?: string;
 }
@@ -291,6 +291,7 @@ export interface BootstrapConfig {
   external_id?: string;
   external_key?: string;
   client_id?: string;
+  client_secret?: string;
   name?: string;
   client_cert?: string;
   client_key?: string;

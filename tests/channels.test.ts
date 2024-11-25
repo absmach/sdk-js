@@ -189,14 +189,14 @@ describe("Channels", () => {
     expect(response).toEqual(DisconnectResponse);
   });
 
-  test("Channel parents should set a group parent to a channel", async () => {
+  test("Set channel parents should set a group parent to a channel", async () => {
     const ChannelParentsResponse = {
       status: 200,
-      message: "Channel Group Parent added successfully",
+      message: "Channel group parent added successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.ChannelParents(
+    const response = await sdk.channels.SetChannelParents(
       domainId,
       channelId,
       groupId,
@@ -205,14 +205,14 @@ describe("Channels", () => {
     expect(response).toEqual(ChannelParentsResponse);
   });
 
-  test("Delete channel parents should delete a group parent from a channel", async () => {
+  test("Delete channel parent group should delete a group parent from a channel", async () => {
     const ChannelParentsResponse = {
       status: 200,
-      message: "Channel Group Parent deleted successfully",
+      message: "Channel group parent deleted successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.DeleteChannelParents(
+    const response = await sdk.channels.DeleteChannelParentGroup(
       domainId,
       channelId,
       token,

@@ -108,7 +108,7 @@ mySdk.clients
     console.log(error);
   });
 
-mySdk.clients.ClientParents(domainId, "<clientId>", "<parentGroupId>", token)
+mySdk.clients.SetClientParents(domainId, "<clientId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -116,7 +116,7 @@ mySdk.clients.ClientParents(domainId, "<clientId>", "<parentGroupId>", token)
     console.error(error);
   });
 
-mySdk.clients.DeleteClientParents(domainId, "<clientId>", token)
+mySdk.clients.DeleteClientParentGroup(domainId, "<clientId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })

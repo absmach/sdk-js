@@ -41,6 +41,7 @@ describe("Clients", () => {
   };
   const clientId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
   const userId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
+  const groupId = "1be56995-aa42-4940-88e3-1fb1e82065fa";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
   const roleName = "editor";
@@ -90,7 +91,8 @@ describe("Clients", () => {
   test("Update client tags should update a client's tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
-    const response = await sdk.clients.UpdateClientTags(client, domainId, token);
+    const response = await sdk.clients
+      .UpdateClientTags(client, domainId, token);
     expect(response).toEqual(client);
   });
 
@@ -125,6 +127,37 @@ describe("Clients", () => {
       token,
     );
     expect(response).toEqual(clientsPage);
+  });
+
+  test("Set client parents should set a group parent to a Client", async () => {
+    const ClientParentsResponse = {
+      status: 200,
+      message: "Client group parent added successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(ClientParentsResponse));
+
+    const response = await sdk.clients.SetClientParents(
+      domainId,
+      clientId,
+      groupId,
+      token,
+    );
+    expect(response).toEqual(ClientParentsResponse);
+  });
+
+  test("Delete client parent group should delete a group parent from a Client", async () => {
+    const ClientParentsResponse = {
+      status: 200,
+      message: "Client group parent deleted successfully",
+    };
+    fetchMock.mockResponseOnce(JSON.stringify(ClientParentsResponse));
+
+    const response = await sdk.clients.DeleteClientParentGroup(
+      domainId,
+      clientId,
+      token,
+    );
+    expect(response).toEqual(ClientParentsResponse);
   });
 
   test("Delete client should delete a client", async () => {

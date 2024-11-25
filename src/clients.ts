@@ -162,7 +162,7 @@ export default class Clients {
   }
 
   /**
-   * @method Disable - Disables an enabled client by its ID..
+   * @method Disable - Disables an enabled client by its ID.
    * @param {string} clientId - The  unique ID of the client.
    * @param {string} domainId -The  unique ID of the domain.
    * @param {string} token - Authorization token.
@@ -454,7 +454,7 @@ export default class Clients {
   }
 
   /**
-  * @method ClientParents - Sets parent to a client.
+  * @method SetClientParents - Sets parent to a client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} clientId - The unique ID of the client to be updated.
   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
@@ -462,7 +462,7 @@ export default class Clients {
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified client.
   * @throws {Error} - If the parent group cannot be set for the client.
   */
-  public async ClientParents(domainId: string, clientId: string, parentGroupId: string, token: string) : Promise<Response> {
+  public async SetClientParents(domainId: string, clientId: string, parentGroupId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {
@@ -488,14 +488,14 @@ export default class Clients {
   }
 
   /**
-  * @method DeleteClientParents - Removes the parent group from a specified client.
+  * @method DeleteClientParentGroup - Removes the parent group from a specified client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} clientId - The  unique ID of the client.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified client.
   * @throws {Error} - If the parent group cannot removed from the client.
   */
-  public async DeleteClientParents(domainId: string, clientId: string, token: string) : Promise<Response> {
+  public async DeleteClientParentGroup(domainId: string, clientId: string, token: string) : Promise<Response> {
     const options: RequestInit = {
       method: "DELETE",
       headers: {
@@ -523,7 +523,7 @@ export default class Clients {
   }
 
   /**
-  * @method DeleteClient - Deletes a client with specified id..
+  * @method DeleteClient - Deletes a client with specified id.
   * @param {string} clientId - The  unique ID of the client.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.

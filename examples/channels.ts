@@ -149,7 +149,7 @@ mySdk.channels
     console.error(error);
   });
 
-mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
+mySdk.channels.SetChannelParents(domainId, "<channelId>", "<groupParentId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -157,7 +157,7 @@ mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
     console.error(error);
   });
 
-mySdk.channels.DeleteChannelParents(domainId, "<channelId>", token)
+mySdk.channels.DeleteChannelParentGroup(domainId, "<channelId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
