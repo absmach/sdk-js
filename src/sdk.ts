@@ -1,6 +1,5 @@
 import Users from "./users";
 import Domains from "./domains";
-import Things from "./things";
 import Certs from "./certs";
 import Groups from "./groups";
 import Invitations from "./invitations";
@@ -9,13 +8,14 @@ import Messages from "./messages";
 import Bootstrap from "./bootstrap";
 import Journal from "./journal";
 import Health from "./health";
+import Clients from "./clients";
 
 export type {
   User,
   UsersPage,
-  ThingBasicInfo,
-  Thing,
-  ThingsPage,
+  ClientBasicInfo,
+  Client,
+  ClientsPage,
   GroupBasicInfo,
   Group,
   GroupsPage,
@@ -35,8 +35,8 @@ export type {
   InvitationsPage,
   Relation,
   GroupRelation,
-  Credentials,
-  ThingCredentials,
+  UserCredentials,
+  ClientCredentials,
   UserBasicInfo,
   DomainBasicInfo,
   Permissions,
@@ -63,7 +63,7 @@ export interface SDKConfig {
   usersUrl?: string;
   channelsUrl?: string;
   domainsUrl?: string;
-  thingsUrl?: string;
+  clientsUrl?: string;
   certsUrl?: string;
   readersUrl?: string;
   httpAdapterUrl?: string;
@@ -77,7 +77,7 @@ class SDK {
 
   domains: Domains;
 
-  things: Things;
+  clients: Clients;
 
   certs: Certs;
 
@@ -99,7 +99,7 @@ class SDK {
     usersUrl = defaultUrl,
     channelsUrl = defaultUrl,
     domainsUrl = defaultUrl,
-    thingsUrl = defaultUrl,
+    clientsUrl = defaultUrl,
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpAdapterUrl = defaultUrl,
@@ -107,11 +107,11 @@ class SDK {
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl,
   }: SDKConfig = {}) {
-    this.users = new Users({ usersUrl, thingsUrl });
+    this.users = new Users({ usersUrl, clientsUrl });
     this.domains = new Domains({ domainsUrl, usersUrl });
-    this.things = new Things({ thingsUrl, usersUrl });
+    this.clients = new Clients({ clientsUrl });
     this.certs = new Certs(certsUrl);
-    this.groups = new Groups({ usersUrl, thingsUrl });
+    this.groups = new Groups({ usersUrl, clientsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
     this.invitations = new Invitations(invitationsUrl);
@@ -119,7 +119,7 @@ class SDK {
     this.Journal = new Journal(journalUrl);
     this.Health = new Health({
       usersUrl,
-      thingsUrl,
+      clientsUrl,
       channelsUrl,
       bootstrapUrl,
       certsUrl,

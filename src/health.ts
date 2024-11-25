@@ -4,7 +4,7 @@ import Errors from "./errors";
 export default class Health {
   private readonly usersUrl?: URL;
 
-  private readonly thingsUrl?: URL;
+  private readonly clientsUrl?: URL;
 
   private readonly channelsUrl?: URL;
 
@@ -24,7 +24,7 @@ export default class Health {
 
   public constructor({
     usersUrl,
-    thingsUrl,
+    clientsUrl,
     channelsUrl,
     bootstrapUrl,
     certsUrl,
@@ -34,7 +34,7 @@ export default class Health {
     invitationsUrl,
   }: {
     usersUrl?: string;
-    thingsUrl?: string;
+    clientsUrl?: string;
     channelsUrl?: string;
     bootstrapUrl?: string;
     certsUrl?: string;
@@ -46,8 +46,8 @@ export default class Health {
     if (usersUrl !== undefined) {
       this.usersUrl = new URL(usersUrl);
     }
-    if (thingsUrl !== undefined) {
-      this.thingsUrl = new URL(thingsUrl);
+    if (clientsUrl !== undefined) {
+      this.clientsUrl = new URL(clientsUrl);
     }
     if (channelsUrl !== undefined) {
       this.channelsUrl = new URL(channelsUrl);
@@ -76,8 +76,8 @@ export default class Health {
   public async Health(service: string): Promise<HealthInfo> {
     let url: URL | undefined;
     switch (service) {
-      case "things": {
-        url = this.thingsUrl;
+      case "clients": {
+        url = this.clientsUrl;
         break;
       }
       case "users": {

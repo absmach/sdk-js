@@ -16,7 +16,6 @@ describe("Channels", () => {
     id: "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9",
     name: "channelName",
     domain_id: "bb7edb32-2eac-4aad-aebe-ed96fe073879",
-    description: "",
     tags: ["tag1", "tag2"],
   };
   const channels = [
@@ -51,63 +50,63 @@ describe("Channels", () => {
     fetchMock.resetMocks();
   });
 
-  test("Channel should retrieve a channel and return success", async () => {
+  test("Channel should retrieve a channel", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.Channel(channelId, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("CreateChannel should create a channel and return success", async () => {
+  test("Create channel should create a channel", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.CreateChannel(channel, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("CreateChannels should create multiple channels and return success", async () => {
+  test("Create channels should create multiple channels", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channels));
 
     const response = await sdk.channels.CreateChannels(channels, domainId, token);
     expect(response).toEqual(channels);
   });
 
-  test("Channels should return a list of channels and return success", async () => {
+  test("Channels should return a list of channels", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage));
 
     const response = await sdk.channels.Channels(queryParams, domainId, token);
     expect(response).toEqual(channelsPage);
   });
 
-  test("UpdateChannelNameAndMetadata should update channel name and metadata and return success", async () => {
+  test("Update channel name and metadata should update a channel's name and metadata", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.UpdateChannelNameAndMetadata(channel, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("UpdateChannelTags should update channel tags and return success", async () => {
+  test("Update channel tags should update channel's tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.UpdateChannelTags(channel, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("EnableChannel should enable a channel and return success", async () => {
+  test("Enable channel should enable a channel", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.EnableChannel(channelId, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("DisableChannel should disable a channel and return success", async () => {
+  test("Disable channel should disable a channel", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channel));
 
     const response = await sdk.channels.DisableChannel(channelId, domainId, token);
     expect(response).toEqual(channel);
   });
 
-  test("Delete should delete a channel and return success", async () => {
+  test("Delete should delete a channel", async () => {
     const deleteResponse = {
       status: 200,
       message: "Channel deleted successfully",
@@ -122,7 +121,7 @@ describe("Channels", () => {
     expect(response).toEqual(deleteResponse);
   });
 
-  test("ConnectClient should connect clients to a channel and return success", async () => {
+  test("Connect client should connect clients to a channel", async () => {
     const connectClientResponse = {
       status: 200,
       message: "Clients connected successfully",
@@ -139,7 +138,7 @@ describe("Channels", () => {
     expect(response).toEqual(connectClientResponse);
   });
 
-  test("DisconnectClient should disconnect clients from a channel and return success", async () => {
+  test("Disconnect client should disconnect clients from a channel", async () => {
     const DisconnectClientResponse = {
       status: 200,
       message: "Clients disconnected successfully",
@@ -156,7 +155,7 @@ describe("Channels", () => {
     expect(response).toEqual(DisconnectClientResponse);
   });
 
-  test("Connect should connect clients to channels and return success", async () => {
+  test("Connect should connect clients to channels", async () => {
     const connectResponse = {
       status: 200,
       message: "Clients connected successfully",
@@ -173,7 +172,7 @@ describe("Channels", () => {
     expect(response).toEqual(connectResponse);
   });
 
-  test("Disconnect should disconnect clients to channels and return success", async () => {
+  test("Disconnect should disconnect clients from channels", async () => {
     const DisconnectResponse = {
       status: 200,
       message: "Clients disconnected successfully",
@@ -190,14 +189,14 @@ describe("Channels", () => {
     expect(response).toEqual(DisconnectResponse);
   });
 
-  test("ChannelParents should set a group parent to a channel and return success", async () => {
+  test("Set channel parent group should set a group parent to a channel", async () => {
     const ChannelParentsResponse = {
       status: 200,
-      message: "Channel Group Parent added successfully",
+      message: "Channel group parent added successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.ChannelParents(
+    const response = await sdk.channels.SetChannelParentGroup(
       domainId,
       channelId,
       groupId,
@@ -206,14 +205,14 @@ describe("Channels", () => {
     expect(response).toEqual(ChannelParentsResponse);
   });
 
-  test("DeleteChannelParents should delete a group parent from a channel and return success", async () => {
+  test("Delete channel parent group should delete a group parent from a channel", async () => {
     const ChannelParentsResponse = {
       status: 200,
-      message: "Channel Group Parent deleted successfully",
+      message: "Channel group parent deleted successfully",
     };
     fetchMock.mockResponseOnce(JSON.stringify(ChannelParentsResponse));
 
-    const response = await sdk.channels.DeleteChannelParents(
+    const response = await sdk.channels.DeleteChannelParentGroup(
       domainId,
       channelId,
       token,

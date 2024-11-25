@@ -4,7 +4,7 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
-  thingsUrl: `${defaultUrl}:9000`,
+  clientsUrl: `${defaultUrl}:9006`,
   channelsUrl: `${defaultUrl}:9005`,
   invitationsUrl: `${defaultUrl}:9020`,
   journalUrl: `${defaultUrl}:9021`,
@@ -15,8 +15,8 @@ const mySdk = new SDK({
   bootstrapUrl: `${defaultUrl}:9013`,
 });
 
-// Things service Health
-mySdk.Health.Health("things")
+// Clients service Health
+mySdk.Health.Health("clients")
   .then((response: any) => {
     console.log("response: ", response);
   })

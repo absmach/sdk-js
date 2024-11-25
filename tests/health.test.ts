@@ -6,7 +6,7 @@ import type { HealthInfo } from "../src/sdk";
 enableFetchMocks();
 
 const usersUrl = "http://localhost";
-const thingsUrl = "http://localhost";
+const clientsUrl = "http://localhost";
 const channelsUrl = "http://localhost";
 const certsUrl = "http://localhost";
 const readersUrl = "http://localhost";
@@ -17,7 +17,7 @@ const journalUrl = "http://localhost";
 
 const sdk = new SDK({
   usersUrl,
-  thingsUrl,
+  clientsUrl,
   channelsUrl,
   certsUrl,
   readersUrl,
@@ -46,11 +46,11 @@ describe("Health", () => {
     instance_id: "aafd1f94-5d6b-4aa5-9b02-22f4e9d21423",
   };
 
-  const thingsServiceHealthInfo: HealthInfo = {
+  const clientsServiceHealthInfo: HealthInfo = {
     status: "pass",
     version: "v0.14.0",
     commit: "c3e7159cb762396f064d43d55c30d90011c9357f",
-    description: "things service",
+    description: "clients service",
     build_time: "2024-07-25_14:20:35",
     instance_id: "aafd1f94-5d6b-4aa5-9b02-22f4e9d21423",
   };
@@ -120,11 +120,18 @@ describe("Health", () => {
     expect(response).toEqual(usersServiceHealthInfo);
   });
 
-  test("fetch things service health information", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(thingsServiceHealthInfo));
+  test("fetch clients service health information", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(clientsServiceHealthInfo));
 
-    const response = await sdk.Health.Health("users");
-    expect(response).toEqual(thingsServiceHealthInfo);
+    const response = await sdk.Health.Health("clients");
+    expect(response).toEqual(clientsServiceHealthInfo);
+  });
+
+  test("fetch channels service health information", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(channelsServiceHealthInfo));
+
+    const response = await sdk.Health.Health("channels");
+    expect(response).toEqual(channelsServiceHealthInfo);
   });
 
   test("fetch channels service health information", async () => {

@@ -7,8 +7,8 @@ import type {
   Login,
   Group,
   GroupsPage,
-  Thing,
-  ThingsPage,
+  Client,
+  ClientsPage,
   Channel,
   Token,
 } from "../src/sdk";
@@ -80,14 +80,14 @@ describe("Users", () => {
     limit: 10,
   };
 
-  const thing: Thing = {
+  const client: Client = {
     id: "886b4266-77d1-4258-abae-2931fb4f16de",
     name: "fkatwigs",
     domain_id: "886b4266-77d1-4258-abae-2931fb4f16de",
   };
 
-  const ThingsPage: ThingsPage = {
-    things: [thing],
+  const clientsPage: ClientsPage = {
+    clients: [client],
     total: 1,
     offset: 0,
     limit: 10,
@@ -238,16 +238,16 @@ describe("Users", () => {
     expect(response).toEqual(GroupsPage);
   });
 
-  test("list user things should return a list of things associated with a user and return success", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(ThingsPage));
+  test("list user clients should return a list of clients associated with a user and return success", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
 
-    const response = await sdk.users.ListUserThings(
+    const response = await sdk.users.ListUserClients(
       domainId,
       userId,
       queryParams,
       token,
     );
-    expect(response).toEqual(ThingsPage);
+    expect(response).toEqual(clientsPage);
   });
 
   test("list user channels should return a list of channels associated with a user and return success", async () => {

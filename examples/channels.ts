@@ -1,4 +1,3 @@
-// Import the SDK class from the mainflux-sdk package
 import SDK from "../src/sdk";
 
 const defaultUrl = "http://localhost";
@@ -6,8 +5,6 @@ const defaultUrl = "http://localhost";
 const mySdk = new SDK({
   channelsUrl: `${defaultUrl}:9005`,
 });
-
-// Channels.ts examples.
 
 const token = "<token>";
 const domainId = "<domainId>";
@@ -152,7 +149,7 @@ mySdk.channels
     console.error(error);
   });
 
-mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
+mySdk.channels.SetChannelParentGroup(domainId, "<channelId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -160,7 +157,7 @@ mySdk.channels.ChannelParents(domainId, "<channelId>", "<groupParentId>", token)
     console.error(error);
   });
 
-mySdk.channels.DeleteChannelParents(domainId, "<channelId>", token)
+mySdk.channels.DeleteChannelParentGroup(domainId, "<channelId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })

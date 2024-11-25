@@ -3,7 +3,7 @@ export interface UserBasicInfo {
   first_name?: string;
   last_name?: string;
   email?: string;
-  credentials?: Credentials;
+  credentials?: UserCredentials;
   status?: Status;
   profile_picture?: string;
 }
@@ -25,35 +25,37 @@ export interface UsersPage {
   limit: number;
 }
 
-export interface Credentials {
+export interface UserCredentials {
   username?: string;
   secret?: string;
 }
 
-export interface ThingCredentials {
+export interface ClientCredentials {
   identity?: string;
   secret?: string;
 }
 
-export interface ThingBasicInfo {
+export interface ClientBasicInfo {
   id?: string;
   name?: string;
-  credentials?: ThingCredentials;
+  credentials?: ClientCredentials;
   status?: Status;
 }
 
-export interface Thing extends ThingBasicInfo {
+export interface Client extends ClientBasicInfo {
   tags?: string[];
   domain_id?: string | DomainBasicInfo;
+  parent_group_id?: string;
   metadata?: Record<string, any>;
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
   permissions?: string[];
+  identity?: string;
 }
 
-export interface ThingsPage {
-  things: Thing[];
+export interface ClientsPage {
+  clients: Client[];
   total: number;
   offset: number;
   limit: number;
@@ -91,16 +93,13 @@ export interface ChannelBasicInfo {
   id?: string;
   name?: string;
   status?: Status;
-  description?: string;
 }
 
 export interface Channel extends ChannelBasicInfo {
   domain_id?: string | DomainBasicInfo;
   metadata?: Record<string, any>;
   tags?: string[];
-  ParentGroup?: string;
-  level?: number;
-  path?: string;
+  parent_group_id?: string;
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string;
@@ -245,7 +244,7 @@ export interface MessagesPage {
 
 export interface MessagesPageMetadata extends PageMetadata {
   subtopic?: string;
-  publisher?: string | ThingBasicInfo;
+  publisher?: string | ClientBasicInfo;
   protocol?: string;
   comparator?: string;
   vb?: boolean;
@@ -259,7 +258,7 @@ export interface MessagesPageMetadata extends PageMetadata {
 export interface SenMLMessage {
   channel?: string | ChannelBasicInfo;
   subtopic?: string;
-  publisher?: string | ThingBasicInfo;
+  publisher?: string | ClientBasicInfo;
   protocol?: string;
   name?: string;
   unit?: string;
@@ -273,7 +272,7 @@ export interface SenMLMessage {
 }
 
 export interface Cert {
-  thing_id?: string;
+  client_id?: string;
   cert_serial?: string;
   client_key?: string;
   client_cert?: string;
@@ -291,8 +290,8 @@ export interface BootstrapConfig {
   channels?: string[];
   external_id?: string;
   external_key?: string;
-  thing_id?: string;
-  thing_key?: string;
+  client_id?: string;
+  client_secret?: string;
   name?: string;
   client_cert?: string;
   client_key?: string;

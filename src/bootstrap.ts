@@ -128,7 +128,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.whitelistEndpoint}/${bootstrap.thing_id}`,
+          `${domainId}/${this.whitelistEndpoint}/${bootstrap.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -178,7 +178,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.configsEndpoint}/${bootstrap.thing_id}`,
+          `${domainId}/${this.configsEndpoint}/${bootstrap.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -265,7 +265,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.bootstrapCertsEndpoint}/${configs.thing_id}`,
+          `${domainId}/${this.bootstrapCertsEndpoint}/${configs.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
