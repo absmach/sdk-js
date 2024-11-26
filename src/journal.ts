@@ -1,51 +1,93 @@
 import type { JournalsPage, JournalsPageMetadata } from "./defs";
 import Errors from "./errors";
 
+/**
+* @class Journal
+* Handles interactions with Journal API.
+*/
 export default class Journal {
-  // Journals API client
-  /**
-   * @class Journals -
-   * Journals API is used for viewing journal logs.
-   * @param {String} journalsUrl - URL to the Journals service.
-   * @returns {Object} - Journals object.
-   */
   private readonly journalsUrl: URL;
 
   private readonly journalsEndpoint: string;
 
   private readonly contentType: string;
 
+  /**
+   * @constructor
+   * Initializes the Journal API client.
+   * @param {object} config - Configuration object.
+   * @param {string} config.journalsUrl - Base URL for the journal API.
+   */
   public constructor(journalsUrl: string) {
     this.journalsUrl = new URL(journalsUrl);
     this.contentType = "application/json";
     this.journalsEndpoint = "journal";
   }
 
-  public async Journal(
+  /**
+  * @method EntityJournals - Retrieve entity journals by entity id matching the provided query parameters.
+  * @param {string} entityType - Entity type i.e client, channel or group.
+  * @param {string} entityId - The  unique ID of the entity.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
+  * @throws {Error} - If the journals cannot be fetched.
+  */
+  public async EntityJournals(
     entityType: string,
     entityId: string,
+    domainId: string,
     queryParams: JournalsPageMetadata,
     token: string
   ): Promise<JournalsPage> {
-    // Gets all journals with pagination
-    /**
-     * Provides journals about an entity. Journals are retrieved based on the entity_type and
-     * the entity_id.
-     * Authorization is using the user_token
-     *
-     * @method Journal - Get entity journals with pagination.
-     * @param {string} entityType - Entity type e.g thing.
-     * @param {string} entityId - Id of the entity.
-     * @param {object} queryParams - Query parameters.
-     * @param {string} token - Access token.
-     * @returns {object} - JournalsPage object.
-     * @example
-     * const queryParams = {
-     * "offset": 0,
-     * "limit": 10
-     * }
-     *
-     */
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${
+            this.journalsEndpoint
+          }/${entityType}/${entityId}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.journalsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const journalsPage: JournalsPage = await response.json();
+      return journalsPage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+  * @method UserJournals - Retrieve user journals by user id matching the provided query parameters.
+  * @param {string} userId - The  unique ID of the user.
+  * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
+  * @throws {Error} - If the journals cannot be fetched.
+  */
+  public async UserJournals(
+    userId: string,
+    queryParams: JournalsPageMetadata,
+    token: string
+  ): Promise<JournalsPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
@@ -62,7 +104,7 @@ export default class Journal {
         new URL(
           `${
             this.journalsEndpoint
-          }/${entityType}/${entityId}?${new URLSearchParams(
+          }/user/${userId}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.journalsUrl
