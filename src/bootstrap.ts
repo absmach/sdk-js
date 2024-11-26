@@ -47,7 +47,7 @@ export default class Bootstrap {
   }
 
   /**
-  * @method Create - Creates a new bootstrap configuration.
+  * @method AddBootstrap - Creates a new bootstrap configuration.
   * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
   * @param {string} domainId - The  unique ID of the domain.
   * @param {string} token - Authorization token.
@@ -301,7 +301,7 @@ export default class Bootstrap {
   * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
   * @param {string} externalId - The external ID of the configuration to be retrieved.
   * @param {string} externalKey - The encrypted external key of the configuration to be retrieved.
-  * @return {Promise<BootstrapConfig>} bootstrapConfig -  Returns the requested Bootstrap Configuration.
+  * @return {Promise<BootstrapConfig>} bootstrapConfig -  Returns the requested bootstrap configuration.
   * @throws {Error} - If the bootstrap configuration cannot be retrieved.
   */
   public async Bootstrap(
@@ -380,7 +380,7 @@ export default class Bootstrap {
   }
 
   /**
-  * @method UpdateConnection - Updates the connection of a bootstrap configuration.
+  * @method UpdateBootstrapConnection - Updates the connection of a bootstrap configuration.
   * @param {string} clientId - The unique identifier of the client.
   * @param {string[]} channels - An array of unique channels ids to be updated.
   * @param {string} domainId - The  unique ID of the domain.
@@ -424,6 +424,14 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method SecureBootstrap - Secures a bootstrap configuration by encrypting it.
+  * @param {string} externalId - The unique external ID of the bootstrap configuration.
+  * @param {string[]} externalKey - The unique external key of the bootstrap configuration.
+  * @param {string} cryptoKey -The unique crypto key to be used to secure the bootstrap configuration.
+  * @returns {Promise<BootstrapConfig>}  - bootstrapConfig -  Returns the secured bootstrap configuration.
+  * @throws {Error} - If the bootstrap configuration cannot be scured.
+  */
   public async SecureBootstrap(
     externalId: string,
     externalKey: string,
