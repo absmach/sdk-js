@@ -29,7 +29,7 @@ describe("Bootstraps", () => {
     "bb7edb32-2eac-4aad-aebe-ed96fe073879",
     "bb7edb32-2eac-4aad-aebe-ed96fe073879",
   ];
-  const thingId = "77cbb344-7c41-47f3-a53a-a3d435b67207";
+  const clientId = "77cbb344-7c41-47f3-a53a-a3d435b67207";
   const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const externalKey = "key";
@@ -39,7 +39,7 @@ describe("Bootstraps", () => {
     fetchMock.resetMocks();
   });
 
-  test("AddBootstrap should create a Bootstrap Configuration and return success", async () => {
+  test("Add bootstrap should create a bootstrap configuration", async () => {
     const createResponse = {
       status: 200,
       message: "Bootstrap configuration created",
@@ -54,7 +54,7 @@ describe("Bootstraps", () => {
     expect(response).toEqual(createResponse);
   });
 
-  test("Whitelist should allow a user to update a Bootstrap Configuration and return success", async () => {
+  test("Whitelist should whitelist a bootstrap configuration", async () => {
     const whitelistResponse = {
       status: 200,
       message: "Bootstrap configuration state updated successfully",
@@ -65,7 +65,7 @@ describe("Bootstraps", () => {
     expect(response).toEqual(whitelistResponse);
   });
 
-  test("UpdateBootstrap should allow a user to update a Bootstrap Configuration and return success", async () => {
+  test("Update bootstrap should update a bootstrap configuration", async () => {
     const updateResponse = {
       status: 200,
       message: "Bootstrap configuration updated successfully",
@@ -80,18 +80,18 @@ describe("Bootstraps", () => {
     expect(response).toEqual(updateResponse);
   });
 
-  test("ViewBootstrap should allow a user to view a Bootstrap Configuration and return success", async () => {
+  test("View bootstrap should view a bootstrap configuration", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(bootstrap));
 
     const response = await sdk.bootstrap.ViewBootstrap(
-      thingId,
+      clientId,
       domainId,
       token,
     );
     expect(response).toEqual(bootstrap);
   });
 
-  test("UpdateBootstrapCerts should update certs of a bootstrap configuration and return success", async () => {
+  test("Update bootstrap certs should update certs of a bootstrap configuration", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(bootstrap));
 
     const response = await sdk.bootstrap.UpdateBootstrapCerts(
@@ -102,29 +102,29 @@ describe("Bootstraps", () => {
     expect(response).toEqual(bootstrap);
   });
 
-  test("RemoveBootstrap should allow a user to view a Bootstrap Configuration and return success", async () => {
-    const removeResponse = {
+  test("Delete bootstrap should delete a bootstrap configuration", async () => {
+    const deleteResponse = {
       status: 200,
       message: "Bootstrap configuration deleted",
     };
-    fetchMock.mockResponseOnce(JSON.stringify(removeResponse));
+    fetchMock.mockResponseOnce(JSON.stringify(deleteResponse));
 
-    const response = await sdk.bootstrap.RemoveBootstrap(
-      thingId,
+    const response = await sdk.bootstrap.DeleteBootstrap(
+      clientId,
       domainId,
       token,
     );
-    expect(response).toEqual(removeResponse);
+    expect(response).toEqual(deleteResponse);
   });
 
-  test("Bootstrap should retrive a Bootstrap Configuration and return success", async () => {
+  test("Bootstrap should retrieve a bootstrap configuration", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(bootstrap));
 
     const response = await sdk.bootstrap.Bootstrap(externalId, externalKey);
     expect(response).toEqual(bootstrap);
   });
 
-  test("Bootstraps should retrive all bootstraps and return success", async () => {
+  test("Bootstraps should retrieve all bootstraps", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(bootstrapPage));
 
     const response = await sdk.bootstrap.Bootstraps(
@@ -135,7 +135,7 @@ describe("Bootstraps", () => {
     expect(response).toEqual(bootstrapPage);
   });
 
-  test("UpdateBootstrapConnection should retrive all bootstraps and return success", async () => {
+  test("Update bootstrap connection update bootstrap connection", async () => {
     const connResponse = {
       status: 200,
       message: "Bootstrap connection successful",
@@ -143,7 +143,7 @@ describe("Bootstraps", () => {
     fetchMock.mockResponseOnce(JSON.stringify(connResponse));
 
     const response = await sdk.bootstrap.UpdateBootstrapConnection(
-      thingId,
+      clientId,
       domainId,
       channels,
       token,

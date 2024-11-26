@@ -8,19 +8,11 @@ import {
   type Response,
 } from "./defs";
 
+/**
+* @class Bootstrap
+* Handles interactions with bootstrap API including creating, updating and managing bootstrap configurations.
+*/
 export default class Bootstrap {
-  // Bootstraps API Client
-  /**
-   * @class Bootstrap
-   * Bootstrap is used to create, update, view and remove bootstrap configurations.
-   * @param {string} bootstraps_url - The url of the bootstraps service.
-   * @param {string} content_type - The content type of the request.
-   * @param {string} bootstrapEndpoint - The endpoint of the bootstraps service which is
-   * configs.
-   * @returns {Bootstrap} - Returns a Bootstrap object.
-   *
-   */
-
   private readonly bootstrapUrl: URL;
 
   private readonly contentType: string;
@@ -37,43 +29,43 @@ export default class Bootstrap {
 
   private readonly secureEndpoint: string;
 
+  /**
+   * @constructor
+   * Initializes the Bootstrap API client.
+   * @param {object} config - Configuration object.
+   * @param {string} config.bootstrapUrl - Base URL for the bootstrap API.
+   */
   public constructor(bootstrapUrl: string) {
     this.bootstrapUrl = new URL(bootstrapUrl);
     this.contentType = "application/json";
-    this.bootstrapEndpoint = "things/bootstrap";
-    this.configsEndpoint = "things/configs";
-    this.whitelistEndpoint = "things/state";
-    this.bootstrapCertsEndpoint = "things/configs/certs";
-    this.bootstrapConnEndpoint = "things/configs/connections";
+    this.bootstrapEndpoint = "clients/bootstrap";
+    this.configsEndpoint = "clients/configs";
+    this.whitelistEndpoint = "clients/state";
+    this.bootstrapCertsEndpoint = "clients/configs/certs";
+    this.bootstrapConnEndpoint = "clients/configs/connections";
     this.secureEndpoint = "secure";
   }
 
+  /**
+  * @method AddBootstrap - Creates a new bootstrap configuration.
+  * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is created.
+  * @throws {Error} - If the bootstrap configuration cannot be created.
+  */
   public async AddBootstrap(
-    bootstrap: BootstrapConfig,
+    bootstrapConfig: BootstrapConfig,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Create a bootstrap configuration
-    /**
-     * @method Create - Create a new bootstrap configuration.
-     * @param {object} config - The configuration object.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication Token.
-     * @example
-     * const config = {
-     *      "external_id": "345",
-     *      "external_key": "012",
-     *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
-     *   }
-     */
-
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(bootstrap),
+      body: JSON.stringify(bootstrapConfig),
     };
     try {
       const response = await fetch(
@@ -97,38 +89,31 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method Whitelist - Updates a bootstrap configuration and changes the status of the config to whitelisted.
+  * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is whitelisted.
+  * @throws {Error} - If the bootstrap configuration cannot be whitelisted.
+  */
   public async Whitelist(
-    bootstrap: BootstrapConfig,
+    bootstrapConfig: BootstrapConfig,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Update a bootstrap configuration
-    /**
-     * @method Whitelist - Allows a logged in user to update a bootstrap configuration.
-     * This changes the status of the config to whitelisted.
-     * @param {object} config - The configuration object.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication Token.
-     * @example
-     * const config = {
-     *      "external_id": "345",
-     *      "external_key": "012",
-     *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
-     *      "name": "thing_name"
-     * }
-     */
     const options: RequestInit = {
       method: "PUT",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ state: bootstrap.state }),
+      body: JSON.stringify({ state: bootstrapConfig.state }),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.whitelistEndpoint}/${bootstrap.client_id}`,
+          `${domainId}/${this.whitelistEndpoint}/${bootstrapConfig.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -147,38 +132,31 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method UpdateBootstrap - Updates an existing bootstrap configuration's details.
+  * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is updated.
+  * @throws {Error} - If the bootstrap configuration cannot be updated.
+  */
   public async UpdateBootstrap(
-    bootstrap: BootstrapConfig,
+    bootstrapConfig: BootstrapConfig,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Update a bootstrap configuration
-    /**
-     * @method Update - Allows a logged in user to update a bootstrap configuration.
-     * This can change the name of the config and metadata.
-     * @param {object} config - The configuration object.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The token to be used for authentication.
-     * @example
-     * const config = {
-     *      "external_id": "345",
-     *      "external_key": "012",
-     *      "thing_id": "3d49a42f-63fd-491b-9784-adf4b64ef347",
-     *      "name": "thing_name"
-     * }
-     */
     const options = {
       method: "PUT",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(bootstrap),
+      body: JSON.stringify(bootstrapConfig),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.configsEndpoint}/${bootstrap.client_id}`,
+          `${domainId}/${this.configsEndpoint}/${bootstrapConfig.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -197,20 +175,20 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method ViewBootstrap - Retrieves a bootstrap config by its ID.
+  * @param {string} clientId - The unique identifier of the client.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<BootstrapConfig>} bootstrapConfig - The requested bootstrap configuration object.
+  * @throws {Error} - If the bootstrap configuration cannot be fetched.
+  */
+
   public async ViewBootstrap(
-    thingId: string,
+    clientId: string,
     domainId: string,
     token: string
   ): Promise<BootstrapConfig> {
-    // View a bootstrap configuration
-    /**
-     * @method View - Allows a logged in user to view a bootstrap configuration.
-     * Once provided with the thingId and a valid token, it returns the configuration object.
-     * @param {string} thingId - The thingId of the configuration to be viewed.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication Token.
-     */
-
     const options = {
       method: "GET",
       headers: {
@@ -221,7 +199,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.configsEndpoint}/${thingId}`,
+          `${domainId}/${this.configsEndpoint}/${clientId}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -230,42 +208,38 @@ export default class Bootstrap {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const bootstrap: BootstrapConfig = await response.json();
-      return bootstrap;
+      const bootstrapConfig: BootstrapConfig = await response.json();
+      return bootstrapConfig;
     } catch (error) {
       throw error;
     }
   }
 
+  /**
+  * @method UpdateBootstrapCerts - Updates the details of a specific role in a domain.
+  * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<BootstrapConfig>} bootstrapConfig - The updated bootstrap configuration.
+  * @throws {Error} - If the certs cannot be updated.
+  */
   public async UpdateBootstrapCerts(
-    configs: BootstrapConfig,
+    bootstrapConfig: BootstrapConfig,
     domainId: string,
     token: string
   ): Promise<BootstrapConfig> {
-    // Update certs of a bootstrap configuration
-    /**
-     * @method UpdateCerts - Allows a logged in user to update the certs of a bootstrap configuration.
-     * Update is performed by replacing the current certificate data with values provided in a request payload.
-     * @param {string} configId - The config_id of the configuration to be updated. This can also mean the thing_id.
-     * @param {string} client_cert - The client certificate to be used.
-     * @param {string} client_key - The client key to be used.
-     * @param {string} ca - The certificate authority to be used.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication Token.
-     *
-     */
     const options: RequestInit = {
       method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(configs),
+      body: JSON.stringify(bootstrapConfig),
     };
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.bootstrapCertsEndpoint}/${configs.client_id}`,
+          `${domainId}/${this.bootstrapCertsEndpoint}/${bootstrapConfig.client_id}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -274,26 +248,26 @@ export default class Bootstrap {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const updatedBootstrap: BootstrapConfig = await response.json();
-      return updatedBootstrap;
+      const updatedBootstrapConfig: BootstrapConfig = await response.json();
+      return updatedBootstrapConfig;
     } catch (error) {
       throw error;
     }
   }
 
-  public async RemoveBootstrap(
-    thingId: string,
+  /**
+  * @method DeleteBootstrap - Deletes bootstrap configuration with specified id.
+  * @param {string} clientId - The  unique ID of the client.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is deleted.
+  * @throws {Error} - If the bootstrap configuration cannot be deleted.
+  */
+  public async DeleteBootstrap(
+    clientId: string,
     domainId: string,
     token: string
   ): Promise<Response> {
-    // Remove a bootstrap configuration
-    /**
-     * @method Remove - Allows a logged in user to delete a bootstrap configuration.
-     * @param {string} configId - The config ID of the configuration to be deleted.
-     * This can also mean the thing ID.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - Authentication Token.
-     */
     const options: RequestInit = {
       method: "DELETE",
       headers: {
@@ -304,7 +278,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.configsEndpoint}/${thingId}`,
+          `${domainId}/${this.configsEndpoint}/${clientId}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -323,22 +297,22 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
+  * @param {string} externalId - The external ID of the configuration to be retrieved.
+  * @param {string} externalKey - The encrypted external key of the configuration to be retrieved.
+  * @return {Promise<BootstrapConfig>} bootstrapConfig -  Returns the requested bootstrap configuration.
+  * @throws {Error} - If the bootstrap configuration cannot be retrieved.
+  */
   public async Bootstrap(
     externalId: string,
     externalKey: string
   ): Promise<BootstrapConfig> {
-    // Retrive a bootstrap configuration
-    /**
-     * @method Bootstrap - Retrieves a configuration with given external ID and encrypted external key.
-     * @param {string} external_id - The external ID of the configuration to be retrieved.
-     * @param {string} external_key - The encrypted external key of the configuration to be retrieved.
-     * @return {object} - Returns a Bootstrap Configuration.
-     */
     const options: RequestInit = {
       method: "GET",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Thing ${externalKey}`,
+        Authorization: `Client ${externalKey}`,
       },
     };
     try {
@@ -360,19 +334,19 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method Bootstraps -Retrieves all bootstrap configuration matching the provided query parameters.
+  * @param {PageMetadata} queryParams - Query parameters for the request.
+  * @param {string} domainId -The  unique ID of the domain.
+  * @param {String} token - Authorization token.
+  * @returns {Promise<BootstrapPage>} bootstrapPage - A page of bootstrap configurations.
+  * @throws {Error} - If the bootstrap configurations cannot be fetched.
+  */
   public async Bootstraps(
     queryParams: PageMetadata,
     domainId: string,
     token: string
   ): Promise<BootstrapPage> {
-    // Retrive all bootstraps with pagination
-    /**
-     * @method Bootstraps - Gets all bootstraps with pagination.
-     * @param {Object} queryParams - Query parameters.
-     * @param {string} domainId - The Domain ID.
-     * @param {String} token - Authentication token.
-     *  @returns {Object} - Bootstrap Page.
-     */
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
@@ -405,20 +379,21 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method UpdateBootstrapConnection - Updates the connection of a bootstrap configuration.
+  * @param {string} clientId - The unique identifier of the client.
+  * @param {string[]} channels - An array of unique channels ids to be updated.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration connection are updated.
+  * @throws {Error} - If the bootstrap configuration cannot be updated.
+  */
   public async UpdateBootstrapConnection(
-    thingId: string,
+    clientId: string,
     domainId: string,
     channels: string[],
     token: string
   ): Promise<Response> {
-    // Update a bootstrap connection
-    /**
-     * @method UpdateConnection - Allows a logged in user to update the connection of a bootstrap configuration.
-     * @param {string} thing_id - The thing_id of the configuration to be updated.
-     * @param {object} channels - The channels object to be used for the update.
-     * @param {string} domainId - The Domain ID.
-     * @param {string} token - The token to be used for authentication.
-     * */
     const options: RequestInit = {
       method: "PUT",
       headers: {
@@ -430,7 +405,7 @@ export default class Bootstrap {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.bootstrapConnEndpoint}/${thingId}`,
+          `${domainId}/${this.bootstrapConnEndpoint}/${clientId}`,
           this.bootstrapUrl
         ).toString(),
         options
@@ -449,6 +424,14 @@ export default class Bootstrap {
     }
   }
 
+  /**
+  * @method SecureBootstrap - Secures a bootstrap configuration by encrypting it.
+  * @param {string} externalId - The unique external ID of the bootstrap configuration.
+  * @param {string[]} externalKey - The unique external key of the bootstrap configuration.
+  * @param {string} cryptoKey -The unique crypto key to be used to secure the bootstrap configuration.
+  * @returns {Promise<BootstrapConfig>}  - bootstrapConfig -  Returns the secured bootstrap configuration.
+  * @throws {Error} - If the bootstrap configuration cannot be scured.
+  */
   public async SecureBootstrap(
     externalId: string,
     externalKey: string,
@@ -462,7 +445,7 @@ export default class Bootstrap {
       method: "GET",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Thing ${encryptedKey}`,
+        Authorization: `Client ${encryptedKey}`,
       },
     };
     try {

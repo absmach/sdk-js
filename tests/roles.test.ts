@@ -20,7 +20,7 @@ describe("Roles", () => {
     fetchMock.resetMocks();
   });
 
-  test("ListAvailableActions should return available actions", async () => {
+  test("List available actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
     fetchMock.mockResponseOnce(JSON.stringify(availableActions));
 
@@ -28,7 +28,7 @@ describe("Roles", () => {
     expect(response).toEqual(availableActions);
   });
 
-  test("CreateRole should create a new role and return it", async () => {
+  test("Create role should create a new role and return it", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(role));
 
     const response = await roles.CreateRole(
@@ -43,7 +43,7 @@ describe("Roles", () => {
     expect(response).toEqual(role);
   });
 
-  test("ListRoles should return a page of roles", async () => {
+  test("List roles should return a page of roles", async () => {
     const rolesPage = { roles: [role], total: 1, offset: 0, limit: 10 };
     fetchMock.mockResponseOnce(JSON.stringify(rolesPage));
 
@@ -57,7 +57,7 @@ describe("Roles", () => {
     expect(response).toEqual(rolesPage);
   });
 
-  test("ViewRole should return details of a specific role", async () => {
+  test("View role should return details of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(role));
 
     const response = await roles.ViewRole(
@@ -70,7 +70,7 @@ describe("Roles", () => {
     expect(response).toEqual(role);
   });
 
-  test("UpdateRole should update a role and return the updated role", async () => {
+  test("Update role should update a role and return the updated role", async () => {
     const updatedRole = { ...role, actions: [...actions, "execute"] };
     fetchMock.mockResponseOnce(JSON.stringify(updatedRole));
 
@@ -85,7 +85,7 @@ describe("Roles", () => {
     expect(response).toEqual(updatedRole);
   });
 
-  test("DeleteRole should delete a role and return success response", async () => {
+  test("Delete role should delete a role  response", async () => {
     const successResponse = {
       status: 200,
       message: "Role deleted successfully",
@@ -102,7 +102,7 @@ describe("Roles", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("AddRoleActions should add actions to a role and return updated actions", async () => {
+  test("Add role actions should add actions to a role and return updated actions", async () => {
     const updatedActions = [...actions, "execute"];
     fetchMock.mockResponseOnce(JSON.stringify(updatedActions));
 
@@ -117,7 +117,7 @@ describe("Roles", () => {
     expect(response).toEqual(updatedActions);
   });
 
-  test("ListRoleActions should return actions of a specific role", async () => {
+  test("List role actions should return actions of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(actions));
 
     const response = await roles.ListRoleActions(
@@ -130,7 +130,7 @@ describe("Roles", () => {
     expect(response).toEqual(actions);
   });
 
-  test("DeleteRoleActions should remove actions from a role and return success response", async () => {
+  test("Delete role actions should remove actions from a role  response", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -148,7 +148,7 @@ describe("Roles", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllRoleActions should remove all actions from a role and return success response", async () => {
+  test("Delete all role actions should remove all actions from a role  response", async () => {
     const successResponse = {
       status: 200,
       message: "Role actions deleted successfully",
@@ -165,7 +165,7 @@ describe("Roles", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("AddRoleMembers should add members to a role and return updated members", async () => {
+  test("Add role members should add members to a role and return updated members", async () => {
     const updatedMembers = [...members, "user3"];
     fetchMock.mockResponseOnce(JSON.stringify(updatedMembers));
 
@@ -180,7 +180,7 @@ describe("Roles", () => {
     expect(response).toEqual(updatedMembers);
   });
 
-  test("ListRoleMembers should return members of a specific role", async () => {
+  test("List role members should return members of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(members));
 
     const response = await roles.ListRoleMembers(
@@ -194,7 +194,7 @@ describe("Roles", () => {
     expect(response).toEqual(members);
   });
 
-  test("DeleteRoleMembers should remove members from a role and return success response", async () => {
+  test("Delete role members should remove members from a role  response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",
@@ -212,7 +212,7 @@ describe("Roles", () => {
     expect(response).toEqual(successResponse);
   });
 
-  test("DeleteAllRoleMembers should remove all members from a role and return success response", async () => {
+  test("Delete all role members should remove all members from a role  response", async () => {
     const successResponse = {
       status: 200,
       message: "Role members deleted successfully",

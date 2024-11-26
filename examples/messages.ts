@@ -10,12 +10,12 @@ const mySdk = new SDK({
 const token = "<token>";
 
 mySdk.messages
-  .Send("<channelId>", "<message>", "<thingKey>")
+  .Send("<channelId>", "<message>", "<clientKey>")
   .then((response: any) => {
     console.log("response: ", response);
   })
-  .catch((error: unknown) => {
-    console.log(error);
+  .catch((error) => {
+    console.error(error);
   });
 
 mySdk.messages
@@ -23,6 +23,6 @@ mySdk.messages
   .then((response: any) => {
     console.log("response: ", response);
   })
-  .catch((error: unknown) => {
-    console.log(error);
+  .catch((error) => {
+    console.error(error);
   });

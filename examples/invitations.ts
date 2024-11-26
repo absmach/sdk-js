@@ -23,7 +23,7 @@ mySdk.invitations.SendInvitation(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.invitations.Invitation(
@@ -35,7 +35,7 @@ mySdk.invitations.Invitation(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.invitations.Invitations(
@@ -49,7 +49,7 @@ mySdk.invitations.Invitations(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.invitations.AcceptInvitation(
@@ -60,7 +60,7 @@ mySdk.invitations.AcceptInvitation(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.invitations.RejectInvitation(
@@ -71,7 +71,7 @@ mySdk.invitations.RejectInvitation(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 mySdk.invitations.DeleteInvitation(
@@ -83,5 +83,5 @@ mySdk.invitations.DeleteInvitation(
     console.log("response: ", response);
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });

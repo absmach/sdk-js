@@ -32,7 +32,7 @@ export type {
   Domain,
   DomainsPage,
   Cert,
-  CertSerials,
+  CertsPage,
   Invitation,
   InvitationsPage,
   Relation,
