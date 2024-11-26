@@ -13,7 +13,7 @@ describe("Journal", () => {
     occurred_at: "2024-07-03T11:55:31.372177Z",
   };
 
-  const journalsPage: JournalsPage = {
+  const userJournalsPage: JournalsPage = {
     total: 1,
     offset: 0,
     limit: 10,
@@ -35,8 +35,8 @@ describe("Journal", () => {
     const entities = [
       {
         entityType: "client",
-        entityId: "clientId",
-        domainId: "domainId1",
+        entityId: "97cbb344-7c41-47f3-a53a-a3d435b67207",
+        domainId: "77cbb344-7c41-47f3-a53a-a3d435b67207",
         expectedResponse: {
           total: 1,
           offset: 0,
@@ -51,8 +51,8 @@ describe("Journal", () => {
       },
       {
         entityType: "channel",
-        entityId: "channelId",
-        domainId: "domainId2",
+        entityId: "78cbb344-7c41-47f3-a53a-a3d435br7208",
+        domainId: "77cbb344-7c41-47f3-a53a-a3d435b67207",
         expectedResponse: {
           total: 1,
           offset: 0,
@@ -67,8 +67,8 @@ describe("Journal", () => {
       },
       {
         entityType: "group",
-        entityId: "groupId",
-        domainId: "domainId3",
+        entityId: "10cbb344-7c41-47f3-a53a-a3d435b97207",
+        domainId: "77cbb344-7c41-47f3-a53a-a3d435b67207",
         expectedResponse: {
           total: 1,
           offset: 0,
@@ -100,13 +100,13 @@ describe("Journal", () => {
   });
 
   test("User journals should return a list of user journals", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(journalsPage));
+    fetchMock.mockResponseOnce(JSON.stringify(userJournalsPage));
 
     const response = await sdk.Journal.UserJournals(
       userId,
       queryParams,
       token,
     );
-    expect(response).toEqual(journalsPage);
+    expect(response).toEqual(userJournalsPage);
   });
 });
