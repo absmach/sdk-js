@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.7
+
+### Patch Changes
+
+- 7b76ecf: update journal service to include domain id in entity journals and add a new endpoint for user journals
+
 ## 0.9.6
 
 ### Patch Changes
