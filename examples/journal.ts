@@ -9,10 +9,22 @@ const mySdk = new SDK({
 const token = "<token>";
 const domainId = "<domainId>";
 
-mySdk.Journal.Journal(
+mySdk.Journal.EntityJournals(
   "<entityType>",
   "<entityId>",
   domainId,
+  { offset: 0, limit: 10 },
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.Journal.UserJournals(
+  "<userId>",
   { offset: 0, limit: 10 },
   token,
 )

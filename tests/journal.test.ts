@@ -9,7 +9,7 @@ const sdk = new SDK({ journalUrl });
 
 describe("Journal", () => {
   const journal: Journal = {
-    operation: "client.view",
+    operation: "entity.view",
     occurred_at: "2024-07-03T11:55:31.372177Z",
   };
 
@@ -22,6 +22,7 @@ describe("Journal", () => {
 
   const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
+  const userId = "895b0543-50ab-46da-9f23-450cfdb2c12f";
   const entityType = "client";
   const entityId = "134135";
 
@@ -33,13 +34,24 @@ describe("Journal", () => {
     fetchMock.resetMocks();
   });
 
-  test("Journal should return a list of journals", async () => {
+  test("Entity journals should return a list of entity journals", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(journalsPage));
 
-    const response = await sdk.Journal.Journal(
+    const response = await sdk.Journal.EntityJournals(
       entityType,
       entityId,
       domainId,
+      queryParams,
+      token,
+    );
+    expect(response).toEqual(journalsPage);
+  });
+
+  test("User journals should return a list of user journals", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(journalsPage));
+
+    const response = await sdk.Journal.UserJournals(
+      userId,
       queryParams,
       token,
     );

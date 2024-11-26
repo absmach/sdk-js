@@ -34,7 +34,7 @@ export default class Journal {
   * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
   * @throws {Error} - If the journals cannot be fetched.
   */
-  public async Journal(
+  public async EntityJournals(
     entityType: string,
     entityId: string,
     domainId: string,
@@ -58,6 +58,53 @@ export default class Journal {
           `${domainId}/${
             this.journalsEndpoint
           }/${entityType}/${entityId}?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.journalsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const journalsPage: JournalsPage = await response.json();
+      return journalsPage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+  * @method UserJournals - Retrieve user journals by user id matching the provided query parameters.
+  * @param {string} userId - The  unique ID of the user.
+  * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
+  * @param {string} token - Authorization token.
+  * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
+  * @throws {Error} - If the journals cannot be fetched.
+  */
+  public async UserJournals(
+    userId: string,
+    queryParams: JournalsPageMetadata,
+    token: string
+  ): Promise<JournalsPage> {
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${
+            this.journalsEndpoint
+          }/user/${userId}?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.journalsUrl
