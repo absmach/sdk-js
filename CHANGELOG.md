@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.8
+
+### Patch Changes
+
+- 7c6dcd1: rename things to clients
+
 ## 0.9.7
 
 ### Patch Changes
