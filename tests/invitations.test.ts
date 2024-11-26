@@ -37,7 +37,7 @@ describe("Invitations", () => {
     fetchMock.resetMocks();
   });
 
-  test("send invitation should send an invitation and return success", async () => {
+  test("Send invitation should send an invitation", async () => {
     const SendInvitationResponse = {
       status: 200,
       message: "Invitation sent successfully",
@@ -48,21 +48,21 @@ describe("Invitations", () => {
     expect(response).toEqual(SendInvitationResponse);
   });
 
-  test("invitation should return an invitation and return success", async () => {
+  test("Invitation should return an invitation", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitation));
 
     const response = await sdk.invitations.Invitation(userId, domainId, token);
     expect(response).toEqual(invitation);
   });
 
-  test("invitations should return a list of invitations and return success", async () => {
+  test("Invitations should return a list of invitations", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitationsPage));
 
     const response = await sdk.invitations.Invitations(queryParams, token);
     expect(response).toEqual(invitationsPage);
   });
 
-  test("accept invitation should accept an invitation and return success", async () => {
+  test("Accept invitation should accept an invitation", async () => {
     const AcceptInvitationResponse = {
       status: 200,
       message: "Invitation accepted successfully",
@@ -73,7 +73,7 @@ describe("Invitations", () => {
     expect(response).toEqual(AcceptInvitationResponse);
   });
 
-  test("reject invitation should reject an invitation and return success", async () => {
+  test("Reject invitation should reject an invitation", async () => {
     const RejectInvitationResponse = {
       status: 200,
       message: "Invitation rejected successfully",
@@ -84,7 +84,7 @@ describe("Invitations", () => {
     expect(response).toEqual(RejectInvitationResponse);
   });
 
-  test("delete invitation should delete an invitation and return success", async () => {
+  test("Delete invitation should delete an invitation", async () => {
     const DeleteInvitationResponse = {
       status: 200,
       message: "Invitation deleted successfully",

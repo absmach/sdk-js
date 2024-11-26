@@ -117,63 +117,63 @@ describe("Users", () => {
     fetchMock.resetMocks();
   });
 
-  test("create should create a user and return success", async () => {
+  test("Create should create a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.Create(user);
     expect(response).toEqual(user);
   });
 
-  test("create token should create a token for a user and return success", async () => {
+  test("Create token should create a token for a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(tokenObject));
 
     const response = await sdk.users.CreateToken(login);
     expect(response).toEqual(tokenObject);
   });
 
-  test("refresh token should refresh a user's token and return success", async () => {
+  test("Refresh token should refresh a user's token", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(tokenObject));
 
     const response = await sdk.users.RefreshToken(refreshToken);
     expect(response).toEqual(tokenObject);
   });
 
-  test("users should get a list of users and return success", async () => {
+  test("Users should get a list of users", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage));
 
     const response = await sdk.users.Users(queryParams, token);
     expect(response).toEqual(UsersPage);
   });
 
-  test("update should update a user metadata and return success", async () => {
+  test("Update should update a user metadata", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.Update(user, token);
     expect(response).toEqual(user);
   });
 
-  test("update user email should update a user email address and return success", async () => {
+  test("Update user email should update a user email address", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateEmail(user, token);
     expect(response).toEqual(user);
   });
 
-  test("update username should update a username and return success", async () => {
+  test("Update username should update a username", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateUsername(user, token);
     expect(response).toEqual(user);
   });
 
-  test("update user profile picture should update a user profile picture URL and return success", async () => {
+  test("Update user profile picture should update a user profile picture URL", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateProfilePicture(user, token);
     expect(response).toEqual(user);
   });
 
-  test("update user password should update a user password and return success", async () => {
+  test("Update user password should update a user password", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateUserPassword(
@@ -184,49 +184,49 @@ describe("Users", () => {
     expect(response).toEqual(user);
   });
 
-  test("update user tags should update a user tags and return success", async () => {
+  test("Update user tags should update a user tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateUserTags(user, token);
     expect(response).toEqual(user);
   });
 
-  test("update user role should update a user role and return success", async () => {
+  test("Update user role should update a user role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UpdateUserRole(user, token);
     expect(response).toEqual(user);
   });
 
-  test("get user should get a user and return success", async () => {
+  test("User should retrieve a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.User(userId, token);
     expect(response).toEqual(user);
   });
 
-  test("user profile should return a user profile and return success", async () => {
+  test("User profile should return a user profile", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.UserProfile(token);
     expect(response).toEqual(user);
   });
 
-  test("disable user should disable a user and return success", async () => {
+  test("Disable user should disable a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.Disable(user, token);
     expect(response).toEqual(user);
   });
 
-  test("enable user should enable a user and return success", async () => {
+  test("Enable user should enable a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
     const response = await sdk.users.Enable(user, token);
     expect(response).toEqual(user);
   });
 
-  test("list user groups should return a list of groups associated with a user and return success", async () => {
+  test("List user groups should return a list of groups associated with a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(GroupsPage));
 
     const response = await sdk.users.ListUserGroups(
@@ -238,7 +238,7 @@ describe("Users", () => {
     expect(response).toEqual(GroupsPage);
   });
 
-  test("list user clients should return a list of clients associated with a user and return success", async () => {
+  test("List user clients should return a list of clients associated with a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
 
     const response = await sdk.users.ListUserClients(
@@ -250,7 +250,7 @@ describe("Users", () => {
     expect(response).toEqual(clientsPage);
   });
 
-  test("list user channels should return a list of channels associated with a user and return success", async () => {
+  test("List user channels should return a list of channels associated with a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(channelsPage));
 
     const response = await sdk.users.ListUserChannels(
@@ -262,7 +262,7 @@ describe("Users", () => {
     expect(response).toEqual(channelsPage);
   });
 
-  test("reset user password request should send a password reset request and return success", async () => {
+  test("Reset user password request should send a password reset request", async () => {
     const resetPasswordRequestResponse = {
       status: 200,
       message: "Email with reset link sent successfully",
@@ -273,7 +273,7 @@ describe("Users", () => {
     expect(response).toEqual(resetPasswordRequestResponse);
   });
 
-  test("reset user password should reset a user password and return success", async () => {
+  test("Reset user password should reset a user password", async () => {
     const resetPasswordResponse = {
       status: 200,
       message: "Password reset successfully",
@@ -284,7 +284,7 @@ describe("Users", () => {
     expect(response).toEqual(resetPasswordResponse);
   });
 
-  test("delete user should delete a user and return success", async () => {
+  test("Delete user should delete a user", async () => {
     const deleteResponse = {
       status: 200,
       message: "User deleted successfully",
@@ -295,7 +295,7 @@ describe("Users", () => {
     expect(response).toEqual(deleteResponse);
   });
 
-  test("search user should search for a user and return success", async () => {
+  test("Search user should search for a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(UsersPage));
 
     const response = await sdk.users.SearchUsers(queryParams, token);

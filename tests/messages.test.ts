@@ -40,7 +40,7 @@ describe("Messages", () => {
     fetchMock.resetMocks();
   });
 
-  test("Send should send a message and return success", async () => {
+  test("Send should send a message", async () => {
     fetchMock.mockResponseOnce(
       JSON.stringify({ status: 200, message: "Message sent successfully" }),
     );
@@ -52,7 +52,7 @@ describe("Messages", () => {
     });
   });
 
-  test("Read should read messages and return success", async () => {
+  test("Read should read messages", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(messagesPage));
 
     const response = await sdk.messages.Read(
