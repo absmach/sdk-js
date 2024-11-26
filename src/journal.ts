@@ -25,7 +25,7 @@ export default class Journal {
   }
 
   /**
-  * @method Journal - Retrieve entity journals by entity id matching the provided query parameters.
+  * @method EntityJournals - Retrieve entity journals by entity id matching the provided query parameters.
   * @param {string} entityType - Entity type i.e client, channel or group.
   * @param {string} entityId - The  unique ID of the entity.
   * @param {string} domainId - The  unique ID of the domain.
