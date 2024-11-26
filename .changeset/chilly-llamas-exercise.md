@@ -2,4 +2,4 @@
 "@absmach/magistrala-sdk": patch
 ---
 
-add domain id to journal service
+update journal service to include domain id in entity journals and add a new endpoint for user journals
