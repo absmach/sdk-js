@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.9
+
+### Patch Changes
+
+- 3d97973: This pr updates the users service to the latest jsdocs and also removes the need for passing a user to enable or disable the user.
+
 ## 0.9.8
 
 ### Patch Changes
