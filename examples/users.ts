@@ -64,7 +64,7 @@ mySdk.users
 mySdk.users
   .Update(
     { id: "<userId>", first_name: "<firstName>", last_name: "<lastName>" },
-    token
+    token,
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -85,7 +85,7 @@ mySdk.users
 mySdk.users
   .UpdateUsername(
     { id: "<userId>", credentials: { username: "<username>" } },
-    token
+    token,
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -97,7 +97,7 @@ mySdk.users
 mySdk.users
   .UpdateProfilePicture(
     { id: "<userId>", profile_picture: "<profilePicture>" },
-    token
+    token,
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -125,7 +125,7 @@ mySdk.users
   });
 
 mySdk.users
-  .Disable({ id: "<userId>" }, token)
+  .Disable("<userId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -134,7 +134,7 @@ mySdk.users
   });
 
 mySdk.users
-  .Enable({ id: "<userId>" }, token)
+  .Enable("<userId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -169,12 +169,8 @@ mySdk.users
     console.error(error);
   });
 
-mySdk.users.ListUserClients(
-  "<domainId>",
-  "<userId>",
-  { offset: 0, limit: 10 },
-  token,
-)
+mySdk.users
+  .ListUserClients("<domainId>", "<userId>", { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })

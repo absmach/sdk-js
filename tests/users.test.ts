@@ -215,14 +215,14 @@ describe("Users", () => {
   test("Disable user should disable a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
-    const response = await sdk.users.Disable(user, token);
+    const response = await sdk.users.Disable(user.id as string, token);
     expect(response).toEqual(user);
   });
 
   test("Enable user should enable a user", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(user));
 
-    const response = await sdk.users.Enable(user, token);
+    const response = await sdk.users.Enable(user.id as string, token);
     expect(response).toEqual(user);
   });
 
