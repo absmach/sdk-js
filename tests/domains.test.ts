@@ -151,7 +151,7 @@ describe("Domains", () => {
 
   test("ListDomainActions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify(availableActions));
+    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
 
     const response = await sdk.domains.ListDomainActions(token);
     expect(response).toEqual(availableActions);
@@ -223,7 +223,7 @@ describe("Domains", () => {
 
   test("AddDomainRoleActions should add actions to a role and return updated actions", async () => {
     const updatedActions = [...actions, "execute"];
-    fetchMock.mockResponseOnce(JSON.stringify(updatedActions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions: updatedActions }));
 
     const response = await sdk.domains.AddDomainRoleActions(
       domainId,
@@ -235,7 +235,7 @@ describe("Domains", () => {
   });
 
   test("ListDomainRoleActions should return actions of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(actions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions }));
 
     const response = await sdk.domains.ListDomainRoleActions(
       domainId,
@@ -278,7 +278,7 @@ describe("Domains", () => {
 
   test("AddDomainRoleMembers should add members to a role and return updated members", async () => {
     const updatedMembers = [...members, "user3"];
-    fetchMock.mockResponseOnce(JSON.stringify(updatedMembers));
+    fetchMock.mockResponseOnce(JSON.stringify({ members: updatedMembers }));
 
     const response = await sdk.domains.AddDomainRoleMembers(
       domainId,
@@ -290,7 +290,7 @@ describe("Domains", () => {
   });
 
   test("ListDomainRoleMembers should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(members));
+    fetchMock.mockResponseOnce(JSON.stringify({ members }));
 
     const response = await sdk.domains.ListDomainRoleMembers(
       domainId,
