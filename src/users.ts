@@ -53,7 +53,7 @@ export default class Users {
 
   /**
    * @method Create - Creates a new user.
-   * @param {Object} user - User object containing details like name, username and password.
+   * @param {User} user - User object containing details like name, username and password.
    * @param {string} token - Authorization token.
    * @returns {Promise<User>} user - The created user object.
    * @throws {Error} - If the user cannot be created.
@@ -183,7 +183,7 @@ export default class Users {
 
   /**
    * @method UpdateEmail - Update a user email for a currently logged in user.
-   * @param {Object} user - User object with updated email.
+   * @param {User} user - User object with updated email.
    * @param {string} token - Authorization token.
    * @returns {Promise<User>} user - The user object with the updated email.
    * @throws {Error} - If the user email cannot be updated.
@@ -574,9 +574,9 @@ export default class Users {
 
   /**
    * @method ListUserGroups - Get memberships of a user.
-   * @param {String} userId - The unique identifier of the member.
-   * @param {String} domainId - The unique identifier of the domain.
-   * @param {Object} queryParams - Query parameters for example offset and limit.
+   * @param {string} userId - The unique identifier of the member.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {PageMetadata} queryParams - Query parameters for example offset and limit.
    * @param {string} token - Authorization token.
    * @returns {Promise<GroupsPage>} groupsPage - A paginated list of groups.
    * @throws {Error} - If the groups cannot be retrieved.
@@ -621,9 +621,9 @@ export default class Users {
 
   /**
    * @method ListUserClients - Get memberships of a user.
-   * @param {String} userId - The unique identifier of the member.
+   * @param {string} userId - The unique identifier of the member.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {Object} queryParams - Query parameters for example offset and limit.
+   * @param {PageMetadata} queryParams - Query parameters for example offset and limit.
    * @param {string} token - Authorization token.
    * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
    * @throws {Error} - If the clients cannot be fetched.
@@ -668,9 +668,9 @@ export default class Users {
 
   /**
    * @method ListUserChannels - Retrieves the various channels a user owns.
-   * @param {String} userId - The unique identifier of the member.
+   * @param {string} userId - The unique identifier of the member.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {Object} queryParams - Query parameters for example offset and limit.
+   * @param {PageMetadata} queryParams - Query parameters for example offset and limit.
    * @param {string} token - Authorization token.
    * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
    * @throws {Error} - If the channels cannot be fetched.
@@ -716,7 +716,7 @@ export default class Users {
 
   /**
    * @method ResetPasswordRequest - Sends a request to reset the password to the given email.
-   * @param {String} email - User email.
+   * @param {string} email - User email.
    * @param {string} hostUrl - URL of the host UI.
    * @returns {Promise<Response>} response - A promise that resolves when the email is sent.
    * @throws {Error} - If the reset request email cannot be sent.
@@ -754,8 +754,8 @@ export default class Users {
 
   /**
    * @method ResetPassword - Resets a user's password.
-   * @param {String} password - updated user password.
-   * @param {String} confPass - Confirmation password.
+   * @param {string} password - updated user password.
+   * @param {string} confPass - Confirmation password.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the password is reset.
    * @throws {Error} - If the password cannot be reset.
