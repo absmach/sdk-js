@@ -32,8 +32,8 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const actions = await response.json();
-      return actions;
+      const actionsResponse: { available_actions: string[] } = await response.json();
+      return actionsResponse.available_actions;
     } catch (error) {
       throw error;
     }
@@ -241,8 +241,8 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addedActions: string[] = await response.json();
-      return addedActions;
+      const addActionResponse: { actions: string[] } = await response.json();
+      return addActionResponse.actions;
     } catch (error) {
       throw error;
     }
@@ -275,7 +275,7 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const actions: string[] = await response.json();
+      const { actions }: { actions: string[] } = await response.json();
       return actions;
     } catch (error) {
       throw error;
@@ -387,8 +387,8 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addedMembers: string[] = await response.json();
-      return addedMembers;
+      const addMembersResponse: { members: string[] } = await response.json();
+      return addMembersResponse.members;
     } catch (error) {
       throw error;
     }
@@ -428,7 +428,7 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const members: string[] = await response.json();
+      const { members }: { members: string[] } = await response.json();
       return members;
     } catch (error) {
       throw error;

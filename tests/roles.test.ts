@@ -22,7 +22,7 @@ describe("Roles", () => {
 
   test("List available actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify(availableActions));
+    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
 
     const response = await roles.ListAvailableActions(baseUrl, endpoint, token);
     expect(response).toEqual(availableActions);
@@ -104,7 +104,7 @@ describe("Roles", () => {
 
   test("Add role actions should add actions to a role and return updated actions", async () => {
     const updatedActions = [...actions, "execute"];
-    fetchMock.mockResponseOnce(JSON.stringify(updatedActions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions: updatedActions }));
 
     const response = await roles.AddRoleActions(
       baseUrl,
@@ -118,7 +118,7 @@ describe("Roles", () => {
   });
 
   test("List role actions should return actions of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(actions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions }));
 
     const response = await roles.ListRoleActions(
       baseUrl,
@@ -167,7 +167,7 @@ describe("Roles", () => {
 
   test("Add role members should add members to a role and return updated members", async () => {
     const updatedMembers = [...members, "user3"];
-    fetchMock.mockResponseOnce(JSON.stringify(updatedMembers));
+    fetchMock.mockResponseOnce(JSON.stringify({ members: updatedMembers }));
 
     const response = await roles.AddRoleMembers(
       baseUrl,
@@ -181,7 +181,7 @@ describe("Roles", () => {
   });
 
   test("List role members should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(members));
+    fetchMock.mockResponseOnce(JSON.stringify({ members }));
 
     const response = await roles.ListRoleMembers(
       baseUrl,

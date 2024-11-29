@@ -250,7 +250,7 @@ describe("Groups", () => {
   });
 
   test("List group actions should return all available actions for a domain", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(actions));
+    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: actions }));
     const response = await sdk.groups.ListGroupActions(domainId, token);
 
     expect(response).toEqual(actions);
@@ -328,7 +328,7 @@ describe("Groups", () => {
   });
 
   test("Add group role actions should return updated actions", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(actions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions }));
 
     const response = await sdk.groups.AddGroupRoleActions(
       groupId,
@@ -342,7 +342,7 @@ describe("Groups", () => {
   });
 
   test("List group role actions should return a list of actions", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(actions));
+    fetchMock.mockResponseOnce(JSON.stringify({ actions }));
 
     const response = await sdk.groups.ListGroupRoleActions(
       groupId,
@@ -389,7 +389,7 @@ describe("Groups", () => {
     expect(response).toEqual(deleteRoleActionResponse);
   });
   test("Add group role members should return created members", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(members));
+    fetchMock.mockResponseOnce(JSON.stringify({ members }));
 
     const response = await sdk.groups.AddGroupRoleMembers(
       groupId,
@@ -403,7 +403,7 @@ describe("Groups", () => {
   });
 
   test("List group role members should return members", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(members));
+    fetchMock.mockResponseOnce(JSON.stringify({ members }));
 
     const response = await sdk.groups.ListGroupRoleMembers(
       groupId,
