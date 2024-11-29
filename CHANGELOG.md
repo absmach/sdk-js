@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.10
+
+### Patch Changes
+
+- 765e90a: Update role responses to return string arrays instead of an object containing string arrays
+
 ## 0.9.9
 
 ### Patch Changes
