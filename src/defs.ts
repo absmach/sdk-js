@@ -10,7 +10,6 @@ export interface UserBasicInfo {
 
 export interface User extends UserBasicInfo {
   role?: string;
-  permissions?: string[];
   tags?: string[];
   metadata?: Record<string, any>;
   created_at?: Date;
@@ -50,7 +49,6 @@ export interface Client extends ClientBasicInfo {
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
-  permissions?: string[];
   identity?: string;
 }
 
@@ -71,7 +69,6 @@ export interface GroupBasicInfo {
 export interface Group extends GroupBasicInfo {
   domain_id?: string | DomainBasicInfo;
   parent_id?: string | GroupBasicInfo;
-  name?: string;
   metadata?: Record<string, any>;
   level?: number;
   path?: string;
@@ -79,7 +76,14 @@ export interface Group extends GroupBasicInfo {
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
-  permissions?: string[];
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
+  access_type?: string;
+  access_provider_id?: string;
+  access_provider_role_id?: string;
+  access_provider_role_name?: string;
+  access_provider_role_actions?: string;
 }
 
 export interface GroupsPage {
@@ -115,7 +119,6 @@ export interface Channel extends ChannelBasicInfo {
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string;
-  permissions?: string[];
 }
 
 export interface ChannelsPage {
@@ -147,7 +150,6 @@ export interface Domain extends DomainBasicInfo {
   tags?: string[];
   metadata?: Record<string, any>;
   permission?: string;
-  permissions?: string[];
   created_by?: string | UserBasicInfo;
   updated_by?: string | UserBasicInfo;
   created_at?: Date;
@@ -169,7 +171,6 @@ export interface Invitation {
   invited_by?: string | UserBasicInfo;
   user_id?: string | UserBasicInfo;
   domain_id?: string | DomainBasicInfo;
-  relation?: Relation;
   token?: string;
   created_at?: Date;
   updated_at?: Date;
@@ -188,19 +189,6 @@ export interface Response {
   status: number;
   message?: string;
 }
-
-export type Relation =
-  | "administrator"
-  | "editor"
-  | "contributor"
-  | "member"
-  | "guest";
-
-export type GroupRelation =
-  | "administrator"
-  | "editor"
-  | "contributor"
-  | "guest";
 
 export type Status = "enabled" | "disabled";
 
@@ -227,7 +215,6 @@ export interface PageMetadata extends BasicPageMeta {
   action?: string;
   subject?: string;
   object?: string;
-  permission?: string;
   tag?: string;
   id?: string;
   tree?: boolean;
@@ -245,6 +232,10 @@ export interface PageMetadata extends BasicPageMeta {
   relation?: string;
   from?: number;
   to?: number;
+  access_type?: string;
+  actions?: string[];
+  role_id?: string;
+  role_name?: string;
 }
 
 export interface MessagesPage {
