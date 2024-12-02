@@ -7,7 +7,7 @@ const mySdk = new SDK({
   usersUrl: `${defaultUrl}:9002`,
 });
 
-const token = "token";
+const token = "<token>";
 const domainId = "<domainId>";
 
 mySdk.domains
