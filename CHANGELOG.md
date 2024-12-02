@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.11
+
+### Patch Changes
+
+- dd7837d: updates the group struct to include actions and roles
+
 ## 0.9.10
 
 ### Patch Changes
