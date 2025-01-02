@@ -86,7 +86,7 @@ export default class Users {
 
   /**
    * @method CreateToken - Issue Access and Refresh Token used for authenticating into the system. A user can use either their email or username to login.
-   * @param {Login} login - Login object with identity and secret. The identity can either be the email or the username of the user to be logged in.
+   * @param {Login} login - Login object with username and password. The username can either be the email or the username of the user to be logged in.
    * @returns {Promise<Token>} token - The created token object.
    * @throws {Error} - If the token cannot be created.
    */
