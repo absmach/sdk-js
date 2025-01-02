@@ -15,7 +15,6 @@ mySdk.invitations.SendInvitation(
   {
     user_id: "<userID>",
     domain_id: domainId,
-    relation: "administrator",
   },
   token,
 )

@@ -491,14 +491,14 @@ export default class Domains {
   /**
    * @method ViewDomainRole - Retrieves details about a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the role details.
    * @throws {Error} - If the role does not exist or cannot be retrieved.
    */
   public async ViewDomainRole(
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Role> {
     try {
@@ -506,7 +506,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         token
       );
       return role;
@@ -518,7 +518,7 @@ export default class Domains {
   /**
    * @method UpdateDomainRole - Updates the details of a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {Role} role - The role to be updated.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the updated role.
@@ -526,7 +526,7 @@ export default class Domains {
    */
   public async UpdateDomainRole(
     domainId: string,
-    roleName: string,
+    roleId: string,
     role: Role,
     token: string
   ): Promise<Role> {
@@ -535,7 +535,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         role,
         token
       );
@@ -548,14 +548,14 @@ export default class Domains {
   /**
    * @method DeleteDomainRole - Deletes a specific role from a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the role is deleted.
    * @throws {Error} - If the role cannot be deleted.
    */
   public async DeleteDomainRole(
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -563,7 +563,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         token
       );
       return response;
@@ -575,7 +575,7 @@ export default class Domains {
   /**
    * @method AddDomainRoleActions - Adds actions to a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @param {string[]} actions - The actions to add to the role.
    * @returns {Promise<string[]>} actions - A promise that resolves with an array of actions.
@@ -583,7 +583,7 @@ export default class Domains {
    */
   public async AddDomainRoleActions(
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
     token: string
   ) {
@@ -592,7 +592,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         actions,
         token
       );
@@ -605,14 +605,14 @@ export default class Domains {
   /**
    * @method ListDomainRoleActions - Lists all actions associated with a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} actions - A promise that resolves with an array of actions.
    * @throws {Error} - If actions cannot be retrieved.
    */
   public async ListDomainRoleActions(
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<string[]> {
     try {
@@ -620,7 +620,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         token
       );
       return updatedRole;
@@ -632,7 +632,7 @@ export default class Domains {
   /**
    * @method DeleteDomainRoleActions - Deletes specific actions from a role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - The actions to delete from the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when actions are deleted.
@@ -640,7 +640,7 @@ export default class Domains {
    */
   public async DeleteDomainRoleActions(
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
     token: string
   ): Promise<Response> {
@@ -649,7 +649,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         actions,
         token
       );
@@ -662,14 +662,14 @@ export default class Domains {
   /**
    * @method DeleteAllDomainRoleActions - Deletes all actions associated with a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all actions are deleted.
    * @throws {Error} - If the actions cannot be deleted.
    */
   public async DeleteAllDomainRoleActions(
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -677,7 +677,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         token
       );
       return response;
@@ -689,7 +689,7 @@ export default class Domains {
   /**
    * @method AddDomainRoleMembers - Adds members to a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to add.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
@@ -697,7 +697,7 @@ export default class Domains {
    */
   public async AddDomainRoleMembers(
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
     token: string
   ): Promise<string[]> {
@@ -706,7 +706,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         members,
         token
       );
@@ -719,14 +719,14 @@ export default class Domains {
   /**
    * @method ListDomainRoleMembers - Lists all members associated with a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
    */
   public async ListDomainRoleMembers(
     domainId: string,
-    roleName: string,
+    roleId: string,
     queryParams: BasicPageMeta,
     token: string
   ): Promise<string[]> {
@@ -735,7 +735,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         queryParams,
         token
       );
@@ -748,7 +748,7 @@ export default class Domains {
   /**
    * @method DeleteDomainRoleMembers - Deletes specific members from a role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to delete.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when members are deleted.
@@ -756,7 +756,7 @@ export default class Domains {
    */
   public async DeleteDomainRoleMembers(
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
     token: string
   ): Promise<Response> {
@@ -765,7 +765,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         members,
         token
       );
@@ -778,14 +778,14 @@ export default class Domains {
   /**
    * @method DeleteAllDomainRoleMembers - Deletes all members associated with a specific role in a domain.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    *  @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all members are deleted.
    * @throws {Error} - If the members cannot be deleted.
    */
   public async DeleteAllDomainRoleMembers(
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -793,7 +793,7 @@ export default class Domains {
         this.domainsUrl,
         this.domainsEndpoint,
         domainId,
-        roleName,
+        roleId,
         token
       );
       return response;

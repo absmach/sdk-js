@@ -26,7 +26,7 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(`${endpoint}/roles/available-actions`, url).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -46,7 +46,7 @@ export default class Roles {
     roleName: string,
     token: string,
     optionalActions?: string[],
-    optionalMembers?: string[],
+    optionalMembers?: string[]
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -63,7 +63,7 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(`${endpoint}/${entityId}/roles`, url).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -81,10 +81,10 @@ export default class Roles {
     endpoint: string,
     entityId: string,
     queryParams: PageMetadata,
-    token: string,
+    token: string
   ) {
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
     const options: RequestInit = {
       method: "GET",
@@ -97,11 +97,11 @@ export default class Roles {
       const response = await fetch(
         new URL(
           `${endpoint}/${entityId}/roles?${new URLSearchParams(
-            stringParams,
+            stringParams
           ).toString()}`,
-          url,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -118,8 +118,8 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "GET",
@@ -131,8 +131,8 @@ export default class Roles {
 
     try {
       const response = await fetch(
-        new URL(`${endpoint}/${entityId}/roles/${roleName}`, url).toString(),
-        options,
+        new URL(`${endpoint}/${entityId}/roles/${roleId}`, url).toString(),
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -149,9 +149,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     role: Role,
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "PUT",
@@ -164,8 +164,8 @@ export default class Roles {
 
     try {
       const response = await fetch(
-        new URL(`${endpoint}/${entityId}/roles/${roleName}`, url).toString(),
-        options,
+        new URL(`${endpoint}/${entityId}/roles/${roleId}`, url).toString(),
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -182,8 +182,8 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "DELETE",
@@ -195,8 +195,8 @@ export default class Roles {
 
     try {
       const response = await fetch(
-        new URL(`${endpoint}/${entityId}/roles/${roleName}`, url).toString(),
-        options,
+        new URL(`${endpoint}/${entityId}/roles/${roleId}`, url).toString(),
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -216,9 +216,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -232,10 +232,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/actions`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/actions`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -252,8 +252,8 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "GET",
@@ -266,10 +266,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/actions`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/actions`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -286,9 +286,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -302,10 +302,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/actions/delete`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/actions/delete`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -325,8 +325,8 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -339,10 +339,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/actions/delete-all`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/actions/delete-all`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -362,9 +362,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -378,10 +378,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/members`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/members`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -398,9 +398,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     queryParams: BasicPageMeta,
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "GET",
@@ -411,18 +411,18 @@ export default class Roles {
     };
 
     const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)]),
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
 
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/members?${new URLSearchParams(
-            stringParams,
+          `${endpoint}/${entityId}/roles/${roleId}/members?${new URLSearchParams(
+            stringParams
           ).toString()}`,
-          url,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -439,9 +439,9 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
-    token: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -455,10 +455,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/members/delete`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/members/delete`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();
@@ -478,8 +478,8 @@ export default class Roles {
     url: URL,
     endpoint: string,
     entityId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ) {
     const options: RequestInit = {
       method: "POST",
@@ -492,10 +492,10 @@ export default class Roles {
     try {
       const response = await fetch(
         new URL(
-          `${endpoint}/${entityId}/roles/${roleName}/members/delete-all`,
-          url,
+          `${endpoint}/${entityId}/roles/${roleId}/members/delete-all`,
+          url
         ).toString(),
-        options,
+        options
       );
       if (!response.ok) {
         const errorRes = await response.json();

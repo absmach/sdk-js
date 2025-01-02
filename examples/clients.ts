@@ -46,7 +46,11 @@ mySdk.clients
   });
 
 mySdk.clients
-  .UpdateClientSecret({ id: "<clientId>", credentials: { secret: "newSecret" } }, domainId, token)
+  .UpdateClientSecret(
+    { id: "<clientId>", credentials: { secret: "newSecret" } },
+    domainId,
+    token
+  )
   .then((response: any) => {
     console.log(response);
   })
@@ -58,7 +62,7 @@ mySdk.clients
   .UpdateClientTags(
     { id: "<clientId>", tags: ["<tag1>", "<tag2>"] },
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log(response);
@@ -95,12 +99,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .ListUserClients(
-    "<userId>",
-    { offset: 0, limit: 10 },
-    domainId,
-    token,
-  )
+  .ListUserClients("<userId>", { offset: 0, limit: 10 }, domainId, token)
   .then((response: any) => {
     console.log("response:", response);
   })
@@ -108,15 +107,8 @@ mySdk.clients
     console.log(error);
   });
 
-mySdk.clients.setClientParentGroup(domainId, "<clientId>", "<parentGroupId>", token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-mySdk.clients.DeleteClientParentGroup(domainId, "<clientId>", token)
+mySdk.clients
+  .setClientParentGroup(domainId, "<clientId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -125,7 +117,20 @@ mySdk.clients.DeleteClientParentGroup(domainId, "<clientId>", token)
   });
 
 mySdk.clients
-  .CreateClients([{ name: "<clientName1>" }, { name: "<clientName2>" }], domainId, token)
+  .DeleteClientParentGroup(domainId, "<clientId>", token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.clients
+  .CreateClients(
+    [{ name: "<clientName1>" }, { name: "<clientName2>" }],
+    domainId,
+    token
+  )
   .then((response: any) => {
     console.log("response:", response);
   })
@@ -161,7 +166,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .ViewClientRole("<clientId>", domainId, "<roleName>", token)
+  .ViewClientRole("<clientId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -173,7 +178,7 @@ mySdk.clients
   .UpdateClientRole(
     "<clientId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     { name: "<updatedRoleName>" },
     token
   )
@@ -185,7 +190,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .DeleteClientRole("<clientId>", domainId, "<roleName>", token)
+  .DeleteClientRole("<clientId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -197,7 +202,7 @@ mySdk.clients
   .AddClientRoleActions(
     "<clientId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<action>", "<action>"],
     token
   )
@@ -209,7 +214,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .ListClientRoleActions("<clientId>", domainId, "<roleName>", token)
+  .ListClientRoleActions("<clientId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -221,7 +226,7 @@ mySdk.clients
   .DeleteClientRoleActions(
     "<clientId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<action>", "<action>"],
     token
   )
@@ -233,7 +238,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .DeleteAllClientRoleActions("<clientId>", domainId, "<roleName>", token)
+  .DeleteAllClientRoleActions("<clientId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -242,7 +247,13 @@ mySdk.clients
   });
 
 mySdk.clients
-  .AddClientRoleMembers("<clientId>", domainId, "<roleName>", ["<userId>", "<userId>"], token)
+  .AddClientRoleMembers(
+    "<clientId>",
+    domainId,
+    "<roleId>",
+    ["<userId>", "<userId>"],
+    token
+  )
   .then((response) => {
     console.log("response: ", response);
   })
@@ -254,7 +265,7 @@ mySdk.clients
   .ListClientRoleMembers(
     "<clientId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     { offset: 0, limit: 10 },
     token
   )
@@ -269,9 +280,9 @@ mySdk.clients
   .DeleteClientRoleMembers(
     "<clientId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<userId>", "<userId>"],
-    token,
+    token
   )
   .then((response) => {
     console.log("response: ", response);
@@ -281,7 +292,7 @@ mySdk.clients
   });
 
 mySdk.clients
-  .DeleteAllClientRoleMembers("<clientId>", domainId, "<roleName>", token)
+  .DeleteAllClientRoleMembers("<clientId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })

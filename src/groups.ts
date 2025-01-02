@@ -746,7 +746,7 @@ export default class Groups {
    * @method viewGroupRole - Retrieves the details of a specific role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role to retrieve.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves to the role details.
    * @throws {Error} - Throws an error if the role details cannot be retrieved.
@@ -754,7 +754,7 @@ export default class Groups {
   public async ViewGroupRole(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Role> {
     try {
@@ -762,7 +762,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         token
       );
       return role;
@@ -775,7 +775,7 @@ export default class Groups {
    * @method updateGroupRole - Updates an existing role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role to update.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {Role} role - The updated role object.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves to the updated role object.
@@ -784,7 +784,7 @@ export default class Groups {
   public async UpdateGroupRole(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     role: Role,
     token: string
   ): Promise<Role> {
@@ -793,7 +793,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         role,
         token
       );
@@ -807,7 +807,7 @@ export default class Groups {
    * @method deleteGroupRole - Deletes a role within a specific group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role to delete.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
    * @throws {Error} - Throws an error if the role cannot be deleted.
@@ -815,7 +815,7 @@ export default class Groups {
   public async DeleteGroupRole(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -823,7 +823,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         token
       );
       return response;
@@ -836,7 +836,7 @@ export default class Groups {
    * @method AddGroupRoleActions - Adds actions to a specific role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - List of actions to add.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} actions - A promise that resolves to the update response.
@@ -845,7 +845,7 @@ export default class Groups {
   public async AddGroupRoleActions(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
     token: string
   ): Promise<string[]> {
@@ -854,7 +854,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         actions,
         token
       );
@@ -868,7 +868,7 @@ export default class Groups {
    * @method listGroupRoleActions - Lists all actions associated with a specific role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} actions - A promise that resolves to a list of actions.
    * @throws {Error} - Throws an error if the actions cannot be retrieved.
@@ -876,7 +876,7 @@ export default class Groups {
   public async ListGroupRoleActions(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<string[]> {
     try {
@@ -884,7 +884,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         token
       );
       return updatedRole;
@@ -897,7 +897,7 @@ export default class Groups {
    * @method deleteGroupRoleActions - Removes specific actions from a role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - List of actions to remove.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
@@ -906,7 +906,7 @@ export default class Groups {
   public async DeleteGroupRoleActions(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
     token: string
   ): Promise<Response> {
@@ -915,7 +915,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         actions,
         token
       );
@@ -929,7 +929,7 @@ export default class Groups {
    * @method deleteAllGroupRoleActions - Removes all actions from a role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
    * @throws {Error} - Throws an error if the actions cannot be removed.
@@ -937,7 +937,7 @@ export default class Groups {
   public async DeleteAllGroupRoleActions(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -945,7 +945,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         token
       );
       return response;
@@ -958,7 +958,7 @@ export default class Groups {
    * @method addGroupRoleMembers - Adds members to a specific role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - List of members to add.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves to the updated list of members.
@@ -967,7 +967,7 @@ export default class Groups {
   public async AddGroupRoleMembers(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
     token: string
   ): Promise<string[]> {
@@ -976,7 +976,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         members,
         token
       );
@@ -990,7 +990,7 @@ export default class Groups {
    * @method listGroupRoleMembers - Lists all members associated with a specific role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {BasicPageMeta} queryParams - Pagination and query metadata.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves to a list of members.
@@ -999,7 +999,7 @@ export default class Groups {
   public async ListGroupRoleMembers(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     queryParams: BasicPageMeta,
     token: string
   ): Promise<string[]> {
@@ -1008,7 +1008,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         queryParams,
         token
       );
@@ -1022,7 +1022,7 @@ export default class Groups {
    * @method deleteGroupRoleMembers - Removes specific members from a role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - List of members to remove.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
@@ -1031,7 +1031,7 @@ export default class Groups {
   public async DeleteGroupRoleMembers(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
     token: string
   ): Promise<Response> {
@@ -1040,7 +1040,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         members,
         token
       );
@@ -1054,7 +1054,7 @@ export default class Groups {
    * @method deleteAllGroupRoleMembers - Removes all members from a role within a group and domain.
    * @param {string} groupId - The unique identifier of the group.
    * @param {string} domainId - The unique identifier of the domain.
-   * @param {string} roleName - The name of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves to the deletion response.
    * @throws {Error} - Throws an error if the members cannot be removed.
@@ -1062,7 +1062,7 @@ export default class Groups {
   public async DeleteAllGroupRoleMembers(
     groupId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     token: string
   ): Promise<Response> {
     try {
@@ -1070,7 +1070,7 @@ export default class Groups {
         this.groupsUrl,
         `${domainId}/${this.groupsEndpoint}`,
         groupId,
-        roleName,
+        roleId,
         token
       );
       return response;

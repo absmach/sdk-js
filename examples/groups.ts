@@ -181,7 +181,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .ViewGroupRole("<groupId>", domainId, "<roleName>", token)
+  .ViewGroupRole("<groupId>", domainId, "<roleId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -193,8 +193,8 @@ mySdk.groups
   .UpdateGroupRole(
     "<groupId>",
     domainId,
-    "<updatedRoleName>",
-    { name: "<roleName>" },
+    "<roleId>",
+    { name: "<updatedRoleName>" },
     token
   )
   .then((response: any) => {
@@ -205,7 +205,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .DeleteGroupRole("<groupId>", domainId, "<roleName>", token)
+  .DeleteGroupRole("<groupId>", domainId, "<roleId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -217,7 +217,7 @@ mySdk.groups
   .AddGroupRoleActions(
     "<groupId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<action>", "<action>"],
     token
   )
@@ -229,7 +229,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .ListGroupRoleActions("<groupId>", domainId, "<roleName>", token)
+  .ListGroupRoleActions("<groupId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -241,7 +241,7 @@ mySdk.groups
   .DeleteGroupRoleActions(
     "<groupId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<action>"],
     token
   )
@@ -253,7 +253,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .DeleteAllGroupRoleActions("<groupId>", domainId, "<roleName>", token)
+  .DeleteAllGroupRoleActions("<groupId>", domainId, "<roleId>", token)
   .then((response) => {
     console.log("response: ", response);
   })
@@ -262,7 +262,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .AddGroupRoleMembers("<groupId>", domainId, "<roleName>", ["<userId>"], token)
+  .AddGroupRoleMembers("<groupId>", domainId, "<roleId>", ["<userId>"], token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -274,7 +274,7 @@ mySdk.groups
   .ListGroupRoleMembers(
     "<groupId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     { offset: 0, limit: 10 },
     token
   )
@@ -289,7 +289,7 @@ mySdk.groups
   .DeleteGroupRoleMembers(
     "<groupId>",
     domainId,
-    "<roleName>",
+    "<roleId>",
     ["<userId>"],
     token
   )
@@ -301,7 +301,7 @@ mySdk.groups
   });
 
 mySdk.groups
-  .DeleteAllGroupRoleMembers("<groupId>", domainId, "<roleName>", token)
+  .DeleteAllGroupRoleMembers("<groupId>", domainId, "<roleId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
