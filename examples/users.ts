@@ -44,7 +44,7 @@ mySdk.users
   });
 
 mySdk.users
-  .CreateToken({ identity: "<username | email>", secret: "<password>" })
+  .CreateToken({ username: "<username | email>", password: "<password>" })
   .then((response: any) => {
     console.log("response: ", response);
   })

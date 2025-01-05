@@ -129,8 +129,8 @@ export interface ChannelsPage {
 }
 
 export interface Login {
-  identity?: string;
-  secret?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface Token {

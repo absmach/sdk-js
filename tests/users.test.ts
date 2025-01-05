@@ -42,8 +42,8 @@ describe("Users", () => {
   };
 
   const login: Login = {
-    secret: "12345678",
-    identity: "fkatwigs",
+    username: "12345678",
+    password: "fkatwigs",
   };
 
   const tokenObject: Token = {

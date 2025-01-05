@@ -29,11 +29,7 @@ export default class Clients {
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
    */
-  public constructor({
-    clientsUrl,
-  }: {
-    clientsUrl: string;
-  }) {
+  public constructor({ clientsUrl }: { clientsUrl: string }) {
     this.clientsUrl = new URL(clientsUrl);
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
@@ -41,13 +37,13 @@ export default class Clients {
   }
 
   /**
-  * @method CreateClient - Creates a new client.
-  * @param {Client} client - Client object containing details like name and metadata.
-  * @param {string} domainId -  The unique ID of the domain.
-  * @param {stringtring} token - Authorization token.
-  * @returns {Promise<Client>} client - The created client object.
-  * @throws {Error} - If the client cannot be created.
-  */
+   * @method CreateClient - Creates a new client.
+   * @param {Client} client - Client object containing details like name and metadata.
+   * @param {string} domainId -  The unique ID of the domain.
+   * @param {stringtring} token - Authorization token.
+   * @returns {Promise<Client>} client - The created client object.
+   * @throws {Error} - If the client cannot be created.
+   */
   public async CreateClient(
     client: Client,
     domainId: string,
@@ -82,13 +78,13 @@ export default class Clients {
   }
 
   /**
-  * @method CreateClients - Creates multiple new clients.
-  * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
-  * @param {string} domainId -  The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-  * @throws {Error} - If the clients cannot be created.
-  */
+   * @method CreateClients - Creates multiple new clients.
+   * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
+   * @param {string} domainId -  The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
+   * @throws {Error} - If the clients cannot be created.
+   */
   public async CreateClients(
     clients: Client[],
     domainId: string,
@@ -122,13 +118,13 @@ export default class Clients {
   }
 
   /**
-  * @method Enable - Enables a previously disabled client by its ID.
-  * @param {string} clientId - The  unique ID of the client.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Client>} client - The updated client object with enabled status.
-  * @throws {Error} - If the client cannot be enabled.
-  */
+   * @method Enable - Enables a previously disabled client by its ID.
+   * @param {string} clientId - The  unique ID of the client.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Client>} client - The updated client object with enabled status.
+   * @throws {Error} - If the client cannot be enabled.
+   */
   public async Enable(
     clientId: string,
     domainId: string,
@@ -168,7 +164,7 @@ export default class Clients {
    * @param {string} token - Authorization token.
    * @returns {Promise<Client>} client - The updated client object with disabled status.
    * @throws {Error} - If the group cannot be disabled.
-  */
+   */
   public async Disable(
     clientId: string,
     domainId: string,
@@ -201,13 +197,13 @@ export default class Clients {
   }
 
   /**
-  * @method UpdateClient - Updates the information of an existing client.
-  * @param {Client} client- The client object.
-  * @param {string} domainId - The unique identifier of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Client>} client - The updated client object.
-  * @throws {Error} - If the client cannot be updated.
-  */
+   * @method UpdateClient - Updates the information of an existing client.
+   * @param {Client} client- The client object.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Client>} client - The updated client object.
+   * @throws {Error} - If the client cannot be updated.
+   */
   public async UpdateClient(
     client: Client,
     domainId: string,
@@ -241,13 +237,13 @@ export default class Clients {
   }
 
   /**
-  * @method UpdateClientSecret - Updates an existing client's secret.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {Client} client - Client object with updated secret.
-  * @param {string} token -  Authorization token.
-  * @returns {Promise<Client> } client - The updated client object.
-  * @throws {Error} - If the client secret cannot be updated.
-  */
+   * @method UpdateClientSecret - Updates an existing client's secret.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {Client} client - Client object with updated secret.
+   * @param {string} token -  Authorization token.
+   * @returns {Promise<Client> } client - The updated client object.
+   * @throws {Error} - If the client secret cannot be updated.
+   */
   public async UpdateClientSecret(
     client: Client,
     domainId: string,
@@ -281,13 +277,13 @@ export default class Clients {
   }
 
   /**
-  * @method UpdateClientTags - Updates an existing client's tags.
-  * @param {Client} client - Client object with updated tags.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<client>} client - The updated client object.
-  * @throws {Error} - If the client tags cannot be updated.
-  */
+   * @method UpdateClientTags - Updates an existing client's tags.
+   * @param {Client} client - Client object with updated tags.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<client>} client - The updated client object.
+   * @throws {Error} - If the client tags cannot be updated.
+   */
   public async UpdateClientTags(
     client: Client,
     domainId: string,
@@ -322,13 +318,13 @@ export default class Clients {
   }
 
   /**
-  * @method Client - Retrieves a client by its id.
-  * @param {string} clientId - The unique ID of the client.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Client>} client - The requested client object.
-  * @throws {Error} - If the client cannot be fetched.
-  */
+   * @method Client - Retrieves a client by its id.
+   * @param {string} clientId - The unique ID of the client.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Client>} client - The requested client object.
+   * @throws {Error} - If the client cannot be fetched.
+   */
   public async Client(
     clientId: string,
     domainId: string,
@@ -362,13 +358,13 @@ export default class Clients {
   }
 
   /**
-  * @method Clients - Retrieves all clients matching the provided query parameters.
-  * @param {PageMetadata} queryParams - Query parameters for the request.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-  * @throws {Error} - If the clients cannot be fetched.
-  */
+   * @method Clients - Retrieves all clients matching the provided query parameters.
+   * @param {PageMetadata} queryParams - Query parameters for the request.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
+   * @throws {Error} - If the clients cannot be fetched.
+   */
   public async Clients(
     queryParams: PageMetadata,
     domainId: string,
@@ -408,14 +404,14 @@ export default class Clients {
   }
 
   /**
-  * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
-  * @param {string} userId - The  unique ID of the user.
-  * @param {PageMetadata} queryParams - Query parameters for the request.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-  * @throws {Error} - If the clients cannot be fetched.
-  */
+   * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
+   * @param {string} userId - The  unique ID of the user.
+   * @param {PageMetadata} queryParams - Query parameters for the request.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
+   * @throws {Error} - If the clients cannot be fetched.
+   */
   public async ListUserClients(
     userId: string,
     queryParams: PageMetadata,
@@ -454,33 +450,44 @@ export default class Clients {
   }
 
   /**
-  * @method setClientParentGroup - Sets parent to a client.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} clientId - The unique ID of the client to be updated.
-  * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified client.
-  * @throws {Error} - If the parent group cannot be set for the client.
-  */
-  public async setClientParentGroup(domainId: string, clientId: string, parentGroupId: string, token: string) : Promise<Response> {
+   * @method setClientParentGroup - Sets parent to a client.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} clientId - The unique ID of the client to be updated.
+   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified client.
+   * @throws {Error} - If the parent group cannot be set for the client.
+   */
+  public async setClientParentGroup(
+    domainId: string,
+    clientId: string,
+    parentGroupId: string,
+    token: string
+  ): Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ parent_group_id: parentGroupId })
+      body: JSON.stringify({ parent_group_id: parentGroupId }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.clientsEndpoint}/${clientId}/parent`, this.clientsUrl).toString(),
+        new URL(
+          `${domainId}/${this.clientsEndpoint}/${clientId}/parent`,
+          this.clientsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addClientParentsResponse: Response = { status: response.status, message: "Client group parent added successfully" };
+      const addClientParentsResponse: Response = {
+        status: response.status,
+        message: "Client group parent added successfully",
+      };
       return addClientParentsResponse;
     } catch (error) {
       throw error;
@@ -488,19 +495,23 @@ export default class Clients {
   }
 
   /**
-  * @method DeleteClientParentGroup - Removes the parent group from a specified client.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} clientId - The  unique ID of the client.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified client.
-  * @throws {Error} - If the parent group cannot removed from the client.
-  */
-  public async DeleteClientParentGroup(domainId: string, clientId: string, token: string) : Promise<Response> {
+   * @method DeleteClientParentGroup - Removes the parent group from a specified client.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} clientId - The  unique ID of the client.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified client.
+   * @throws {Error} - If the parent group cannot removed from the client.
+   */
+  public async DeleteClientParentGroup(
+    domainId: string,
+    clientId: string,
+    token: string
+  ): Promise<Response> {
     const options: RequestInit = {
       method: "DELETE",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     };
     try {
@@ -515,7 +526,10 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteClientParentsResponse: Response = { status: response.status, message: "Client group parent deleted successfully" };
+      const deleteClientParentsResponse: Response = {
+        status: response.status,
+        message: "Client group parent deleted successfully",
+      };
       return deleteClientParentsResponse;
     } catch (error) {
       throw error;
@@ -523,13 +537,13 @@ export default class Clients {
   }
 
   /**
-  * @method DeleteClient - Deletes a client with specified id.
-  * @param {string} clientId - The  unique ID of the client.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the client is deleted.
-  * @throws {Error} - If the client cannot be deleted.
-  */
+   * @method DeleteClient - Deletes a client with specified id.
+   * @param {string} clientId - The  unique ID of the client.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the client is deleted.
+   * @throws {Error} - If the client cannot be deleted.
+   */
   public async DeleteClient(
     clientId: string,
     domainId: string,
@@ -572,12 +586,15 @@ export default class Clients {
    * @returns {Promise<string[]>} actions - A promise that resolves with an array of actions.
    * @throws {Error} - If client actions cannot be fetched.
    */
-  public async ListClientActions(domainId: string, token: string): Promise<string[]> {
+  public async ListClientActions(
+    domainId: string,
+    token: string
+  ): Promise<string[]> {
     try {
       const actions: string[] = await this.clientRoles.ListAvailableActions(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
-        token,
+        token
       );
       return actions;
     } catch (error) {
@@ -602,7 +619,7 @@ export default class Clients {
     domainId: string,
     token: string,
     optionalActions?: string[],
-    optionalMembers?: string[],
+    optionalMembers?: string[]
   ): Promise<Role> {
     try {
       const role: Role = await this.clientRoles.CreateRole(
@@ -612,7 +629,7 @@ export default class Clients {
         roleName,
         token,
         optionalActions,
-        optionalMembers,
+        optionalMembers
       );
       return role;
     } catch (error) {
@@ -633,7 +650,7 @@ export default class Clients {
     clientId: string,
     domainId: string,
     queryParams: PageMetadata,
-    token: string,
+    token: string
   ): Promise<RolePage> {
     try {
       const rolesPage: RolePage = await this.clientRoles.ListRoles(
@@ -641,7 +658,7 @@ export default class Clients {
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
         queryParams,
-        token,
+        token
       );
       return rolesPage;
     } catch (error) {
@@ -653,7 +670,7 @@ export default class Clients {
    * @method ViewClientRole - Retrieves details about a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the role details.
    * @throws {Error} - If the role does not exist or cannot be retrieved.
@@ -661,16 +678,16 @@ export default class Clients {
   public async ViewClientRole(
     clientId: string,
     domainId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ): Promise<Role> {
     try {
       const role = await this.clientRoles.ViewRole(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
-        token,
+        roleId,
+        token
       );
       return role;
     } catch (error) {
@@ -682,7 +699,7 @@ export default class Clients {
    * @method UpdateClientRole - Updates the details of a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {Role} role - The role to be updated.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the updated role.
@@ -691,18 +708,18 @@ export default class Clients {
   public async UpdateClientRole(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     role: Role,
-    token: string,
+    token: string
   ): Promise<Role> {
     try {
       const updatedRole = await this.clientRoles.UpdateRole(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         role,
-        token,
+        token
       );
       return updatedRole;
     } catch (error) {
@@ -714,7 +731,7 @@ export default class Clients {
    * @method DeleteClientRole - Deletes a specific role from a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the role is deleted.
    * @throws {Error} - If the role cannot be deleted.
@@ -722,16 +739,16 @@ export default class Clients {
   public async DeleteClientRole(
     clientId: string,
     domainId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ): Promise<Response> {
     try {
       const response = await this.clientRoles.DeleteRole(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
-        token,
+        roleId,
+        token
       );
       return response;
     } catch (error) {
@@ -743,7 +760,7 @@ export default class Clients {
    * @method AddClientRoleActions - Adds actions to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @param {string[]} actions - The actions to add to the role.
    * @returns {Promise<string[]>} role actions- A promise that resolves with an array of actions.
@@ -752,18 +769,18 @@ export default class Clients {
   public async AddClientRoleActions(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
-    token: string,
+    token: string
   ): Promise<string[]> {
     try {
       const response = await this.clientRoles.AddRoleActions(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         actions,
-        token,
+        token
       );
       return response;
     } catch (error) {
@@ -775,7 +792,7 @@ export default class Clients {
    * @method ListClientRoleActions - Lists all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} role actions - A promise that resolves with an array of actions.
    * @throws {Error} - If actions cannot be retrieved.
@@ -783,16 +800,16 @@ export default class Clients {
   public async ListClientRoleActions(
     clientId: string,
     domainId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ): Promise<string[]> {
     try {
       const updatedRole = await this.clientRoles.ListRoleActions(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
-        token,
+        roleId,
+        token
       );
       return updatedRole;
     } catch (error) {
@@ -804,7 +821,7 @@ export default class Clients {
    * @method DeleteClientRoleActions - Deletes specific actions from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - The actions to delete from the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when actions are deleted.
@@ -813,18 +830,18 @@ export default class Clients {
   public async DeleteClientRoleActions(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     actions: string[],
-    token: string,
+    token: string
   ): Promise<Response> {
     try {
       const response = await this.clientRoles.DeleteRoleActions(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         actions,
-        token,
+        token
       );
       return response;
     } catch (error) {
@@ -836,7 +853,7 @@ export default class Clients {
    * @method DeleteAllClientRoleActions - Deletes all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all actions are deleted.
    * @throws {Error} - If the actions cannot be deleted.
@@ -844,16 +861,16 @@ export default class Clients {
   public async DeleteAllClientRoleActions(
     clientId: string,
     domainId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ): Promise<Response> {
     try {
       const response = await this.clientRoles.DeleteAllRoleActions(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
-        token,
+        roleId,
+        token
       );
       return response;
     } catch (error) {
@@ -865,7 +882,7 @@ export default class Clients {
    * @method AddClientRoleMembers - Adds members to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to add.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
@@ -874,18 +891,18 @@ export default class Clients {
   public async AddClientRoleMembers(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
-    token: string,
+    token: string
   ): Promise<string[]> {
     try {
       const response = await this.clientRoles.AddRoleMembers(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         members,
-        token,
+        token
       );
       return response;
     } catch (error) {
@@ -897,7 +914,7 @@ export default class Clients {
    * @method ListClientRoleMembers - Lists all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
@@ -905,18 +922,18 @@ export default class Clients {
   public async ListClientRoleMembers(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     queryParams: BasicPageMeta,
-    token: string,
+    token: string
   ): Promise<string[]> {
     try {
       const updatedRole = await this.clientRoles.ListRoleMembers(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         queryParams,
-        token,
+        token
       );
       return updatedRole;
     } catch (error) {
@@ -928,7 +945,7 @@ export default class Clients {
    * @method DeleteClientRoleMembers - Deletes specific members from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to delete.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when members are deleted.
@@ -937,18 +954,18 @@ export default class Clients {
   public async DeleteClientRoleMembers(
     clientId: string,
     domainId: string,
-    roleName: string,
+    roleId: string,
     members: string[],
-    token: string,
+    token: string
   ): Promise<Response> {
     try {
       const response = await this.clientRoles.DeleteRoleMembers(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
+        roleId,
         members,
-        token,
+        token
       );
       return response;
     } catch (error) {
@@ -960,7 +977,7 @@ export default class Clients {
    * @method DeleteAllClientRoleMembers - Deletes all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
    * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} roleName - The unique identifier of the role.
+   * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all members are deleted.
    * @throws {Error} - If the members cannot be deleted.
@@ -968,16 +985,16 @@ export default class Clients {
   public async DeleteAllClientRoleMembers(
     clientId: string,
     domainId: string,
-    roleName: string,
-    token: string,
+    roleId: string,
+    token: string
   ): Promise<Response> {
     try {
       const response = await this.clientRoles.DeleteAllRoleMembers(
         this.clientsUrl,
         `${domainId}/${this.clientsEndpoint}`,
         clientId,
-        roleName,
-        token,
+        roleId,
+        token
       );
       return response;
     } catch (error) {
