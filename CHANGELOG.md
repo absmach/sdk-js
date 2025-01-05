@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.9.12
+
+### Patch Changes
+
+- 45dee3f: updates the roles to use roleId instead of roleName in the URL
+
 ## 0.9.11
 
 ### Patch Changes
