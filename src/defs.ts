@@ -379,3 +379,47 @@ export interface MembersPage {
   offset: number;
   limit: number;
 }
+
+export interface Script {
+  type: number;
+  value: string;
+}
+
+export interface Schedule {
+  date?: Date;
+  recurring_type: number;
+  recurring_period: number;
+}
+
+export type RuleStatus = "enabled" | "disabled" | "deleted" | "all" | "unknown";
+export interface Rule {
+  id?: string;
+  name?: string;
+  domain?: string;
+  input_channel?: string;
+  input_topic?: string;
+  logic?: Script;
+  output_channel?: string;
+  output_topic?: string;
+  schedule?: Schedule;
+  status?: RuleStatus;
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  updated_by?: string;
+}
+
+export interface RulesPageMetadata {
+  total?: number;
+  offset?: number;
+  limit?: number;
+  dir?: string;
+  name?: string;
+  input_channel?: string;
+  output_channel?: string;
+  status?: RuleStatus;
+}
+
+export interface RulesPage extends RulesPageMetadata {
+  rules: Rule[];
+}
