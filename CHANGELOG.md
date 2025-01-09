@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.0
+
+### Minor Changes
+
+- c269644: add rules service to the sdk
+
 ## 0.9.12
 
 ### Patch Changes
