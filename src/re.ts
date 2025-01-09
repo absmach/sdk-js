@@ -190,7 +190,7 @@ export default class Rules {
    * @param {string} domainId - The  unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the rule is successfully deleted.
-   * @throws {Error} - If the rule status cannot be updated.
+   * @throws {Error} - If the rule cannot be deleted.
    */
   public async DeleteRule(
     ruleId: string,
@@ -198,7 +198,7 @@ export default class Rules {
     token: string
   ): Promise<Response> {
     const options = {
-      method: "PUT",
+      method: "DELETE",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -207,7 +207,7 @@ export default class Rules {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/${this.rulesEndpoint}/${ruleId}/delete`,
+          `${domainId}/${this.rulesEndpoint}/${ruleId}`,
           this.rulesUrl
         ).toString(),
         options
@@ -218,9 +218,87 @@ export default class Rules {
       }
       const statusResponse: Response = {
         status: response.status,
-        message: "Rule status updated successfully",
+        message: "Rule deleted successfully",
       };
       return statusResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method EnableRule - Enables a previously disabled rule.
+   * @param {string} ruleId - The  unique ID of the rule.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Rule>} rule - The enabled rule object.
+   * @throws {Error} - If the rule cannot be enabled.
+   */
+  public async EnableRule(
+    ruleId: string,
+    domainId: string,
+    token: string
+  ): Promise<Rule> {
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.rulesEndpoint}/${ruleId}/enable`,
+          this.rulesUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const enabledRule: Rule = await response.json();
+      return enabledRule;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method DisableRule - Disables a spcific rule.
+   * @param {string} ruleId - The  unique ID of the rule.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Rule>} rule - The disabled rule object.
+   * @throws {Error} - If the rule cannot be disabled.
+   */
+  public async DisableRule(
+    ruleId: string,
+    domainId: string,
+    token: string
+  ): Promise<Rule> {
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${this.rulesEndpoint}/${ruleId}/disable`,
+          this.rulesUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const disabledRule: Rule = await response.json();
+      return disabledRule;
     } catch (error) {
       throw error;
     }

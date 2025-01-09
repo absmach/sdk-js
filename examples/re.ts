@@ -56,3 +56,19 @@ mySdk.Rules.DeleteRule("<ruleId>", domainId, token)
   .catch((error) => {
     console.error(error);
   });
+
+mySdk.Rules.DisableRule("<ruleId>", domainId, token)
+  .then((response: any) => {
+    console.log("response:", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.Rules.EnableRule("<ruleId>", domainId, token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
