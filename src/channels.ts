@@ -221,7 +221,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/channels/${channel.id}`,
+          `${domainId}/${this.channelsEndpoint}/${channel.id}`,
           this.channelsUrl
         ).toString(),
         options
@@ -261,7 +261,7 @@ export default class Channels {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/channels/${channel.id}/tags`,
+          `${domainId}/${this.channelsEndpoint}/${channel.id}/tags`,
           this.channelsUrl
         ).toString(),
         options

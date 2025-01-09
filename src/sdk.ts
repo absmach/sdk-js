@@ -9,6 +9,7 @@ import Bootstrap from "./bootstrap";
 import Journal from "./journal";
 import Health from "./health";
 import Clients from "./clients";
+import Rules from "./re";
 
 export type {
   User,
@@ -55,6 +56,12 @@ export type {
   EntityActionRole,
   EntityMemberRole,
   MembersPage,
+  Script,
+  Schedule,
+  RuleStatus,
+  Rule,
+  RulesPageMetadata,
+  RulesPage,
 } from "./defs";
 
 const defaultUrl = "http://localhost";
@@ -71,6 +78,7 @@ export interface SDKConfig {
   invitationsUrl?: string;
   bootstrapUrl?: string;
   journalUrl?: string;
+  rulesUrl?: string;
 }
 
 class SDK {
@@ -96,6 +104,8 @@ class SDK {
 
   Health: Health;
 
+  Rules: Rules;
+
   constructor({
     usersUrl = defaultUrl,
     channelsUrl = defaultUrl,
@@ -108,6 +118,7 @@ class SDK {
     invitationsUrl = defaultUrl,
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl,
+    rulesUrl = defaultUrl,
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, clientsUrl });
     this.domains = new Domains({ domainsUrl, usersUrl });
@@ -132,6 +143,7 @@ class SDK {
       domainsUrl,
       groupsUrl,
     });
+    this.Rules = new Rules({ rulesUrl });
   }
 }
 
