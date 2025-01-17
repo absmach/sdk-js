@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.1
+
+### Patch Changes
+
+- e2bc996: add metadata to Rule interface
+
 ## 0.10.0
 
 ### Minor Changes
