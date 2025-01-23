@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.3
+
+### Patch Changes
+
+- 4571aab: update entity structs to include permissions
+
 ## 0.10.2
 
 ### Patch Changes
