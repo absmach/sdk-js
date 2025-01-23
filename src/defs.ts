@@ -15,6 +15,7 @@ export interface User extends UserBasicInfo {
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
+  permissions?: string[];
 }
 
 export interface UsersPage {
@@ -50,6 +51,16 @@ export interface Client extends ClientBasicInfo {
   updated_at?: Date;
   updated_by?: string | UserBasicInfo;
   identity?: string;
+  parent_group_path?: string;
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
+  access_type?: string;
+  access_provider_id?: string;
+  access_provider_role_id?: string;
+  access_provider_role_name?: string;
+  access_provider_role_actions?: string[];
+  connection_type?: string[];
 }
 
 export interface ClientsPage {
@@ -83,7 +94,7 @@ export interface Group extends GroupBasicInfo {
   access_provider_id?: string;
   access_provider_role_id?: string;
   access_provider_role_name?: string;
-  access_provider_role_actions?: string;
+  access_provider_role_actions?: string[];
 }
 
 export interface GroupsPage {
@@ -119,6 +130,16 @@ export interface Channel extends ChannelBasicInfo {
   created_at?: Date;
   updated_at?: Date;
   updated_by?: string;
+  parent_group_path?: string;
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
+  access_type?: string;
+  access_provider_id?: string;
+  access_provider_role_id?: string;
+  access_provider_role_name?: string;
+  access_provider_role_actions?: string[];
+  connection_type?: string[];
 }
 
 export interface ChannelsPage {
@@ -240,7 +261,6 @@ export interface PageMetadata extends BasicPageMeta {
   client?: string;
   channel?: string;
   connection_type?: string;
-
 }
 
 export interface MessagesPage {
