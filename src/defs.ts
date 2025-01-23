@@ -202,7 +202,7 @@ export interface PageMetadata extends BasicPageMeta {
   offset?: number;
   limit?: number;
   order?: string;
-  direction?: string;
+  dir?: string;
   level?: number;
   email?: string;
   username?: string;
@@ -227,7 +227,7 @@ export interface PageMetadata extends BasicPageMeta {
   state?: string;
   list_perms?: boolean;
   invited_by?: string;
-  domain_id?: string;
+  domain?: string;
   user_id?: string;
   relation?: string;
   from?: number;
@@ -236,6 +236,11 @@ export interface PageMetadata extends BasicPageMeta {
   actions?: string[];
   role_id?: string;
   role_name?: string;
+  group?: string;
+  client?: string;
+  channel?: string;
+  connection_type?: string;
+
 }
 
 export interface MessagesPage {
