@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.2
+
+### Patch Changes
+
+- 9de0997: update page metadata
+
 ## 0.10.1
 
 ### Patch Changes
