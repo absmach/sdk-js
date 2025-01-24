@@ -1,10 +1,10 @@
-# Magistrala JavaScript SDK
+# Magistrala Typescript SDK
 
 [![NPM package](https://img.shields.io/npm/v/@absmach/magistrala-sdk.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen)][npm]
 [![license][license]](LICENSE)
 [![chat][gitter-badge]][gitter]
 
-Magistrala javascript sdk is a javascript driver for [Magistrala HTTP API][docs] API reference in the Swagger UI can be found [here][api].
+Magistrala typescript sdk is a typescript driver for [Magistrala HTTP API][docs] API reference in the Swagger UI can be found [here][api].
 It does both system administration (provisioning) and messaging.
 
 ## Install
@@ -17,7 +17,7 @@ npm install @absmach/magistrala-sdk
 
 Once the package is installed you can import the library using 'import':
 
-```js
+```ts
 import SDK from "@absmach/magistrala-sdk";
 ```
 
@@ -25,7 +25,7 @@ import SDK from "@absmach/magistrala-sdk";
 
 Thank you for your interest in Magistrala-sdk and the desire to contribute!
 
-1. Take a look at our [open issues](https://github.com/absmach/sdk-js/issues). The [good-first-issue](https://github.com/absmach/sdk-js/labels/good-first-issue) label is specifically for issues that are great for getting started.
+1. Take a look at our [open issues](https://github.com/absmach/magistrala-sdk-ts/issues). The [good-first-issue](https://github.com/absmach/magistrala-sdk-ts/labels/good-first-issue) label is specifically for issues that are great for getting started.
 2. Checkout the [contribution guide][contributing] to learn more about our style and conventions.
 3. Make your changes compatible to our workflow.
 
