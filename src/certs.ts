@@ -1,3 +1,6 @@
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
+
 import Errors from "./errors";
 import { type Cert, CertsPage, type Response } from "./defs";
 

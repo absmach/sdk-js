@@ -1,3 +1,6 @@
+<!-- Copyright (c) Abstract Machines
+SPDX-License-Identifier: Apache-2.0 -->
+
 <!--
 The GitHub issue tracker is for bug reports and feature requests. General support can be found at
 the following locations:

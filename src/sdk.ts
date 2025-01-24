@@ -1,3 +1,6 @@
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
+
 import Users from "./users";
 import Domains from "./domains";
 import Certs from "./certs";

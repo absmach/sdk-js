@@ -1,3 +1,6 @@
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
+
 export interface UserBasicInfo {
   id?: string;
   first_name?: string;
