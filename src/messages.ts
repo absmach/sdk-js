@@ -62,7 +62,7 @@ export default class Messages {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `client ${clientKey}`,
+        Authorization: `Client ${clientKey}`,
       },
       body: msg,
     };
