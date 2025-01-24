@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.4
+
+### Patch Changes
+
+- 29b932d: update sending message
+
 ## 0.10.3
 
 ### Patch Changes
