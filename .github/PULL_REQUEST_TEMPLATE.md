@@ -1,3 +1,6 @@
+<!-- Copyright (c) Abstract Machines
+SPDX-License-Identifier: Apache-2.0 -->
+
 Pull request title should be `TSSDK-XXX - description` or `NOISSUE - description` where XXX is ID of issue that this PR relate to.
 Please review the [CONTRIBUTING.md](./CONTRIBUTING.md) file for detailed contributing guidelines.
 

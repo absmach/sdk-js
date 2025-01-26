@@ -1,3 +1,6 @@
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
+
 import type { HealthInfo } from "./defs";
 import Errors from "./errors";
 

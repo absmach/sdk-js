@@ -1,3 +1,6 @@
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
+
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK, { type Journal, type JournalsPage } from "../src/sdk";

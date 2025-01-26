@@ -1,4 +1,5 @@
-// Imposrt the SDK class from the mainflux-sdk package
+// Copyright (c) Abstract Machines
+// SPDX-License-Identifier: Apache-2.0
 
 import SDK from "../src/sdk";
 
