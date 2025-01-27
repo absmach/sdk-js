@@ -7,6 +7,7 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   channelsUrl: `${defaultUrl}:9005`,
+  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "<token>";
@@ -34,7 +35,7 @@ mySdk.channels
   .CreateChannels(
     [{ name: "<channelName1>" }, { name: "<channelName2>" }],
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -56,7 +57,7 @@ mySdk.channels
   .UpdateChannelNameAndMetadata(
     { id: "<channelId>", name: "<channelName>", metadata: { key: "value" } },
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -69,7 +70,7 @@ mySdk.channels
   .UpdateChannelTags(
     { id: "<channelId>", tags: ["tag1", "tag2"] },
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -102,7 +103,7 @@ mySdk.channels
     "<channelId>",
     ["publish"],
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -117,7 +118,7 @@ mySdk.channels
     "<channelId>",
     ["publish"],
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -132,7 +133,7 @@ mySdk.channels
     ["<channelId1>", "<channelId1>"],
     ["publish"],
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response:", response);
@@ -147,7 +148,7 @@ mySdk.channels
     ["<channelId1>", "<channelId1>"],
     ["publish"],
     domainId,
-    token,
+    token
   )
   .then((response: any) => {
     console.log("response: ", response);
@@ -156,7 +157,8 @@ mySdk.channels
     console.error(error);
   });
 
-mySdk.channels.SetChannelParentGroup(domainId, "<channelId>", "<parentGroupId>", token)
+mySdk.channels
+  .SetChannelParentGroup(domainId, "<channelId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -164,7 +166,8 @@ mySdk.channels.SetChannelParentGroup(domainId, "<channelId>", "<parentGroupId>",
     console.error(error);
   });
 
-mySdk.channels.DeleteChannelParentGroup(domainId, "<channelId>", token)
+mySdk.channels
+  .DeleteChannelParentGroup(domainId, "<channelId>", token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -179,4 +182,13 @@ mySdk.channels
   })
   .catch((error) => {
     console.error(error);
+  });
+
+mySdk.channels
+  .ListChannelUsers("<channelId>", { offset: 0, limit: 10 }, domainId, token)
+  .then((response: any) => {
+    console.log("response:", response);
+  })
+  .catch((error) => {
+    console.log(error);
   });

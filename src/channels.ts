@@ -8,12 +8,13 @@ import type {
   PageMetadata,
   Response,
   ChannelsPage,
+  UsersPage,
 } from "./defs";
 
 /**
-* @class Channels
-* Handles interactions with channels API, including creating, updating and managing channels.
-*/
+ * @class Channels
+ * Handles interactions with channels API, including creating, updating and managing channels.
+ */
 export default class Channels {
   private readonly contentType: string;
 
@@ -21,30 +22,40 @@ export default class Channels {
 
   private readonly channelsUrl: URL;
 
+  private readonly usersUrl?: URL;
+
   /**
    * @constructor
    * Initializes the Channel API client.
    * @param {object} config - Configuration object.
    * @param {string} config.channelsUrl - Base URL for the channels API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
   public constructor({
     channelsUrl,
+    usersUrl,
   }: {
-    channelsUrl:string;
+    channelsUrl: string;
+    usersUrl?: string;
   }) {
     this.channelsUrl = new URL(channelsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.channelsEndpoint = "channels";
   }
 
   /**
-  * @method CreateChannel - Creates a new channel
-  * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The created channel object.
-  * @throws {Error} - If the channel cannot be created.
-  */
+   * @method CreateChannel - Creates a new channel
+   * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The created channel object.
+   * @throws {Error} - If the channel cannot be created.
+   */
   public async CreateChannel(
     channel: Channel,
     domainId: string,
@@ -78,13 +89,13 @@ export default class Channels {
   }
 
   /**
-  * @method Channel - Retrieves a channel by its id.
-  * @param {string} channelId - The unique ID of the channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The requested channel object.
-  * @throws {Error} - If the channel cannot be fetched.
-  */
+   * @method Channel - Retrieves a channel by its id.
+   * @param {string} channelId - The unique ID of the channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The requested channel object.
+   * @throws {Error} - If the channel cannot be fetched.
+   */
   public async Channel(
     channelId: string,
     domainId: string,
@@ -117,13 +128,13 @@ export default class Channels {
   }
 
   /**
-  * @method CreateChannels - Creates multiple new channels.
-  * @param {Channel[]} channels - An array of channel objects, each containing details like name, metadata, and tags.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
-  * @throws {Error} - If the channels cannot be created.
-  */
+   * @method CreateChannels - Creates multiple new channels.
+   * @param {Channel[]} channels - An array of channel objects, each containing details like name, metadata, and tags.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
+   * @throws {Error} - If the channels cannot be created.
+   */
   public async CreateChannels(
     channels: Channel[],
     domainId: string,
@@ -157,13 +168,13 @@ export default class Channels {
   }
 
   /**
-  * @method Channels - Retrieves all channels matching the provided query parameters.
-  * @param {PageMetadata} queryParams - Query parameters for the request.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
-  * @throws {Error} - If the channels cannot be fetched.
-  */
+   * @method Channels - Retrieves all channels matching the provided query parameters.
+   * @param {PageMetadata} queryParams - Query parameters for the request.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
+   * @throws {Error} - If the channels cannot be fetched.
+   */
   public async Channels(
     queryParams: PageMetadata,
     domainId: string,
@@ -201,13 +212,13 @@ export default class Channels {
   }
 
   /**
-  * @method UpdateChannelNameAndMetadata - Updates an existing channel's metadata and name.
-  * @param {Channel} channel - Channel object with updated properties.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The updated channel object.
-  * @throws {Error} - If the channel cannot be updated.
-  */
+   * @method UpdateChannelNameAndMetadata - Updates an existing channel's metadata and name.
+   * @param {Channel} channel - Channel object with updated properties.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The updated channel object.
+   * @throws {Error} - If the channel cannot be updated.
+   */
   public async UpdateChannelNameAndMetadata(
     channel: Channel,
     domainId: string,
@@ -241,13 +252,13 @@ export default class Channels {
   }
 
   /**
-  * @method UpdateChannelTags - Updates an existing channel's tags.
-  * @param {Channel} channel - Channel object with updated properties.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The updated channel object.
-  * @throws {Error} - If the channel tags cannot be updated.
-  */
+   * @method UpdateChannelTags - Updates an existing channel's tags.
+   * @param {Channel} channel - Channel object with updated properties.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The updated channel object.
+   * @throws {Error} - If the channel tags cannot be updated.
+   */
   public async UpdateChannelTags(
     channel: Channel,
     domainId: string,
@@ -281,13 +292,13 @@ export default class Channels {
   }
 
   /**
-  * @method DisableChannel - Disables a spcific channel.
-  * @param {string} channelId - The  unique ID of the channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The disabled channel object.
-  * @throws {Error} - If the channel cannot be disabled.
-  */
+   * @method DisableChannel - Disables a spcific channel.
+   * @param {string} channelId - The  unique ID of the channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The disabled channel object.
+   * @throws {Error} - If the channel cannot be disabled.
+   */
   public async DisableChannel(
     channelId: string,
     domainId: string,
@@ -320,13 +331,13 @@ export default class Channels {
   }
 
   /**
-  * @method EnableChannel - Enables a previously disabled channel.
-  * @param {string} channelId - The  unique ID of the channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Channel>} channel - The enabled channel object.
-  * @throws {Error} - If the channel cannot be enabled.
-  */
+   * @method EnableChannel - Enables a previously disabled channel.
+   * @param {string} channelId - The  unique ID of the channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Channel>} channel - The enabled channel object.
+   * @throws {Error} - If the channel cannot be enabled.
+   */
   public async EnableChannel(
     channelId: string,
     domainId: string,
@@ -359,13 +370,13 @@ export default class Channels {
   }
 
   /**
-  * @method DeleteChannel - Deletes channel with specified id.
-  * @param {string} channelId - The  unique ID of the channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the channel is deleted.
-  * @throws {Error} - If the channel cannot be deleted.
-  */
+   * @method DeleteChannel - Deletes channel with specified id.
+   * @param {string} channelId - The  unique ID of the channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the channel is deleted.
+   * @throws {Error} - If the channel cannot be deleted.
+   */
   public async DeleteChannel(
     channelId: string,
     domainId: string,
@@ -380,7 +391,10 @@ export default class Channels {
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}`, this.channelsUrl).toString(),
+        new URL(
+          `${domainId}/${this.channelsEndpoint}/${channelId}`,
+          this.channelsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
@@ -398,15 +412,15 @@ export default class Channels {
   }
 
   /**
-  * @method ConnectClient - Connects multiple clients to a channel.
-  * @param {string[]} clientIds - An array of unique clients IDs to be connected.
-  * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
-  * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channel.
-  * @throws {Error} - If the clients cannot be connected to the channel.
-  */
+   * @method ConnectClient - Connects multiple clients to a channel.
+   * @param {string[]} clientIds - An array of unique clients IDs to be connected.
+   * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
+   * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channel.
+   * @throws {Error} - If the clients cannot be connected to the channel.
+   */
   public async ConnectClient(
     clientIds: string[],
     channelId: string,
@@ -420,7 +434,11 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ client_ids: clientIds, channel_id: channelId, types: connectionTypes }),
+      body: JSON.stringify({
+        client_ids: clientIds,
+        channel_id: channelId,
+        types: connectionTypes,
+      }),
     };
     try {
       const response = await fetch(
@@ -445,15 +463,15 @@ export default class Channels {
   }
 
   /**
-  * @method Connect - Connects multiple clients to multple channels.
-  * @param {string[]} clientIds - An array of unique clients IDs to be connected.
-  * @param {string[]} channelIds - An array of unique channels IDs to which the clients will connect.
-  * @param {string[]} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-  * @param {string} domainId - The  unique ID of the channel.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channels.
-  * @throws {Error} - If the clients cannot be connected to the channel.
-  */
+   * @method Connect - Connects multiple clients to multple channels.
+   * @param {string[]} clientIds - An array of unique clients IDs to be connected.
+   * @param {string[]} channelIds - An array of unique channels IDs to which the clients will connect.
+   * @param {string[]} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
+   * @param {string} domainId - The  unique ID of the channel.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channels.
+   * @throws {Error} - If the clients cannot be connected to the channel.
+   */
   public async Connect(
     clientIds: string[],
     channelIds: string[],
@@ -467,11 +485,18 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ client_ids: clientIds, channel_ids: channelIds, types: connectionTypes }),
+      body: JSON.stringify({
+        client_ids: clientIds,
+        channel_ids: channelIds,
+        types: connectionTypes,
+      }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.channelsEndpoint}/connect`, this.channelsUrl).toString(),
+        new URL(
+          `${domainId}/${this.channelsEndpoint}/connect`,
+          this.channelsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
@@ -489,15 +514,15 @@ export default class Channels {
   }
 
   /**
-  * @method Disconnect - Disconnects clients from channels.
-  * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
-  * @param {string[]} channelIds -  An array of unique channels IDs to which the clients will disconnect.
-  * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channels.
-  * @throws {Error} - If the clients cannot be disconnected from the channels.
-  */
+   * @method Disconnect - Disconnects clients from channels.
+   * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
+   * @param {string[]} channelIds -  An array of unique channels IDs to which the clients will disconnect.
+   * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channels.
+   * @throws {Error} - If the clients cannot be disconnected from the channels.
+   */
   public async Disconnect(
     clientIds: string[],
     channelIds: string[],
@@ -511,11 +536,18 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ client_ids: clientIds, channel_ids: channelIds, types: connectionTypes }),
+      body: JSON.stringify({
+        client_ids: clientIds,
+        channel_ids: channelIds,
+        types: connectionTypes,
+      }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.channelsEndpoint}/disconnect`, this.channelsUrl).toString(),
+        new URL(
+          `${domainId}/${this.channelsEndpoint}/disconnect`,
+          this.channelsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
@@ -533,15 +565,15 @@ export default class Channels {
   }
 
   /**
-  * @method DisconnectClient - Disconnects clients from channel.
-  * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
-  * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
-  * @param {string[]} connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channel.
-  * @throws {Error} - If the clients cannot be disconnected from the channel.
-  */
+   * @method DisconnectClient - Disconnects clients from channel.
+   * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
+   * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
+   * @param {string[]} connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channel.
+   * @throws {Error} - If the clients cannot be disconnected from the channel.
+   */
   public async DisconnectClient(
     clientIds: string[],
     channelId: string,
@@ -555,7 +587,11 @@ export default class Channels {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ client_ids: clientIds, channel_id: channelId, types: connectionTypes }),
+      body: JSON.stringify({
+        client_ids: clientIds,
+        channel_id: channelId,
+        types: connectionTypes,
+      }),
     };
     try {
       const response = await fetch(
@@ -580,33 +616,44 @@ export default class Channels {
   }
 
   /**
-  * @method SetChannelParentGroup - Sets parent to a channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} channelId - The unique ID of the channel to be updated.
-  * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified channel.
-  * @throws {Error} - If the parent group cannot be set for the channel.
-  */
-  public async SetChannelParentGroup(domainId: string, channelId: string, parentGroupId: string, token: string) : Promise<Response> {
+   * @method SetChannelParentGroup - Sets parent to a channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} channelId - The unique ID of the channel to be updated.
+   * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully set for the specified channel.
+   * @throws {Error} - If the parent group cannot be set for the channel.
+   */
+  public async SetChannelParentGroup(
+    domainId: string,
+    channelId: string,
+    parentGroupId: string,
+    token: string
+  ): Promise<Response> {
     const options: RequestInit = {
       method: "POST",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ parent_group_id: parentGroupId })
+      body: JSON.stringify({ parent_group_id: parentGroupId }),
     };
     try {
       const response = await fetch(
-        new URL(`${domainId}/${this.channelsEndpoint}/${channelId}/parent`, this.channelsUrl).toString(),
+        new URL(
+          `${domainId}/${this.channelsEndpoint}/${channelId}/parent`,
+          this.channelsUrl
+        ).toString(),
         options
       );
       if (!response.ok) {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const addChannelParentsResponse: Response = { status: response.status, message: "Channel group parent added successfully" };
+      const addChannelParentsResponse: Response = {
+        status: response.status,
+        message: "Channel group parent added successfully",
+      };
       return addChannelParentsResponse;
     } catch (error) {
       throw error;
@@ -614,19 +661,23 @@ export default class Channels {
   }
 
   /**
-  * @method DeleteChannelParentGroup - Removes the parent group from a specified channel.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @param {string} channelId - The  unique ID of the channel.
-  * @param {string} token - Authorization token.
-  * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified channel.
-  * @throws {Error} - If the parent group cannot removed from the channel.
-  */
-  public async DeleteChannelParentGroup(domainId: string, channelId: string, token: string) : Promise<Response> {
+   * @method DeleteChannelParentGroup - Removes the parent group from a specified channel.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} channelId - The  unique ID of the channel.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified channel.
+   * @throws {Error} - If the parent group cannot removed from the channel.
+   */
+  public async DeleteChannelParentGroup(
+    domainId: string,
+    channelId: string,
+    token: string
+  ): Promise<Response> {
     const options: RequestInit = {
       method: "DELETE",
       headers: {
         "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     };
     try {
@@ -641,8 +692,57 @@ export default class Channels {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const deleteChannelParentsResponse: Response = { status: response.status, message: "Channel group parent deleted successfully" };
+      const deleteChannelParentsResponse: Response = {
+        status: response.status,
+        message: "Channel group parent deleted successfully",
+      };
       return deleteChannelParentsResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListChannelUsers - Retrieves a list of users associated with a specific channel.
+   * @param {string} channelId - The  unique ID of the channel.
+   * @param {PageMetadata} queryParams - Query parameters for the request.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<UsersPage>} usersPage - A page of users.
+   * @throws {Error} - If the users of the channel cannot be fetched.
+   */
+  public async ListChannelUsers(
+    channelId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<UsersPage> {
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/channels/${channelId}/users?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.usersUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const usersData: UsersPage = await response.json();
+      return usersData;
     } catch (error) {
       throw error;
     }

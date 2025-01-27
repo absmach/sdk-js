@@ -12,6 +12,7 @@ import type {
   BasicPageMeta,
   HierarchyPageMeta,
   HierarchyPage,
+  UsersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -21,6 +22,8 @@ import Roles from "./roles";
  */
 export default class Groups {
   private readonly groupsUrl: URL;
+
+  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -33,9 +36,21 @@ export default class Groups {
    * Initializes the Groups API client.
    * @param {object} config - Configuration object.
    * @param {string} config.groupsUrl - Base URL for the groups API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({ groupsUrl }: { groupsUrl: string }) {
+  public constructor({
+    groupsUrl,
+    usersUrl,
+  }: {
+    groupsUrl: string;
+    usersUrl?: string;
+  }) {
     this.groupsUrl = new URL(groupsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
     this.groupRoles = new Roles();
@@ -653,6 +668,52 @@ export default class Groups {
 
       const groups: GroupsPage = await response.json();
       return groups;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListGroupUsers - Retrieves a list of users associated with a specific group.
+   * @param {string} groupId - The  unique ID of the group.
+   * @param {PageMetadata} queryParams - Query parameters for the request.
+   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<UsersPage>} usersPage - A page of users.
+   * @throws {Error} - If the users of the group cannot be fetched.
+   */
+  public async ListGroupUsers(
+    groupId: string,
+    queryParams: PageMetadata,
+    domainId: string,
+    token: string
+  ): Promise<UsersPage> {
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/groups/${groupId}/users?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          this.usersUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const usersData: UsersPage = await response.json();
+      return usersData;
     } catch (error) {
       throw error;
     }

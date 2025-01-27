@@ -11,6 +11,7 @@ import type {
   Role,
   RolePage,
   BasicPageMeta,
+  UsersPage,
 } from "./defs";
 
 /**
@@ -19,6 +20,8 @@ import type {
  */
 export default class Clients {
   private readonly clientsUrl: URL;
+
+  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -31,9 +34,21 @@ export default class Clients {
    * Initializes the Clients API client.
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({ clientsUrl }: { clientsUrl: string }) {
+  public constructor({
+    clientsUrl,
+    usersUrl,
+  }: {
+    clientsUrl: string;
+    usersUrl?: string;
+  }) {
     this.clientsUrl = new URL(clientsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
     this.clientRoles = new Roles();
@@ -407,20 +422,20 @@ export default class Clients {
   }
 
   /**
-   * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
-   * @param {string} userId - The  unique ID of the user.
+   * @method ListClientUsers - Retrieves a list of users associated with a specific client.
+   * @param {string} clientId - The  unique ID of the client.
    * @param {PageMetadata} queryParams - Query parameters for the request.
    * @param {string} domainId - The  unique ID of the domain.
    * @param {string} token - Authorization token.
-   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-   * @throws {Error} - If the clients cannot be fetched.
+   * @returns {Promise<UsersPage>} usersPage - A page of users.
+   * @throws {Error} - If the users of the client cannot be fetched.
    */
-  public async ListUserClients(
-    userId: string,
+  public async ListClientUsers(
+    clientId: string,
     queryParams: PageMetadata,
     domainId: string,
     token: string
-  ): Promise<ClientsPage> {
+  ): Promise<UsersPage> {
     const stringParams: Record<string, string> = Object.fromEntries(
       Object.entries(queryParams).map(([key, value]) => [key, String(value)])
     );
@@ -434,10 +449,10 @@ export default class Clients {
     try {
       const response = await fetch(
         new URL(
-          `${domainId}/users/${userId}/clients?${new URLSearchParams(
+          `${domainId}/clients/${clientId}/users?${new URLSearchParams(
             stringParams
           ).toString()}`,
-          this.clientsUrl
+          this.usersUrl
         ).toString(),
         options
       );
@@ -445,8 +460,8 @@ export default class Clients {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const clientsData: ClientsPage = await response.json();
-      return clientsData;
+      const usersData: UsersPage = await response.json();
+      return usersData;
     } catch (error) {
       throw error;
     }
