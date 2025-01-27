@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.5
+
+### Patch Changes
+
+- 188e93e: Add channel level role management
+
 ## 0.10.4
 
 ### Patch Changes
