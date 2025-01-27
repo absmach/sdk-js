@@ -4,9 +4,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type {
-  Client, ClientsPage
-} from "../src/sdk";
+import type { Client, ClientsPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -43,7 +41,6 @@ describe("Clients", () => {
     limit: 0,
   };
   const clientId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
-  const userId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
   const groupId = "1be56995-aa42-4940-88e3-1fb1e82065fa";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
@@ -87,15 +84,22 @@ describe("Clients", () => {
   test("Update client secret should update a client's secret", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
-    const response = await sdk.clients.UpdateClientSecret(client, domainId, token);
+    const response = await sdk.clients.UpdateClientSecret(
+      client,
+      domainId,
+      token
+    );
     expect(response).toEqual(client);
   });
 
   test("Update client tags should update a client's tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
-    const response = await sdk.clients
-      .UpdateClientTags(client, domainId, token);
+    const response = await sdk.clients.UpdateClientTags(
+      client,
+      domainId,
+      token
+    );
     expect(response).toEqual(client);
   });
 
@@ -119,19 +123,6 @@ describe("Clients", () => {
     const response = await sdk.clients.Clients(queryParams, domainId, token);
     expect(response).toEqual(clientsPage);
   });
-
-  test("List user clients should list clients linked to a user", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
-
-    const response = await sdk.clients.ListUserClients(
-      userId,
-      queryParams,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(clientsPage);
-  });
-
   test("Set client parent group should set a group parent to a Client", async () => {
     const ClientParentsResponse = {
       status: 200,
@@ -143,7 +134,7 @@ describe("Clients", () => {
       domainId,
       clientId,
       groupId,
-      token,
+      token
     );
     expect(response).toEqual(ClientParentsResponse);
   });
@@ -158,7 +149,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientParentGroup(
       domainId,
       clientId,
-      token,
+      token
     );
     expect(response).toEqual(ClientParentsResponse);
   });
@@ -176,7 +167,9 @@ describe("Clients", () => {
 
   test("List client actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
+    fetchMock.mockResponseOnce(
+      JSON.stringify({ available_actions: availableActions })
+    );
 
     const response = await sdk.clients.ListClientActions(domainId, token);
     expect(response).toEqual(availableActions);

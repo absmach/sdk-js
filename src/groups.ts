@@ -22,6 +22,8 @@ import Roles from "./roles";
 export default class Groups {
   private readonly groupsUrl: URL;
 
+  private readonly usersUrl?: URL;
+
   private readonly contentType: string;
 
   private readonly groupsEndpoint: string;
@@ -33,9 +35,21 @@ export default class Groups {
    * Initializes the Groups API client.
    * @param {object} config - Configuration object.
    * @param {string} config.groupsUrl - Base URL for the groups API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({ groupsUrl }: { groupsUrl: string }) {
+  public constructor({
+    groupsUrl,
+    usersUrl,
+  }: {
+    groupsUrl: string;
+    usersUrl?: string;
+  }) {
     this.groupsUrl = new URL(groupsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
     this.groupRoles = new Roles();

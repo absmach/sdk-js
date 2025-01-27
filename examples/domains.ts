@@ -59,15 +59,6 @@ mySdk.domains
   });
 
 mySdk.domains
-  .ListDomainUsers(domainId, { offset: 0, limit: 10 }, token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-mySdk.domains
   .EnableDomain(domainId, token)
   .then((response: any) => {
     console.log("response: ", response);

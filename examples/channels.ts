@@ -7,6 +7,7 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   channelsUrl: `${defaultUrl}:9005`,
+  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "<token>";

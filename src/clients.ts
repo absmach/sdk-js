@@ -20,6 +20,8 @@ import type {
 export default class Clients {
   private readonly clientsUrl: URL;
 
+  private readonly usersUrl?: URL;
+
   private readonly contentType: string;
 
   private readonly clientsEndpoint: string;
@@ -31,9 +33,21 @@ export default class Clients {
    * Initializes the Clients API client.
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({ clientsUrl }: { clientsUrl: string }) {
+  public constructor({
+    clientsUrl,
+    usersUrl,
+  }: {
+    clientsUrl: string;
+    usersUrl?: string;
+  }) {
     this.clientsUrl = new URL(clientsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
     this.clientRoles = new Roles();
@@ -389,52 +403,6 @@ export default class Clients {
       const response = await fetch(
         new URL(
           `${domainId}/${this.clientsEndpoint}?${new URLSearchParams(
-            stringParams
-          ).toString()}`,
-          this.clientsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const clientsData: ClientsPage = await response.json();
-      return clientsData;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
-   * @param {string} userId - The  unique ID of the user.
-   * @param {PageMetadata} queryParams - Query parameters for the request.
-   * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} token - Authorization token.
-   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-   * @throws {Error} - If the clients cannot be fetched.
-   */
-  public async ListUserClients(
-    userId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<ClientsPage> {
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/users/${userId}/clients?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.clientsUrl

@@ -26,15 +26,28 @@ export default class Channels {
   private readonly channelsUrl: URL;
 
   private readonly channelRoles: Roles;
+  private readonly usersUrl?: URL;
 
   /**
    * @constructor
    * Initializes the Channel API client.
    * @param {object} config - Configuration object.
    * @param {string} config.channelsUrl - Base URL for the channels API.
+   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({ channelsUrl }: { channelsUrl: string }) {
+  public constructor({
+    channelsUrl,
+    usersUrl,
+  }: {
+    channelsUrl: string;
+    usersUrl?: string;
+  }) {
     this.channelsUrl = new URL(channelsUrl);
+    if (usersUrl !== undefined) {
+      this.usersUrl = new URL(usersUrl);
+    } else {
+      this.usersUrl = new URL("");
+    }
     this.contentType = "application/json";
     this.channelsEndpoint = "channels";
     this.channelRoles = new Roles();

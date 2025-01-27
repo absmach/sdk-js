@@ -32,6 +32,7 @@ describe("Channels", () => {
     offset: 0,
     limit: 10,
   };
+
   const channelId = "290b0f49-7a57-4b8c-9e4e-fbf17c6ab7d9";
   const groupId = "1be56995-aa42-4940-88e3-1fb1e82065fa";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";

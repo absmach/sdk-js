@@ -384,11 +384,50 @@ export interface Role {
   updated_by?: string;
 }
 
+export interface RoleProvision extends Role {
+  optional_actions?: string[];
+  optional_members?: string[];
+}
+
 export interface RolePage {
   roles: Role[];
   total: number;
   offset: number;
   limit: number;
+}
+
+export interface MemberRoleActions {
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
+  access_provider_id?: string;
+  access_provider_path?: string;
+  access_type?: string;
+}
+
+export interface MemberRoles {
+  member_id?: string;
+  roles?: MemberRoleActions[];
+}
+
+export interface MemberRolesPage {
+  member_roles: MemberRoles[];
+  total: number;
+  offset: number;
+  limit: number;
+}
+
+export interface MembersRolePageQuery {
+  total?: number;
+  offset?: number;
+  limit?: number;
+  order_by?: string;
+  dir?: string;
+  access_provider_id?: string;
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
+  access_type?: string;
 }
 
 export interface EntityActionRole {
