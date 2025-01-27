@@ -43,7 +43,7 @@ export default class Channels {
   /**
    * @method CreateChannel - Creates a new channel
    * @param {Channel} channel - Channel object with a containing details like name, metadata and tags.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The created channel object.
    * @throws {Error} - If the channel cannot be created.
@@ -83,7 +83,7 @@ export default class Channels {
   /**
    * @method Channel - Retrieves a channel by its id.
    * @param {string} channelId - The unique ID of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The requested channel object.
    * @throws {Error} - If the channel cannot be fetched.
@@ -122,7 +122,7 @@ export default class Channels {
   /**
    * @method CreateChannels - Creates multiple new channels.
    * @param {Channel[]} channels - An array of channel objects, each containing details like name, metadata, and tags.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
    * @throws {Error} - If the channels cannot be created.
@@ -162,7 +162,7 @@ export default class Channels {
   /**
    * @method Channels - Retrieves all channels matching the provided query parameters.
    * @param {PageMetadata} queryParams - Query parameters for the request.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<ChannelsPage>} channelsPage - A page of channels.
    * @throws {Error} - If the channels cannot be fetched.
@@ -206,7 +206,7 @@ export default class Channels {
   /**
    * @method UpdateChannelNameAndMetadata - Updates an existing channel's metadata and name.
    * @param {Channel} channel - Channel object with updated properties.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The updated channel object.
    * @throws {Error} - If the channel cannot be updated.
@@ -246,7 +246,7 @@ export default class Channels {
   /**
    * @method UpdateChannelTags - Updates an existing channel's tags.
    * @param {Channel} channel - Channel object with updated properties.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The updated channel object.
    * @throws {Error} - If the channel tags cannot be updated.
@@ -284,9 +284,9 @@ export default class Channels {
   }
 
   /**
-   * @method DisableChannel - Disables a spcific channel.
-   * @param {string} channelId - The  unique ID of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @method DisableChannel - Disables a specific channel.
+   * @param {string} channelId - The unique ID of the channel.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The disabled channel object.
    * @throws {Error} - If the channel cannot be disabled.
@@ -324,8 +324,8 @@ export default class Channels {
 
   /**
    * @method EnableChannel - Enables a previously disabled channel.
-   * @param {string} channelId - The  unique ID of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} channelId - The unique ID of the channel.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Channel>} channel - The enabled channel object.
    * @throws {Error} - If the channel cannot be enabled.
@@ -363,8 +363,8 @@ export default class Channels {
 
   /**
    * @method DeleteChannel - Deletes channel with specified id.
-   * @param {string} channelId - The  unique ID of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} channelId - The unique ID of the channel.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the channel is deleted.
    * @throws {Error} - If the channel cannot be deleted.
@@ -407,8 +407,8 @@ export default class Channels {
    * @method ConnectClient - Connects multiple clients to a channel.
    * @param {string[]} clientIds - An array of unique clients IDs to be connected.
    * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
-   * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string[]}connectionTypes - Connection types can be 'publish', 'subscribe' or both.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channel.
    * @throws {Error} - If the clients cannot be connected to the channel.
@@ -459,7 +459,7 @@ export default class Channels {
    * @param {string[]} clientIds - An array of unique clients IDs to be connected.
    * @param {string[]} channelIds - An array of unique channels IDs to which the clients will connect.
    * @param {string[]} connectionTypes - Connection types can be publish, subscribe or both publish and subscribe
-   * @param {string} domainId - The  unique ID of the channel.
+   * @param {string} domainId - The unique ID of the channel.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the clients are connected to the channels.
    * @throws {Error} - If the clients cannot be connected to the channel.
@@ -510,7 +510,7 @@ export default class Channels {
    * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
    * @param {string[]} channelIds -  An array of unique channels IDs to which the clients will disconnect.
    * @param {string[]}connectionTypes - Connection types can be publish, subscribe or both publish and subscribe.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channels.
    * @throws {Error} - If the clients cannot be disconnected from the channels.
@@ -561,7 +561,7 @@ export default class Channels {
    * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
    * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
    * @param {string[]} connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the clients are disconnected from the channel.
    * @throws {Error} - If the clients cannot be disconnected from the channel.
@@ -609,7 +609,7 @@ export default class Channels {
 
   /**
    * @method SetChannelParentGroup - Sets parent to a channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} channelId - The unique ID of the channel to be updated.
    * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
    * @param {string} token - Authorization token.
@@ -654,11 +654,11 @@ export default class Channels {
 
   /**
    * @method DeleteChannelParentGroup - Removes the parent group from a specified channel.
-   * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} channelId - The  unique ID of the channel.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} channelId - The unique ID of the channel.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified channel.
-   * @throws {Error} - If the parent group cannot removed from the channel.
+   * @throws {Error} - If the parent group cannot be removed from the channel.
    */
   public async DeleteChannelParentGroup(
     domainId: string,
@@ -720,7 +720,7 @@ export default class Channels {
   /**
    * @method CreateChannelRole - Creates a new role within a specific channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleName - The name of the role to create.
    * @param {string} token - Authorization token.
    * @param {string[]} optionalActions - Optional actions assigned to the role.
@@ -755,7 +755,7 @@ export default class Channels {
   /**
    * @method ListChannelRoles - Lists all roles within a specific channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {PageMetadata} queryParams - Metadata for pagination or filters.
    * @param {string} token - Authorization token.
    * @returns {Promise<RolePage>} rolePage - A promise that resolves with a page of roles in the domain.
@@ -784,7 +784,7 @@ export default class Channels {
   /**
    * @method ViewChannelRole - Retrieves details about a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the role details.
@@ -813,7 +813,7 @@ export default class Channels {
   /**
    * @method UpdateChannelRole - Updates the details of a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {Role} role - The role to be updated.
    * @param {string} token - Authorization token.
@@ -845,7 +845,7 @@ export default class Channels {
   /**
    * @method DeleteChannelRole - Deletes a specific role from a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the role is deleted.
@@ -874,7 +874,7 @@ export default class Channels {
   /**
    * @method AddChannelRoleActions - Adds actions to a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @param {string[]} actions - The actions to add to the role.
@@ -906,7 +906,7 @@ export default class Channels {
   /**
    * @method ListChannelRoleActions - Lists all actions associated with a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} role actions - A promise that resolves with an array of actions.
@@ -935,7 +935,7 @@ export default class Channels {
   /**
    * @method DeleteChannelRoleActions - Deletes specific actions from a role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - The actions to delete from the role.
    * @param {string} token - Authorization token.
@@ -967,7 +967,7 @@ export default class Channels {
   /**
    * @method DeleteAllChannelRoleActions - Deletes all actions associated with a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all actions are deleted.
@@ -996,7 +996,7 @@ export default class Channels {
   /**
    * @method AddChannelRoleMembers - Adds members to a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to add.
    * @param {string} token - Authorization token.
@@ -1028,7 +1028,7 @@ export default class Channels {
   /**
    * @method ListChannelRoleMembers - Lists all members associated with a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
@@ -1059,7 +1059,7 @@ export default class Channels {
   /**
    * @method DeleteChannelRoleMembers - Deletes specific members from a role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to delete.
    * @param {string} token - Authorization token.
@@ -1091,7 +1091,7 @@ export default class Channels {
   /**
    * @method DeleteAllChannelRoleMembers - Deletes all members associated with a specific role in a channel.
    * @param {string} channelId - The unique identifier of the channel.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all members are deleted.
