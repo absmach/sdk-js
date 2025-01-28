@@ -22,8 +22,8 @@ jobs:
         run: |
           CHECK=""
           for file in $(grep -rl --exclude-dir={.git,build,.changeset} \
-            --exclude=\*.{crt,key,pem,zed,hcl,md,json,csv,mod,sum,tmpl,args,eslintignore,prettierrc,bundle.js,prettierignore} \
-            --exclude={CODEOWNERS,LICENSE,MAINTAINERS} \
+            --exclude=\*.{md,json,eslintignore,prettierrc,prettierignore} \
+            --exclude={bundle.js,LICENSE} \
             .); do
               
               if ! head -n 5 "$file" | grep -q "Copyright (c) Abstract Machines"; then
