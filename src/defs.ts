@@ -173,7 +173,9 @@ export interface DomainBasicInfo {
 export interface Domain extends DomainBasicInfo {
   tags?: string[];
   metadata?: Record<string, any>;
-  permission?: string;
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
   created_by?: string | UserBasicInfo;
   updated_by?: string | UserBasicInfo;
   created_at?: Date;
