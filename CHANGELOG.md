@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.7
+
+### Patch Changes
+
+- e48f976: add role and actions to domain struct
+
 ## 0.10.6
 
 ### Patch Changes
