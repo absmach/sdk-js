@@ -16,7 +16,6 @@ describe("Domains", () => {
     id: "886b4266-77d1-4258-abae-2931fb4f16de",
     name: "fkatwigs",
     alias: "music",
-    permission: "admin",
     status: "enabled",
   };
 
