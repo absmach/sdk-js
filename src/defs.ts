@@ -63,7 +63,7 @@ export interface Client extends ClientBasicInfo {
   access_provider_role_id?: string;
   access_provider_role_name?: string;
   access_provider_role_actions?: string[];
-  connection_type?: string[];
+  connection_types?: string[];
 }
 
 export interface ClientsPage {
@@ -142,7 +142,7 @@ export interface Channel extends ChannelBasicInfo {
   access_provider_role_id?: string;
   access_provider_role_name?: string;
   access_provider_role_actions?: string[];
-  connection_type?: string[];
+  connection_types?: string[];
 }
 
 export interface ChannelsPage {
