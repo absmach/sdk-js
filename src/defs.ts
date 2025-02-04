@@ -411,7 +411,7 @@ export interface MemberRoles {
 }
 
 export interface MemberRolesPage {
-  member_roles: MemberRoles[];
+  members: MemberRoles[];
   total: number;
   offset: number;
   limit: number;

@@ -133,7 +133,7 @@ class SDK {
     this.clients = new Clients({ clientsUrl, usersUrl });
     this.certs = new Certs(certsUrl);
     this.groups = new Groups({ groupsUrl, usersUrl });
-    this.channels = new Channels({ channelsUrl, usersUrl });
+    this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
     this.invitations = new Invitations(invitationsUrl);
     this.bootstrap = new Bootstrap(bootstrapUrl);

@@ -4,7 +4,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type { Channel, ChannelsPage } from "../src/sdk";
+import type { Channel, ChannelsPage, MemberRolesPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -47,9 +47,36 @@ describe("Channels", () => {
   ];
   const connectionType = ["publish"];
   const roleName = "editor";
+  const roleId = "channel_RYYW2unQ5K18jYgjRmb3lMFB";
   const actions = ["read", "write"];
   const members = ["user1", "user2"];
   const role = { name: roleName, actions, members };
+
+  const membersPage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
+  };
 
   beforeEach(() => {
     fetchMock.resetMocks();
@@ -288,7 +315,7 @@ describe("Channels", () => {
     const response = await sdk.channels.ViewChannelRole(
       channelId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(role);
@@ -301,7 +328,7 @@ describe("Channels", () => {
     const response = await sdk.channels.UpdateChannelRole(
       channelId,
       domainId,
-      roleName,
+      roleId,
       updatedRole,
       token
     );
@@ -318,7 +345,7 @@ describe("Channels", () => {
     const response = await sdk.channels.DeleteChannelRole(
       channelId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -331,7 +358,7 @@ describe("Channels", () => {
     const response = await sdk.channels.AddChannelRoleActions(
       channelId,
       domainId,
-      roleName,
+      roleId,
       ["execute"],
       token
     );
@@ -344,7 +371,7 @@ describe("Channels", () => {
     const response = await sdk.channels.ListChannelRoleActions(
       channelId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(actions);
@@ -360,7 +387,7 @@ describe("Channels", () => {
     const response = await sdk.channels.DeleteChannelRoleActions(
       channelId,
       domainId,
-      roleName,
+      roleId,
       ["write"],
       token
     );
@@ -377,7 +404,7 @@ describe("Channels", () => {
     const response = await sdk.channels.DeleteAllChannelRoleActions(
       channelId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -390,7 +417,7 @@ describe("Channels", () => {
     const response = await sdk.channels.AddChannelRoleMembers(
       channelId,
       domainId,
-      roleName,
+      roleId,
       ["user3"],
       token
     );
@@ -403,7 +430,7 @@ describe("Channels", () => {
     const response = await sdk.channels.ListChannelRoleMembers(
       channelId,
       domainId,
-      roleName,
+      roleId,
       { offset: 0, limit: 10 },
       token
     );
@@ -420,7 +447,7 @@ describe("Channels", () => {
     const response = await sdk.channels.DeleteChannelRoleMembers(
       channelId,
       domainId,
-      roleName,
+      roleId,
       ["user1"],
       token
     );
@@ -437,9 +464,21 @@ describe("Channels", () => {
     const response = await sdk.channels.DeleteAllChannelRoleMembers(
       channelId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
+  });
+
+  test("List channel members should return members of a specific channel", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
+
+    const response = await sdk.channels.ListChannelMembers(
+      channelId,
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersPage);
   });
 });

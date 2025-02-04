@@ -7,7 +7,6 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   channelsUrl: `${defaultUrl}:9005`,
-  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "<token>";
@@ -339,6 +338,15 @@ mySdk.channels
 
 mySdk.channels
   .DeleteAllChannelRoleMembers("<channelId>", domainId, "<roleId>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.channels
+  .ListChannelMembers("<channelId>", domainId, { offset: 0, limit: 10 }, token)
   .then((response) => {
     console.log("response: ", response);
   })

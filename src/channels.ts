@@ -11,6 +11,7 @@ import type {
   Role,
   RolePage,
   BasicPageMeta,
+  MemberRolesPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -27,8 +28,6 @@ export default class Channels {
 
   private readonly channelRoles: Roles;
 
-  private readonly usersUrl?: URL;
-
   /**
    * @constructor
    * Initializes the Channel API client.
@@ -36,19 +35,9 @@ export default class Channels {
    * @param {string} config.channelsUrl - Base URL for the channels API.
    * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({
-    channelsUrl,
-    usersUrl,
-  }: {
-    channelsUrl: string;
-    usersUrl?: string;
-  }) {
+  public constructor({ channelsUrl }: { channelsUrl: string }) {
     this.channelsUrl = new URL(channelsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
+
     this.contentType = "application/json";
     this.channelsEndpoint = "channels";
     this.channelRoles = new Roles();
@@ -1056,7 +1045,7 @@ export default class Channels {
     token: string
   ): Promise<string[]> {
     try {
-      const updatedRole = await this.channelRoles.ListRoleMembers(
+      const members = await this.channelRoles.ListRoleMembers(
         this.channelsUrl,
         `${domainId}/${this.channelsEndpoint}`,
         channelId,
@@ -1064,7 +1053,7 @@ export default class Channels {
         queryParams,
         token
       );
-      return updatedRole;
+      return members;
     } catch (error) {
       throw error;
     }
@@ -1126,6 +1115,34 @@ export default class Channels {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListChannelMembers - Lists all members associated with a channel.
+   * @param {string} channelId - The unique identifier of the channel.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListChannelMembers(
+    channelId: string,
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.channelRoles.ListEntityMembers(
+        this.channelsUrl,
+        `${domainId}/${this.channelsEndpoint}`,
+        channelId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }
