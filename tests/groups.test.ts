@@ -8,6 +8,8 @@ import type {
   Group,
   GroupsPage,
   HierarchyPage,
+  MemberRolesPage,
+  MembersPage,
   Role,
   RolePage,
 } from "../src/sdk";
@@ -51,6 +53,44 @@ describe("Groups", () => {
     offset: 0,
     limit: 10,
     total: 1,
+  };
+
+  const roleId = "group_RYYW2unQ5K18jYgjRmb3lMFB";
+
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
   };
 
   const groupsPage: GroupsPage = {
@@ -291,7 +331,7 @@ describe("Groups", () => {
     const response = await sdk.groups.ViewGroupRole(
       groupId,
       domainId,
-      "editor",
+      roleId,
       token
     );
 
@@ -306,7 +346,7 @@ describe("Groups", () => {
     const response = await sdk.groups.UpdateGroupRole(
       groupId,
       domainId,
-      "editor",
+      roleId,
       updatedRole,
       token
     );
@@ -324,7 +364,7 @@ describe("Groups", () => {
     const response = await sdk.groups.DeleteGroupRole(
       groupId,
       domainId,
-      "editor",
+      roleId,
       token
     );
     expect(response).toEqual(removeParentResponse);
@@ -336,7 +376,7 @@ describe("Groups", () => {
     const response = await sdk.groups.AddGroupRoleActions(
       groupId,
       domainId,
-      "editor",
+      roleId,
       actions,
       token
     );
@@ -350,7 +390,7 @@ describe("Groups", () => {
     const response = await sdk.groups.ListGroupRoleActions(
       groupId,
       domainId,
-      "editor",
+      roleId,
       token
     );
 
@@ -367,7 +407,7 @@ describe("Groups", () => {
     const response = await sdk.groups.DeleteGroupRoleActions(
       groupId,
       domainId,
-      "editor",
+      roleId,
       actions,
       token
     );
@@ -385,7 +425,7 @@ describe("Groups", () => {
     const response = await sdk.groups.DeleteAllGroupRoleActions(
       groupId,
       domainId,
-      "editor",
+      roleId,
       token
     );
 
@@ -397,7 +437,7 @@ describe("Groups", () => {
     const response = await sdk.groups.AddGroupRoleMembers(
       groupId,
       domainId,
-      "editor",
+      roleId,
       members,
       token
     );
@@ -406,17 +446,17 @@ describe("Groups", () => {
   });
 
   test("List group role members should return members", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await sdk.groups.ListGroupRoleMembers(
       groupId,
       domainId,
-      "editor",
+      roleId,
       { offset: 0, limit: 10 },
       token
     );
 
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("Delete group role members should return deletion response", async () => {
@@ -431,7 +471,7 @@ describe("Groups", () => {
     const response = await sdk.groups.DeleteGroupRoleMembers(
       groupId,
       domainId,
-      "editor",
+      roleId,
       remMembers,
       token
     );
@@ -449,10 +489,22 @@ describe("Groups", () => {
     const response = await sdk.groups.DeleteAllGroupRoleMembers(
       groupId,
       domainId,
-      "editor",
+      roleId,
       token
     );
 
     expect(response).toEqual(deleteMembersResponse);
+  });
+
+  test("List group members should return members of a specific group", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
+
+    const response = await sdk.groups.ListGroupMembers(
+      groupId,
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersRolePage);
   });
 });

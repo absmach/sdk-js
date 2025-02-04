@@ -55,7 +55,12 @@ export type {
   JournalsPageMetadata,
   HealthInfo,
   Role,
+  RoleProvision,
   RolePage,
+  MemberRoleActions,
+  MemberRoles,
+  MemberRolesPage,
+  MembersRolePageQuery,
   EntityActionRole,
   EntityMemberRole,
   MembersPage,
@@ -124,7 +129,7 @@ class SDK {
     rulesUrl = defaultUrl,
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, clientsUrl });
-    this.domains = new Domains({ domainsUrl, usersUrl });
+    this.domains = new Domains({ domainsUrl });
     this.clients = new Clients({ clientsUrl });
     this.certs = new Certs(certsUrl);
     this.groups = new Groups({ groupsUrl });

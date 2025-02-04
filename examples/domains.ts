@@ -7,7 +7,6 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   domainsUrl: `${defaultUrl}:9003`,
-  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "<token>";
@@ -51,15 +50,6 @@ mySdk.domains
 
 mySdk.domains
   .ListUserDomains("<userId>", { offset: 0, limit: 10 }, token)
-  .then((response: any) => {
-    console.log("response: ", response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-mySdk.domains
-  .ListDomainUsers(domainId, { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })
@@ -223,6 +213,15 @@ mySdk.domains
 
 mySdk.domains
   .DeleteAllDomainRoleMembers(domainId, "<roleId>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains
+  .ListDomainMembers(domainId, { offset: 0, limit: 10 }, token)
   .then((response) => {
     console.log("response: ", response);
   })

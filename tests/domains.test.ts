@@ -4,7 +4,12 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type { Domain, DomainsPage, User, UsersPage } from "../src/sdk";
+import type {
+  Domain,
+  DomainsPage,
+  MemberRolesPage,
+  MembersPage,
+} from "../src/sdk";
 
 enableFetchMocks();
 
@@ -26,10 +31,46 @@ describe("Domains", () => {
   const userId = "886b4266-77d1-4258-abae-2931fb4f16de";
 
   const roleName = "editor";
+  const roleId = "domain_RYYW2unQ5K18jYgjRmb3lMFB";
   const actions = ["read", "write"];
   const members = ["user1", "user2"];
   const role = { name: roleName, actions, members };
 
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
+  };
   const domainsPage: DomainsPage = {
     domains: [domain],
     total: 1,
@@ -38,27 +79,6 @@ describe("Domains", () => {
   };
 
   const queryParams = {
-    offset: 0,
-    limit: 10,
-  };
-
-  const user: User = {
-    id: "886b4266-77d1-4258-abae-2931fb4f16de",
-    first_name: "tahliah",
-    last_name: "barnett",
-    tags: ["holy", "terrain"],
-    email: "fkatwigs@email.com",
-    credentials: {
-      username: "fkatwigs@email.com",
-      secret: "12345678",
-    },
-    role: "administrator",
-    status: "enabled",
-  };
-
-  const usersPage: UsersPage = {
-    users: [user],
-    total: 1,
     offset: 0,
     limit: 10,
   };
@@ -106,17 +126,6 @@ describe("Domains", () => {
     expect(response).toEqual(domainsPage);
   });
 
-  test("List domain users should return a list of domain users", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(usersPage));
-
-    const response = await sdk.domains.ListDomainUsers(
-      domainId,
-      queryParams,
-      token
-    );
-    expect(response).toEqual(usersPage);
-  });
-
   test("Enable domain should enable a domain", async () => {
     const enableDomainResponse = {
       status: 200,
@@ -153,7 +162,9 @@ describe("Domains", () => {
 
   test("ListDomainActions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
+    fetchMock.mockResponseOnce(
+      JSON.stringify({ available_actions: availableActions })
+    );
 
     const response = await sdk.domains.ListDomainActions(token);
     expect(response).toEqual(availableActions);
@@ -187,11 +198,7 @@ describe("Domains", () => {
   test("ViewDomainRole should return details of a specific role", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(role));
 
-    const response = await sdk.domains.ViewDomainRole(
-      domainId,
-      roleName,
-      token
-    );
+    const response = await sdk.domains.ViewDomainRole(domainId, roleId, token);
     expect(response).toEqual(role);
   });
 
@@ -201,7 +208,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.UpdateDomainRole(
       domainId,
-      roleName,
+      roleId,
       updatedRole,
       token
     );
@@ -217,7 +224,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.DeleteDomainRole(
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -229,7 +236,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.AddDomainRoleActions(
       domainId,
-      roleName,
+      roleId,
       ["execute"],
       token
     );
@@ -241,7 +248,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.ListDomainRoleActions(
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(actions);
@@ -256,7 +263,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.DeleteDomainRoleActions(
       domainId,
-      roleName,
+      roleId,
       ["write"],
       token
     );
@@ -272,7 +279,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.DeleteAllDomainRoleActions(
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -284,7 +291,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.AddDomainRoleMembers(
       domainId,
-      roleName,
+      roleId,
       ["user3"],
       token
     );
@@ -292,15 +299,15 @@ describe("Domains", () => {
   });
 
   test("ListDomainRoleMembers should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await sdk.domains.ListDomainRoleMembers(
       domainId,
-      roleName,
+      roleId,
       { offset: 0, limit: 10 },
       token
     );
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("DeleteDomainRoleMembers should remove members from a role response", async () => {
@@ -312,7 +319,7 @@ describe("Domains", () => {
 
     const response = await sdk.domains.DeleteDomainRoleMembers(
       domainId,
-      roleName,
+      roleId,
       ["user1"],
       token
     );
@@ -328,9 +335,20 @@ describe("Domains", () => {
 
     const response = await sdk.domains.DeleteAllDomainRoleMembers(
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
+  });
+
+  test("List domain members should return members of a specific domain", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
+
+    const response = await sdk.domains.ListDomainMembers(
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersRolePage);
   });
 });

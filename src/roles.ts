@@ -7,6 +7,8 @@ import type {
   RolePage,
   Response,
   BasicPageMeta,
+  MembersRolePageQuery,
+  MemberRolesPage,
 } from "./defs";
 import Errors from "./errors";
 
@@ -431,8 +433,8 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const { members }: { members: string[] } = await response.json();
-      return members;
+      const membersPage = await response.json();
+      return membersPage;
     } catch (error) {
       throw error;
     }
@@ -509,6 +511,46 @@ export default class Roles {
         message: "Role members deleted successfully",
       };
       return deleteResponse;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async ListEntityMembers(
+    url: URL,
+    endpoint: string,
+    entityId: string,
+    queryParams: MembersRolePageQuery,
+    token: string
+  ) {
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const stringParams: Record<string, string> = Object.fromEntries(
+      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
+    );
+
+    try {
+      const response = await fetch(
+        new URL(
+          `${endpoint}/${entityId}/roles/members?${new URLSearchParams(
+            stringParams
+          ).toString()}`,
+          url
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const membersPage: MemberRolesPage = await response.json();
+      return membersPage;
     } catch (error) {
       throw error;
     }

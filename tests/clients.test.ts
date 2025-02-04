@@ -4,9 +4,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type {
-  Client, ClientsPage
-} from "../src/sdk";
+import type { Client, ClientsPage, MemberRolesPage, MembersPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -43,14 +41,50 @@ describe("Clients", () => {
     limit: 0,
   };
   const clientId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
-  const userId = "bb7edb32-2eac-4aad-aebe-ed96fe073879";
   const groupId = "1be56995-aa42-4940-88e3-1fb1e82065fa";
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
   const roleName = "editor";
+  const roleId = "client_RYYW2unQ5K18jYgjRmb3lMFB";
   const actions = ["read", "write"];
   const members = ["user1", "user2"];
   const role = { name: roleName, actions, members };
+
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
+  };
 
   beforeEach(() => {
     fetchMock.resetMocks();
@@ -87,15 +121,22 @@ describe("Clients", () => {
   test("Update client secret should update a client's secret", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
-    const response = await sdk.clients.UpdateClientSecret(client, domainId, token);
+    const response = await sdk.clients.UpdateClientSecret(
+      client,
+      domainId,
+      token
+    );
     expect(response).toEqual(client);
   });
 
   test("Update client tags should update a client's tags", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(client));
 
-    const response = await sdk.clients
-      .UpdateClientTags(client, domainId, token);
+    const response = await sdk.clients.UpdateClientTags(
+      client,
+      domainId,
+      token
+    );
     expect(response).toEqual(client);
   });
 
@@ -119,19 +160,6 @@ describe("Clients", () => {
     const response = await sdk.clients.Clients(queryParams, domainId, token);
     expect(response).toEqual(clientsPage);
   });
-
-  test("List user clients should list clients linked to a user", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(clientsPage));
-
-    const response = await sdk.clients.ListUserClients(
-      userId,
-      queryParams,
-      domainId,
-      token,
-    );
-    expect(response).toEqual(clientsPage);
-  });
-
   test("Set client parent group should set a group parent to a Client", async () => {
     const ClientParentsResponse = {
       status: 200,
@@ -143,7 +171,7 @@ describe("Clients", () => {
       domainId,
       clientId,
       groupId,
-      token,
+      token
     );
     expect(response).toEqual(ClientParentsResponse);
   });
@@ -158,7 +186,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientParentGroup(
       domainId,
       clientId,
-      token,
+      token
     );
     expect(response).toEqual(ClientParentsResponse);
   });
@@ -176,7 +204,9 @@ describe("Clients", () => {
 
   test("List client actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
+    fetchMock.mockResponseOnce(
+      JSON.stringify({ available_actions: availableActions })
+    );
 
     const response = await sdk.clients.ListClientActions(domainId, token);
     expect(response).toEqual(availableActions);
@@ -215,7 +245,7 @@ describe("Clients", () => {
     const response = await sdk.clients.ViewClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(role);
@@ -228,7 +258,7 @@ describe("Clients", () => {
     const response = await sdk.clients.UpdateClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       updatedRole,
       token
     );
@@ -245,7 +275,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -258,7 +288,7 @@ describe("Clients", () => {
     const response = await sdk.clients.AddClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["execute"],
       token
     );
@@ -271,7 +301,7 @@ describe("Clients", () => {
     const response = await sdk.clients.ListClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(actions);
@@ -287,7 +317,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["write"],
       token
     );
@@ -304,7 +334,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteAllClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -317,7 +347,7 @@ describe("Clients", () => {
     const response = await sdk.clients.AddClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["user3"],
       token
     );
@@ -325,16 +355,16 @@ describe("Clients", () => {
   });
 
   test("List client role members should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await sdk.clients.ListClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       { offset: 0, limit: 10 },
       token
     );
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("Delete client role members should remove members from a role response", async () => {
@@ -347,7 +377,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["user1"],
       token
     );
@@ -364,9 +394,21 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteAllClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
+  });
+
+  test("List client members should return members of a specific client", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
+
+    const response = await sdk.clients.ListClientMembers(
+      clientId,
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersRolePage);
   });
 });

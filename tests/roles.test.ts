@@ -3,6 +3,7 @@
 
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 import Roles from "../src/roles";
+import type { MemberRolesPage, MembersPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -19,13 +20,51 @@ describe("Roles", () => {
   const role = { name: roleName, actions, members };
   const queryParams = { offset: 0, limit: 10 };
 
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
+  };
+
   beforeEach(() => {
     fetchMock.resetMocks();
   });
 
   test("List available actions should return available actions", async () => {
     const availableActions = ["read", "write", "delete"];
-    fetchMock.mockResponseOnce(JSON.stringify({ available_actions: availableActions }));
+    fetchMock.mockResponseOnce(
+      JSON.stringify({ available_actions: availableActions })
+    );
 
     const response = await roles.ListAvailableActions(baseUrl, endpoint, token);
     expect(response).toEqual(availableActions);
@@ -184,7 +223,7 @@ describe("Roles", () => {
   });
 
   test("List role members should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await roles.ListRoleMembers(
       baseUrl,
@@ -194,7 +233,7 @@ describe("Roles", () => {
       queryParams,
       token
     );
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("Delete role members should remove members from a role  response", async () => {
@@ -230,5 +269,18 @@ describe("Roles", () => {
       token
     );
     expect(response).toEqual(successResponse);
+  });
+
+  test("List entity members should return members of a specific entity", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
+
+    const response = await roles.ListEntityMembers(
+      baseUrl,
+      endpoint,
+      entityId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersRolePage);
   });
 });

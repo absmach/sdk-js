@@ -11,6 +11,8 @@ import type {
   Role,
   RolePage,
   BasicPageMeta,
+  MemberRolesPage,
+  MembersPage,
 } from "./defs";
 
 /**
@@ -31,9 +33,11 @@ export default class Clients {
    * Initializes the Clients API client.
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
+
    */
   public constructor({ clientsUrl }: { clientsUrl: string }) {
     this.clientsUrl = new URL(clientsUrl);
+
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
     this.clientRoles = new Roles();
@@ -389,52 +393,6 @@ export default class Clients {
       const response = await fetch(
         new URL(
           `${domainId}/${this.clientsEndpoint}?${new URLSearchParams(
-            stringParams
-          ).toString()}`,
-          this.clientsUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const clientsData: ClientsPage = await response.json();
-      return clientsData;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * @method ListUserClients - Retrieves all clients that match the specified query parameters for the given userId.
-   * @param {string} userId - The  unique ID of the user.
-   * @param {PageMetadata} queryParams - Query parameters for the request.
-   * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} token - Authorization token.
-   * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
-   * @throws {Error} - If the clients cannot be fetched.
-   */
-  public async ListUserClients(
-    userId: string,
-    queryParams: PageMetadata,
-    domainId: string,
-    token: string
-  ): Promise<ClientsPage> {
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/users/${userId}/clients?${new URLSearchParams(
             stringParams
           ).toString()}`,
           this.clientsUrl
@@ -919,7 +877,7 @@ export default class Clients {
    * @param {string} domainId - The  unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
+   * @returns {Promise<MembersPage>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
    */
   public async ListClientRoleMembers(
@@ -928,7 +886,7 @@ export default class Clients {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const updatedRole = await this.clientRoles.ListRoleMembers(
         this.clientsUrl,
@@ -1000,6 +958,34 @@ export default class Clients {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListClientMembers - Lists all members associated with a client.
+   * @param {string} clientId - The unique identifier of the client.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListClientMembers(
+    clientId: string,
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.clientRoles.ListEntityMembers(
+        this.clientsUrl,
+        `${domainId}/${this.clientsEndpoint}`,
+        clientId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }

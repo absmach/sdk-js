@@ -344,3 +344,12 @@ mySdk.channels
   .catch((error) => {
     console.error(error);
   });
+
+mySdk.channels
+  .ListChannelMembers("<channelId>", domainId, { offset: 0, limit: 10 }, token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });

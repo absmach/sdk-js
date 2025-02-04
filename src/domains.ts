@@ -7,10 +7,11 @@ import type {
   PageMetadata,
   DomainsPage,
   Response,
-  UsersPage,
   Role,
   BasicPageMeta,
   RolePage,
+  MemberRolesPage,
+  MembersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -20,8 +21,6 @@ import Roles from "./roles";
  */
 export default class Domains {
   private readonly domainsUrl: URL;
-
-  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -34,21 +33,9 @@ export default class Domains {
    * Initializes the Domains API client.
    * @param {object} config - Configuration object.
    * @param {string} config.domainsUrl - Base URL for the domains API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({
-    domainsUrl,
-    usersUrl,
-  }: {
-    domainsUrl: string;
-    usersUrl?: string;
-  }) {
+  public constructor({ domainsUrl }: { domainsUrl: string }) {
     this.domainsUrl = new URL(domainsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
     this.contentType = "application/json";
     this.domainsEndpoint = "domains";
     this.domainRoles = new Roles();
@@ -240,49 +227,6 @@ export default class Domains {
         throw Errors.HandleError(errorRes.message, response.status);
       }
       const domainData: DomainsPage = await response.json();
-      return domainData;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * @method ListDomainUsers - Retrieves a list of users associated with a specific domain.
-   * @param {string} domainId - The unique ID of the domain.
-   * @param {PageMetadata} queryParams - Metadata for pagination or filters.
-   * @param {string} token - Authorization token.
-   * @returns {Promise<UsersPage>} usersPage - A page of users in the domain.
-   * @throws {Error} - If users of a domain cannot be fetched.
-   */
-  public async ListDomainUsers(
-    domainId: string,
-    queryParams: PageMetadata,
-    token: string
-  ): Promise<UsersPage> {
-    const stringParams: Record<string, string> = Object.fromEntries(
-      Object.entries(queryParams).map(([key, value]) => [key, String(value)])
-    );
-    const options: RequestInit = {
-      method: "GET",
-      headers: {
-        "Content-Type": this.contentType,
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const response = await fetch(
-        new URL(
-          `${domainId}/users?${new URLSearchParams(stringParams).toString()}`,
-          this.usersUrl
-        ).toString(),
-        options
-      );
-      if (!response.ok) {
-        const errorRes = await response.json();
-        throw Errors.HandleError(errorRes.message, response.status);
-      }
-      const domainData: UsersPage = await response.json();
       return domainData;
     } catch (error) {
       throw error;
@@ -724,7 +668,7 @@ export default class Domains {
    * @param {string} domainId - The unique identifier of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
+   * @returns {Promise<MembersPage>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
    */
   public async ListDomainRoleMembers(
@@ -732,7 +676,7 @@ export default class Domains {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const updatedRole = await this.domainRoles.ListRoleMembers(
         this.domainsUrl,
@@ -800,6 +744,32 @@ export default class Domains {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListDomainMembers - Lists all members associated with a domain.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListDomainMembers(
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.domainRoles.ListEntityMembers(
+        this.domainsUrl,
+        `${this.domainsEndpoint}`,
+        domainId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }

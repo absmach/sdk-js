@@ -311,3 +311,12 @@ mySdk.groups
   .catch((error) => {
     console.error(error);
   });
+
+mySdk.groups
+  .ListGroupMembers("<groupId>", domainId, { offset: 0, limit: 10 }, token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });

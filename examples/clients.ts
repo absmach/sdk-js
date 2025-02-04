@@ -102,15 +102,6 @@ mySdk.clients
   });
 
 mySdk.clients
-  .ListUserClients("<userId>", { offset: 0, limit: 10 }, domainId, token)
-  .then((response: any) => {
-    console.log("response:", response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-mySdk.clients
   .setClientParentGroup(domainId, "<clientId>", "<parentGroupId>", token)
   .then((response: any) => {
     console.log("response: ", response);
@@ -296,6 +287,15 @@ mySdk.clients
 
 mySdk.clients
   .DeleteAllClientRoleMembers("<clientId>", domainId, "<roleId>", token)
+  .then((response) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.clients
+  .ListClientMembers("<clientId>", domainId, { offset: 0, limit: 10 }, token)
   .then((response) => {
     console.log("response: ", response);
   })

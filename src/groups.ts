@@ -12,6 +12,8 @@ import type {
   BasicPageMeta,
   HierarchyPageMeta,
   HierarchyPage,
+  MemberRolesPage,
+  MembersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -996,7 +998,7 @@ export default class Groups {
    * @param {string} roleId - The unique identifier of the role.
    * @param {BasicPageMeta} queryParams - Pagination and query metadata.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves to a list of members.
+   * @returns {Promise<MembersPage>} members - A promise that resolves to a list of members.
    * @throws {Error} - Throws an error if the members cannot be retrieved.
    */
   public async ListGroupRoleMembers(
@@ -1005,7 +1007,7 @@ export default class Groups {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const updatedRole = await this.groupRoles.ListRoleMembers(
         this.groupsUrl,
@@ -1077,6 +1079,34 @@ export default class Groups {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListGroupMembers - Lists all members associated with a group.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListGroupMembers(
+    groupId: string,
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.groupRoles.ListEntityMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }
