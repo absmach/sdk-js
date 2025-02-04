@@ -433,8 +433,8 @@ export default class Roles {
         const errorRes = await response.json();
         throw Errors.HandleError(errorRes.message, response.status);
       }
-      const { members }: { members: string[] } = await response.json();
-      return members;
+      const membersPage = await response.json();
+      return membersPage;
     } catch (error) {
       throw error;
     }

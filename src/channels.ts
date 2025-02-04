@@ -12,6 +12,7 @@ import type {
   RolePage,
   BasicPageMeta,
   MemberRolesPage,
+  MembersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -1033,7 +1034,7 @@ export default class Channels {
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
+   * @returns {Promise<MembersPage>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
    */
   public async ListChannelRoleMembers(
@@ -1042,7 +1043,7 @@ export default class Channels {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const members = await this.channelRoles.ListRoleMembers(
         this.channelsUrl,

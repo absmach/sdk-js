@@ -11,6 +11,7 @@ import type {
   BasicPageMeta,
   RolePage,
   MemberRolesPage,
+  MembersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -667,7 +668,7 @@ export default class Domains {
    * @param {string} domainId - The unique identifier of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves with an array of member ids.
+   * @returns {Promise<MembersPage>} members - A promise that resolves with an array of member ids.
    * @throws {Error} - If members cannot be retrieved.
    */
   public async ListDomainRoleMembers(
@@ -675,7 +676,7 @@ export default class Domains {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const updatedRole = await this.domainRoles.ListRoleMembers(
         this.domainsUrl,

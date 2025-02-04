@@ -13,6 +13,7 @@ import type {
   HierarchyPageMeta,
   HierarchyPage,
   MemberRolesPage,
+  MembersPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -997,7 +998,7 @@ export default class Groups {
    * @param {string} roleId - The unique identifier of the role.
    * @param {BasicPageMeta} queryParams - Pagination and query metadata.
    * @param {string} token - Authorization token.
-   * @returns {Promise<string[]>} members - A promise that resolves to a list of members.
+   * @returns {Promise<MembersPage>} members - A promise that resolves to a list of members.
    * @throws {Error} - Throws an error if the members cannot be retrieved.
    */
   public async ListGroupRoleMembers(
@@ -1006,7 +1007,7 @@ export default class Groups {
     roleId: string,
     queryParams: BasicPageMeta,
     token: string
-  ): Promise<string[]> {
+  ): Promise<MembersPage> {
     try {
       const updatedRole = await this.groupRoles.ListRoleMembers(
         this.groupsUrl,
