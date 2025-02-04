@@ -26,6 +26,7 @@ export default class Channels {
   private readonly channelsUrl: URL;
 
   private readonly channelRoles: Roles;
+
   private readonly usersUrl?: URL;
 
   /**
