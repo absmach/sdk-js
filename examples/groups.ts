@@ -7,7 +7,6 @@ const defaultUrl = "http://localhost";
 
 const mySdk = new SDK({
   groupsUrl: `${defaultUrl}:9004`,
-  usersUrl: `${defaultUrl}:9002`,
 });
 
 const token = "<token>";
@@ -306,6 +305,15 @@ mySdk.groups
 
 mySdk.groups
   .DeleteAllGroupRoleMembers("<groupId>", domainId, "<roleId>", token)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.groups
+  .ListGroupMembers("<groupId>", domainId, { offset: 0, limit: 10 }, token)
   .then((response: any) => {
     console.log("response: ", response);
   })

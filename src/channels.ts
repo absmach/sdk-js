@@ -33,7 +33,6 @@ export default class Channels {
    * Initializes the Channel API client.
    * @param {object} config - Configuration object.
    * @param {string} config.channelsUrl - Base URL for the channels API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
   public constructor({ channelsUrl }: { channelsUrl: string }) {
     this.channelsUrl = new URL(channelsUrl);

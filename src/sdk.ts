@@ -129,10 +129,10 @@ class SDK {
     rulesUrl = defaultUrl,
   }: SDKConfig = {}) {
     this.users = new Users({ usersUrl, clientsUrl });
-    this.domains = new Domains({ domainsUrl, usersUrl });
-    this.clients = new Clients({ clientsUrl, usersUrl });
+    this.domains = new Domains({ domainsUrl });
+    this.clients = new Clients({ clientsUrl });
     this.certs = new Certs(certsUrl);
-    this.groups = new Groups({ groupsUrl, usersUrl });
+    this.groups = new Groups({ groupsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
     this.invitations = new Invitations(invitationsUrl);

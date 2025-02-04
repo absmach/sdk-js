@@ -4,7 +4,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type { Client, ClientsPage } from "../src/sdk";
+import type { Client, ClientsPage, MemberRolesPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -45,9 +45,36 @@ describe("Clients", () => {
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjU3OTMwNjksImlhdCI6";
   const roleName = "editor";
+  const roleId = "client_RYYW2unQ5K18jYgjRmb3lMFB";
   const actions = ["read", "write"];
   const members = ["user1", "user2"];
   const role = { name: roleName, actions, members };
+
+  const membersPage: MemberRolesPage = {
+    total: 3,
+    offset: 0,
+    limit: 10,
+    members: [
+      {
+        member_id: "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+      {
+        member_id: "c096bb08-e993-46a8-8baa-ac3d61b9212a",
+        roles: [
+          {
+            role_name: "editor",
+            actions: ["read", "write"],
+          },
+        ],
+      },
+    ],
+  };
 
   beforeEach(() => {
     fetchMock.resetMocks();
@@ -208,7 +235,7 @@ describe("Clients", () => {
     const response = await sdk.clients.ViewClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(role);
@@ -221,7 +248,7 @@ describe("Clients", () => {
     const response = await sdk.clients.UpdateClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       updatedRole,
       token
     );
@@ -238,7 +265,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRole(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -251,7 +278,7 @@ describe("Clients", () => {
     const response = await sdk.clients.AddClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["execute"],
       token
     );
@@ -264,7 +291,7 @@ describe("Clients", () => {
     const response = await sdk.clients.ListClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(actions);
@@ -280,7 +307,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["write"],
       token
     );
@@ -297,7 +324,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteAllClientRoleActions(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
@@ -310,7 +337,7 @@ describe("Clients", () => {
     const response = await sdk.clients.AddClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["user3"],
       token
     );
@@ -323,7 +350,7 @@ describe("Clients", () => {
     const response = await sdk.clients.ListClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       { offset: 0, limit: 10 },
       token
     );
@@ -340,7 +367,7 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       ["user1"],
       token
     );
@@ -357,9 +384,21 @@ describe("Clients", () => {
     const response = await sdk.clients.DeleteAllClientRoleMembers(
       clientId,
       domainId,
-      roleName,
+      roleId,
       token
     );
     expect(response).toEqual(successResponse);
+  });
+
+  test("List client members should return members of a specific client", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
+
+    const response = await sdk.clients.ListClientMembers(
+      clientId,
+      domainId,
+      { offset: 0, limit: 10 },
+      token
+    );
+    expect(response).toEqual(membersPage);
   });
 });

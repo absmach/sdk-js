@@ -12,6 +12,7 @@ import type {
   BasicPageMeta,
   HierarchyPageMeta,
   HierarchyPage,
+  MemberRolesPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -21,8 +22,6 @@ import Roles from "./roles";
  */
 export default class Groups {
   private readonly groupsUrl: URL;
-
-  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -35,21 +34,9 @@ export default class Groups {
    * Initializes the Groups API client.
    * @param {object} config - Configuration object.
    * @param {string} config.groupsUrl - Base URL for the groups API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({
-    groupsUrl,
-    usersUrl,
-  }: {
-    groupsUrl: string;
-    usersUrl?: string;
-  }) {
+  public constructor({ groupsUrl }: { groupsUrl: string }) {
     this.groupsUrl = new URL(groupsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
     this.contentType = "application/json";
     this.groupsEndpoint = "groups";
     this.groupRoles = new Roles();
@@ -1091,6 +1078,34 @@ export default class Groups {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListGroupMembers - Lists all members associated with a group.
+   * @param {string} groupId - The unique identifier of the group.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListGroupMembers(
+    groupId: string,
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.groupRoles.ListEntityMembers(
+        this.groupsUrl,
+        `${domainId}/${this.groupsEndpoint}`,
+        groupId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }

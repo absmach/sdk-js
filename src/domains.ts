@@ -10,6 +10,7 @@ import type {
   Role,
   BasicPageMeta,
   RolePage,
+  MemberRolesPage,
 } from "./defs";
 import Roles from "./roles";
 
@@ -19,8 +20,6 @@ import Roles from "./roles";
  */
 export default class Domains {
   private readonly domainsUrl: URL;
-
-  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -33,21 +32,9 @@ export default class Domains {
    * Initializes the Domains API client.
    * @param {object} config - Configuration object.
    * @param {string} config.domainsUrl - Base URL for the domains API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
    */
-  public constructor({
-    domainsUrl,
-    usersUrl,
-  }: {
-    domainsUrl: string;
-    usersUrl?: string;
-  }) {
+  public constructor({ domainsUrl }: { domainsUrl: string }) {
     this.domainsUrl = new URL(domainsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
     this.contentType = "application/json";
     this.domainsEndpoint = "domains";
     this.domainRoles = new Roles();
@@ -756,6 +743,32 @@ export default class Domains {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListDomainMembers - Lists all members associated with a domain.
+   * @param {string} domainId - The unique identifier of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListDomainMembers(
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.domainRoles.ListEntityMembers(
+        this.domainsUrl,
+        `${this.domainsEndpoint}`,
+        domainId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }

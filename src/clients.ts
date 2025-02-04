@@ -11,6 +11,7 @@ import type {
   Role,
   RolePage,
   BasicPageMeta,
+  MemberRolesPage,
 } from "./defs";
 
 /**
@@ -19,8 +20,6 @@ import type {
  */
 export default class Clients {
   private readonly clientsUrl: URL;
-
-  private readonly usersUrl?: URL;
 
   private readonly contentType: string;
 
@@ -33,21 +32,11 @@ export default class Clients {
    * Initializes the Clients API client.
    * @param {object} config - Configuration object.
    * @param {string} config.clientsUrl - Base URL for the clients API.
-   * @param {string} [config.usersUrl] - Optional URL for the users API.
+
    */
-  public constructor({
-    clientsUrl,
-    usersUrl,
-  }: {
-    clientsUrl: string;
-    usersUrl?: string;
-  }) {
+  public constructor({ clientsUrl }: { clientsUrl: string }) {
     this.clientsUrl = new URL(clientsUrl);
-    if (usersUrl !== undefined) {
-      this.usersUrl = new URL(usersUrl);
-    } else {
-      this.usersUrl = new URL("");
-    }
+
     this.contentType = "application/json";
     this.clientsEndpoint = "clients";
     this.clientRoles = new Roles();
@@ -968,6 +957,34 @@ export default class Clients {
         token
       );
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * @method ListClientMembers - Lists all members associated with a client.
+   * @param {string} clientId - The unique identifier of the client.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} token - Authorization token.
+   * @returns {Promise<MemberRolePage>} members - A promise that resolves with a page of members.
+   * @throws {Error} - If members cannot be retrieved.
+   */
+  public async ListClientMembers(
+    clientId: string,
+    domainId: string,
+    queryParams: BasicPageMeta,
+    token: string
+  ): Promise<MemberRolesPage> {
+    try {
+      const members = await this.clientRoles.ListEntityMembers(
+        this.clientsUrl,
+        `${domainId}/${this.clientsEndpoint}`,
+        clientId,
+        queryParams,
+        token
+      );
+      return members;
     } catch (error) {
       throw error;
     }
