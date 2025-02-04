@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.8
+
+### Patch Changes
+
+- 574f32b: add list entity users
+
 ## 0.10.7
 
 ### Patch Changes
