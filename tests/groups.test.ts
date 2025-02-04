@@ -9,6 +9,7 @@ import type {
   GroupsPage,
   HierarchyPage,
   MemberRolesPage,
+  MembersPage,
   Role,
   RolePage,
 } from "../src/sdk";
@@ -56,7 +57,17 @@ describe("Groups", () => {
 
   const roleId = "group_RYYW2unQ5K18jYgjRmb3lMFB";
 
-  const membersPage: MemberRolesPage = {
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
     total: 3,
     offset: 0,
     limit: 10,
@@ -435,7 +446,7 @@ describe("Groups", () => {
   });
 
   test("List group role members should return members", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await sdk.groups.ListGroupRoleMembers(
       groupId,
@@ -445,7 +456,7 @@ describe("Groups", () => {
       token
     );
 
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("Delete group role members should return deletion response", async () => {
@@ -486,7 +497,7 @@ describe("Groups", () => {
   });
 
   test("List group members should return members of a specific group", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
 
     const response = await sdk.groups.ListGroupMembers(
       groupId,
@@ -494,6 +505,6 @@ describe("Groups", () => {
       { offset: 0, limit: 10 },
       token
     );
-    expect(response).toEqual(membersPage);
+    expect(response).toEqual(membersRolePage);
   });
 });

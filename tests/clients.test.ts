@@ -4,7 +4,7 @@
 import fetchMock, { enableFetchMocks } from "jest-fetch-mock";
 
 import SDK from "../src/sdk";
-import type { Client, ClientsPage, MemberRolesPage } from "../src/sdk";
+import type { Client, ClientsPage, MemberRolesPage, MembersPage } from "../src/sdk";
 
 enableFetchMocks();
 
@@ -50,7 +50,17 @@ describe("Clients", () => {
   const members = ["user1", "user2"];
   const role = { name: roleName, actions, members };
 
-  const membersPage: MemberRolesPage = {
+  const membersPage: MembersPage = {
+    total: 2,
+    offset: 0,
+    limit: 10,
+    members: [
+      "59c83204-192b-4c1c-ba1a-5a7c80b71dff",
+      "af3aad36-58df-478a-9b89-f5057b40ca55",
+    ],
+  };
+
+  const membersRolePage: MemberRolesPage = {
     total: 3,
     offset: 0,
     limit: 10,
@@ -345,7 +355,7 @@ describe("Clients", () => {
   });
 
   test("List client role members should return members of a specific role", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ members }));
+    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
 
     const response = await sdk.clients.ListClientRoleMembers(
       clientId,
@@ -354,7 +364,7 @@ describe("Clients", () => {
       { offset: 0, limit: 10 },
       token
     );
-    expect(response).toEqual(members);
+    expect(response).toEqual(membersPage);
   });
 
   test("Delete client role members should remove members from a role response", async () => {
@@ -391,7 +401,7 @@ describe("Clients", () => {
   });
 
   test("List client members should return members of a specific client", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(membersPage));
+    fetchMock.mockResponseOnce(JSON.stringify(membersRolePage));
 
     const response = await sdk.clients.ListClientMembers(
       clientId,
@@ -399,6 +409,6 @@ describe("Clients", () => {
       { offset: 0, limit: 10 },
       token
     );
-    expect(response).toEqual(membersPage);
+    expect(response).toEqual(membersRolePage);
   });
 });
