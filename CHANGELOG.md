@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.9
+
+### Patch Changes
+
+- ffa578a: Update the content of the schedule for the rules engine
+
 ## 0.10.8
 
 ### Patch Changes
