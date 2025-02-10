@@ -285,7 +285,7 @@ export interface MessagesPageMetadata extends PageMetadata {
   vd?: string;
   aggregation?: string;
   interval?: string;
-  value?: number;
+  v?: number;
 }
 
 export interface SenMLMessage {
