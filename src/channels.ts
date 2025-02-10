@@ -409,7 +409,7 @@ export default class Channels {
   /**
    * @method ConnectClient - Connects multiple clients to a channel.
    * @param {string[]} clientIds - An array of unique clients IDs to be connected.
-   * @param {string} channelId - The  unique ID of the channel to which the clients will connect.
+   * @param {string} channelId - The unique ID of the channel. to which the clients will connect.
    * @param {string[]}connectionTypes - Connection types can be 'publish', 'subscribe' or both.
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
@@ -562,7 +562,7 @@ export default class Channels {
   /**
    * @method DisconnectClient - Disconnects clients from channel.
    * @param {string[]} clientIds - An array of unique clients IDs to be disconnected.
-   * @param {string} channelId - The  unique ID of the channel from which the clients will be disconnected.
+   * @param {string} channelId - The unique ID of the channel. from which the clients will be disconnected.
    * @param {string[]} connectionTypes - connection types can be publish, subscribe or both publish and subscribe.
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.

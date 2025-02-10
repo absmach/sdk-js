@@ -30,7 +30,7 @@ export default class Rules {
   /**
    * @method CreateRule - Creates a new rule
    * @param {Rule} rule - Rule object with a containing details like name, input_channel, input_topic and logic.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Rule>} rule - The created rule object.
    * @throws {Error} - If the rule cannot be created.
@@ -67,7 +67,7 @@ export default class Rules {
   /**
    * @method ViewRule - Retrieves a rule by its id.
    * @param {string} ruleId - The unique ID of the rule.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Rule>} rule - The requested rule object.
    * @throws {Error} - If the rule cannot be fetched.
@@ -106,7 +106,7 @@ export default class Rules {
   /**
    * @method ListRules - Retrieves all rules matching the provided query parameters.
    * @param {RulesPageMetadata} queryParams - Query parameters for the request.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<RulesPage>} rulesPage - A page of rules.
    * @throws {Error} - If the rules cannot be fetched.
@@ -150,7 +150,7 @@ export default class Rules {
   /**
    * @method UpdateRule - Updates an existing rule.
    * @param {Rule} rule - rule object with updated properties.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Rule>} rule - The updated rule object.
    * @throws {Error} - If the rule cannot be updated.
@@ -190,7 +190,7 @@ export default class Rules {
   /**
    * @method DeleteRule - Deletes a rule.
    * @param {string} ruleId - The  unique ID of the rule.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the rule is successfully deleted.
    * @throws {Error} - If the rule cannot be deleted.
@@ -232,7 +232,7 @@ export default class Rules {
   /**
    * @method EnableRule - Enables a previously disabled rule.
    * @param {string} ruleId - The  unique ID of the rule.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Rule>} rule - The enabled rule object.
    * @throws {Error} - If the rule cannot be enabled.
@@ -271,7 +271,7 @@ export default class Rules {
   /**
    * @method DisableRule - Disables a spcific rule.
    * @param {string} ruleId - The  unique ID of the rule.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Rule>} rule - The disabled rule object.
    * @throws {Error} - If the rule cannot be disabled.

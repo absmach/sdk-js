@@ -30,8 +30,8 @@ export default class Journal {
   /**
   * @method EntityJournals - Retrieve entity journals by entity id matching the provided query parameters.
   * @param {string} entityType - Entity type i.e client, channel or group.
-  * @param {string} entityId - The  unique ID of the entity.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} entityId - The unique ID of the entity.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
   * @param {string} token - Authorization token.
   * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
@@ -80,7 +80,7 @@ export default class Journal {
 
   /**
   * @method UserJournals - Retrieve user journals by user id matching the provided query parameters.
-  * @param {string} userId - The  unique ID of the user.
+  * @param {string} userId - The unique ID of the user.
   * @param {JournalsPageMetadata} queryParams - Query parameters for the request.
   * @param {string} token - Authorization token.
   * @returns {Promise<JournalsPage>} journalsPage - A page of journals.
@@ -127,10 +127,10 @@ export default class Journal {
 
   /**
   * @method ClientTelemetry - Retrieves client telemetry.
-  * @param {string} clientId - The  unique ID of the client.
+  * @param {string} clientId - The unique ID of the client.
   * @param {string} token - Authorization token.
-  * @param {string} domainId - The  unique ID of the domain.
-  * @returns {Promise<ClientTelemetry>} clientTelemetry - A  client telemetry interface.
+  * @param {string} domainId - The unique ID of the domain.
+  * @returns {Promise<ClientTelemetry>} clientTelemetry - A client telemetry interface.
   * @throws {Error} - If client telemetry cannot be fetched.
   */
   public async ClientTelemetry(

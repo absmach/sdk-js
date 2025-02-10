@@ -52,7 +52,7 @@ export default class Bootstrap {
   /**
   * @method AddBootstrap - Creates a new bootstrap configuration.
   * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is created.
   * @throws {Error} - If the bootstrap configuration cannot be created.
@@ -95,7 +95,7 @@ export default class Bootstrap {
   /**
   * @method Whitelist - Updates a bootstrap configuration and changes the status of the config to whitelisted.
   * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is whitelisted.
   * @throws {Error} - If the bootstrap configuration cannot be whitelisted.
@@ -138,7 +138,7 @@ export default class Bootstrap {
   /**
   * @method UpdateBootstrap - Updates an existing bootstrap configuration's details.
   * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is updated.
   * @throws {Error} - If the bootstrap configuration cannot be updated.
@@ -181,7 +181,7 @@ export default class Bootstrap {
   /**
   * @method ViewBootstrap - Retrieves a bootstrap config by its ID.
   * @param {string} clientId - The unique identifier of the client.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<BootstrapConfig>} bootstrapConfig - The requested bootstrap configuration object.
   * @throws {Error} - If the bootstrap configuration cannot be fetched.
@@ -221,7 +221,7 @@ export default class Bootstrap {
   /**
   * @method UpdateBootstrapCerts - Updates the details of a specific role in a domain.
   * @param {BootstrapConfig} bootstrapConfig - The bootstrap configuration object containing details like external key, channels, externalId, clientId, etc.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<BootstrapConfig>} bootstrapConfig - The updated bootstrap configuration.
   * @throws {Error} - If the certs cannot be updated.
@@ -260,8 +260,8 @@ export default class Bootstrap {
 
   /**
   * @method DeleteBootstrap - Deletes bootstrap configuration with specified id.
-  * @param {string} clientId - The  unique ID of the client.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} clientId - The unique ID of the client.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration is deleted.
   * @throws {Error} - If the bootstrap configuration cannot be deleted.
@@ -340,7 +340,7 @@ export default class Bootstrap {
   /**
   * @method Bootstraps -Retrieves all bootstrap configuration matching the provided query parameters.
   * @param {PageMetadata} queryParams - Query parameters for the request.
-  * @param {string} domainId -The  unique ID of the domain.
+  * @param {string} domainId -The unique ID of the domain.
   * @param {String} token - Authorization token.
   * @returns {Promise<BootstrapPage>} bootstrapPage - A page of bootstrap configurations.
   * @throws {Error} - If the bootstrap configurations cannot be fetched.
@@ -386,7 +386,7 @@ export default class Bootstrap {
   * @method UpdateBootstrapConnection - Updates the connection of a bootstrap configuration.
   * @param {string} clientId - The unique identifier of the client.
   * @param {string[]} channels - An array of unique channels ids to be updated.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the bootstrap configuration connection are updated.
   * @throws {Error} - If the bootstrap configuration cannot be updated.
