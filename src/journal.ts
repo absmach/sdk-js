@@ -1,7 +1,7 @@
 // Copyright (c) Abstract Machines
 // SPDX-License-Identifier: Apache-2.0
 
-import type { JournalsPage, JournalsPageMetadata } from "./defs";
+import type { ClientTelemetry, JournalsPage, JournalsPageMetadata } from "./defs";
 import Errors from "./errors";
 
 /**
@@ -120,6 +120,47 @@ export default class Journal {
       }
       const journalsPage: JournalsPage = await response.json();
       return journalsPage;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+  * @method ClientTelemetry - Retrieves client telemetry.
+  * @param {string} clientId - The  unique ID of the client.
+  * @param {string} token - Authorization token.
+  * @param {string} domainId - The  unique ID of the domain.
+  * @returns {Promise<ClientTelemetry>} clientTelemetry - A  client telemetry interface.
+  * @throws {Error} - If client telemetry cannot be fetched.
+  */
+  public async ClientTelemetry(
+    clientId: string,
+    domainId: string,
+    token: string
+  ): Promise<ClientTelemetry> {
+    const options: RequestInit = {
+      method: "GET",
+      headers: {
+        "Content-Type": this.contentType,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const response = await fetch(
+        new URL(
+          `${domainId}/${
+            this.journalsEndpoint
+          }/client/${clientId}/telemetry`,
+          this.journalsUrl
+        ).toString(),
+        options
+      );
+      if (!response.ok) {
+        const errorRes = await response.json();
+        throw Errors.HandleError(errorRes.message, response.status);
+      }
+      const clientTelemetry: ClientTelemetry = await response.json();
+      return clientTelemetry;
     } catch (error) {
       throw error;
     }

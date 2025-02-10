@@ -496,3 +496,13 @@ export interface RulesPageMetadata {
 export interface RulesPage extends RulesPageMetadata {
   rules: Rule[];
 }
+
+export interface ClientTelemetry {
+  client_id: string;
+  domain_id: string;
+  subscriptions: number;
+  inbound_messages: number;
+  outbound_messages: number;
+  first_seen: Date;
+  last_seen: Date;
+}

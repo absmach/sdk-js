@@ -37,3 +37,15 @@ mySdk.Journal.UserJournals(
   .catch((error) => {
     console.error(error);
   });
+
+mySdk.Journal.ClientTelemetry(
+  "<clientId>",
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
