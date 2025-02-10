@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.10
+
+### Patch Changes
+
+- cbdedb9: This fixes the value param in messages page metadata
+
 ## 0.10.9
 
 ### Patch Changes
