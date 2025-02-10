@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.11
+
+### Patch Changes
+
+- 9ec65e6: update re api method type
+
 ## 0.10.10
 
 ### Patch Changes
