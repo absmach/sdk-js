@@ -161,7 +161,7 @@ export default class Rules {
     token: string
   ): Promise<Rule> {
     const options: RequestInit = {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -243,7 +243,7 @@ export default class Rules {
     token: string
   ): Promise<Rule> {
     const options = {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
@@ -282,7 +282,7 @@ export default class Rules {
     token: string
   ): Promise<Rule> {
     const options = {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": this.contentType,
         Authorization: `Bearer ${token}`,
