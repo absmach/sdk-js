@@ -25,7 +25,7 @@ export default class Certs {
   * @method IssueCert - Issues a certificate to a client.
   * @param {string} clientId - The unique ID of the client to be issued a certificate.
   * @param {string} valid - The time in hours for which the certificate is valid such as '10h'
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Cert>} cert - A promise that resolves with the certificate issued.
   * @throws {Error} - If the certificate cannot be issued.
@@ -63,8 +63,8 @@ export default class Certs {
 
   /**
   * @method ViewCertByClient -  Retrieves all certs matching the provided client Id.
-  * @param {string} clientId - The  unique ID of the client.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} clientId - The unique ID of the client.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<CertsPage>} certsPage - A page of certs.
   * @throws {Error} - If the certs cannot be fetched.
@@ -100,7 +100,7 @@ export default class Certs {
   /**
   * @method ViewCert - Retrieves a certificate by its id.
   * @param {string} certId - The  unique ID of the certificate.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Cert>} cert - The requested cert object.
   * @throws {Error} - If the cert cannot be fetched.
@@ -140,7 +140,7 @@ export default class Certs {
   /**
   * @method RevokeCert - Revokes and deletes a certificate with specified id.
   * @param {string} certId - The  unique ID of the certificate to be revoked.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @param {string} token - Authorization token.
   * @returns {Promise<Response>} response - A promise that resolves when the cert is revoked.
   * @throws {Error} - If the cert cannot be revoked.

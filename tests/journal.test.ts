@@ -30,6 +30,19 @@ describe("Journal", () => {
     offset: 0,
     limit: 10,
   };
+
+  const clientTelemetry = {
+    client_id: "ce838355-7f80-46cf-ba5c-5fb5d5b891bc",
+    domain_id: "e61d04fc-50ce-45e9-b461-8913f4c0cfbe",
+    subscriptions: 0,
+    inbound_messages: 0,
+    outbound_messages: 0,
+    first_seen: "2025-02-10T12:01:54.253192Z",
+    last_seen: "2025-02-10T12:01:54.253192Z"
+  };
+
+  const clientId = "ce838355-7f80-46cf-ba5c-5fb5d5b891bc";
+
   beforeEach(() => {
     fetchMock.resetMocks();
   });
@@ -111,5 +124,16 @@ describe("Journal", () => {
       token,
     );
     expect(response).toEqual(userJournalsPage);
+  });
+
+  test("Client telemetry should return client telemetry", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(clientTelemetry));
+    const domainId = "e61d04fc-50ce-45e9-b461-8913f4c0cfbe";
+    const response = await sdk.Journal.ClientTelemetry(
+      clientId,
+      domainId,
+      token,
+    );
+    expect(response).toEqual(clientTelemetry);
   });
 });

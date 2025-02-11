@@ -87,7 +87,7 @@ export default class Clients {
   /**
    * @method CreateClients - Creates multiple new clients.
    * @param {Client[]} clients - An array of client objects,  each containing details like name, metadata, and tags.
-   * @param {string} domainId -  The  unique ID of the domain.
+   * @param {string} domainId -  The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
    * @throws {Error} - If the clients cannot be created.
@@ -126,8 +126,8 @@ export default class Clients {
 
   /**
    * @method Enable - Enables a previously disabled client by its ID.
-   * @param {string} clientId - The  unique ID of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} clientId - The unique ID of the client.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Client>} client - The updated client object with enabled status.
    * @throws {Error} - If the client cannot be enabled.
@@ -166,8 +166,8 @@ export default class Clients {
 
   /**
    * @method Disable - Disables an enabled client by its ID.
-   * @param {string} clientId - The  unique ID of the client.
-   * @param {string} domainId -The  unique ID of the domain.
+   * @param {string} clientId - The unique ID of the client.
+   * @param {string} domainId -The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Client>} client - The updated client object with disabled status.
    * @throws {Error} - If the group cannot be disabled.
@@ -245,7 +245,7 @@ export default class Clients {
 
   /**
    * @method UpdateClientSecret - Updates an existing client's secret.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {Client} client - Client object with updated secret.
    * @param {string} token -  Authorization token.
    * @returns {Promise<Client> } client - The updated client object.
@@ -286,7 +286,7 @@ export default class Clients {
   /**
    * @method UpdateClientTags - Updates an existing client's tags.
    * @param {Client} client - Client object with updated tags.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<client>} client - The updated client object.
    * @throws {Error} - If the client tags cannot be updated.
@@ -327,7 +327,7 @@ export default class Clients {
   /**
    * @method Client - Retrieves a client by its id.
    * @param {string} clientId - The unique ID of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Client>} client - The requested client object.
    * @throws {Error} - If the client cannot be fetched.
@@ -367,7 +367,7 @@ export default class Clients {
   /**
    * @method Clients - Retrieves all clients matching the provided query parameters.
    * @param {PageMetadata} queryParams - Query parameters for the request.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<ClientsPage>} clientsPage - A page of clients.
    * @throws {Error} - If the clients cannot be fetched.
@@ -412,7 +412,7 @@ export default class Clients {
 
   /**
    * @method setClientParentGroup - Sets parent to a client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} clientId - The unique ID of the client to be updated.
    * @param {string} parentGroupId - The unique ID of the group to be set as the parent.
    * @param {string} token - Authorization token.
@@ -457,8 +457,8 @@ export default class Clients {
 
   /**
    * @method DeleteClientParentGroup - Removes the parent group from a specified client.
-   * @param {string} domainId - The  unique ID of the domain.
-   * @param {string} clientId - The  unique ID of the client.
+   * @param {string} domainId - The unique ID of the domain.
+   * @param {string} clientId - The unique ID of the client.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the parent group is successfully removed from the specified client.
    * @throws {Error} - If the parent group cannot removed from the client.
@@ -499,8 +499,8 @@ export default class Clients {
 
   /**
    * @method DeleteClient - Deletes a client with specified id.
-   * @param {string} clientId - The  unique ID of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} clientId - The unique ID of the client.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the client is deleted.
    * @throws {Error} - If the client cannot be deleted.
@@ -566,7 +566,7 @@ export default class Clients {
   /**
    * @method CreateClientRole - Creates a new role within a specific client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleName - The name of the role to create.
    * @param {string} token - Authorization token.
    * @param {string[]} optionalActions - Optional actions assigned to the role.
@@ -601,7 +601,7 @@ export default class Clients {
   /**
    * @method ListClientRoles - Lists all roles within a specific client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {PageMetadata} queryParams - Metadata for pagination or filters.
    * @param {string} token - Authorization token.
    * @returns {Promise<RolePage>} rolePage - A promise that resolves with a page of roles in the domain.
@@ -630,7 +630,7 @@ export default class Clients {
   /**
    * @method ViewClientRole - Retrieves details about a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Role>} role - A promise that resolves with the role details.
@@ -659,7 +659,7 @@ export default class Clients {
   /**
    * @method UpdateClientRole - Updates the details of a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {Role} role - The role to be updated.
    * @param {string} token - Authorization token.
@@ -691,7 +691,7 @@ export default class Clients {
   /**
    * @method DeleteClientRole - Deletes a specific role from a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when the role is deleted.
@@ -720,7 +720,7 @@ export default class Clients {
   /**
    * @method AddClientRoleActions - Adds actions to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @param {string[]} actions - The actions to add to the role.
@@ -752,7 +752,7 @@ export default class Clients {
   /**
    * @method ListClientRoleActions - Lists all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<string[]>} role actions - A promise that resolves with an array of actions.
@@ -781,7 +781,7 @@ export default class Clients {
   /**
    * @method DeleteClientRoleActions - Deletes specific actions from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} actions - The actions to delete from the role.
    * @param {string} token - Authorization token.
@@ -813,7 +813,7 @@ export default class Clients {
   /**
    * @method DeleteAllClientRoleActions - Deletes all actions associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all actions are deleted.
@@ -842,7 +842,7 @@ export default class Clients {
   /**
    * @method AddClientRoleMembers - Adds members to a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to add.
    * @param {string} token - Authorization token.
@@ -874,7 +874,7 @@ export default class Clients {
   /**
    * @method ListClientRoleMembers - Lists all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<MembersPage>} members - A promise that resolves with an array of member ids.
@@ -905,7 +905,7 @@ export default class Clients {
   /**
    * @method DeleteClientRoleMembers - Deletes specific members from a role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string[]} members - The IDs of the members to delete.
    * @param {string} token - Authorization token.
@@ -937,7 +937,7 @@ export default class Clients {
   /**
    * @method DeleteAllClientRoleMembers - Deletes all members associated with a specific role in a client.
    * @param {string} clientId - The unique identifier of the client.
-   * @param {string} domainId - The  unique ID of the domain.
+   * @param {string} domainId - The unique ID of the domain.
    * @param {string} roleId - The unique identifier of the role.
    * @param {string} token - Authorization token.
    * @returns {Promise<Response>} response - A promise that resolves when all members are deleted.

@@ -97,7 +97,7 @@ export default class Messages {
   * @param {MessagesPageMetadata} queryParams - Query parameters for the request.
   * @param {string} channelId - The ID of the channel to read the message from.
   * @param {string} token - Authorization token.
-  * @param {string} domainId - The  unique ID of the domain.
+  * @param {string} domainId - The unique ID of the domain.
   * @returns {Promise<MessagesPage>} messagesPage - A page of messages.
   * @throws {Error} - If the messages cannot be fetched.
   */
