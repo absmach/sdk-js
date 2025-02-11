@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.12
+
+### Patch Changes
+
+- 59e8853: This updates journals and adds clients telemetry
+
 ## 0.10.11
 
 ### Patch Changes
