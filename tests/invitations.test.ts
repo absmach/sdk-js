@@ -8,14 +8,15 @@ import type { Invitation, InvitationsPage } from "../src/sdk";
 
 enableFetchMocks();
 
-const invitationsUrl = "http://localhost";
-const sdk = new SDK({ invitationsUrl });
+const domainsUrl = "http://localhost";
+const sdk = new SDK({ domainsUrl });
 
 describe("Invitations", () => {
   const invitation: Invitation = {
-    invited_by: "886b4266-77d1-4258-abae-2931fb4f16de",
-    user_id: "886b4266-77d1-4258-abae-2931fb4f16de",
-    domain_id: "886b4266-77d1-4258-abae-2931fb4f16de",
+    invited_by: "6a422a33-f849-4631-aa8f-92132037c84a",
+    invitee_user_id: "99419100-b577-4d1a-a4d0-4383be3f4aef",
+    domain_id: "3ca9a205-fc34-4c64-b21a-cd48a8c6d380",
+    role_id: "domain_h7QSXUqR6a7he9eRE3HmDcbt",
   };
 
   const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9";
@@ -23,6 +24,8 @@ describe("Invitations", () => {
   const userId = "886b4266-77d1-4258-abae-2931fb4f16de";
 
   const domainId = "886b4266-77d1-4258-abae-2931fb4f16de";
+
+  const roleId = "domain_qSTQnPldHH7Qgu3xckTD5NEX";
 
   const queryParams = {
     offset: 0,
@@ -47,21 +50,28 @@ describe("Invitations", () => {
     };
     fetchMock.mockResponseOnce(JSON.stringify(SendInvitationResponse));
 
-    const response = await sdk.invitations.SendInvitation(invitation, token);
+    const response = await sdk.invitations.SendInvitation(userId, domainId, roleId, token);
     expect(response).toEqual(SendInvitationResponse);
   });
 
   test("Invitation should return an invitation", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitation));
 
-    const response = await sdk.invitations.Invitation(userId, domainId, token);
+    const response = await sdk.invitations.ViewInvitation(userId, domainId, token);
     expect(response).toEqual(invitation);
   });
 
-  test("Invitations should return a list of invitations", async () => {
+  test("ListDomainInvitations should return a list of domain invitations", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(invitationsPage));
 
-    const response = await sdk.invitations.Invitations(queryParams, token);
+    const response = await sdk.invitations.ListDomainInvitations(queryParams, domainId, token);
+    expect(response).toEqual(invitationsPage);
+  });
+
+  test("ListUserInvitations should return a list of user invitations", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(invitationsPage));
+
+    const response = await sdk.invitations.ListUserInvitations(queryParams, token);
     expect(response).toEqual(invitationsPage);
   });
 

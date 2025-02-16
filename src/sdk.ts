@@ -84,7 +84,6 @@ export interface SDKConfig {
   certsUrl?: string;
   readersUrl?: string;
   httpAdapterUrl?: string;
-  invitationsUrl?: string;
   bootstrapUrl?: string;
   journalUrl?: string;
   rulesUrl?: string;
@@ -124,7 +123,6 @@ class SDK {
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpAdapterUrl = defaultUrl,
-    invitationsUrl = defaultUrl,
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl,
     rulesUrl = defaultUrl,
@@ -136,7 +134,7 @@ class SDK {
     this.groups = new Groups({ groupsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
-    this.invitations = new Invitations(invitationsUrl);
+    this.invitations = new Invitations({ domainsUrl });
     this.bootstrap = new Bootstrap(bootstrapUrl);
     this.Journal = new Journal(journalUrl);
     this.Health = new Health({
@@ -148,7 +146,6 @@ class SDK {
       readersUrl,
       httpAdapterUrl,
       journalUrl,
-      invitationsUrl,
       domainsUrl,
       groupsUrl,
     });
