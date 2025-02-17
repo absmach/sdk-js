@@ -782,12 +782,12 @@ export default class Domains {
   }
 
   /**
-   * @method SendInvitation - Sends an invitation to the email address associated with the given user.
+   * @method SendInvitation - Sends an invitation to the given user.
    * @param {string} userId - The unique ID of the user.
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
-   * @returns {Promise<Response>} response - A promise that resolves when the invitations are sent.
-   * @throws {Error} - If the invitations cannot be sent.
+   * @returns {Promise<Response>} response - A promise that resolves when the invitation is sent.
+   * @throws {Error} - If the invitation cannot be sent.
   */
   public async SendInvitation(
     userId: string,
@@ -823,7 +823,7 @@ export default class Domains {
   }
 
   /**
-   * @method ViewInvitation - Retrieves all the invitation for the given user.
+   * @method ViewInvitation - Retrieves the invitation for the given user to a given domain.
    * @param {string} userId - The unique ID of the user.
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.

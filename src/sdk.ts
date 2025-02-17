@@ -38,6 +38,7 @@ export type {
   CertsPage,
   Invitation,
   InvitationsPage,
+  InvitationPageMeta,
   UserCredentials,
   ClientCredentials,
   UserBasicInfo,
