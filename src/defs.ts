@@ -194,14 +194,16 @@ export interface Permissions {
 }
 
 export interface Invitation {
-  invited_by?: string | UserBasicInfo;
-  user_id?: string | UserBasicInfo;
-  domain_id?: string | DomainBasicInfo;
-  token?: string;
+  invited_by: string | UserBasicInfo;
+  invitee_user_id: string | UserBasicInfo;
+  domain_id: string | DomainBasicInfo;
+  role_id?: string;
+  role_name?: string;
+  actions?: string[];
   created_at?: Date;
   updated_at?: Date;
-  resend?: boolean;
   confirmed_at?: Date;
+  rejected_at?: Date;
 }
 
 export interface InvitationsPage {
@@ -505,4 +507,15 @@ export interface ClientTelemetry {
   outbound_messages: number;
   first_seen: Date;
   last_seen: Date;
+}
+
+export interface InvitationPageMeta extends BasicPageMeta {
+  offset: number;
+  limit: number;
+  invited_by?: string;
+  invitee_user_id?: string;
+  domain_id?: string;
+  role_id?: string;
+  invited_by_or_user_id?: string;
+  state?: string;
 }

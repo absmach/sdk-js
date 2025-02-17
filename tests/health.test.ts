@@ -85,15 +85,6 @@ describe("Health", () => {
     instance_id: "f158507c-a117-48a6-8110-7da540c8109a",
   };
 
-  const invitationsServiceHealthInfo: HealthInfo = {
-    status: "pass",
-    version: "v0.14.0",
-    commit: "c3e7159cb762396f064d43d55c30d90011c9357f",
-    description: "invitations service",
-    build_time: "2024-07-25_14:25:39",
-    instance_id: "2a798912-284b-4623-98dc-ae83fba881b3",
-  };
-
   const httpAdapterServiceHealthInfo: HealthInfo = {
     status: "pass",
     version: "v0.14.0",
@@ -188,13 +179,6 @@ describe("Health", () => {
 
     const response = await sdk.Health.Health("reader");
     expect(response).toEqual(readerServiceHealthInfo);
-  });
-
-  test("fetch invitations service health information", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify(invitationsServiceHealthInfo));
-
-    const response = await sdk.Health.Health("invitations");
-    expect(response).toEqual(invitationsServiceHealthInfo);
   });
 
   test("fetch http adapter service health information", async () => {

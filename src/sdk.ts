@@ -5,7 +5,6 @@ import Users from "./users";
 import Domains from "./domains";
 import Certs from "./certs";
 import Groups from "./groups";
-import Invitations from "./invitations";
 import Channels from "./channels";
 import Messages from "./messages";
 import Bootstrap from "./bootstrap";
@@ -39,6 +38,7 @@ export type {
   CertsPage,
   Invitation,
   InvitationsPage,
+  InvitationPageMeta,
   UserCredentials,
   ClientCredentials,
   UserBasicInfo,
@@ -84,7 +84,6 @@ export interface SDKConfig {
   certsUrl?: string;
   readersUrl?: string;
   httpAdapterUrl?: string;
-  invitationsUrl?: string;
   bootstrapUrl?: string;
   journalUrl?: string;
   rulesUrl?: string;
@@ -105,8 +104,6 @@ class SDK {
 
   messages: Messages;
 
-  invitations: Invitations;
-
   bootstrap: Bootstrap;
 
   Journal: Journal;
@@ -124,7 +121,6 @@ class SDK {
     certsUrl = defaultUrl,
     readersUrl = defaultUrl,
     httpAdapterUrl = defaultUrl,
-    invitationsUrl = defaultUrl,
     bootstrapUrl = defaultUrl,
     journalUrl = defaultUrl,
     rulesUrl = defaultUrl,
@@ -136,7 +132,6 @@ class SDK {
     this.groups = new Groups({ groupsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
-    this.invitations = new Invitations(invitationsUrl);
     this.bootstrap = new Bootstrap(bootstrapUrl);
     this.Journal = new Journal(journalUrl);
     this.Health = new Health({
@@ -148,7 +143,6 @@ class SDK {
       readersUrl,
       httpAdapterUrl,
       journalUrl,
-      invitationsUrl,
       domainsUrl,
       groupsUrl,
     });
