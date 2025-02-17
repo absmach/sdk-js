@@ -782,7 +782,7 @@ export default class Domains {
   }
 
   /**
-   * @method SendInvitation - Sends an invitation to the given user.
+   * @method SendInvitation - Sends an invitation to a given user.
    * @param {string} userId - The unique ID of the user.
    * @param {string} domainId - The unique ID of the domain.
    * @param {string} token - Authorization token.
