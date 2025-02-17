@@ -5,7 +5,6 @@ import Users from "./users";
 import Domains from "./domains";
 import Certs from "./certs";
 import Groups from "./groups";
-import Invitations from "./invitations";
 import Channels from "./channels";
 import Messages from "./messages";
 import Bootstrap from "./bootstrap";
@@ -104,8 +103,6 @@ class SDK {
 
   messages: Messages;
 
-  invitations: Invitations;
-
   bootstrap: Bootstrap;
 
   Journal: Journal;
@@ -134,7 +131,6 @@ class SDK {
     this.groups = new Groups({ groupsUrl });
     this.channels = new Channels({ channelsUrl });
     this.messages = new Messages({ readersUrl, httpAdapterUrl });
-    this.invitations = new Invitations({ domainsUrl });
     this.bootstrap = new Bootstrap(bootstrapUrl);
     this.Journal = new Journal(journalUrl);
     this.Health = new Health({

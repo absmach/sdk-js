@@ -228,3 +228,91 @@ mySdk.domains
   .catch((error) => {
     console.error(error);
   });
+
+mySdk.domains.SendInvitation(
+  "<userId>",
+  domainId,
+  "<roleId>",
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.ViewInvitation(
+  "<userId>",
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.ListDomainInvitations(
+  {
+    limit: 10,
+    offset: 0,
+  },
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.ListUserInvitations(
+  {
+    limit: 10,
+    offset: 0,
+  },
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.AcceptInvitation(
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.RejectInvitation(
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+mySdk.domains.DeleteInvitation(
+  "<userId>",
+  domainId,
+  token,
+)
+  .then((response: any) => {
+    console.log("response: ", response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
