@@ -1,5 +1,11 @@
 # @absmach/magistrala-sdk
 
+## 0.10.13
+
+### Patch Changes
+
+- 9f812e6: Removes the invitations service and updates existing invitations
+
 ## 0.10.12
 
 ### Patch Changes
